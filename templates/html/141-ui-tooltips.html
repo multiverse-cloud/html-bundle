@@ -1,22 +1,30 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#465fff" />
-  <meta name="description" content="Tooltip placements and icon help patterns." />
-  <title>Tooltips - mtverse</title>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tooltips — mtverse</title>
   <style>
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-    .animate-slideDown { animation: slideDown 0.2s ease-out; }
+    .no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+    @keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .animate-spin-custom{animation:spin 1s linear infinite}
+    @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+    .shimmer{background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
+    .dark .shimmer{background:linear-gradient(90deg,#1f2937 25%,#374151 50%,#1f2937 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
+
+    /* Tooltip arrow helpers */
+    .tooltip-arrow-top::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#111827}
+    .dark .tooltip-arrow-top::after{border-top-color:#1f2937}
+    .tooltip-arrow-bottom::after{content:'';position:absolute;bottom:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-bottom-color:#111827}
+    .dark .tooltip-arrow-bottom::after{border-bottom-color:#1f2937}
+    .tooltip-arrow-left::after{content:'';position:absolute;left:100%;top:50%;transform:translateY(-50%);border:5px solid transparent;border-left-color:#111827}
+    .tooltip-arrow-right::after{content:'';position:absolute;right:100%;top:50%;transform:translateY(-50%);border:5px solid transparent;border-right-color:#111827}
+    /* JS-controlled tooltip */
+    .js-tooltip{position:absolute;z-index:50;pointer-events:none;white-space:nowrap;opacity:0;transition:opacity .15s ease;padding:6px 10px;font-size:.75rem;font-weight:500;color:#fff;background:#111827;border-radius:8px}
+    .js-tooltip.visible{opacity:1}
   </style>
   <link rel="stylesheet" href="tailwind-production.css">
   <link rel="stylesheet" href="pro-styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
 <div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
@@ -26,63 +34,477 @@
     <div id="header-container"></div>
     <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
       <div class="mx-auto w-full max-w-screen-2xl">
-        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <div class="mb-2 flex items-center gap-2 text-sm text-gray-500">
-              <span>mtverse</span><span>/</span><span>ui-elements</span><span>/</span>
-              <span class="font-medium text-gray-800 dark:text-white/90">Tooltips</span>
+
+        <!-- PAGE HEADER -->
+        <div class="mb-8">
+          <nav class="mb-3 flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
+            <a href="#" class="hover:text-blue-600">mtverse</a>
+            <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <a href="#" class="hover:text-blue-600">UI Elements</a>
+            <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <span class="text-gray-800 dark:text-gray-100">Tooltips</span>
+          </nav>
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Tooltips</h1>
+          <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">16 tooltip variants — positions, colors, arrows, rich content, delayed, and JS-controlled.</p>
+          <div class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div class="rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-white/[0.03]"><div class="text-2xl font-bold text-gray-900 dark:text-white">16</div><div class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">Variants</div></div>
+            <div class="rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-white/[0.03]"><div class="text-2xl font-bold text-gray-900 dark:text-white">8</div><div class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">Sections</div></div>
+            <div class="rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-white/[0.03]"><div class="text-2xl font-bold text-green-600">✓</div><div class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">CSS-Only</div></div>
+            <div class="rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-white/[0.03]"><div class="text-2xl font-bold text-green-600">✓</div><div class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">Responsive</div></div>
+          </div>
+        </div>
+
+
+        <!-- SECTION 1: Basic Tooltip (CSS-only, group/group-hover) -->
+        <section id="sec1" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">Basic Tooltip</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">CSS-only using Tailwind's <code class="text-xs bg-gray-100 dark:bg-gray-700 px-1 rounded">group</code> + <code class="text-xs bg-gray-100 dark:bg-gray-700 px-1 rounded">group-hover:opacity-100</code> pattern. No JS required.</p></div>
+              <button onclick="openSourceDrawer('sec1','Basic Tooltip')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
             </div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white/90">Tooltips</h1>
-            <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Tooltip placements and icon help patterns.</p>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <button type="button" class="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:bg-white/[0.03] dark:text-gray-300">Preview</button>
-            <button type="button" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">Use Component</button>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Components</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">24</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">States</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">96</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Responsive</p><p class="mt-2 text-3xl font-bold text-green-600">Ready</p>
-          </div>
-        </div>
-        <div class="mt-5 grid grid-cols-1 gap-5 xl:grid-cols-2">
-
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Tooltip placements</h2>
-            <div class="mt-5"><div class="grid gap-4 md:grid-cols-4"><div class="relative grid place-items-center rounded-xl border border-gray-200 p-8 dark:border-gray-800"><button type="button" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white">Top</button><span class="absolute top-2 rounded-md bg-gray-900 px-2 py-1 text-xs text-white">Top tooltip</span></div><div class="relative grid place-items-center rounded-xl border border-gray-200 p-8 dark:border-gray-800"><button type="button" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white">Right</button><span class="absolute top-2 rounded-md bg-gray-900 px-2 py-1 text-xs text-white">Right tooltip</span></div><div class="relative grid place-items-center rounded-xl border border-gray-200 p-8 dark:border-gray-800"><button type="button" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white">Bottom</button><span class="absolute top-2 rounded-md bg-gray-900 px-2 py-1 text-xs text-white">Bottom tooltip</span></div><div class="relative grid place-items-center rounded-xl border border-gray-200 p-8 dark:border-gray-800"><button type="button" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white">Left</button><span class="absolute top-2 rounded-md bg-gray-900 px-2 py-1 text-xs text-white">Left tooltip</span></div></div></div>
-          </section>
-
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] xl:col-span-2">
-            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-              <div>
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Tooltips production states</h2>
-                <p class="mt-1 text-sm text-gray-500">Real dashboard states with actions, accessibility, responsive layout, and clean spacing.</p>
+            <div class="flex flex-wrap gap-8">
+              <!-- Tooltip 1 -->
+              <div class="relative inline-flex group">
+                <button class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">Save changes</button>
+                <span class="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 dark:bg-gray-700">
+                  Ctrl+S to save quickly
+                </span>
               </div>
-              <div class="inline-flex rounded-xl bg-gray-100 p-1 dark:bg-white/[0.04]">
-                <button class="rounded-lg bg-white px-4 py-2 text-sm font-bold text-blue-600 shadow-sm dark:bg-gray-900">Preview</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">Code</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">States</button>
+              <!-- Tooltip 2 -->
+              <div class="relative inline-flex group">
+                <button class="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">Delete</button>
+                <span class="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 dark:bg-gray-700">
+                  This action is irreversible
+                </span>
+              </div>
+              <!-- Tooltip 3 -->
+              <div class="relative inline-flex group">
+                <button class="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">Share</button>
+                <span class="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 dark:bg-gray-700">
+                  Copy shareable link
+                </span>
               </div>
             </div>
-            <div class="mt-5 grid gap-4 md:grid-cols-3">
-              <div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Default</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Hover / active</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Loading / empty</p><span class="h-2.5 w-2.5 rounded-full bg-yellow-400"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: Four Positions -->
+        <section id="sec2" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">Tooltip Positions</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Top, right, bottom, and left placements — pure CSS using absolute positioning.</p></div>
+              <button onclick="openSourceDrawer('sec2','Tooltip Positions')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
             </div>
-          </section>
-        </div>
+            <div class="flex flex-wrap items-center justify-center gap-12 py-8">
+              <!-- Top -->
+              <div class="relative inline-flex group">
+                <button class="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">Top</button>
+                <span class="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 dark:bg-gray-700">Tooltip on top</span>
+              </div>
+              <!-- Right -->
+              <div class="relative inline-flex group">
+                <button class="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">Right</button>
+                <span class="pointer-events-none absolute left-full top-1/2 ml-2 -translate-y-1/2 whitespace-nowrap rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 dark:bg-gray-700">Tooltip on right</span>
+              </div>
+              <!-- Bottom -->
+              <div class="relative inline-flex group">
+                <button class="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">Bottom</button>
+                <span class="pointer-events-none absolute top-full left-1/2 mt-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 dark:bg-gray-700">Tooltip on bottom</span>
+              </div>
+              <!-- Left -->
+              <div class="relative inline-flex group">
+                <button class="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">Left</button>
+                <span class="pointer-events-none absolute right-full top-1/2 mr-2 -translate-y-1/2 whitespace-nowrap rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 dark:bg-gray-700">Tooltip on left</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: Tooltip Colors -->
+        <section id="sec3" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">Tooltip Colors</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Dark, light (bordered), blue, and red color variants.</p></div>
+              <button onclick="openSourceDrawer('sec3','Tooltip Colors')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div class="flex flex-wrap gap-8">
+              <!-- Dark -->
+              <div class="relative inline-flex group">
+                <button class="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">Dark</button>
+                <span class="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100">Dark tooltip</span>
+              </div>
+              <!-- Light -->
+              <div class="relative inline-flex group">
+                <button class="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">Light</button>
+                <span class="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-800 shadow-md opacity-0 transition-opacity group-hover:opacity-100 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">Light tooltip</span>
+              </div>
+              <!-- Blue -->
+              <div class="relative inline-flex group">
+                <button class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">Blue</button>
+                <span class="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100">Blue tooltip</span>
+              </div>
+              <!-- Red -->
+              <div class="relative inline-flex group">
+                <button class="rounded-xl border border-red-200 bg-red-50 px-4 py-2 text-sm font-medium text-red-700 hover:bg-red-100 dark:border-red-900/50 dark:bg-red-900/20 dark:text-red-400">Warning</button>
+                <span class="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-red-600 px-3 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100">Danger zone!</span>
+              </div>
+              <!-- Green -->
+              <div class="relative inline-flex group">
+                <button class="rounded-xl border border-green-200 bg-green-50 px-4 py-2 text-sm font-medium text-green-700 hover:bg-green-100 dark:border-green-900/50 dark:bg-green-900/20 dark:text-green-400">Success</button>
+                <span class="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-green-600 px-3 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100">Action succeeded</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- SECTION 4: Tooltip with Arrow -->
+        <section id="sec4" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">Tooltip with Arrow</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">CSS <code class="text-xs bg-gray-100 dark:bg-gray-700 px-1 rounded">::after</code> triangle arrows pointing toward the trigger element.</p></div>
+              <button onclick="openSourceDrawer('sec4','Tooltip with Arrow')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div class="flex flex-wrap items-center gap-12 py-4">
+              <!-- Top arrow -->
+              <div class="relative inline-flex group">
+                <button class="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">Hover me ↑</button>
+                <span class="tooltip-arrow-top pointer-events-none absolute bottom-full left-1/2 mb-3 -translate-x-1/2 whitespace-nowrap rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 dark:bg-gray-700">Arrow above</span>
+              </div>
+              <!-- Bottom arrow -->
+              <div class="relative inline-flex group">
+                <button class="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">Hover me ↓</button>
+                <span class="tooltip-arrow-bottom pointer-events-none absolute top-full left-1/2 mt-3 -translate-x-1/2 whitespace-nowrap rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 dark:bg-gray-700">Arrow below</span>
+              </div>
+              <!-- Right arrow (tooltip is to the right) -->
+              <div class="relative inline-flex group">
+                <button class="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">Hover me →</button>
+                <span class="tooltip-arrow-right pointer-events-none absolute left-full top-1/2 ml-3 -translate-y-1/2 whitespace-nowrap rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 dark:bg-gray-700">Arrow right</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 5: Rich Tooltip -->
+        <section id="sec5" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">Rich Tooltip</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Wider multi-line tooltip with icon, title, and description text.</p></div>
+              <button onclick="openSourceDrawer('sec5','Rich Tooltip')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div class="flex flex-wrap gap-8 py-4">
+              <!-- Rich info tooltip -->
+              <div class="relative inline-flex group">
+                <button class="flex h-8 w-8 items-center justify-center rounded-full border border-blue-200 bg-blue-50 text-blue-600 hover:bg-blue-100 dark:border-blue-900/50 dark:bg-blue-900/20 dark:text-blue-400">
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </button>
+                <div class="pointer-events-none absolute bottom-full left-1/2 mb-3 -translate-x-1/2 w-64 rounded-xl border border-gray-200 bg-white p-3 shadow-xl opacity-0 transition-opacity group-hover:opacity-100 dark:border-gray-700 dark:bg-gray-800">
+                  <div class="flex items-start gap-2">
+                    <span class="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900/40">
+                      <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </span>
+                    <div>
+                      <p class="text-xs font-semibold text-gray-900 dark:text-white">Shared workspace</p>
+                      <p class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">All team members can view and edit files in this folder. Changes sync in real time.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Rich warning tooltip -->
+              <div class="relative inline-flex group">
+                <button class="flex h-8 w-8 items-center justify-center rounded-full border border-amber-200 bg-amber-50 text-amber-600 hover:bg-amber-100 dark:border-amber-900/50 dark:bg-amber-900/20 dark:text-amber-400">
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                </button>
+                <div class="pointer-events-none absolute bottom-full left-1/2 mb-3 -translate-x-1/2 w-64 rounded-xl border border-amber-200 bg-white p-3 shadow-xl opacity-0 transition-opacity group-hover:opacity-100 dark:border-amber-900/50 dark:bg-gray-800">
+                  <div class="flex items-start gap-2">
+                    <span class="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-600 dark:bg-amber-900/40">
+                      <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                    </span>
+                    <div>
+                      <p class="text-xs font-semibold text-gray-900 dark:text-white">Quota warning</p>
+                      <p class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">You are using 89% of your storage quota. Upgrade your plan to avoid service interruption.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 6: Tooltip on Different Elements -->
+        <section id="sec6" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">Tooltip on Different Elements</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Tooltips applied to text links, icon buttons, badges, and code spans.</p></div>
+              <button onclick="openSourceDrawer('sec6','Tooltip Elements')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div class="flex flex-wrap items-center gap-8 py-2">
+              <!-- Text link -->
+              <div class="relative inline-flex group">
+                <a href="#" class="text-sm text-blue-600 underline hover:text-blue-800 dark:text-blue-400">Learn more</a>
+                <span class="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 dark:bg-gray-700">Opens docs in new tab</span>
+              </div>
+              <!-- Icon button -->
+              <div class="relative inline-flex group">
+                <button class="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-100 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700">
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                </button>
+                <span class="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 dark:bg-gray-700">Upload file</span>
+              </div>
+              <!-- Badge -->
+              <div class="relative inline-flex group">
+                <span class="inline-flex cursor-default items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-700 dark:bg-green-900/40 dark:text-green-300">Active</span>
+                <span class="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 dark:bg-gray-700">Last seen 2 minutes ago</span>
+              </div>
+              <!-- Code span -->
+              <div class="relative inline-flex group">
+                <code class="cursor-default rounded bg-gray-100 px-2 py-0.5 text-xs font-mono text-gray-800 dark:bg-gray-800 dark:text-gray-300">API_KEY</code>
+                <span class="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 dark:bg-gray-700">Set in environment variables</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- SECTION 7: Delayed Tooltip -->
+        <section id="sec7" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">Delayed Tooltip</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">CSS <code class="text-xs bg-gray-100 dark:bg-gray-700 px-1 rounded">transition-delay</code> makes the tooltip appear after a pause, reducing visual noise on rapid hovers.</p></div>
+              <button onclick="openSourceDrawer('sec7','Delayed Tooltip')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div class="flex flex-wrap gap-8 py-4">
+              <!-- Normal (instant) -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="relative inline-flex group">
+                  <button class="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">Normal (instant)</button>
+                  <span class="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 dark:bg-gray-700">Appears immediately</span>
+                </div>
+                <span class="text-xs text-gray-400 dark:text-gray-500">transition-opacity (0ms delay)</span>
+              </div>
+              <!-- 300ms delay -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="relative inline-flex group">
+                  <button class="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">Delayed (300ms)</button>
+                  <span class="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity delay-300 group-hover:opacity-100 dark:bg-gray-700">Appears after 300ms</span>
+                </div>
+                <span class="text-xs text-gray-400 dark:text-gray-500">transition-opacity delay-300 (300ms)</span>
+              </div>
+              <!-- 600ms delay -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="relative inline-flex group">
+                  <button class="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">Slow (600ms)</button>
+                  <span class="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100 dark:bg-gray-700" style="transition: opacity .2s ease .6s">Appears after 600ms</span>
+                </div>
+                <span class="text-xs text-gray-400 dark:text-gray-500">inline style: transition-delay: 600ms</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 8: Long Content & JS-Controlled -->
+        <section id="sec8" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">Long Content &amp; Programmatic Tooltips</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Wrapping tooltip with <code class="text-xs bg-gray-100 dark:bg-gray-700 px-1 rounded">max-w-xs</code>, plus JS-driven tooltip positioning for dynamic use cases.</p></div>
+              <button onclick="openSourceDrawer('sec8','Long Content')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div class="flex flex-wrap gap-10 py-4">
+              <!-- Long content CSS tooltip -->
+              <div class="flex flex-col items-start gap-3">
+                <p class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">CSS — Wrapping text</p>
+                <div class="relative inline-flex group">
+                  <button class="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">Long description</button>
+                  <span class="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 max-w-xs rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 dark:bg-gray-700" style="width:220px;white-space:normal">This tooltip contains a longer piece of text that wraps onto multiple lines to provide detailed contextual help.</span>
+                </div>
+              </div>
+              <!-- JS-programmatic tooltips -->
+              <div class="flex flex-col items-start gap-3">
+                <p class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">JS — Programmatic control</p>
+                <div class="flex flex-wrap gap-3">
+                  <button data-tip="Programmatic tooltip — top" data-tip-pos="top"
+                    class="js-tip-trigger rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">
+                    Hover (top)
+                  </button>
+                  <button data-tip="Positioned to the right using JS" data-tip-pos="right"
+                    class="js-tip-trigger rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">
+                    Hover (right)
+                  </button>
+                  <button data-tip="Below the button — JS-placed" data-tip-pos="bottom"
+                    class="js-tip-trigger rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">
+                    Hover (bottom)
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
       </div>
     </main>
   </div>
 </div>
-<script src="common-loader.js"></script>
+
+
+<!-- SOURCE DRAWER -->
+<div id="source-drawer" class="fixed inset-x-0 bottom-0 z-50 hidden">
+  <div class="fixed inset-0 bg-black/30" onclick="closeSourceDrawer()"></div>
+  <div class="relative bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 rounded-t-2xl shadow-2xl max-h-[65vh] flex flex-col mx-auto" style="max-width:720px;border-left:1px solid #e5e7eb;border-right:1px solid #e5e7eb;">
+    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-gray-800 flex-shrink-0">
+      <span id="drawer-title" class="text-sm font-semibold text-gray-900 dark:text-white">Source</span>
+      <div class="flex gap-2">
+        <button onclick="copyDrawerCode()" class="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700">Copy</button>
+        <button onclick="closeSourceDrawer()" class="rounded-lg border border-gray-200 dark:border-gray-700 p-1.5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+    </div>
+    <div class="overflow-auto flex-1 p-5"><pre id="drawer-code" class="text-xs leading-relaxed text-gray-800 dark:text-gray-200 whitespace-pre-wrap font-mono"></pre></div>
+  </div>
+</div>
+<div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-2 pointer-events-none"></div>
+
 <script src="common-sidebar.js"></script>
 <script src="common-header.js"></script>
 <script src="app-shell.js"></script>
+<script>
+const SOURCE_SNIPPETS={
+  sec1:`<!-- CSS-only tooltip using Tailwind group + group-hover -->
+<div class="relative inline-flex group">
+  <button class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white">
+    Save changes
+  </button>
+  <span class="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2
+    whitespace-nowrap rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-medium text-white
+    opacity-0 transition-opacity group-hover:opacity-100">
+    Ctrl+S to save quickly
+  </span>
+</div>`,
+  sec2:`<!-- Top: bottom-full + left-1/2 + -translate-x-1/2 + mb-2 -->
+<span class="... absolute bottom-full left-1/2 mb-2 -translate-x-1/2 ...">Tooltip on top</span>
+
+<!-- Right: left-full + top-1/2 + -translate-y-1/2 + ml-2 -->
+<span class="... absolute left-full top-1/2 ml-2 -translate-y-1/2 ...">Tooltip on right</span>
+
+<!-- Bottom: top-full + left-1/2 + -translate-x-1/2 + mt-2 -->
+<span class="... absolute top-full left-1/2 mt-2 -translate-x-1/2 ...">Tooltip on bottom</span>
+
+<!-- Left: right-full + top-1/2 + -translate-y-1/2 + mr-2 -->
+<span class="... absolute right-full top-1/2 mr-2 -translate-y-1/2 ...">Tooltip on left</span>`,
+  sec3:`<!-- Dark -->  <span class="... bg-gray-900 text-white ...">Dark tooltip</span>
+<!-- Light --> <span class="... border border-gray-200 bg-white text-gray-800 shadow-md ...">Light tooltip</span>
+<!-- Blue -->  <span class="... bg-blue-600 text-white ...">Blue tooltip</span>
+<!-- Red -->   <span class="... bg-red-600 text-white ...">Danger zone!</span>`,
+  sec4:`<!-- Arrow pointing down (toward trigger above) -->
+.tooltip-arrow-top::after {
+  content: '';
+  position: absolute;
+  top: 100%;         /* below the tooltip box */
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #111827;  /* matches bg-gray-900 */
+}
+
+<span class="tooltip-arrow-top ... absolute bottom-full mb-3 ...">Arrow above</span>`,
+  sec5:`<!-- Rich multi-line tooltip with icon + title + description -->
+<div class="pointer-events-none absolute bottom-full mb-3 w-64 rounded-xl
+  border border-gray-200 bg-white p-3 shadow-xl
+  opacity-0 transition-opacity group-hover:opacity-100">
+  <div class="flex items-start gap-2">
+    <span class="flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 text-blue-600">
+      <!-- icon SVG -->
+    </span>
+    <div>
+      <p class="text-xs font-semibold text-gray-900">Shared workspace</p>
+      <p class="mt-0.5 text-xs text-gray-500">All team members can view and edit files...</p>
+    </div>
+  </div>
+</div>`,
+  sec6:`<!-- Tooltip on a text link -->
+<div class="relative inline-flex group">
+  <a href="#" class="text-sm text-blue-600 underline">Learn more</a>
+  <span class="... group-hover:opacity-100 ...">Opens docs in new tab</span>
+</div>
+
+<!-- Tooltip on a badge -->
+<div class="relative inline-flex group">
+  <span class="rounded-full bg-green-100 px-2.5 py-0.5 text-xs text-green-700">Active</span>
+  <span class="... group-hover:opacity-100 ...">Last seen 2 minutes ago</span>
+</div>`,
+  sec7:`<!-- Normal (instant): just transition-opacity, no delay -->
+<span class="... opacity-0 transition-opacity group-hover:opacity-100 ...">Appears immediately</span>
+
+<!-- 300ms delay using Tailwind delay-300 utility -->
+<span class="... opacity-0 transition-opacity delay-300 group-hover:opacity-100 ...">Appears after 300ms</span>
+
+<!-- 600ms delay using inline style -->
+<span class="... opacity-0 group-hover:opacity-100 ..."
+  style="transition: opacity .2s ease .6s">Appears after 600ms</span>`,
+  sec8:`<!-- Wrapping long content (max-w-xs) -->
+<span class="... max-w-xs rounded-lg bg-gray-900 px-3 py-1.5 text-xs text-white
+  opacity-0 transition-opacity group-hover:opacity-100"
+  style="width:220px; white-space:normal">
+  This tooltip contains a longer piece of text...
+</span>
+
+<!-- JS-programmatic approach using data attributes -->
+<button data-tip="Tooltip text" data-tip-pos="top" class="js-tip-trigger ...">
+  Hover me
+</button>
+
+<script>
+// Create a single shared tooltip element
+const tipEl = document.createElement('div');
+tipEl.className = 'js-tooltip';
+document.body.appendChild(tipEl);
+
+document.querySelectorAll('.js-tip-trigger').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    tipEl.textContent = el.dataset.tip;
+    const r = el.getBoundingClientRect();
+    const pos = el.dataset.tipPos || 'top';
+    if (pos === 'top') {
+      tipEl.style.left = (r.left + r.width/2 - tipEl.offsetWidth/2 + scrollX) + 'px';
+      tipEl.style.top  = (r.top - tipEl.offsetHeight - 8 + scrollY) + 'px';
+    }
+    tipEl.classList.add('visible');
+  });
+  el.addEventListener('mouseleave', () => tipEl.classList.remove('visible'));
+});
+<\/script>`
+};
+
+function openSourceDrawer(id,title){document.getElementById('drawer-title').textContent=title+' — Source';document.getElementById('drawer-code').textContent=SOURCE_SNIPPETS[id]||'';document.getElementById('source-drawer').classList.remove('hidden');document.getElementById('source-drawer').dataset.currentId=id;document.body.style.overflow='hidden';}
+function closeSourceDrawer(){document.getElementById('source-drawer').classList.add('hidden');document.body.style.overflow='';}
+function copyDrawerCode(){navigator.clipboard.writeText(SOURCE_SNIPPETS[document.getElementById('source-drawer').dataset.currentId]||'').then(()=>showToast('Copied!'));}
+function showToast(msg){const c=document.getElementById('toast-container');const t=document.createElement('div');t.className='pointer-events-auto flex items-center gap-2 rounded-xl border border-green-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 shadow-lg dark:border-green-800 dark:bg-gray-900 dark:text-white';t.style.animation='toastIn .2s ease';t.innerHTML='<span class="h-2 w-2 rounded-full bg-green-500 flex-shrink-0"></span>'+msg;c.appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(12px)';t.style.transition='all .2s';setTimeout(()=>t.remove(),200);},2500);}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSourceDrawer();});
+
+/* JS-programmatic tooltip engine */
+document.addEventListener('DOMContentLoaded',()=>{
+  const tipEl=document.createElement('div');
+  tipEl.className='js-tooltip';
+  document.body.appendChild(tipEl);
+
+  document.querySelectorAll('.js-tip-trigger').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{
+      tipEl.textContent=el.dataset.tip||'';
+      tipEl.classList.add('visible');
+      const r=el.getBoundingClientRect();
+      const pos=el.dataset.tipPos||'top';
+      const gap=8;
+      requestAnimationFrame(()=>{
+        const tw=tipEl.offsetWidth,th=tipEl.offsetHeight;
+        let left,top;
+        if(pos==='top'){left=r.left+r.width/2-tw/2+window.scrollX;top=r.top-th-gap+window.scrollY;}
+        else if(pos==='bottom'){left=r.left+r.width/2-tw/2+window.scrollX;top=r.bottom+gap+window.scrollY;}
+        else if(pos==='right'){left=r.right+gap+window.scrollX;top=r.top+r.height/2-th/2+window.scrollY;}
+        else{left=r.left-tw-gap+window.scrollX;top=r.top+r.height/2-th/2+window.scrollY;}
+        tipEl.style.left=left+'px';tipEl.style.top=top+'px';
+      });
+    });
+    el.addEventListener('mouseleave',()=>tipEl.classList.remove('visible'));
+  });
+});
+</script>
 </body>
 </html>

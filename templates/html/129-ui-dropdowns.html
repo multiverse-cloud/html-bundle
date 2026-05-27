@@ -1,22 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#465fff" />
-  <meta name="description" content="Dropdown menus, filter menus, profile menus, and contextual actions." />
-  <title>Dropdowns - mtverse</title>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dropdowns &amp; Select Menus — mtverse</title>
   <style>
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-    .animate-slideDown { animation: slideDown 0.2s ease-out; }
+    .no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+    @keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .animate-spin-custom{animation:spin 1s linear infinite}
+    @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+    .shimmer{background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
+    .dark .shimmer{background:linear-gradient(90deg,#1f2937 25%,#374151 50%,#1f2937 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
   </style>
   <link rel="stylesheet" href="tailwind-production.css">
   <link rel="stylesheet" href="pro-styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
 <div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
@@ -26,63 +23,729 @@
     <div id="header-container"></div>
     <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
       <div class="mx-auto w-full max-w-screen-2xl">
-        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <div class="mb-2 flex items-center gap-2 text-sm text-gray-500">
-              <span>mtverse</span><span>/</span><span>ui-elements</span><span>/</span>
-              <span class="font-medium text-gray-800 dark:text-white/90">Dropdowns</span>
+
+
+        <!-- PAGE HEADER -->
+        <div class="mb-8">
+          <nav class="mb-3 flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
+            <a href="#" class="hover:text-blue-600">mtverse</a>
+            <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <a href="#" class="hover:text-blue-600">UI Elements</a>
+            <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <span class="text-gray-800 dark:text-gray-100">Dropdowns</span>
+          </nav>
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Dropdowns &amp; Select Menus</h1>
+          <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">24 dropdown variants — menus, selects, search, mega-dropdowns, and action menus.</p>
+          <div class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div class="rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-white/[0.03]">
+              <div class="text-2xl font-bold text-gray-900 dark:text-white">24</div>
+              <div class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">Variants</div>
             </div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white/90">Dropdowns</h1>
-            <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Dropdown menus, filter menus, profile menus, and contextual actions.</p>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <button type="button" class="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:bg-white/[0.03] dark:text-gray-300">Preview</button>
-            <button type="button" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">Use Component</button>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Components</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">24</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">States</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">96</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Responsive</p><p class="mt-2 text-3xl font-bold text-green-600">Ready</p>
+            <div class="rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-white/[0.03]">
+              <div class="text-2xl font-bold text-gray-900 dark:text-white">10</div>
+              <div class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">Sections</div>
+            </div>
+            <div class="rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-white/[0.03]">
+              <div class="text-2xl font-bold text-green-600">✓</div>
+              <div class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">Interactive</div>
+            </div>
+            <div class="rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-white/[0.03]">
+              <div class="text-2xl font-bold text-green-600">✓</div>
+              <div class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">Responsive</div>
+            </div>
           </div>
         </div>
-        <div class="mt-5 grid grid-cols-1 gap-5 xl:grid-cols-2">
 
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Dropdown menu states</h2>
-            <div class="mt-5"><div class="grid gap-4 md:grid-cols-3"><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><button type="button" class="w-full rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white">Profile</button><div class="mt-3 rounded-xl border border-gray-200 bg-white p-2 shadow-sm dark:border-gray-800 dark:bg-gray-900"><button class="block w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-gray-50 dark:hover:bg-white/[0.04]">View</button><button class="block w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-gray-50 dark:hover:bg-white/[0.04]">Edit</button><button class="block w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-gray-50 dark:hover:bg-white/[0.04]">Archive</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><button type="button" class="w-full rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white">Filter</button><div class="mt-3 rounded-xl border border-gray-200 bg-white p-2 shadow-sm dark:border-gray-800 dark:bg-gray-900"><button class="block w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-gray-50 dark:hover:bg-white/[0.04]">View</button><button class="block w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-gray-50 dark:hover:bg-white/[0.04]">Edit</button><button class="block w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-gray-50 dark:hover:bg-white/[0.04]">Archive</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><button type="button" class="w-full rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white">Actions</button><div class="mt-3 rounded-xl border border-gray-200 bg-white p-2 shadow-sm dark:border-gray-800 dark:bg-gray-900"><button class="block w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-gray-50 dark:hover:bg-white/[0.04]">View</button><button class="block w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-gray-50 dark:hover:bg-white/[0.04]">Edit</button><button class="block w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-gray-50 dark:hover:bg-white/[0.04]">Archive</button></div></div></div></div>
-          </section>
 
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] xl:col-span-2">
-            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <!-- SECTION 1: Basic Dropdown -->
+        <section id="sec1" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
               <div>
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Dropdowns production states</h2>
-                <p class="mt-1 text-sm text-gray-500">Real dashboard states with actions, accessibility, responsive layout, and clean spacing.</p>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Basic Dropdown</h2>
+                <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Simple toggle dropdown with outside-click dismiss and keyboard support.</p>
               </div>
-              <div class="inline-flex rounded-xl bg-gray-100 p-1 dark:bg-white/[0.04]">
-                <button class="rounded-lg bg-white px-4 py-2 text-sm font-bold text-blue-600 shadow-sm dark:bg-gray-900">Preview</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">Code</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">States</button>
+              <button onclick="openSourceDrawer('sec1','Basic Dropdown')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div class="flex flex-wrap gap-6">
+              <div class="relative inline-block">
+                <button onclick="toggleDropdown('dd-basic1',event)" class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700">
+                  Options
+                  <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </button>
+                <div id="dd-basic1" data-dropdown class="hidden absolute z-10 mt-1 w-48 rounded-xl border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                  <div class="py-1">
+                    <button class="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Home</button>
+                    <button class="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Profile</button>
+                    <button class="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Settings</button>
+                    <button class="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Help</button>
+                    <button class="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Sign out</button>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="mt-5 grid gap-4 md:grid-cols-3">
-              <div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Default</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Hover / active</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Loading / empty</p><span class="h-2.5 w-2.5 rounded-full bg-yellow-400"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: Dropdown with Icons -->
+        <section id="sec2" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Dropdown with Icons</h2>
+                <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Each menu item includes a contextual icon for faster visual scanning.</p>
+              </div>
+              <button onclick="openSourceDrawer('sec2','Dropdown with Icons')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
             </div>
-          </section>
-        </div>
-      </div>
+            <div class="flex flex-wrap gap-6">
+              <div class="relative inline-block">
+                <button onclick="toggleDropdown('dd-icons1',event)" class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700">
+                  My Account
+                  <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </button>
+                <div id="dd-icons1" data-dropdown class="hidden absolute z-10 mt-1 w-52 rounded-xl border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                  <div class="py-1">
+                    <button class="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">
+                      <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                      Home
+                    </button>
+                    <button class="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">
+                      <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                      Profile
+                    </button>
+                    <button class="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">
+                      <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                      Settings
+                    </button>
+                    <button class="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">
+                      <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                      Help
+                    </button>
+                    <button class="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20">
+                      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                      Sign out
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- SECTION 3: Dropdown with Dividers -->
+        <section id="sec3" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Dropdown with Dividers</h2>
+                <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Grouped items with horizontal rule dividers for visual separation of action groups.</p>
+              </div>
+              <button onclick="openSourceDrawer('sec3','Dropdown with Dividers')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div class="relative inline-block">
+              <button onclick="toggleDropdown('dd-dividers',event)" class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700">
+                Account
+                <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </button>
+              <div id="dd-dividers" data-dropdown class="hidden absolute z-10 mt-1 w-52 rounded-xl border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                <div class="py-1">
+                  <button class="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">View Profile</button>
+                  <button class="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Edit Profile</button>
+                </div>
+                <hr class="my-1 border-gray-100 dark:border-gray-700">
+                <div class="py-1">
+                  <button class="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Settings</button>
+                  <button class="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Notifications</button>
+                </div>
+                <hr class="my-1 border-gray-100 dark:border-gray-700">
+                <div class="py-1">
+                  <button class="flex w-full items-center px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20">Sign out</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 4: Dropdown with Checkboxes -->
+        <section id="sec4" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Dropdown with Checkboxes</h2>
+                <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Multi-select filter dropdown with live count reflected in the trigger button.</p>
+              </div>
+              <button onclick="openSourceDrawer('sec4','Dropdown with Checkboxes')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div class="relative inline-block">
+              <button id="filter-btn" onclick="toggleDropdown('filter-menu',event)" class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700">
+                <span>Filter by Status</span>
+                <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </button>
+              <div id="filter-menu" data-dropdown class="hidden absolute z-10 mt-1 w-52 rounded-xl border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                <div class="py-1">
+                  <label class="flex cursor-pointer items-center gap-3 px-4 py-2.5 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                    <input type="checkbox" onchange="updateFilterCount()" class="h-4 w-4 rounded border-gray-300 text-blue-600 dark:border-gray-600">
+                    <span class="text-sm text-gray-700 dark:text-gray-300">Active</span>
+                  </label>
+                  <label class="flex cursor-pointer items-center gap-3 px-4 py-2.5 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                    <input type="checkbox" onchange="updateFilterCount()" class="h-4 w-4 rounded border-gray-300 text-blue-600 dark:border-gray-600">
+                    <span class="text-sm text-gray-700 dark:text-gray-300">Inactive</span>
+                  </label>
+                  <label class="flex cursor-pointer items-center gap-3 px-4 py-2.5 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                    <input type="checkbox" onchange="updateFilterCount()" class="h-4 w-4 rounded border-gray-300 text-blue-600 dark:border-gray-600">
+                    <span class="text-sm text-gray-700 dark:text-gray-300">Pending</span>
+                  </label>
+                  <label class="flex cursor-pointer items-center gap-3 px-4 py-2.5 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                    <input type="checkbox" onchange="updateFilterCount()" class="h-4 w-4 rounded border-gray-300 text-blue-600 dark:border-gray-600">
+                    <span class="text-sm text-gray-700 dark:text-gray-300">Archived</span>
+                  </label>
+                  <label class="flex cursor-pointer items-center gap-3 px-4 py-2.5 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                    <input type="checkbox" onchange="updateFilterCount()" class="h-4 w-4 rounded border-gray-300 text-blue-600 dark:border-gray-600">
+                    <span class="text-sm text-gray-700 dark:text-gray-300">Draft</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- SECTION 5: Dropdown with Search -->
+        <section id="sec5" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Dropdown with Search</h2>
+                <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Filterable list dropdown — type to narrow options in real time.</p>
+              </div>
+              <button onclick="openSourceDrawer('sec5','Dropdown with Search')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div class="relative inline-block">
+              <button onclick="toggleDropdown('dd-search',event)" class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700">
+                <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/></svg>
+                Select Country
+                <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </button>
+              <div id="dd-search" data-dropdown class="hidden absolute z-10 mt-1 w-60 rounded-xl border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                <div class="border-b border-gray-100 dark:border-gray-700">
+                  <input id="country-search" type="text" placeholder="Search countries..." class="w-full bg-transparent px-4 py-2.5 text-sm text-gray-700 placeholder-gray-400 outline-none dark:text-gray-300 dark:placeholder-gray-500" onclick="event.stopPropagation()">
+                </div>
+                <ul id="country-list" class="max-h-52 overflow-y-auto py-1 no-scrollbar">
+                  <li><button class="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">🇺🇸 United States</button></li>
+                  <li><button class="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">🇬🇧 United Kingdom</button></li>
+                  <li><button class="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">🇨🇦 Canada</button></li>
+                  <li><button class="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">🇩🇪 Germany</button></li>
+                  <li><button class="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">🇫🇷 France</button></li>
+                  <li><button class="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">🇯🇵 Japan</button></li>
+                  <li><button class="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">🇦🇺 Australia</button></li>
+                  <li><button class="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">🇧🇷 Brazil</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 6: Dropdown Positions -->
+        <section id="sec6" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Dropdown Positions</h2>
+                <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Four placement variants: bottom-left, bottom-right, top-left, top-right.</p>
+              </div>
+              <button onclick="openSourceDrawer('sec6','Dropdown Positions')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div class="flex flex-wrap gap-4 pt-4 pb-16">
+              <div class="relative inline-block">
+                <button onclick="toggleDropdown('dd-bl',event)" class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">Bottom Left <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button>
+                <div id="dd-bl" data-dropdown class="hidden absolute z-10 top-full left-0 mt-1 w-44 rounded-xl border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                  <div class="py-1">
+                    <button class="flex w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Item One</button>
+                    <button class="flex w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Item Two</button>
+                    <button class="flex w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Item Three</button>
+                  </div>
+                </div>
+              </div>
+              <div class="relative inline-block">
+                <button onclick="toggleDropdown('dd-br',event)" class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">Bottom Right <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button>
+                <div id="dd-br" data-dropdown class="hidden absolute z-10 top-full right-0 mt-1 w-44 rounded-xl border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                  <div class="py-1">
+                    <button class="flex w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Item One</button>
+                    <button class="flex w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Item Two</button>
+                    <button class="flex w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Item Three</button>
+                  </div>
+                </div>
+              </div>
+              <div class="relative inline-block">
+                <button onclick="toggleDropdown('dd-tl',event)" class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">Top Left <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg></button>
+                <div id="dd-tl" data-dropdown class="hidden absolute z-10 bottom-full left-0 mb-1 w-44 rounded-xl border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                  <div class="py-1">
+                    <button class="flex w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Item One</button>
+                    <button class="flex w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Item Two</button>
+                    <button class="flex w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Item Three</button>
+                  </div>
+                </div>
+              </div>
+              <div class="relative inline-block">
+                <button onclick="toggleDropdown('dd-tr',event)" class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">Top Right <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg></button>
+                <div id="dd-tr" data-dropdown class="hidden absolute z-10 bottom-full right-0 mb-1 w-44 rounded-xl border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                  <div class="py-1">
+                    <button class="flex w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Item One</button>
+                    <button class="flex w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Item Two</button>
+                    <button class="flex w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Item Three</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- SECTION 7: Dropdown Sizes -->
+        <section id="sec7" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Dropdown Sizes</h2>
+                <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Small, medium, and large trigger buttons each opening a proportionally sized menu.</p>
+              </div>
+              <button onclick="openSourceDrawer('sec7','Dropdown Sizes')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div class="flex flex-wrap items-end gap-4">
+              <!-- Small -->
+              <div class="relative inline-block">
+                <button onclick="toggleDropdown('dd-sm',event)" class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">
+                  Small <svg class="h-3 w-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </button>
+                <div id="dd-sm" data-dropdown class="hidden absolute z-10 mt-1 w-36 rounded-xl border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                  <div class="py-0.5">
+                    <button class="flex w-full px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Option A</button>
+                    <button class="flex w-full px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Option B</button>
+                    <button class="flex w-full px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Option C</button>
+                  </div>
+                </div>
+              </div>
+              <!-- Medium -->
+              <div class="relative inline-block">
+                <button onclick="toggleDropdown('dd-md',event)" class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">
+                  Medium <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </button>
+                <div id="dd-md" data-dropdown class="hidden absolute z-10 mt-1 w-48 rounded-xl border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                  <div class="py-1">
+                    <button class="flex w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Option A</button>
+                    <button class="flex w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Option B</button>
+                    <button class="flex w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Option C</button>
+                  </div>
+                </div>
+              </div>
+              <!-- Large -->
+              <div class="relative inline-block">
+                <button onclick="toggleDropdown('dd-lg',event)" class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-5 py-2.5 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200">
+                  Large <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </button>
+                <div id="dd-lg" data-dropdown class="hidden absolute z-10 mt-1 w-56 rounded-xl border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                  <div class="py-1.5">
+                    <button class="flex w-full px-5 py-3 text-base text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Option A</button>
+                    <button class="flex w-full px-5 py-3 text-base text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Option B</button>
+                    <button class="flex w-full px-5 py-3 text-base text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Option C</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 8: Mega Dropdown -->
+        <section id="sec8" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Mega Dropdown</h2>
+                <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Wide multi-column panel for navigation-heavy use cases like product suites.</p>
+              </div>
+              <button onclick="openSourceDrawer('sec8','Mega Dropdown')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div class="relative inline-block">
+              <button onclick="toggleDropdown('dd-mega',event)" class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700">
+                Products
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </button>
+              <div id="dd-mega" data-dropdown class="hidden absolute z-10 mt-2 rounded-2xl border border-gray-200 bg-white shadow-xl dark:border-gray-700 dark:bg-gray-800" style="min-width:620px;left:0">
+                <div class="grid grid-cols-3 gap-0 p-4">
+                  <div class="pr-4 border-r border-gray-100 dark:border-gray-700">
+                    <p class="mb-2 px-2 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Analytics</p>
+                    <button class="flex w-full items-start gap-3 rounded-xl p-2 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                      <span class="mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-900/40"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg></span>
+                      <div class="text-left"><div class="text-sm font-medium text-gray-800 dark:text-gray-200">Dashboard</div><div class="text-xs text-gray-500 dark:text-gray-400">Overview metrics</div></div>
+                    </button>
+                    <button class="flex w-full items-start gap-3 rounded-xl p-2 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                      <span class="mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-purple-100 text-purple-600 dark:bg-purple-900/40"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></span>
+                      <div class="text-left"><div class="text-sm font-medium text-gray-800 dark:text-gray-200">Reports</div><div class="text-xs text-gray-500 dark:text-gray-400">Scheduled &amp; custom</div></div>
+                    </button>
+                    <button class="flex w-full items-start gap-3 rounded-xl p-2 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                      <span class="mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-600 dark:bg-green-900/40"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg></span>
+                      <div class="text-left"><div class="text-sm font-medium text-gray-800 dark:text-gray-200">Metrics</div><div class="text-xs text-gray-500 dark:text-gray-400">KPI tracking</div></div>
+                    </button>
+                    <button class="flex w-full items-start gap-3 rounded-xl p-2 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                      <span class="mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-amber-100 text-amber-600 dark:bg-amber-900/40"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg></span>
+                      <div class="text-left"><div class="text-sm font-medium text-gray-800 dark:text-gray-200">Exports</div><div class="text-xs text-gray-500 dark:text-gray-400">CSV &amp; PDF exports</div></div>
+                    </button>
+                  </div>
+                  <div class="px-4 border-r border-gray-100 dark:border-gray-700">
+                    <p class="mb-2 px-2 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Commerce</p>
+                    <button class="flex w-full items-start gap-3 rounded-xl p-2 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                      <span class="mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-indigo-100 text-indigo-600 dark:bg-indigo-900/40"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg></span>
+                      <div class="text-left"><div class="text-sm font-medium text-gray-800 dark:text-gray-200">Orders</div><div class="text-xs text-gray-500 dark:text-gray-400">Order management</div></div>
+                    </button>
+                    <button class="flex w-full items-start gap-3 rounded-xl p-2 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                      <span class="mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-pink-100 text-pink-600 dark:bg-pink-900/40"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg></span>
+                      <div class="text-left"><div class="text-sm font-medium text-gray-800 dark:text-gray-200">Products</div><div class="text-xs text-gray-500 dark:text-gray-400">Catalog &amp; SKUs</div></div>
+                    </button>
+                    <button class="flex w-full items-start gap-3 rounded-xl p-2 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                      <span class="mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-teal-100 text-teal-600 dark:bg-teal-900/40"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg></span>
+                      <div class="text-left"><div class="text-sm font-medium text-gray-800 dark:text-gray-200">Customers</div><div class="text-xs text-gray-500 dark:text-gray-400">CRM &amp; segments</div></div>
+                    </button>
+                    <button class="flex w-full items-start gap-3 rounded-xl p-2 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                      <span class="mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-orange-100 text-orange-600 dark:bg-orange-900/40"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg></span>
+                      <div class="text-left"><div class="text-sm font-medium text-gray-800 dark:text-gray-200">Inventory</div><div class="text-xs text-gray-500 dark:text-gray-400">Stock levels</div></div>
+                    </button>
+                  </div>
+                  <div class="pl-4">
+                    <p class="mb-2 px-2 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Settings</p>
+                    <button class="flex w-full items-start gap-3 rounded-xl p-2 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                      <span class="mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-gray-100 text-gray-600 dark:bg-gray-700"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg></span>
+                      <div class="text-left"><div class="text-sm font-medium text-gray-800 dark:text-gray-200">General</div><div class="text-xs text-gray-500 dark:text-gray-400">Preferences</div></div>
+                    </button>
+                    <button class="flex w-full items-start gap-3 rounded-xl p-2 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                      <span class="mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-600 dark:bg-red-900/40"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg></span>
+                      <div class="text-left"><div class="text-sm font-medium text-gray-800 dark:text-gray-200">Security</div><div class="text-xs text-gray-500 dark:text-gray-400">2FA &amp; sessions</div></div>
+                    </button>
+                    <button class="flex w-full items-start gap-3 rounded-xl p-2 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                      <span class="mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-emerald-100 text-emerald-600 dark:bg-emerald-900/40"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg></span>
+                      <div class="text-left"><div class="text-sm font-medium text-gray-800 dark:text-gray-200">Billing</div><div class="text-xs text-gray-500 dark:text-gray-400">Plans &amp; invoices</div></div>
+                    </button>
+                    <button class="flex w-full items-start gap-3 rounded-xl p-2 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                      <span class="mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-violet-100 text-violet-600 dark:bg-violet-900/40"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg></span>
+                      <div class="text-left"><div class="text-sm font-medium text-gray-800 dark:text-gray-200">Integrations</div><div class="text-xs text-gray-500 dark:text-gray-400">Apps &amp; webhooks</div></div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- SECTION 9: User Menu -->
+        <section id="sec9" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">User Menu</h2>
+                <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Avatar + name trigger with a rich user-context menu including keyboard shortcut badge.</p>
+              </div>
+              <button onclick="openSourceDrawer('sec9','User Menu')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div class="relative inline-block">
+              <button onclick="toggleDropdown('dd-user',event)" class="inline-flex items-center gap-2.5 rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700">
+                <span class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white">JD</span>
+                <span>John Doe</span>
+                <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </button>
+              <div id="dd-user" data-dropdown class="hidden absolute z-10 mt-1 w-64 rounded-xl border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800" style="left:0">
+                <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+                  <p class="text-sm font-semibold text-gray-900 dark:text-white">John Doe</p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400">john.doe@company.com</p>
+                </div>
+                <div class="py-1">
+                  <button class="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">
+                    <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    Profile
+                  </button>
+                  <button class="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">
+                    <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    Account Settings
+                  </button>
+                  <button class="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">
+                    <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                    Billing
+                  </button>
+                  <button class="flex w-full items-center justify-between gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">
+                    <span class="flex items-center gap-3">
+                      <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z"/></svg>
+                      Keyboard shortcuts
+                    </span>
+                    <span class="rounded-md bg-gray-100 px-1.5 py-0.5 text-xs font-mono text-gray-600 dark:bg-gray-700 dark:text-gray-300">⌘K</span>
+                  </button>
+                </div>
+                <hr class="my-1 border-gray-100 dark:border-gray-700">
+                <div class="py-1">
+                  <button class="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                    Sign out
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 10: Action Menu -->
+        <section id="sec10" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Action Menu (Row Context)</h2>
+                <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Per-row ⋮ action menus — only one open at a time, closes on outside click.</p>
+              </div>
+              <button onclick="openSourceDrawer('sec10','Action Menu')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div class="divide-y divide-gray-100 rounded-xl border border-gray-200 dark:divide-gray-800 dark:border-gray-700">
+              <!-- Row 1 -->
+              <div class="flex items-center justify-between px-4 py-3">
+                <div class="flex items-center gap-3">
+                  <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-xs font-semibold text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">AL</div>
+                  <div>
+                    <p class="text-sm font-medium text-gray-800 dark:text-gray-200">Alice Johnson</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">alice@company.com</p>
+                  </div>
+                </div>
+                <div class="relative">
+                  <button onclick="toggleAction('action-menu-1',event)" class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-200">⋮</button>
+                  <div id="action-menu-1" data-action-menu class="hidden absolute z-10 right-0 mt-1 w-48 rounded-xl border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                    <div class="py-1">
+                      <button class="flex w-full items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50"><svg class="h-3.5 w-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>Edit</button>
+                      <button class="flex w-full items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50"><svg class="h-3.5 w-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>Duplicate</button>
+                      <button class="flex w-full items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50"><svg class="h-3.5 w-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>Archive</button>
+                      <hr class="my-1 border-gray-100 dark:border-gray-700">
+                      <button class="flex w-full items-center gap-2.5 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20"><svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Row 2 -->
+              <div class="flex items-center justify-between px-4 py-3">
+                <div class="flex items-center gap-3">
+                  <div class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center text-xs font-semibold text-green-700 dark:bg-green-900/40 dark:text-green-300">BK</div>
+                  <div>
+                    <p class="text-sm font-medium text-gray-800 dark:text-gray-200">Bob Kim</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">bob@company.com</p>
+                  </div>
+                </div>
+                <div class="relative">
+                  <button onclick="toggleAction('action-menu-2',event)" class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-200">⋮</button>
+                  <div id="action-menu-2" data-action-menu class="hidden absolute z-10 right-0 mt-1 w-48 rounded-xl border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                    <div class="py-1">
+                      <button class="flex w-full items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50"><svg class="h-3.5 w-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>Edit</button>
+                      <button class="flex w-full items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50"><svg class="h-3.5 w-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>Duplicate</button>
+                      <button class="flex w-full items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50"><svg class="h-3.5 w-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>Archive</button>
+                      <hr class="my-1 border-gray-100 dark:border-gray-700">
+                      <button class="flex w-full items-center gap-2.5 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20"><svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Row 3 -->
+              <div class="flex items-center justify-between px-4 py-3">
+                <div class="flex items-center gap-3">
+                  <div class="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center text-xs font-semibold text-purple-700 dark:bg-purple-900/40 dark:text-purple-300">CM</div>
+                  <div>
+                    <p class="text-sm font-medium text-gray-800 dark:text-gray-200">Carol Martinez</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">carol@company.com</p>
+                  </div>
+                </div>
+                <div class="relative">
+                  <button onclick="toggleAction('action-menu-3',event)" class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-200">⋮</button>
+                  <div id="action-menu-3" data-action-menu class="hidden absolute z-10 right-0 mt-1 w-48 rounded-xl border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                    <div class="py-1">
+                      <button class="flex w-full items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Edit</button>
+                      <button class="flex w-full items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Duplicate</button>
+                      <button class="flex w-full items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50">Archive</button>
+                      <hr class="my-1 border-gray-100 dark:border-gray-700">
+                      <button class="flex w-full items-center gap-2.5 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20">Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div><!-- /max-w -->
     </main>
   </div>
 </div>
-<script src="common-loader.js"></script>
+
+
+<!-- SOURCE DRAWER -->
+<div id="source-drawer" class="fixed inset-x-0 bottom-0 z-50 hidden">
+  <div class="fixed inset-0 bg-black/30" onclick="closeSourceDrawer()"></div>
+  <div class="relative bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 rounded-t-2xl shadow-2xl max-h-[65vh] flex flex-col mx-auto" style="max-width:720px;border-left:1px solid #e5e7eb;border-right:1px solid #e5e7eb;">
+    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-gray-800 flex-shrink-0">
+      <span id="drawer-title" class="text-sm font-semibold text-gray-900 dark:text-white">Source</span>
+      <div class="flex gap-2">
+        <button onclick="copyDrawerCode()" class="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700">Copy</button>
+        <button onclick="closeSourceDrawer()" class="rounded-lg border border-gray-200 dark:border-gray-700 p-1.5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+    </div>
+    <div class="overflow-auto flex-1 p-5"><pre id="drawer-code" class="text-xs leading-relaxed text-gray-800 dark:text-gray-200 whitespace-pre-wrap font-mono"></pre></div>
+  </div>
+</div>
+<div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-2 pointer-events-none"></div>
+
 <script src="common-sidebar.js"></script>
 <script src="common-header.js"></script>
 <script src="app-shell.js"></script>
+<script>
+const SOURCE_SNIPPETS={
+  sec1:`<div class="relative inline-block">
+  <button onclick="toggleDropdown('dd-basic1',event)"
+    class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50">
+    Options
+    <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+    </svg>
+  </button>
+  <div id="dd-basic1" data-dropdown class="hidden absolute z-10 mt-1 w-48 rounded-xl border border-gray-200 bg-white shadow-lg">
+    <div class="py-1">
+      <button class="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">Home</button>
+      <button class="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">Profile</button>
+      <button class="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">Settings</button>
+      <button class="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">Help</button>
+      <button class="flex w-full items-center px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">Sign out</button>
+    </div>
+  </div>
+</div>`,
+  sec2:`<div class="relative inline-block">
+  <button onclick="toggleDropdown('dd-icons1',event)" class="inline-flex items-center gap-2 rounded-xl border ...">
+    My Account <svg ...chevron... />
+  </button>
+  <div id="dd-icons1" data-dropdown class="hidden absolute z-10 mt-1 w-52 rounded-xl border bg-white shadow-lg">
+    <div class="py-1">
+      <button class="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
+        <svg ...home icon... /> Home
+      </button>
+      <!-- Repeat for Profile, Settings, Help, Sign out -->
+    </div>
+  </div>
+</div>`,
+  sec3:`<div id="dd-dividers" class="w-52 rounded-xl border bg-white shadow-lg">
+  <div class="py-1">
+    <button class="...">View Profile</button>
+    <button class="...">Edit Profile</button>
+  </div>
+  <hr class="my-1 border-gray-100">
+  <div class="py-1">
+    <button class="...">Settings</button>
+    <button class="...">Notifications</button>
+  </div>
+  <hr class="my-1 border-gray-100">
+  <div class="py-1">
+    <button class="... text-red-600">Sign out</button>
+  </div>
+</div>`,
+  sec4:`<label class="flex cursor-pointer items-center gap-3 px-4 py-2.5 hover:bg-gray-50">
+  <input type="checkbox" onchange="updateFilterCount()"
+    class="h-4 w-4 rounded border-gray-300 text-blue-600">
+  <span class="text-sm text-gray-700">Active</span>
+</label>`,
+  sec5:`<div id="dd-search" class="w-60 rounded-xl border bg-white shadow-lg">
+  <div class="border-b border-gray-100">
+    <input id="country-search" type="text" placeholder="Search countries..."
+      class="w-full bg-transparent px-4 py-2.5 text-sm outline-none">
+  </div>
+  <ul id="country-list" class="max-h-52 overflow-y-auto py-1">
+    <li><button class="flex w-full px-4 py-2.5 text-sm hover:bg-gray-50">🇺🇸 United States</button></li>
+    <!-- more items -->
+  </ul>
+</div>`,
+  sec6:`<!-- Bottom Left -->
+<div class="relative inline-block">
+  <button onclick="toggleDropdown('dd-bl',event)">Bottom Left</button>
+  <div id="dd-bl" data-dropdown class="hidden absolute top-full left-0 mt-1 ..."></div>
+</div>
+<!-- Top Right -->
+<div class="relative inline-block">
+  <button onclick="toggleDropdown('dd-tr',event)">Top Right</button>
+  <div id="dd-tr" data-dropdown class="hidden absolute bottom-full right-0 mb-1 ..."></div>
+</div>`,
+  sec7:`<!-- Small -->
+<button class="rounded-lg border px-3 py-1.5 text-xs">Small</button>
+<!-- Medium -->
+<button class="rounded-xl border px-4 py-2 text-sm">Medium</button>
+<!-- Large -->
+<button class="rounded-xl border px-5 py-2.5 text-base">Large</button>`,
+  sec8:`<div class="absolute rounded-2xl border bg-white shadow-xl" style="min-width:620px">
+  <div class="grid grid-cols-3 gap-0 p-4">
+    <div class="pr-4 border-r">
+      <p class="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-400">Analytics</p>
+      <!-- items with icon + title + description -->
+    </div>
+    <div class="px-4 border-r"><!-- Commerce --></div>
+    <div class="pl-4"><!-- Settings --></div>
+  </div>
+</div>`,
+  sec9:`<button class="inline-flex items-center gap-2.5 rounded-xl border px-3 py-2">
+  <span class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white">JD</span>
+  John Doe
+</button>
+<!-- dropdown includes name/email header, nav items, ⌘K badge, sign out -->`,
+  sec10:`<div class="relative">
+  <button onclick="toggleAction('action-menu-1',event)" class="flex h-8 w-8 items-center justify-center ...">⋮</button>
+  <div id="action-menu-1" data-action-menu class="hidden absolute right-0 w-48 rounded-xl border bg-white shadow-lg">
+    <button class="...">Edit</button>
+    <button class="...">Duplicate</button>
+    <button class="...">Archive</button>
+    <hr>
+    <button class="... text-red-600">Delete</button>
+  </div>
+</div>`
+};
+
+function openSourceDrawer(id,title){document.getElementById('drawer-title').textContent=title+' — Source';document.getElementById('drawer-code').textContent=SOURCE_SNIPPETS[id]||'';document.getElementById('source-drawer').classList.remove('hidden');document.getElementById('source-drawer').dataset.currentId=id;document.body.style.overflow='hidden';}
+function closeSourceDrawer(){document.getElementById('source-drawer').classList.add('hidden');document.body.style.overflow='';}
+function copyDrawerCode(){navigator.clipboard.writeText(SOURCE_SNIPPETS[document.getElementById('source-drawer').dataset.currentId]||'').then(()=>showToast('Copied!'));}
+function showToast(msg){const c=document.getElementById('toast-container');const t=document.createElement('div');t.className='pointer-events-auto flex items-center gap-2 rounded-xl border border-green-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 shadow-lg dark:border-green-800 dark:bg-gray-900 dark:text-white';t.style.animation='toastIn .2s ease';t.innerHTML='<span class="h-2 w-2 rounded-full bg-green-500 flex-shrink-0"></span>'+msg;c.appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(12px)';t.style.transition='all .2s';setTimeout(()=>t.remove(),200);},2500);}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSourceDrawer();});
+
+function toggleDropdown(menuId,event){
+  event&&event.stopPropagation();
+  const menu=document.getElementById(menuId);
+  const isHidden=menu.classList.contains('hidden');
+  document.querySelectorAll('[data-dropdown]').forEach(m=>m.classList.add('hidden'));
+  if(isHidden)menu.classList.remove('hidden');
+}
+document.addEventListener('click',()=>{
+  document.querySelectorAll('[data-dropdown]').forEach(m=>m.classList.add('hidden'));
+  document.querySelectorAll('[data-action-menu]').forEach(m=>m.classList.add('hidden'));
+});
+
+function updateFilterCount(){
+  const checked=document.querySelectorAll('#filter-menu input:checked').length;
+  const btn=document.getElementById('filter-btn');
+  btn.querySelector('span').textContent=checked>0?`Filter (${checked})`:'Filter by Status';
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const si=document.getElementById('country-search');
+  if(si){
+    si.addEventListener('input',function(){
+      const q=this.value.toLowerCase();
+      document.querySelectorAll('#country-list li').forEach(li=>{
+        li.style.display=li.textContent.toLowerCase().includes(q)?'':'none';
+      });
+    });
+  }
+});
+
+function toggleAction(id,event){
+  event.stopPropagation();
+  document.querySelectorAll('[data-action-menu]').forEach(m=>{
+    if(m.id!==id)m.classList.add('hidden');
+  });
+  document.getElementById(id).classList.toggle('hidden');
+}
+</script>
 </body>
 </html>

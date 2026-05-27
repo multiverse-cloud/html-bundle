@@ -1,22 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#465fff" />
-  <meta name="description" content="Pagination bars for tables, search results, and mobile lists." />
-  <title>Pagination - mtverse</title>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pagination — mtverse</title>
   <style>
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-    .animate-slideDown { animation: slideDown 0.2s ease-out; }
+    .no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+    @keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .animate-spin-custom{animation:spin 1s linear infinite}
+    @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+    .shimmer{background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
+    .dark .shimmer{background:linear-gradient(90deg,#1f2937 25%,#374151 50%,#1f2937 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
   </style>
   <link rel="stylesheet" href="tailwind-production.css">
   <link rel="stylesheet" href="pro-styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
 <div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
@@ -26,63 +23,518 @@
     <div id="header-container"></div>
     <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
       <div class="mx-auto w-full max-w-screen-2xl">
-        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <div class="mb-2 flex items-center gap-2 text-sm text-gray-500">
-              <span>mtverse</span><span>/</span><span>ui-elements</span><span>/</span>
-              <span class="font-medium text-gray-800 dark:text-white/90">Pagination</span>
+
+        <!-- PAGE HEADER -->
+        <div class="mb-8">
+          <nav class="mb-3 flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
+            <a href="#" class="hover:text-blue-600">mtverse</a>
+            <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <a href="#" class="hover:text-blue-600">UI Elements</a>
+            <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <span class="text-gray-800 dark:text-gray-100">Pagination</span>
+          </nav>
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Pagination</h1>
+          <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">18 pagination variants — numbered, pill, outlined, table footers, load more, and infinite scroll.</p>
+          <div class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div class="rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-white/[0.03]"><div class="text-2xl font-bold text-gray-900 dark:text-white">18</div><div class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">Variants</div></div>
+            <div class="rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-white/[0.03]"><div class="text-2xl font-bold text-gray-900 dark:text-white">10</div><div class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">Sections</div></div>
+            <div class="rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-white/[0.03]"><div class="text-2xl font-bold text-green-600">✓</div><div class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">Interactive</div></div>
+            <div class="rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-white/[0.03]"><div class="text-2xl font-bold text-green-600">✓</div><div class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">Responsive</div></div>
+          </div>
+        </div>
+
+
+        <!-- SECTION 1: Simple Previous/Next -->
+        <section id="sec1" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">Simple Previous / Next</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Minimal prev/next navigation with centered page info. Prev disabled on page 1, Next on last.</p></div>
+              <button onclick="openSourceDrawer('sec1','Simple Prev/Next')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
             </div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white/90">Pagination</h1>
-            <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Pagination bars for tables, search results, and mobile lists.</p>
+            <div class="flex items-center justify-between">
+              <button id="pn-prev" onclick="pnChangePage(-1)" class="inline-flex items-center gap-1.5 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700" disabled>
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                Previous
+              </button>
+              <span id="pn-info" class="text-sm font-medium text-gray-600 dark:text-gray-400">Page 1 of 12</span>
+              <button id="pn-next" onclick="pnChangePage(1)" class="inline-flex items-center gap-1.5 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
+                Next
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+              </button>
+            </div>
           </div>
-          <div class="flex flex-wrap gap-2">
-            <button type="button" class="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:bg-white/[0.03] dark:text-gray-300">Preview</button>
-            <button type="button" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">Use Component</button>
-          </div>
-        </div>
+        </section>
 
-        <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <!-- SECTION 2: Numbered Pagination -->
+        <section id="sec2" class="mb-6">
           <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Components</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">24</p>
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">Numbered Pagination</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Page number buttons with ellipsis, active highlight, and prev/next arrows.</p></div>
+              <button onclick="openSourceDrawer('sec2','Numbered Pagination')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div id="numbered-pg" class="flex flex-wrap items-center gap-1"></div>
           </div>
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">States</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">96</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Responsive</p><p class="mt-2 text-3xl font-bold text-green-600">Ready</p>
-          </div>
-        </div>
-        <div class="mt-5 grid grid-cols-1 gap-5 xl:grid-cols-2">
+        </section>
 
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Table pagination</h2>
-            <div class="mt-5"><div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"><p class="text-sm text-gray-500">Showing 1 to 10 of 159 entries</p><div class="flex items-center gap-2"><button class="rounded-lg border border-gray-200 px-3 py-2 text-sm font-semibold  dark:border-gray-800">Prev</button><button type="button" class="rounded-lg border border-gray-200 px-3 py-2 text-sm font-semibold bg-blue-600 text-white dark:border-gray-800">1</button><button class="rounded-lg border border-gray-200 px-3 py-2 text-sm font-semibold  dark:border-gray-800">2</button><button class="rounded-lg border border-gray-200 px-3 py-2 text-sm font-semibold  dark:border-gray-800">3</button><button class="rounded-lg border border-gray-200 px-3 py-2 text-sm font-semibold  dark:border-gray-800">Next</button></div></div></div>
-          </section>
+        <!-- SECTION 3: Compact Pagination with Direct Input -->
+        <section id="sec3" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">Compact with Direct Input</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Icon-only nav buttons surrounding a text input for jumping directly to any page.</p></div>
+              <button onclick="openSourceDrawer('sec3','Compact Pagination')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="compactChangePage(-1)" class="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700">
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+              </button>
+              <span class="text-sm text-gray-500 dark:text-gray-400">Page</span>
+              <input id="compact-input" type="number" min="1" max="12" value="3" onchange="compactGoToPage(this.value)" class="h-8 w-14 rounded-lg border border-gray-200 bg-white px-2 text-center text-sm font-medium text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">
+              <span class="text-sm text-gray-500 dark:text-gray-400">of <span id="compact-total">12</span></span>
+              <button onclick="compactChangePage(1)" class="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700">
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+          </div>
+        </section>
 
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] xl:col-span-2">
-            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-              <div>
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Pagination production states</h2>
-                <p class="mt-1 text-sm text-gray-500">Real dashboard states with actions, accessibility, responsive layout, and clean spacing.</p>
+        <!-- SECTION 4: Rounded Pills -->
+        <section id="sec4" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">Rounded Pills</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Full pill-style buttons using <code class="text-xs bg-gray-100 dark:bg-gray-700 px-1 rounded">rounded-full</code> on all elements.</p></div>
+              <button onclick="openSourceDrawer('sec4','Rounded Pills')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div id="pills-pg" class="flex flex-wrap items-center gap-1.5"></div>
+          </div>
+        </section>
+
+        <!-- SECTION 5: Outlined Style -->
+        <section id="sec5" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">Outlined Style</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Border-only buttons, no fills. Active page gets a blue border and blue text.</p></div>
+              <button onclick="openSourceDrawer('sec5','Outlined Style')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div id="outlined-pg" class="flex flex-wrap items-center gap-1"></div>
+          </div>
+        </section>
+
+
+        <!-- SECTION 6: With Page Size Selector -->
+        <section id="sec6" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">With Page Size Selector</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Left-side per-page selector updates the "Showing X–Y of Z" label dynamically.</p></div>
+              <button onclick="openSourceDrawer('sec6','Page Size Selector')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div class="flex flex-wrap items-center justify-between gap-4">
+              <div class="flex items-center gap-2">
+                <span class="text-sm text-gray-600 dark:text-gray-400">Show:</span>
+                <select id="page-size-sel" onchange="updatePageSize()" class="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+                <span class="text-sm text-gray-600 dark:text-gray-400">entries per page</span>
               </div>
-              <div class="inline-flex rounded-xl bg-gray-100 p-1 dark:bg-white/[0.04]">
-                <button class="rounded-lg bg-white px-4 py-2 text-sm font-bold text-blue-600 shadow-sm dark:bg-gray-900">Preview</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">Code</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">States</button>
+              <div id="pgsz-pg" class="flex items-center gap-1"></div>
+            </div>
+            <p id="pgsz-info" class="mt-3 text-xs text-gray-500 dark:text-gray-400">Showing 1–10 of 247 entries</p>
+          </div>
+        </section>
+
+        <!-- SECTION 7: Table Footer Pagination -->
+        <section id="sec7" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">Table Footer Pagination</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Full footer bar with result range text on the left and controls on the right.</p></div>
+              <button onclick="openSourceDrawer('sec7','Table Footer')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <!-- Mock table -->
+            <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700">
+              <table class="w-full text-sm">
+                <thead class="bg-gray-50 dark:bg-gray-800">
+                  <tr>
+                    <th class="px-4 py-3 text-left font-medium text-gray-600 dark:text-gray-400">Name</th>
+                    <th class="px-4 py-3 text-left font-medium text-gray-600 dark:text-gray-400">Status</th>
+                    <th class="px-4 py-3 text-left font-medium text-gray-600 dark:text-gray-400">Amount</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+                  <tr class="bg-white dark:bg-gray-900/30"><td class="px-4 py-3 text-gray-800 dark:text-gray-200">Alice Johnson</td><td class="px-4 py-3"><span class="rounded-full bg-green-100 px-2 py-0.5 text-xs text-green-700 dark:bg-green-900/40 dark:text-green-300">Active</span></td><td class="px-4 py-3 text-gray-800 dark:text-gray-200">$1,240.00</td></tr>
+                  <tr class="bg-white dark:bg-gray-900/30"><td class="px-4 py-3 text-gray-800 dark:text-gray-200">Bob Kim</td><td class="px-4 py-3"><span class="rounded-full bg-amber-100 px-2 py-0.5 text-xs text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">Pending</span></td><td class="px-4 py-3 text-gray-800 dark:text-gray-200">$892.50</td></tr>
+                  <tr class="bg-white dark:bg-gray-900/30"><td class="px-4 py-3 text-gray-800 dark:text-gray-200">Carol Martinez</td><td class="px-4 py-3"><span class="rounded-full bg-red-100 px-2 py-0.5 text-xs text-red-700 dark:bg-red-900/40 dark:text-red-300">Inactive</span></td><td class="px-4 py-3 text-gray-800 dark:text-gray-200">$430.00</td></tr>
+                </tbody>
+              </table>
+              <!-- Table footer -->
+              <div class="flex flex-wrap items-center justify-between gap-3 border-t border-gray-200 bg-white px-4 py-3 dark:border-gray-700 dark:bg-gray-800">
+                <p class="text-xs text-gray-500 dark:text-gray-400">Showing 31–40 of 247 results</p>
+                <div class="flex items-center gap-1">
+                  <button class="flex h-7 w-7 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-400">
+                    <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                  </button>
+                  <button class="flex h-7 w-7 items-center justify-center rounded-lg border border-gray-200 bg-white text-xs text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300">3</button>
+                  <button class="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-600 text-xs font-semibold text-white">4</button>
+                  <button class="flex h-7 w-7 items-center justify-center rounded-lg border border-gray-200 bg-white text-xs text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-300">5</button>
+                  <button class="flex h-7 w-7 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-400">
+                    <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                  </button>
+                </div>
               </div>
             </div>
-            <div class="mt-5 grid gap-4 md:grid-cols-3">
-              <div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Default</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Hover / active</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Loading / empty</p><span class="h-2.5 w-2.5 rounded-full bg-yellow-400"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div>
+          </div>
+        </section>
+
+        <!-- SECTION 8: Mini Pagination -->
+        <section id="sec8" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">Mini Pagination</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Extra-small pagination for use inside card headers or compact widgets.</p></div>
+              <button onclick="openSourceDrawer('sec8','Mini Pagination')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
             </div>
-          </section>
-        </div>
+            <!-- Mock card with mini pagination in header -->
+            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+              <div class="flex items-center justify-between bg-gray-50 px-4 py-2.5 dark:bg-gray-800">
+                <span class="text-sm font-semibold text-gray-700 dark:text-gray-200">Recent Activity</span>
+                <div class="flex items-center gap-0.5">
+                  <button class="flex h-6 w-6 items-center justify-center rounded-md border border-gray-200 bg-white text-gray-400 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400">
+                    <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                  </button>
+                  <button class="flex h-6 w-6 items-center justify-center rounded-md text-xs font-medium text-blue-600 bg-blue-50 dark:bg-blue-900/30 dark:text-blue-400">1</button>
+                  <button class="flex h-6 w-6 items-center justify-center rounded-md text-xs text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700">2</button>
+                  <button class="flex h-6 w-6 items-center justify-center rounded-md text-xs text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700">3</button>
+                  <button class="flex h-6 w-6 items-center justify-center rounded-md border border-gray-200 bg-white text-gray-400 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400">
+                    <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div class="divide-y divide-gray-100 dark:divide-gray-700 bg-white dark:bg-gray-900/30">
+                <div class="flex items-center gap-3 px-4 py-2.5"><div class="h-1.5 w-1.5 rounded-full bg-green-500"></div><span class="text-sm text-gray-700 dark:text-gray-300">User login — 2 minutes ago</span></div>
+                <div class="flex items-center gap-3 px-4 py-2.5"><div class="h-1.5 w-1.5 rounded-full bg-blue-500"></div><span class="text-sm text-gray-700 dark:text-gray-300">File uploaded — 5 minutes ago</span></div>
+                <div class="flex items-center gap-3 px-4 py-2.5"><div class="h-1.5 w-1.5 rounded-full bg-amber-500"></div><span class="text-sm text-gray-700 dark:text-gray-300">Payment pending — 11 minutes ago</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 9: Load More Button -->
+        <section id="sec9" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">Load More</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Append-style pagination with a loading spinner state during fetch simulation.</p></div>
+              <button onclick="openSourceDrawer('sec9','Load More')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <ul id="load-more-list" class="mb-4 divide-y divide-gray-100 rounded-xl border border-gray-200 dark:divide-gray-700 dark:border-gray-700">
+              <li class="flex items-center gap-3 px-4 py-3 bg-white dark:bg-gray-900/30"><div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-xs font-semibold text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">A</div><div><p class="text-sm font-medium text-gray-800 dark:text-gray-200">Article: Getting started with Tailwind</p><p class="text-xs text-gray-500 dark:text-gray-400">5 min read · 2 days ago</p></div></li>
+              <li class="flex items-center gap-3 px-4 py-3 bg-white dark:bg-gray-900/30"><div class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center text-xs font-semibold text-green-700 dark:bg-green-900/40 dark:text-green-300">B</div><div><p class="text-sm font-medium text-gray-800 dark:text-gray-200">Tutorial: Building a dashboard</p><p class="text-xs text-gray-500 dark:text-gray-400">8 min read · 3 days ago</p></div></li>
+              <li class="flex items-center gap-3 px-4 py-3 bg-white dark:bg-gray-900/30"><div class="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center text-xs font-semibold text-purple-700 dark:bg-purple-900/40 dark:text-purple-300">C</div><div><p class="text-sm font-medium text-gray-800 dark:text-gray-200">Guide: Dark mode best practices</p><p class="text-xs text-gray-500 dark:text-gray-400">6 min read · 4 days ago</p></div></li>
+              <li class="flex items-center gap-3 px-4 py-3 bg-white dark:bg-gray-900/30"><div class="h-8 w-8 rounded-full bg-amber-100 flex items-center justify-center text-xs font-semibold text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">D</div><div><p class="text-sm font-medium text-gray-800 dark:text-gray-200">Tip: Responsive design patterns</p><p class="text-xs text-gray-500 dark:text-gray-400">3 min read · 5 days ago</p></div></li>
+            </ul>
+            <div class="flex justify-center">
+              <button id="load-more-btn" onclick="loadMore()" class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
+                <span id="load-more-text">Load more</span>
+                <span id="load-more-spinner" class="hidden">
+                  <svg class="h-4 w-4 animate-spin-custom text-gray-400" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+                </span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 10: Infinite Scroll Trigger -->
+        <section id="sec10" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">Infinite Scroll Indicator</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Visual representation of an infinite scroll loading state with animated dots.</p></div>
+              <button onclick="openSourceDrawer('sec10','Infinite Scroll')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+              <div class="divide-y divide-gray-100 dark:divide-gray-700 bg-white dark:bg-gray-900/30">
+                <div class="flex items-center gap-3 px-4 py-3"><div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center text-xs font-semibold text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300">E</div><div><p class="text-sm font-medium text-gray-800 dark:text-gray-200">Event: Design systems workshop</p><p class="text-xs text-gray-500 dark:text-gray-400">Tomorrow at 2:00 PM</p></div></div>
+                <div class="flex items-center gap-3 px-4 py-3"><div class="h-8 w-8 rounded-full bg-pink-100 flex items-center justify-center text-xs font-semibold text-pink-700 dark:bg-pink-900/40 dark:text-pink-300">F</div><div><p class="text-sm font-medium text-gray-800 dark:text-gray-200">Update: New component library v3.1</p><p class="text-xs text-gray-500 dark:text-gray-400">Yesterday at 9:15 AM</p></div></div>
+                <div class="flex items-center gap-3 px-4 py-3"><div class="h-8 w-8 rounded-full bg-teal-100 flex items-center justify-center text-xs font-semibold text-teal-700 dark:bg-teal-900/40 dark:text-teal-300">G</div><div><p class="text-sm font-medium text-gray-800 dark:text-gray-200">Release: mtverse 2.5 shipped</p><p class="text-xs text-gray-500 dark:text-gray-400">3 days ago at 4:00 PM</p></div></div>
+              </div>
+              <!-- Loading row -->
+              <div class="flex items-center justify-center gap-2 border-t border-gray-100 bg-gray-50 py-4 dark:border-gray-700 dark:bg-gray-800">
+                <style>
+                  @keyframes dotBounce{0%,80%,100%{transform:scale(0);opacity:.4}40%{transform:scale(1);opacity:1}}
+                  .dot-bounce{display:inline-block;width:8px;height:8px;border-radius:50%;background:#6366f1;animation:dotBounce 1.4s ease-in-out infinite}
+                  .dot-bounce:nth-child(1){animation-delay:0s}
+                  .dot-bounce:nth-child(2){animation-delay:.2s}
+                  .dot-bounce:nth-child(3){animation-delay:.4s}
+                </style>
+                <span class="dot-bounce"></span>
+                <span class="dot-bounce"></span>
+                <span class="dot-bounce"></span>
+                <span class="ml-2 text-xs text-gray-400 dark:text-gray-500">Loading more...</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
       </div>
     </main>
   </div>
 </div>
-<script src="common-loader.js"></script>
+
+
+<!-- SOURCE DRAWER -->
+<div id="source-drawer" class="fixed inset-x-0 bottom-0 z-50 hidden">
+  <div class="fixed inset-0 bg-black/30" onclick="closeSourceDrawer()"></div>
+  <div class="relative bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 rounded-t-2xl shadow-2xl max-h-[65vh] flex flex-col mx-auto" style="max-width:720px;border-left:1px solid #e5e7eb;border-right:1px solid #e5e7eb;">
+    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-gray-800 flex-shrink-0">
+      <span id="drawer-title" class="text-sm font-semibold text-gray-900 dark:text-white">Source</span>
+      <div class="flex gap-2">
+        <button onclick="copyDrawerCode()" class="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700">Copy</button>
+        <button onclick="closeSourceDrawer()" class="rounded-lg border border-gray-200 dark:border-gray-700 p-1.5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+    </div>
+    <div class="overflow-auto flex-1 p-5"><pre id="drawer-code" class="text-xs leading-relaxed text-gray-800 dark:text-gray-200 whitespace-pre-wrap font-mono"></pre></div>
+  </div>
+</div>
+<div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-2 pointer-events-none"></div>
+
 <script src="common-sidebar.js"></script>
 <script src="common-header.js"></script>
 <script src="app-shell.js"></script>
+<script>
+const SOURCE_SNIPPETS={
+  sec1:`<div class="flex items-center justify-between">
+  <button id="pn-prev" onclick="pnChangePage(-1)" disabled
+    class="inline-flex items-center gap-1.5 rounded-xl border px-4 py-2 text-sm font-medium
+           disabled:cursor-not-allowed disabled:opacity-40">
+    ← Previous
+  </button>
+  <span id="pn-info" class="text-sm font-medium text-gray-600">Page 1 of 12</span>
+  <button id="pn-next" onclick="pnChangePage(1)" class="... inline-flex items-center gap-1.5 ...">
+    Next →
+  </button>
+</div>`,
+  sec2:`<div class="flex flex-wrap items-center gap-1">
+  <!-- Prev arrow -->
+  <button class="flex h-9 w-9 items-center justify-center rounded-xl border ...">←</button>
+  <!-- Numbers -->
+  <button class="flex h-9 w-9 items-center justify-center rounded-xl border text-sm ...">1</button>
+  <!-- Active page -->
+  <button class="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-sm text-white">3</button>
+  <!-- Ellipsis -->
+  <span class="flex h-9 w-9 items-center justify-center text-sm text-gray-400">…</span>
+  <!-- Next arrow -->
+  <button class="flex h-9 w-9 items-center justify-center rounded-xl border ...">→</button>
+</div>`,
+  sec3:`<div class="flex items-center gap-2">
+  <button class="flex h-8 w-8 items-center justify-center rounded-lg border ...">←</button>
+  <span class="text-sm text-gray-500">Page</span>
+  <input type="number" min="1" max="12" value="3" onchange="goToPage(this.value)"
+    class="h-8 w-14 rounded-lg border px-2 text-center text-sm">
+  <span class="text-sm text-gray-500">of 12</span>
+  <button class="flex h-8 w-8 items-center justify-center rounded-lg border ...">→</button>
+</div>`,
+  sec4:`<!-- rounded-full on all buttons -->
+<button class="flex h-9 w-9 items-center justify-center rounded-full border ...">1</button>
+<button class="flex h-9 w-9 items-center justify-center rounded-full bg-blue-600 text-white">3</button>`,
+  sec5:`<!-- Outlined: border only, no background fill -->
+<button class="flex h-9 w-9 items-center justify-center rounded-xl border border-gray-300 text-sm">1</button>
+<!-- Active -->
+<button class="flex h-9 w-9 items-center justify-center rounded-xl border-2 border-blue-600 text-sm text-blue-600">3</button>`,
+  sec6:`<div class="flex items-center gap-2">
+  <span>Show:</span>
+  <select onchange="updatePageSize()" class="rounded-lg border px-3 py-1.5 text-sm">
+    <option>10</option><option>25</option><option>50</option><option>100</option>
+  </select>
+  <span>entries per page</span>
+</div>
+<p>Showing 1–10 of 247 entries</p>`,
+  sec7:`<div class="flex items-center justify-between border-t bg-white px-4 py-3">
+  <p class="text-xs text-gray-500">Showing 31–40 of 247 results</p>
+  <div class="flex gap-1">
+    <button class="flex h-7 w-7 ... rounded-lg border">←</button>
+    <button class="flex h-7 w-7 ...">3</button>
+    <button class="flex h-7 w-7 bg-blue-600 text-white">4</button>
+    <button class="flex h-7 w-7 ...">5</button>
+    <button class="flex h-7 w-7 ... rounded-lg border">→</button>
+  </div>
+</div>`,
+  sec8:`<!-- Inside card header -->
+<div class="flex items-center justify-between bg-gray-50 px-4 py-2.5">
+  <span class="text-sm font-semibold">Recent Activity</span>
+  <div class="flex gap-0.5">
+    <button class="flex h-6 w-6 items-center justify-center rounded-md border">←</button>
+    <button class="flex h-6 w-6 items-center justify-center rounded-md text-xs bg-blue-50 text-blue-600">1</button>
+    <button class="flex h-6 w-6 items-center justify-center rounded-md text-xs text-gray-500">2</button>
+    <button class="flex h-6 w-6 items-center justify-center rounded-md border">→</button>
+  </div>
+</div>`,
+  sec9:`<button id="load-more-btn" onclick="loadMore()"
+  class="inline-flex items-center gap-2 rounded-xl border px-5 py-2 text-sm font-medium">
+  <span id="load-more-text">Load more</span>
+  <span id="load-more-spinner" class="hidden">
+    <svg class="h-4 w-4 animate-spin">...</svg>
+  </span>
+</button>`,
+  sec10:`<!-- Infinite scroll loading indicator -->
+<div class="flex items-center justify-center gap-2 border-t bg-gray-50 py-4">
+  <span class="dot-bounce"></span>
+  <span class="dot-bounce"></span>
+  <span class="dot-bounce"></span>
+  <span class="ml-2 text-xs text-gray-400">Loading more...</span>
+</div>
+<style>
+  @keyframes dotBounce{0%,80%,100%{transform:scale(0);opacity:.4}40%{transform:scale(1);opacity:1}}
+  .dot-bounce{display:inline-block;width:8px;height:8px;border-radius:50%;background:#6366f1;
+    animation:dotBounce 1.4s ease-in-out infinite}
+  .dot-bounce:nth-child(2){animation-delay:.2s}
+  .dot-bounce:nth-child(3){animation-delay:.4s}
+</style>`
+};
+
+function openSourceDrawer(id,title){document.getElementById('drawer-title').textContent=title+' — Source';document.getElementById('drawer-code').textContent=SOURCE_SNIPPETS[id]||'';document.getElementById('source-drawer').classList.remove('hidden');document.getElementById('source-drawer').dataset.currentId=id;document.body.style.overflow='hidden';}
+function closeSourceDrawer(){document.getElementById('source-drawer').classList.add('hidden');document.body.style.overflow='';}
+function copyDrawerCode(){navigator.clipboard.writeText(SOURCE_SNIPPETS[document.getElementById('source-drawer').dataset.currentId]||'').then(()=>showToast('Copied!'));}
+function showToast(msg){const c=document.getElementById('toast-container');const t=document.createElement('div');t.className='pointer-events-auto flex items-center gap-2 rounded-xl border border-green-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 shadow-lg dark:border-green-800 dark:bg-gray-900 dark:text-white';t.style.animation='toastIn .2s ease';t.innerHTML='<span class="h-2 w-2 rounded-full bg-green-500 flex-shrink-0"></span>'+msg;c.appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(12px)';t.style.transition='all .2s';setTimeout(()=>t.remove(),200);},2500);}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSourceDrawer();});
+
+/* ---- Section 1: Simple Prev/Next ---- */
+let pnPage=1,pnTotal=12;
+function pnChangePage(d){
+  pnPage=Math.max(1,Math.min(pnTotal,pnPage+d));
+  document.getElementById('pn-info').textContent=`Page ${pnPage} of ${pnTotal}`;
+  document.getElementById('pn-prev').disabled=pnPage===1;
+  document.getElementById('pn-next').disabled=pnPage===pnTotal;
+}
+
+/* ---- Section 2: Numbered Pagination ---- */
+let numberedPage=3,numberedTotal=12;
+function buildNumbered(){
+  const c=document.getElementById('numbered-pg');
+  c.innerHTML='';
+  const btn=(label,active,disabled,page,cls='')=>{
+    const b=document.createElement('button');
+    b.innerHTML=label;
+    b.className=`flex h-9 min-w-[36px] items-center justify-center rounded-xl border px-2 text-sm font-medium transition ${active?'bg-blue-600 text-white border-blue-600':'border-gray-200 bg-white text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'} ${disabled?'opacity-40 cursor-not-allowed':''} ${cls}`;
+    if(!disabled&&!active&&page!=null)b.onclick=()=>{numberedPage=page;buildNumbered();};
+    return b;
+  };
+  const ellipsis=()=>{const s=document.createElement('span');s.textContent='…';s.className='flex h-9 w-9 items-center justify-center text-sm text-gray-400';return s;};
+  c.appendChild(btn('<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>',false,numberedPage===1,null,'',()=>{}));
+  c.lastChild.onclick=numberedPage>1?()=>{numberedPage--;buildNumbered();}:null;
+  const pages=[1,2,3];
+  if(numberedTotal>5){pages.push('...',numberedTotal-1,numberedTotal);}
+  [1,2,3].forEach(p=>c.appendChild(btn(p,p===numberedPage,false,p)));
+  if(numberedPage>4&&numberedTotal>6)c.appendChild(ellipsis());
+  if(numberedTotal>5){
+    const mid=[];
+    for(let p=Math.max(4,numberedPage-1);p<=Math.min(numberedTotal-3,numberedPage+1);p++)mid.push(p);
+    mid.forEach(p=>c.appendChild(btn(p,p===numberedPage,false,p)));
+  }
+  if(numberedPage<numberedTotal-3&&numberedTotal>6)c.appendChild(ellipsis());
+  [numberedTotal-1,numberedTotal].forEach(p=>{if(p>3)c.appendChild(btn(p,p===numberedPage,false,p));});
+  const nextBtn=btn('<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>',false,numberedPage===numberedTotal,null);
+  nextBtn.onclick=numberedPage<numberedTotal?()=>{numberedPage++;buildNumbered();}:null;
+  c.appendChild(nextBtn);
+}
+
+/* ---- Section 4: Pills ---- */
+let pillsPage=2,pillsTotal=10;
+function buildPills(){
+  const c=document.getElementById('pills-pg');
+  c.innerHTML='';
+  const btn=(label,active,disabled,page)=>{
+    const b=document.createElement('button');
+    b.innerHTML=label;
+    b.className=`flex h-9 min-w-[36px] items-center justify-center rounded-full border px-2 text-sm font-medium transition ${active?'bg-blue-600 text-white border-blue-600':'border-gray-200 bg-white text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300'} ${disabled?'opacity-40 cursor-not-allowed':''}`;
+    if(!disabled&&!active&&page!=null)b.onclick=()=>{pillsPage=page;buildPills();};
+    return b;
+  };
+  const prev=btn('←',false,pillsPage===1,null);prev.onclick=pillsPage>1?()=>{pillsPage--;buildPills();}:null;c.appendChild(prev);
+  for(let p=1;p<=pillsTotal;p++){if(p<=3||p>=pillsTotal-1||p===pillsPage){c.appendChild(btn(p,p===pillsPage,false,p));}else if(p===4&&pillsPage>4){const s=document.createElement('span');s.textContent='…';s.className='flex h-9 w-9 items-center justify-center text-sm text-gray-400';c.appendChild(s);}}
+  const next=btn('→',false,pillsPage===pillsTotal,null);next.onclick=pillsPage<pillsTotal?()=>{pillsPage++;buildPills();}:null;c.appendChild(next);
+}
+
+/* ---- Section 5: Outlined ---- */
+let outlinedPage=4,outlinedTotal=10;
+function buildOutlined(){
+  const c=document.getElementById('outlined-pg');
+  c.innerHTML='';
+  const btn=(label,active,disabled,page)=>{
+    const b=document.createElement('button');
+    b.innerHTML=label;
+    b.className=`flex h-9 min-w-[36px] items-center justify-center rounded-xl px-2 text-sm font-medium transition ${active?'border-2 border-blue-600 text-blue-600 dark:border-blue-500 dark:text-blue-400':'border border-gray-300 text-gray-600 hover:border-gray-400 dark:border-gray-600 dark:text-gray-400'} ${disabled?'opacity-40 cursor-not-allowed':''}`;
+    if(!disabled&&!active&&page!=null)b.onclick=()=>{outlinedPage=page;buildOutlined();};
+    return b;
+  };
+  const prev=btn('←',false,outlinedPage===1,null);prev.onclick=outlinedPage>1?()=>{outlinedPage--;buildOutlined();}:null;c.appendChild(prev);
+  for(let p=1;p<=outlinedTotal;p++){if(p<=3||p>=outlinedTotal-1||p===outlinedPage){c.appendChild(btn(p,p===outlinedPage,false,p));}else if(p===4&&outlinedPage>4){const s=document.createElement('span');s.textContent='…';s.className='flex h-9 w-9 items-center justify-center text-sm text-gray-400';c.appendChild(s);}}
+  const next=btn('→',false,outlinedPage===outlinedTotal,null);next.onclick=outlinedPage<outlinedTotal?()=>{outlinedPage++;buildOutlined();}:null;c.appendChild(next);
+}
+
+/* ---- Section 6: Page Size Selector ---- */
+let pgszPage=1,pgszSize=10,pgszTotal=247;
+function buildPgSz(){
+  const c=document.getElementById('pgsz-pg');
+  c.innerHTML='';
+  const pages=Math.ceil(pgszTotal/pgszSize);
+  const prev=document.createElement('button');
+  prev.innerHTML='←';
+  prev.className=`flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 bg-white text-sm text-gray-500 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 ${pgszPage===1?'opacity-40 cursor-not-allowed':''}`;
+  prev.onclick=pgszPage>1?()=>{pgszPage--;buildPgSz();}:null;
+  c.appendChild(prev);
+  for(let p=Math.max(1,pgszPage-1);p<=Math.min(pages,pgszPage+1);p++){
+    const b=document.createElement('button');
+    b.textContent=p;
+    b.className=`flex h-8 w-8 items-center justify-center rounded-lg text-sm font-medium ${p===pgszPage?'bg-blue-600 text-white':'border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300'}`;
+    b.onclick=()=>{pgszPage=p;buildPgSz();};
+    c.appendChild(b);
+  }
+  const next=document.createElement('button');
+  next.innerHTML='→';
+  next.className=`flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 bg-white text-sm text-gray-500 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 ${pgszPage>=pages?'opacity-40 cursor-not-allowed':''}`;
+  next.onclick=pgszPage<pages?()=>{pgszPage++;buildPgSz();}:null;
+  c.appendChild(next);
+  const from=(pgszPage-1)*pgszSize+1,to=Math.min(pgszPage*pgszSize,pgszTotal);
+  document.getElementById('pgsz-info').textContent=`Showing ${from}–${to} of ${pgszTotal} entries`;
+}
+function updatePageSize(){
+  pgszSize=parseInt(document.getElementById('page-size-sel').value);
+  pgszPage=1;buildPgSz();
+}
+
+/* ---- Section 3: Compact ---- */
+let compactPage=3,compactTotal=12;
+function compactChangePage(d){
+  compactPage=Math.max(1,Math.min(compactTotal,compactPage+d));
+  document.getElementById('compact-input').value=compactPage;
+}
+function compactGoToPage(v){
+  compactPage=Math.max(1,Math.min(compactTotal,parseInt(v)||1));
+  document.getElementById('compact-input').value=compactPage;
+}
+
+/* ---- Section 9: Load More ---- */
+let loadMoreItems=[
+  {color:'bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300',letter:'E',title:'Explainer: Component-driven development',meta:'4 min read · 6 days ago'},
+  {color:'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-300',letter:'F',title:'Podcast: The future of design tokens',meta:'22 min listen · 7 days ago'},
+];
+function loadMore(){
+  const btn=document.getElementById('load-more-btn');
+  const txt=document.getElementById('load-more-text');
+  const spin=document.getElementById('load-more-spinner');
+  txt.textContent='Loading...';spin.classList.remove('hidden');btn.disabled=true;
+  setTimeout(()=>{
+    const list=document.getElementById('load-more-list');
+    loadMoreItems.forEach(item=>{
+      const li=document.createElement('li');
+      li.className='flex items-center gap-3 px-4 py-3 bg-white dark:bg-gray-900/30';
+      li.innerHTML=`<div class="h-8 w-8 rounded-full flex items-center justify-center text-xs font-semibold ${item.color}">${item.letter}</div><div><p class="text-sm font-medium text-gray-800 dark:text-gray-200">${item.title}</p><p class="text-xs text-gray-500 dark:text-gray-400">${item.meta}</p></div>`;
+      list.appendChild(li);
+    });
+    txt.textContent='No more items';spin.classList.add('hidden');btn.disabled=true;btn.classList.add('opacity-50','cursor-not-allowed');
+    loadMoreItems=[];
+  },1500);
+}
+
+document.addEventListener('DOMContentLoaded',()=>{buildNumbered();buildPills();buildOutlined();buildPgSz();});
+</script>
 </body>
 </html>
