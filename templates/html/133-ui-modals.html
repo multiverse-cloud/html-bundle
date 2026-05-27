@@ -3,20 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#465fff" />
-  <meta name="description" content="Modal examples for confirmation, forms, billing, and command workflows." />
-  <title>Modals - mtverse</title>
+  <title>Modals — mtverse</title>
   <style>
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-    .animate-slideDown { animation: slideDown 0.2s ease-out; }
+    .no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+    @keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes modalIn{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+    @keyframes slideInRight{from{opacity:0;transform:translateX(100%)}to{opacity:1;transform:translateX(0)}}
+    @keyframes slideInUp{from{opacity:0;transform:translateY(100%)}to{opacity:1;transform:translateY(0)}}
+    .modal-panel{animation:modalIn .22s ease}
+    .drawer-panel{animation:slideInRight .25s ease}
+    .bottom-sheet-panel{animation:slideInUp .25s ease}
   </style>
   <link rel="stylesheet" href="tailwind-production.css">
   <link rel="stylesheet" href="pro-styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
 <div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
@@ -26,63 +25,1097 @@
     <div id="header-container"></div>
     <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
       <div class="mx-auto w-full max-w-screen-2xl">
+
+
+        <!-- PAGE HEADER -->
         <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <div class="mb-2 flex items-center gap-2 text-sm text-gray-500">
-              <span>mtverse</span><span>/</span><span>ui-elements</span><span>/</span>
+              <span>mtverse</span><span>/</span><span>UI Elements</span><span>/</span>
               <span class="font-medium text-gray-800 dark:text-white/90">Modals</span>
             </div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white/90">Modals</h1>
-            <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Modal examples for confirmation, forms, billing, and command workflows.</p>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <button type="button" class="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:bg-white/[0.03] dark:text-gray-300">Preview</button>
-            <button type="button" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">Use Component</button>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white/90">Modals &amp; Dialogs</h1>
+            <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">10+ modal variants — confirmation, forms, drawers, bottom sheets, command palette, and multi-step wizards</p>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <!-- STAT CARDS -->
+        <div class="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
           <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Components</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">24</p>
+            <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Variants</p>
+            <p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">12</p>
           </div>
           <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">States</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">96</p>
+            <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Types</p>
+            <p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">6</p>
           </div>
           <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Responsive</p><p class="mt-2 text-3xl font-bold text-green-600">Ready</p>
+            <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Animated</p>
+            <p class="mt-2 text-3xl font-bold text-green-600">✓</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Accessible</p>
+            <p class="mt-2 text-3xl font-bold text-green-600">✓</p>
           </div>
         </div>
-        <div class="mt-5 grid grid-cols-1 gap-5 xl:grid-cols-2">
 
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Modal templates</h2>
-            <div class="mt-5"><div class="grid gap-4 md:grid-cols-2"><div class="rounded-xl border border-gray-200 p-5 dark:border-gray-800"><h3 class="font-bold">Confirm action</h3><p class="mt-2 text-sm text-gray-500">Use this for destructive or billing actions.</p><button class="mt-4 rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white">Open Confirm</button></div><div class="rounded-xl border border-gray-200 p-5 dark:border-gray-800"><h3 class="font-bold">Edit profile</h3><p class="mt-2 text-sm text-gray-500">Form modal with validation-ready fields.</p><button type="button" class="mt-4 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white">Open Form</button></div></div></div>
-          </section>
 
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] xl:col-span-2">
-            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-              <div>
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Modals production states</h2>
-                <p class="mt-1 text-sm text-gray-500">Real dashboard states with actions, accessibility, responsive layout, and clean spacing.</p>
-              </div>
-              <div class="inline-flex rounded-xl bg-gray-100 p-1 dark:bg-white/[0.04]">
-                <button class="rounded-lg bg-white px-4 py-2 text-sm font-bold text-blue-600 shadow-sm dark:bg-gray-900">Preview</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">Code</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">States</button>
-              </div>
+        <!-- DEMO CARDS GRID -->
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+
+          <!-- Card 1: Confirmation -->
+          <div class="flex flex-col rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex-1">
+              <p class="text-sm font-semibold text-gray-900 dark:text-white">Confirmation Modal</p>
+              <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Simple centered dialog for confirming an action with warning icon.</p>
             </div>
-            <div class="mt-5 grid gap-4 md:grid-cols-3">
-              <div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Default</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Hover / active</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Loading / empty</p><span class="h-2.5 w-2.5 rounded-full bg-yellow-400"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div>
+            <div class="mt-4 flex items-center gap-2">
+              <button onclick="openModal('modal-confirm')" class="rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-700 transition-colors">Open Modal</button>
+              <button onclick="openSourceDrawer('modal-confirm','Confirmation Modal')" class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-transparent dark:text-gray-300 dark:hover:bg-white/[0.05] transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>View Source
+              </button>
             </div>
-          </section>
-        </div>
+          </div>
+
+          <!-- Card 2: Destructive Delete -->
+          <div class="flex flex-col rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex-1">
+              <p class="text-sm font-semibold text-gray-900 dark:text-white">Destructive Delete</p>
+              <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Red-toned dialog for irreversible delete operations requiring confirmation.</p>
+            </div>
+            <div class="mt-4 flex items-center gap-2">
+              <button onclick="openModal('modal-delete')" class="rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-700 transition-colors">Open Modal</button>
+              <button onclick="openSourceDrawer('modal-delete','Destructive Delete')" class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-transparent dark:text-gray-300 dark:hover:bg-white/[0.05] transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>View Source
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 3: Billing / Upgrade -->
+          <div class="flex flex-col rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex-1">
+              <p class="text-sm font-semibold text-gray-900 dark:text-white">Billing / Upgrade</p>
+              <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Pro upgrade prompt with feature bullets and pricing call-to-action.</p>
+            </div>
+            <div class="mt-4 flex items-center gap-2">
+              <button onclick="openModal('modal-billing')" class="rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-700 transition-colors">Open Modal</button>
+              <button onclick="openSourceDrawer('modal-billing','Billing / Upgrade')" class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-transparent dark:text-gray-300 dark:hover:bg-white/[0.05] transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>View Source
+              </button>
+            </div>
+          </div>
+
+
+          <!-- Card 4: Profile Edit -->
+          <div class="flex flex-col rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex-1">
+              <p class="text-sm font-semibold text-gray-900 dark:text-white">Profile Edit Form</p>
+              <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Form modal with avatar upload, name, email, job title, and bio fields.</p>
+            </div>
+            <div class="mt-4 flex items-center gap-2">
+              <button onclick="openModal('modal-profile')" class="rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-700 transition-colors">Open Modal</button>
+              <button onclick="openSourceDrawer('modal-profile','Profile Edit Form')" class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-transparent dark:text-gray-300 dark:hover:bg-white/[0.05] transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>View Source
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 5: Media Preview -->
+          <div class="flex flex-col rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex-1">
+              <p class="text-sm font-semibold text-gray-900 dark:text-white">Media Preview</p>
+              <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Wide dark modal for image/file preview with filename and download action.</p>
+            </div>
+            <div class="mt-4 flex items-center gap-2">
+              <button onclick="openModal('modal-media')" class="rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-700 transition-colors">Open Modal</button>
+              <button onclick="openSourceDrawer('modal-media','Media Preview')" class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-transparent dark:text-gray-300 dark:hover:bg-white/[0.05] transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>View Source
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 6: Command Palette -->
+          <div class="flex flex-col rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex-1">
+              <p class="text-sm font-semibold text-gray-900 dark:text-white">Command Palette</p>
+              <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">⌘K-style search with recent items list and quick action shortcuts.</p>
+            </div>
+            <div class="mt-4 flex items-center gap-2">
+              <button onclick="openModal('modal-command')" class="rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-700 transition-colors">Open Modal</button>
+              <button onclick="openSourceDrawer('modal-command','Command Palette')" class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-transparent dark:text-gray-300 dark:hover:bg-white/[0.05] transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>View Source
+              </button>
+            </div>
+          </div>
+
+
+          <!-- Card 7: Onboarding Welcome -->
+          <div class="flex flex-col rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex-1">
+              <p class="text-sm font-semibold text-gray-900 dark:text-white">Onboarding Welcome</p>
+              <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Step-indicator welcome screen to guide new users through setup.</p>
+            </div>
+            <div class="mt-4 flex items-center gap-2">
+              <button onclick="openModal('modal-onboarding')" class="rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-700 transition-colors">Open Modal</button>
+              <button onclick="openSourceDrawer('modal-onboarding','Onboarding Welcome')" class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-transparent dark:text-gray-300 dark:hover:bg-white/[0.05] transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>View Source
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 8: Right Drawer -->
+          <div class="flex flex-col rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex-1">
+              <p class="text-sm font-semibold text-gray-900 dark:text-white">Right Drawer</p>
+              <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Full-height panel sliding in from the right with notification settings toggles.</p>
+            </div>
+            <div class="mt-4 flex items-center gap-2">
+              <button onclick="openModal('modal-drawer')" class="rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-700 transition-colors">Open Modal</button>
+              <button onclick="openSourceDrawer('modal-drawer','Right Drawer')" class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-transparent dark:text-gray-300 dark:hover:bg-white/[0.05] transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>View Source
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 9: Bottom Sheet -->
+          <div class="flex flex-col rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex-1">
+              <p class="text-sm font-semibold text-gray-900 dark:text-white">Bottom Sheet</p>
+              <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Mobile-native share sheet sliding up from the bottom with action rows.</p>
+            </div>
+            <div class="mt-4 flex items-center gap-2">
+              <button onclick="openModal('modal-bottomsheet')" class="rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-700 transition-colors">Open Modal</button>
+              <button onclick="openSourceDrawer('modal-bottomsheet','Bottom Sheet')" class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-transparent dark:text-gray-300 dark:hover:bg-white/[0.05] transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>View Source
+              </button>
+            </div>
+          </div>
+
+
+          <!-- Card 10: Multi-step Wizard -->
+          <div class="flex flex-col rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex-1">
+              <p class="text-sm font-semibold text-gray-900 dark:text-white">Multi-step Wizard</p>
+              <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">3-step progress wizard with Details → Plan → Payment flow navigation.</p>
+            </div>
+            <div class="mt-4 flex items-center gap-2">
+              <button onclick="openModal('modal-wizard'); setWizardStep(1);" class="rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-700 transition-colors">Open Modal</button>
+              <button onclick="openSourceDrawer('modal-wizard','Multi-step Wizard')" class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-transparent dark:text-gray-300 dark:hover:bg-white/[0.05] transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>View Source
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 11: Image Gallery -->
+          <div class="flex flex-col rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex-1">
+              <p class="text-sm font-semibold text-gray-900 dark:text-white">Image Gallery Picker</p>
+              <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Grid of thumbnail placeholders with selection highlight and insert action.</p>
+            </div>
+            <div class="mt-4 flex items-center gap-2">
+              <button onclick="openModal('modal-gallery')" class="rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-700 transition-colors">Open Modal</button>
+              <button onclick="openSourceDrawer('modal-gallery','Image Gallery Picker')" class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-transparent dark:text-gray-300 dark:hover:bg-white/[0.05] transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>View Source
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 12: Alert Notification -->
+          <div class="flex flex-col rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex-1">
+              <p class="text-sm font-semibold text-gray-900 dark:text-white">Alert Notification</p>
+              <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Small info dialog notifying users of session expiry with a single CTA.</p>
+            </div>
+            <div class="mt-4 flex items-center gap-2">
+              <button onclick="openModal('modal-alert')" class="rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-700 transition-colors">Open Modal</button>
+              <button onclick="openSourceDrawer('modal-alert','Alert Notification')" class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-transparent dark:text-gray-300 dark:hover:bg-white/[0.05] transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>View Source
+              </button>
+            </div>
+          </div>
+
+        </div><!-- /grid -->
       </div>
     </main>
   </div>
 </div>
-<script src="common-loader.js"></script>
+
+
+<!-- ===================== MODALS ===================== -->
+
+<!-- Modal 1: Confirmation -->
+<div id="modal-confirm" class="modal-overlay hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/50" onclick="closeModal('modal-confirm')"></div>
+  <div class="modal-panel relative w-full max-w-md rounded-2xl bg-white shadow-2xl dark:bg-gray-900 p-6">
+    <button onclick="closeModal('modal-confirm')" class="absolute right-4 top-4 rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800">
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+    <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900/30">
+      <svg class="h-6 w-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+    </div>
+    <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Confirm this action</h2>
+    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Are you sure you want to proceed? This will apply changes immediately.</p>
+    <div class="mt-6 flex gap-3 justify-end">
+      <button onclick="closeModal('modal-confirm')" class="rounded-lg border border-gray-200 dark:border-gray-700 px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Cancel</button>
+      <button onclick="closeModal('modal-confirm'); showToast('Action confirmed!');" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 2: Destructive Delete -->
+<div id="modal-delete" class="modal-overlay hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/50" onclick="closeModal('modal-delete')"></div>
+  <div class="modal-panel relative w-full max-w-md rounded-2xl bg-white shadow-2xl dark:bg-gray-900 p-6">
+    <button onclick="closeModal('modal-delete')" class="absolute right-4 top-4 rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800">
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+    <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30">
+      <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+    </div>
+    <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Delete workspace?</h2>
+    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">This will permanently delete <span class="font-semibold text-gray-700 dark:text-gray-200">"Acme Corp"</span> workspace and all 24 members, projects, and files. This cannot be undone.</p>
+    <div class="mt-6 flex gap-3 justify-end">
+      <button onclick="closeModal('modal-delete')" class="rounded-lg border border-gray-200 dark:border-gray-700 px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Cancel</button>
+      <button onclick="closeModal('modal-delete'); showToast('Workspace deleted.');" class="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 transition-colors">Delete</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal 3: Billing / Upgrade -->
+<div id="modal-billing" class="modal-overlay hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/50" onclick="closeModal('modal-billing')"></div>
+  <div class="modal-panel relative w-full max-w-lg rounded-2xl bg-white shadow-2xl dark:bg-gray-900 p-6">
+    <button onclick="closeModal('modal-billing')" class="absolute right-4 top-4 rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800">
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+    <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900/30">
+      <svg class="h-6 w-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3l14 9-14 9V3z"/></svg>
+    </div>
+    <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Upgrade to Pro</h2>
+    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Unlock the full power of mtverse with our Pro plan.</p>
+    <ul class="mt-4 space-y-2">
+      <li class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+        <svg class="h-4 w-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        Unlimited API calls
+      </li>
+      <li class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+        <svg class="h-4 w-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        Priority support
+      </li>
+      <li class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+        <svg class="h-4 w-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        Advanced analytics
+      </li>
+    </ul>
+    <div class="mt-5 flex items-baseline gap-1">
+      <span class="text-3xl font-bold text-gray-900 dark:text-white">$49</span>
+      <span class="text-sm text-gray-500">/month</span>
+    </div>
+    <div class="mt-6 flex gap-3 justify-end">
+      <button onclick="closeModal('modal-billing')" class="rounded-lg border border-gray-200 dark:border-gray-700 px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Maybe later</button>
+      <button onclick="closeModal('modal-billing'); showToast('Upgrade started!');" class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700 transition-colors">Upgrade Now</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 4: Profile Edit -->
+<div id="modal-profile" class="modal-overlay hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/50" onclick="closeModal('modal-profile')"></div>
+  <div class="modal-panel relative w-full max-w-md rounded-2xl bg-white shadow-2xl dark:bg-gray-900 p-6">
+    <button onclick="closeModal('modal-profile')" class="absolute right-4 top-4 rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800">
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+    <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Edit Profile</h2>
+    <div class="mb-5 flex items-center gap-4">
+      <div class="flex h-16 w-16 items-center justify-center rounded-full bg-blue-600 text-xl font-bold text-white flex-shrink-0">JD</div>
+      <button class="rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Upload photo</button>
+    </div>
+    <div class="space-y-3">
+      <div>
+        <label class="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">Full Name</label>
+        <input type="text" value="Jane Doe" class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+      </div>
+      <div>
+        <label class="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">Email</label>
+        <input type="email" value="jane@mtverse.io" class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+      </div>
+      <div>
+        <label class="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">Job Title</label>
+        <input type="text" value="Product Designer" class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+      </div>
+      <div>
+        <label class="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">Bio</label>
+        <textarea rows="3" class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 resize-none">Building delightful products at mtverse.</textarea>
+      </div>
+    </div>
+    <div class="mt-5 flex gap-3 justify-end">
+      <button onclick="closeModal('modal-profile')" class="rounded-lg border border-gray-200 dark:border-gray-700 px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Cancel</button>
+      <button onclick="closeModal('modal-profile'); showToast('Profile saved!');" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal 5: Media Preview -->
+<div id="modal-media" class="modal-overlay hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/70" onclick="closeModal('modal-media')"></div>
+  <div class="modal-panel relative w-full max-w-2xl rounded-2xl bg-gray-900 shadow-2xl overflow-hidden">
+    <button onclick="closeModal('modal-media')" class="absolute right-3 top-3 z-10 rounded-lg p-1.5 text-gray-400 hover:bg-gray-700 hover:text-white">
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+    <!-- 16:9 Image placeholder -->
+    <div class="w-full bg-gray-700 flex items-center justify-center" style="aspect-ratio:16/9;">
+      <div class="text-center text-gray-500">
+        <svg class="mx-auto h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        <p class="mt-2 text-sm">Image Preview</p>
+      </div>
+    </div>
+    <div class="flex items-center justify-between px-5 py-4">
+      <div>
+        <p class="text-sm font-semibold text-white">hero-banner-v3.png</p>
+        <p class="text-xs text-gray-400">2.4 MB · PNG · 1920 × 1080</p>
+      </div>
+      <button onclick="showToast('Download started!');" class="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700 transition-colors">
+        <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        Download
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 6: Command Palette -->
+<div id="modal-command" class="modal-overlay hidden fixed inset-0 z-50 flex items-start justify-center p-4 pt-20">
+  <div class="absolute inset-0 bg-black/50" onclick="closeModal('modal-command')"></div>
+  <div class="modal-panel relative w-full max-w-xl rounded-2xl bg-white shadow-2xl dark:bg-gray-900 border border-gray-200 dark:border-gray-700 overflow-hidden">
+    <!-- Search input -->
+    <div class="flex items-center gap-3 border-b border-gray-200 dark:border-gray-700 px-4 py-3">
+      <svg class="h-4 w-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      <input type="text" placeholder="Search commands..." class="flex-1 bg-transparent text-sm text-gray-900 dark:text-white placeholder-gray-400 outline-none" autofocus />
+      <kbd class="hidden sm:inline-flex items-center rounded border border-gray-200 dark:border-gray-700 px-1.5 py-0.5 font-mono text-xs text-gray-500 dark:text-gray-400">⌘K</kbd>
+    </div>
+    <!-- Recent items -->
+    <div class="px-2 py-2">
+      <p class="px-2 pb-1 text-xs font-semibold uppercase tracking-wide text-gray-400">Recent</p>
+      <a href="#" onclick="closeModal('modal-command')" class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+        <div class="flex h-7 w-7 items-center justify-center rounded-md bg-blue-100 dark:bg-blue-900/40"><svg class="h-3.5 w-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg></div>
+        <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Dashboard</span>
+      </a>
+      <a href="#" onclick="closeModal('modal-command')" class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+        <div class="flex h-7 w-7 items-center justify-center rounded-md bg-purple-100 dark:bg-purple-900/40"><svg class="h-3.5 w-3.5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg></div>
+        <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Users</span>
+      </a>
+      <a href="#" onclick="closeModal('modal-command')" class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+        <div class="flex h-7 w-7 items-center justify-center rounded-md bg-gray-100 dark:bg-gray-800"><svg class="h-3.5 w-3.5 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
+        <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Settings</span>
+      </a>
+      <a href="#" onclick="closeModal('modal-command')" class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+        <div class="flex h-7 w-7 items-center justify-center rounded-md bg-green-100 dark:bg-green-900/40"><svg class="h-3.5 w-3.5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg></div>
+        <span class="text-sm font-medium text-gray-800 dark:text-gray-200">API Keys</span>
+      </a>
+      <a href="#" onclick="closeModal('modal-command')" class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+        <div class="flex h-7 w-7 items-center justify-center rounded-md bg-amber-100 dark:bg-amber-900/40"><svg class="h-3.5 w-3.5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg></div>
+        <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Billing</span>
+      </a>
+    </div>
+    <!-- Quick actions footer -->
+    <div class="border-t border-gray-200 dark:border-gray-700 px-4 py-2.5 flex items-center gap-4">
+      <span class="text-xs text-gray-400">Quick actions:</span>
+      <button onclick="closeModal('modal-command'); showToast('New project created!');" class="rounded-md bg-gray-100 dark:bg-gray-800 px-2.5 py-1 text-xs font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">+ New Project</button>
+      <button onclick="closeModal('modal-command'); showToast('Invite sent!');" class="rounded-md bg-gray-100 dark:bg-gray-800 px-2.5 py-1 text-xs font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">Invite member</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal 7: Onboarding Welcome -->
+<div id="modal-onboarding" class="modal-overlay hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/50" onclick="closeModal('modal-onboarding')"></div>
+  <div class="modal-panel relative w-full max-w-lg rounded-2xl bg-white shadow-2xl dark:bg-gray-900 p-6 text-center">
+    <button onclick="closeModal('modal-onboarding')" class="absolute right-4 top-4 rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800">
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+    <!-- Step dots -->
+    <div class="mb-5 flex items-center justify-center gap-2">
+      <span class="h-2.5 w-2.5 rounded-full bg-blue-600"></span>
+      <span class="h-2.5 w-2.5 rounded-full bg-gray-200 dark:bg-gray-700"></span>
+      <span class="h-2.5 w-2.5 rounded-full bg-gray-200 dark:bg-gray-700"></span>
+    </div>
+    <!-- Illustration placeholder -->
+    <div class="mx-auto mb-5 flex h-32 w-full max-w-xs items-center justify-center rounded-xl bg-blue-50 dark:bg-blue-900/20">
+      <svg class="h-16 w-16 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+    </div>
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white">Welcome to mtverse</h2>
+    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Let's set up your workspace. It only takes 2 minutes.</p>
+    <div class="mt-6 flex items-center justify-center gap-3">
+      <button onclick="closeModal('modal-onboarding')" class="rounded-lg border border-gray-200 dark:border-gray-700 px-5 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Skip</button>
+      <button onclick="closeModal('modal-onboarding'); showToast('Setup started!');" class="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 transition-colors">Get Started</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 8: Right Drawer -->
+<div id="modal-drawer" class="modal-overlay hidden fixed inset-0 z-50">
+  <div class="absolute inset-0 bg-black/50" onclick="closeModal('modal-drawer')"></div>
+  <div class="drawer-panel absolute right-0 top-0 h-full w-96 max-w-full bg-white dark:bg-gray-900 shadow-2xl flex flex-col">
+    <!-- Header -->
+    <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-800 px-5 py-4 flex-shrink-0">
+      <h2 class="text-base font-semibold text-gray-900 dark:text-white">Notification Settings</h2>
+      <button onclick="closeModal('modal-drawer')" class="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <!-- Body -->
+    <div class="flex-1 overflow-y-auto px-5 py-4 no-scrollbar">
+      <p class="mb-4 text-xs text-gray-500 dark:text-gray-400">Manage how and when you receive notifications.</p>
+      <div class="space-y-1">
+        <!-- Toggle row helper -->
+        <div class="flex items-center justify-between rounded-lg px-2 py-3 hover:bg-gray-50 dark:hover:bg-gray-800">
+          <div>
+            <p class="text-sm font-medium text-gray-900 dark:text-white">Email notifications</p>
+            <p class="text-xs text-gray-500">Receive updates via email</p>
+          </div>
+          <button role="switch" aria-checked="true" onclick="this.setAttribute('aria-checked', this.getAttribute('aria-checked')==='true'?'false':'true'); this.classList.toggle('bg-blue-600'); this.classList.toggle('bg-gray-200'); this.querySelector('span').classList.toggle('translate-x-5'); this.querySelector('span').classList.toggle('translate-x-1');" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-blue-600 transition-colors focus:outline-none">
+            <span class="inline-block h-5 w-5 translate-x-5 rounded-full bg-white shadow ring-0 transition-transform"></span>
+          </button>
+        </div>
+        <div class="flex items-center justify-between rounded-lg px-2 py-3 hover:bg-gray-50 dark:hover:bg-gray-800">
+          <div>
+            <p class="text-sm font-medium text-gray-900 dark:text-white">Push alerts</p>
+            <p class="text-xs text-gray-500">Browser push notifications</p>
+          </div>
+          <button role="switch" aria-checked="true" onclick="this.setAttribute('aria-checked', this.getAttribute('aria-checked')==='true'?'false':'true'); this.classList.toggle('bg-blue-600'); this.classList.toggle('bg-gray-200'); this.querySelector('span').classList.toggle('translate-x-5'); this.querySelector('span').classList.toggle('translate-x-1');" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-blue-600 transition-colors focus:outline-none">
+            <span class="inline-block h-5 w-5 translate-x-5 rounded-full bg-white shadow ring-0 transition-transform"></span>
+          </button>
+        </div>
+        <div class="flex items-center justify-between rounded-lg px-2 py-3 hover:bg-gray-50 dark:hover:bg-gray-800">
+          <div>
+            <p class="text-sm font-medium text-gray-900 dark:text-white">Weekly digest</p>
+            <p class="text-xs text-gray-500">Summary every Monday</p>
+          </div>
+          <button role="switch" aria-checked="false" onclick="this.setAttribute('aria-checked', this.getAttribute('aria-checked')==='true'?'false':'true'); this.classList.toggle('bg-blue-600'); this.classList.toggle('bg-gray-200'); this.querySelector('span').classList.toggle('translate-x-5'); this.querySelector('span').classList.toggle('translate-x-1');" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-gray-200 dark:bg-gray-700 transition-colors focus:outline-none">
+            <span class="inline-block h-5 w-5 translate-x-1 rounded-full bg-white shadow ring-0 transition-transform"></span>
+          </button>
+        </div>
+        <div class="flex items-center justify-between rounded-lg px-2 py-3 hover:bg-gray-50 dark:hover:bg-gray-800">
+          <div>
+            <p class="text-sm font-medium text-gray-900 dark:text-white">Marketing emails</p>
+            <p class="text-xs text-gray-500">Product updates and offers</p>
+          </div>
+          <button role="switch" aria-checked="false" onclick="this.setAttribute('aria-checked', this.getAttribute('aria-checked')==='true'?'false':'true'); this.classList.toggle('bg-blue-600'); this.classList.toggle('bg-gray-200'); this.querySelector('span').classList.toggle('translate-x-5'); this.querySelector('span').classList.toggle('translate-x-1');" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-gray-200 dark:bg-gray-700 transition-colors focus:outline-none">
+            <span class="inline-block h-5 w-5 translate-x-1 rounded-full bg-white shadow ring-0 transition-transform"></span>
+          </button>
+        </div>
+        <div class="flex items-center justify-between rounded-lg px-2 py-3 hover:bg-gray-50 dark:hover:bg-gray-800">
+          <div>
+            <p class="text-sm font-medium text-gray-900 dark:text-white">Security alerts</p>
+            <p class="text-xs text-gray-500">Login & suspicious activity</p>
+          </div>
+          <button role="switch" aria-checked="true" onclick="this.setAttribute('aria-checked', this.getAttribute('aria-checked')==='true'?'false':'true'); this.classList.toggle('bg-blue-600'); this.classList.toggle('bg-gray-200'); this.querySelector('span').classList.toggle('translate-x-5'); this.querySelector('span').classList.toggle('translate-x-1');" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-blue-600 transition-colors focus:outline-none">
+            <span class="inline-block h-5 w-5 translate-x-5 rounded-full bg-white shadow ring-0 transition-transform"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+    <div class="flex items-center justify-end gap-3 border-t border-gray-200 dark:border-gray-800 px-5 py-4 flex-shrink-0">
+      <button onclick="closeModal('modal-drawer')" class="rounded-lg border border-gray-200 dark:border-gray-700 px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Cancel</button>
+      <button onclick="closeModal('modal-drawer'); showToast('Settings saved!');" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors">Save</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal 9: Mobile Bottom Sheet -->
+<div id="modal-bottomsheet" class="modal-overlay hidden fixed inset-0 z-50 flex items-end">
+  <div class="absolute inset-0 bg-black/50" onclick="closeModal('modal-bottomsheet')"></div>
+  <div class="bottom-sheet-panel relative w-full rounded-t-2xl bg-white dark:bg-gray-900 shadow-2xl">
+    <!-- Drag handle -->
+    <div class="flex justify-center pt-3 pb-1">
+      <div class="h-1 w-10 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+    </div>
+    <div class="px-5 pt-3 pb-2">
+      <h2 class="text-base font-semibold text-gray-900 dark:text-white">Share this file</h2>
+    </div>
+    <div class="divide-y divide-gray-100 dark:divide-gray-800 px-2 pb-6">
+      <button class="flex w-full items-center gap-4 px-3 py-3.5 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl transition-colors">
+        <div class="flex h-9 w-9 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30 flex-shrink-0">
+          <svg class="h-4 w-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+        </div>
+        <span class="flex-1 text-left text-sm font-medium text-gray-800 dark:text-gray-200">Copy link</span>
+        <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </button>
+      <button class="flex w-full items-center gap-4 px-3 py-3.5 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl transition-colors">
+        <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30 flex-shrink-0">
+          <svg class="h-4 w-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        </div>
+        <span class="flex-1 text-left text-sm font-medium text-gray-800 dark:text-gray-200">Send via email</span>
+        <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </button>
+      <button class="flex w-full items-center gap-4 px-3 py-3.5 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl transition-colors">
+        <div class="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 flex-shrink-0">
+          <svg class="h-4 w-4 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        </div>
+        <span class="flex-1 text-left text-sm font-medium text-gray-800 dark:text-gray-200">Download</span>
+        <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </button>
+      <button class="flex w-full items-center gap-4 px-3 py-3.5 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-xl transition-colors">
+        <div class="flex h-9 w-9 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30 flex-shrink-0">
+          <svg class="h-4 w-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+        </div>
+        <span class="flex-1 text-left text-sm font-medium text-red-600">Delete</span>
+        <svg class="h-4 w-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal 10: Multi-step Wizard -->
+<div id="modal-wizard" class="modal-overlay hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/50" onclick="closeModal('modal-wizard')"></div>
+  <div class="modal-panel relative w-full max-w-lg rounded-2xl bg-white shadow-2xl dark:bg-gray-900 overflow-hidden">
+    <!-- Step progress bar -->
+    <div class="border-b border-gray-200 dark:border-gray-800 px-6 pt-5 pb-4">
+      <div class="flex items-center">
+        <div class="flex flex-col items-center">
+          <div id="wizard-dot-1" class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white">1</div>
+          <span class="mt-1 text-xs font-medium text-blue-600">Details</span>
+        </div>
+        <div class="mx-2 flex-1 h-1 rounded-full bg-gray-200 dark:bg-gray-700">
+          <div id="wizard-bar-1" class="h-full rounded-full bg-blue-600 transition-all duration-300" style="width:0%"></div>
+        </div>
+        <div class="flex flex-col items-center">
+          <div id="wizard-dot-2" class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 text-xs font-bold text-gray-500 dark:text-gray-400">2</div>
+          <span class="mt-1 text-xs font-medium text-gray-400">Plan</span>
+        </div>
+        <div class="mx-2 flex-1 h-1 rounded-full bg-gray-200 dark:bg-gray-700">
+          <div id="wizard-bar-2" class="h-full rounded-full bg-blue-600 transition-all duration-300" style="width:0%"></div>
+        </div>
+        <div class="flex flex-col items-center">
+          <div id="wizard-dot-3" class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 text-xs font-bold text-gray-500 dark:text-gray-400">3</div>
+          <span class="mt-1 text-xs font-medium text-gray-400">Payment</span>
+        </div>
+      </div>
+    </div>
+    <!-- Step content -->
+    <div class="px-6 py-5">
+      <!-- Step 1 -->
+      <div id="wizard-step-1">
+        <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-4">Workspace details</h2>
+        <div class="space-y-3">
+          <div>
+            <label class="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">Workspace Name</label>
+            <input type="text" placeholder="e.g. Acme Corp" class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+          </div>
+          <div>
+            <label class="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">Description</label>
+            <input type="text" placeholder="Brief description of your workspace" class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+          </div>
+        </div>
+      </div>
+      <!-- Step 2 -->
+      <div id="wizard-step-2" class="hidden">
+        <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-4">Choose your plan</h2>
+        <div class="space-y-2">
+          <label class="flex cursor-pointer items-center gap-3 rounded-xl border-2 border-blue-600 bg-blue-50 dark:bg-blue-900/10 p-3">
+            <input type="radio" name="plan" value="pro" checked class="text-blue-600" />
+            <div>
+              <p class="text-sm font-semibold text-gray-900 dark:text-white">Pro — $49/mo</p>
+              <p class="text-xs text-gray-500">Unlimited API calls, priority support</p>
+            </div>
+          </label>
+          <label class="flex cursor-pointer items-center gap-3 rounded-xl border border-gray-200 dark:border-gray-700 p-3 hover:border-gray-300">
+            <input type="radio" name="plan" value="starter" class="text-blue-600" />
+            <div>
+              <p class="text-sm font-semibold text-gray-900 dark:text-white">Starter — $9/mo</p>
+              <p class="text-xs text-gray-500">10k API calls, community support</p>
+            </div>
+          </label>
+          <label class="flex cursor-pointer items-center gap-3 rounded-xl border border-gray-200 dark:border-gray-700 p-3 hover:border-gray-300">
+            <input type="radio" name="plan" value="free" class="text-blue-600" />
+            <div>
+              <p class="text-sm font-semibold text-gray-900 dark:text-white">Free</p>
+              <p class="text-xs text-gray-500">1k API calls/month</p>
+            </div>
+          </label>
+        </div>
+      </div>
+      <!-- Step 3 -->
+      <div id="wizard-step-3" class="hidden">
+        <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-4">Payment details</h2>
+        <div class="space-y-3">
+          <div>
+            <label class="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">Card number</label>
+            <input type="text" placeholder="1234 5678 9012 3456" class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 font-mono" />
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">Expiry</label>
+              <input type="text" placeholder="MM / YY" class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 font-mono" />
+            </div>
+            <div>
+              <label class="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">CVC</label>
+              <input type="text" placeholder="•••" class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 font-mono" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Footer nav -->
+    <div class="flex items-center justify-between border-t border-gray-200 dark:border-gray-800 px-6 py-4">
+      <button onclick="closeModal('modal-wizard')" class="text-sm text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">Cancel</button>
+      <div class="flex gap-2">
+        <button id="wizard-prev" onclick="setWizardStep(wizardStep-1)" class="hidden rounded-lg border border-gray-200 dark:border-gray-700 px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Previous</button>
+        <button id="wizard-next" onclick="if(wizardStep<3){setWizardStep(wizardStep+1)}else{closeModal('modal-wizard');showToast('Setup complete!')}" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors">Next</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal 11: Image Gallery Picker -->
+<div id="modal-gallery" class="modal-overlay hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/50" onclick="closeModal('modal-gallery')"></div>
+  <div class="modal-panel relative w-full max-w-3xl rounded-2xl bg-white shadow-2xl dark:bg-gray-900 overflow-hidden">
+    <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-800 px-5 py-4">
+      <h2 class="text-base font-semibold text-gray-900 dark:text-white">Select Image</h2>
+      <button onclick="closeModal('modal-gallery')" class="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="p-5">
+      <div class="grid grid-cols-3 gap-3 sm:grid-cols-6" id="gallery-grid">
+        <!-- 6 thumbnails -->
+        <button onclick="selectGalleryItem(this,1)" class="gallery-thumb group relative aspect-square rounded-xl bg-gray-200 dark:bg-gray-700 overflow-hidden border-2 border-blue-600 focus:outline-none">
+          <div class="absolute inset-0 flex items-center justify-center text-gray-400 dark:text-gray-500">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </div>
+          <div class="absolute inset-0 bg-blue-600/20 opacity-100 group-focus:opacity-100 transition-opacity"></div>
+          <div class="absolute top-1.5 right-1.5 h-4 w-4 rounded-full bg-blue-600 flex items-center justify-center">
+            <svg class="h-2.5 w-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+          </div>
+        </button>
+        <button onclick="selectGalleryItem(this,2)" class="gallery-thumb group relative aspect-square rounded-xl bg-gray-200 dark:bg-gray-700 overflow-hidden border-2 border-transparent hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none transition-colors">
+          <div class="absolute inset-0 flex items-center justify-center text-gray-400 dark:text-gray-500">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </div>
+        </button>
+        <button onclick="selectGalleryItem(this,3)" class="gallery-thumb group relative aspect-square rounded-xl bg-gray-300 dark:bg-gray-600 overflow-hidden border-2 border-transparent hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none transition-colors">
+          <div class="absolute inset-0 flex items-center justify-center text-gray-500 dark:text-gray-400">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </div>
+        </button>
+        <button onclick="selectGalleryItem(this,4)" class="gallery-thumb group relative aspect-square rounded-xl bg-gray-200 dark:bg-gray-700 overflow-hidden border-2 border-transparent hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none transition-colors">
+          <div class="absolute inset-0 flex items-center justify-center text-gray-400 dark:text-gray-500">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </div>
+        </button>
+        <button onclick="selectGalleryItem(this,5)" class="gallery-thumb group relative aspect-square rounded-xl bg-gray-300 dark:bg-gray-600 overflow-hidden border-2 border-transparent hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none transition-colors">
+          <div class="absolute inset-0 flex items-center justify-center text-gray-500 dark:text-gray-400">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </div>
+        </button>
+        <button onclick="selectGalleryItem(this,6)" class="gallery-thumb group relative aspect-square rounded-xl bg-gray-200 dark:bg-gray-700 overflow-hidden border-2 border-transparent hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none transition-colors">
+          <div class="absolute inset-0 flex items-center justify-center text-gray-400 dark:text-gray-500">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </div>
+        </button>
+      </div>
+      <p id="gallery-selected-label" class="mt-3 text-xs text-gray-500 dark:text-gray-400">1 image selected</p>
+    </div>
+    <div class="flex items-center justify-end gap-3 border-t border-gray-200 dark:border-gray-800 px-5 py-4">
+      <button onclick="closeModal('modal-gallery')" class="rounded-lg border border-gray-200 dark:border-gray-700 px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Cancel</button>
+      <button onclick="closeModal('modal-gallery'); showToast('Image inserted!');" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors">Insert Image</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 12: Alert Notification -->
+<div id="modal-alert" class="modal-overlay hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/50" onclick="closeModal('modal-alert')"></div>
+  <div class="modal-panel relative w-full max-w-sm rounded-2xl bg-white shadow-2xl dark:bg-gray-900 p-6 text-center">
+    <div class="mb-4 flex justify-center">
+      <div class="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30">
+        <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </div>
+    </div>
+    <h2 class="text-base font-semibold text-gray-900 dark:text-white">Your session expires soon</h2>
+    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">You'll be automatically signed out in 5 minutes. Save your work now.</p>
+    <button onclick="closeModal('modal-alert'); showToast('Session extended!');" class="mt-5 w-full rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 transition-colors">Stay signed in</button>
+  </div>
+</div>
+
+
+<!-- ===================== SOURCE DRAWER ===================== -->
+<div id="source-drawer" class="fixed inset-x-0 bottom-0 z-[60] hidden">
+  <div class="fixed inset-0 bg-black/30" onclick="closeSourceDrawer()"></div>
+  <div class="relative bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 rounded-t-2xl shadow-2xl max-h-[65vh] flex flex-col mx-auto" style="max-width:720px;border-left:1px solid #e5e7eb;border-right:1px solid #e5e7eb;">
+    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-gray-800 flex-shrink-0">
+      <span id="drawer-title" class="text-sm font-semibold text-gray-900 dark:text-white">Source Code</span>
+      <div class="flex gap-2">
+        <button onclick="copyDrawerCode()" class="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700">Copy</button>
+        <button onclick="closeSourceDrawer()" class="rounded-lg border border-gray-200 dark:border-gray-700 p-1.5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+    </div>
+    <div class="overflow-auto flex-1 p-5">
+      <pre id="drawer-code" class="text-xs leading-relaxed text-gray-800 dark:text-gray-200 whitespace-pre-wrap font-mono"></pre>
+    </div>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-2 pointer-events-none"></div>
+
 <script src="common-sidebar.js"></script>
 <script src="common-header.js"></script>
 <script src="app-shell.js"></script>
+
+
+<script>
+/* ── Open / Close modals ── */
+function openModal(id) {
+  const m = document.getElementById(id);
+  if (!m) return;
+  m.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  const m = document.getElementById(id);
+  if (!m) return;
+  m.classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+/* ── Toast notification ── */
+function showToast(msg) {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = 'pointer-events-auto flex items-center gap-2 rounded-xl border border-green-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 shadow-lg dark:border-green-800 dark:bg-gray-900 dark:text-white';
+  t.style.animation = 'toastIn .2s ease';
+  t.innerHTML = '<span class="h-2 w-2 rounded-full bg-green-500 flex-shrink-0"></span>' + msg;
+  c.appendChild(t);
+  setTimeout(() => {
+    t.style.opacity = '0';
+    t.style.transform = 'translateX(12px)';
+    t.style.transition = 'all .2s';
+    setTimeout(() => t.remove(), 200);
+  }, 2500);
+}
+
+/* ── Source drawer ── */
+const SOURCE_SNIPPETS = {
+  'modal-confirm': `<!-- Confirmation Modal -->
+<div id="modal-confirm" class="modal-overlay hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/50" onclick="closeModal('modal-confirm')"></div>
+  <div class="modal-panel relative w-full max-w-md rounded-2xl bg-white shadow-2xl dark:bg-gray-900 p-6">
+    <button onclick="closeModal('modal-confirm')" class="absolute right-4 top-4 rounded-lg p-1.5 text-gray-400 hover:bg-gray-100">
+      <!-- X icon -->
+    </button>
+    <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-amber-100">
+      <!-- Warning icon -->
+    </div>
+    <h2 class="text-lg font-semibold text-gray-900">Confirm this action</h2>
+    <p class="mt-2 text-sm text-gray-500">Are you sure you want to proceed? This will apply changes immediately.</p>
+    <div class="mt-6 flex gap-3 justify-end">
+      <button onclick="closeModal('modal-confirm')" class="rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50">Cancel</button>
+      <button class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">Confirm</button>
+    </div>
+  </div>
+</div>`,
+
+  'modal-delete': `<!-- Destructive Delete Modal -->
+<div id="modal-delete" class="modal-overlay hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/50" onclick="closeModal('modal-delete')"></div>
+  <div class="modal-panel relative w-full max-w-md rounded-2xl bg-white shadow-2xl dark:bg-gray-900 p-6">
+    <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
+      <!-- Trash icon -->
+    </div>
+    <h2 class="text-lg font-semibold text-gray-900">Delete workspace?</h2>
+    <p class="mt-2 text-sm text-gray-500">This will permanently delete "Acme Corp" workspace and all 24 members, projects, and files. This cannot be undone.</p>
+    <div class="mt-6 flex gap-3 justify-end">
+      <button onclick="closeModal('modal-delete')" class="rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50">Cancel</button>
+      <button class="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700">Delete</button>
+    </div>
+  </div>
+</div>`,
+
+  'modal-billing': `<!-- Billing / Upgrade Modal -->
+<div id="modal-billing" class="modal-overlay hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/50" onclick="closeModal('modal-billing')"></div>
+  <div class="modal-panel relative w-full max-w-lg rounded-2xl bg-white shadow-2xl dark:bg-gray-900 p-6">
+    <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-indigo-100">
+      <!-- Sparkle icon -->
+    </div>
+    <h2 class="text-lg font-semibold">Upgrade to Pro</h2>
+    <ul class="mt-4 space-y-2">
+      <li class="flex items-center gap-2 text-sm">✓ Unlimited API calls</li>
+      <li class="flex items-center gap-2 text-sm">✓ Priority support</li>
+      <li class="flex items-center gap-2 text-sm">✓ Advanced analytics</li>
+    </ul>
+    <div class="mt-5 flex items-baseline gap-1">
+      <span class="text-3xl font-bold">$49</span><span class="text-sm text-gray-500">/month</span>
+    </div>
+    <div class="mt-6 flex gap-3 justify-end">
+      <button onclick="closeModal('modal-billing')" class="rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700">Maybe later</button>
+      <button class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700">Upgrade Now</button>
+    </div>
+  </div>
+</div>`,
+
+  'modal-profile': `<!-- Profile Edit Modal -->
+<div id="modal-profile" class="modal-overlay hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/50" onclick="closeModal('modal-profile')"></div>
+  <div class="modal-panel relative w-full max-w-md rounded-2xl bg-white shadow-2xl dark:bg-gray-900 p-6">
+    <h2 class="text-lg font-semibold mb-4">Edit Profile</h2>
+    <div class="mb-5 flex items-center gap-4">
+      <div class="flex h-16 w-16 items-center justify-center rounded-full bg-blue-600 text-xl font-bold text-white">JD</div>
+      <button class="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-semibold">Upload photo</button>
+    </div>
+    <div class="space-y-3">
+      <input type="text" placeholder="Full Name" class="w-full rounded-lg border px-3 py-2 text-sm" />
+      <input type="email" placeholder="Email" class="w-full rounded-lg border px-3 py-2 text-sm" />
+      <input type="text" placeholder="Job Title" class="w-full rounded-lg border px-3 py-2 text-sm" />
+      <textarea rows="3" placeholder="Bio" class="w-full rounded-lg border px-3 py-2 text-sm resize-none"></textarea>
+    </div>
+    <div class="mt-5 flex gap-3 justify-end">
+      <button onclick="closeModal('modal-profile')" class="rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold">Cancel</button>
+      <button class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">Save Changes</button>
+    </div>
+  </div>
+</div>`,
+
+  'modal-media': `<!-- Media Preview Modal -->
+<div id="modal-media" class="modal-overlay hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/70" onclick="closeModal('modal-media')"></div>
+  <div class="modal-panel relative w-full max-w-2xl rounded-2xl bg-gray-900 shadow-2xl overflow-hidden">
+    <button onclick="closeModal('modal-media')" class="absolute right-3 top-3 z-10 rounded-lg p-1.5 text-gray-400 hover:bg-gray-700"><!-- X --></button>
+    <div class="w-full bg-gray-700 flex items-center justify-center" style="aspect-ratio:16/9;">
+      <!-- Image here -->
+    </div>
+    <div class="flex items-center justify-between px-5 py-4">
+      <div>
+        <p class="text-sm font-semibold text-white">hero-banner-v3.png</p>
+        <p class="text-xs text-gray-400">2.4 MB · PNG · 1920 × 1080</p>
+      </div>
+      <button class="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700">Download</button>
+    </div>
+  </div>
+</div>`,
+
+  'modal-command': `<!-- Command Palette Modal -->
+<div id="modal-command" class="modal-overlay hidden fixed inset-0 z-50 flex items-start justify-center p-4 pt-20">
+  <div class="absolute inset-0 bg-black/50" onclick="closeModal('modal-command')"></div>
+  <div class="modal-panel relative w-full max-w-xl rounded-2xl bg-white shadow-2xl border border-gray-200 overflow-hidden">
+    <div class="flex items-center gap-3 border-b border-gray-200 px-4 py-3">
+      <!-- Search icon -->
+      <input type="text" placeholder="Search commands..." class="flex-1 bg-transparent text-sm outline-none" />
+      <kbd class="rounded border border-gray-200 px-1.5 py-0.5 font-mono text-xs text-gray-500">⌘K</kbd>
+    </div>
+    <div class="px-2 py-2">
+      <p class="px-2 pb-1 text-xs font-semibold uppercase tracking-wide text-gray-400">Recent</p>
+      <!-- 5 recent item rows -->
+    </div>
+    <div class="border-t border-gray-200 px-4 py-2.5 flex items-center gap-4">
+      <span class="text-xs text-gray-400">Quick actions:</span>
+      <button class="rounded-md bg-gray-100 px-2.5 py-1 text-xs font-medium">+ New Project</button>
+      <button class="rounded-md bg-gray-100 px-2.5 py-1 text-xs font-medium">Invite member</button>
+    </div>
+  </div>
+</div>`,
+
+  'modal-onboarding': `<!-- Onboarding Welcome Modal -->
+<div id="modal-onboarding" class="modal-overlay hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/50" onclick="closeModal('modal-onboarding')"></div>
+  <div class="modal-panel relative w-full max-w-lg rounded-2xl bg-white shadow-2xl p-6 text-center">
+    <div class="mb-5 flex items-center justify-center gap-2">
+      <span class="h-2.5 w-2.5 rounded-full bg-blue-600"></span>
+      <span class="h-2.5 w-2.5 rounded-full bg-gray-200"></span>
+      <span class="h-2.5 w-2.5 rounded-full bg-gray-200"></span>
+    </div>
+    <div class="mx-auto mb-5 flex h-32 w-full max-w-xs items-center justify-center rounded-xl bg-blue-50">
+      <!-- Illustration placeholder -->
+    </div>
+    <h2 class="text-xl font-bold">Welcome to mtverse</h2>
+    <p class="mt-2 text-sm text-gray-500">Let's set up your workspace. It only takes 2 minutes.</p>
+    <div class="mt-6 flex items-center justify-center gap-3">
+      <button onclick="closeModal('modal-onboarding')" class="rounded-lg border border-gray-200 px-5 py-2.5 text-sm font-semibold">Skip</button>
+      <button class="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-700">Get Started</button>
+    </div>
+  </div>
+</div>`,
+
+  'modal-drawer': `<!-- Right Drawer Modal -->
+<div id="modal-drawer" class="modal-overlay hidden fixed inset-0 z-50">
+  <div class="absolute inset-0 bg-black/50" onclick="closeModal('modal-drawer')"></div>
+  <div class="drawer-panel absolute right-0 top-0 h-full w-96 max-w-full bg-white dark:bg-gray-900 shadow-2xl flex flex-col">
+    <div class="flex items-center justify-between border-b border-gray-200 px-5 py-4">
+      <h2 class="text-base font-semibold">Notification Settings</h2>
+      <button onclick="closeModal('modal-drawer')" class="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100"><!-- X --></button>
+    </div>
+    <div class="flex-1 overflow-y-auto px-5 py-4">
+      <!-- 5 toggle rows: Email notifications, Push alerts, Weekly digest, Marketing emails, Security alerts -->
+    </div>
+    <div class="flex items-center justify-end gap-3 border-t border-gray-200 px-5 py-4">
+      <button onclick="closeModal('modal-drawer')" class="rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold">Cancel</button>
+      <button class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white">Save</button>
+    </div>
+  </div>
+</div>`,
+
+  'modal-bottomsheet': `<!-- Bottom Sheet Modal -->
+<div id="modal-bottomsheet" class="modal-overlay hidden fixed inset-0 z-50 flex items-end">
+  <div class="absolute inset-0 bg-black/50" onclick="closeModal('modal-bottomsheet')"></div>
+  <div class="bottom-sheet-panel relative w-full rounded-t-2xl bg-white dark:bg-gray-900 shadow-2xl">
+    <div class="flex justify-center pt-3 pb-1">
+      <div class="h-1 w-10 rounded-full bg-gray-300"></div>
+    </div>
+    <div class="px-5 pt-3 pb-2">
+      <h2 class="text-base font-semibold">Share this file</h2>
+    </div>
+    <div class="divide-y divide-gray-100 px-2 pb-6">
+      <!-- Rows: Copy link, Send via email, Download, Delete -->
+    </div>
+  </div>
+</div>`,
+
+  'modal-wizard': `<!-- Multi-step Wizard Modal -->
+<div id="modal-wizard" class="modal-overlay hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/50" onclick="closeModal('modal-wizard')"></div>
+  <div class="modal-panel relative w-full max-w-lg rounded-2xl bg-white shadow-2xl overflow-hidden">
+    <!-- Step progress: Details → Plan → Payment -->
+    <div class="border-b border-gray-200 px-6 pt-5 pb-4">
+      <!-- Step dots and progress bars -->
+    </div>
+    <div class="px-6 py-5">
+      <!-- Step 1: Name + Description inputs -->
+      <!-- Step 2: Plan radio options -->
+      <!-- Step 3: Card number + expiry + CVC -->
+    </div>
+    <div class="flex items-center justify-between border-t border-gray-200 px-6 py-4">
+      <button onclick="closeModal('modal-wizard')" class="text-sm text-gray-500">Cancel</button>
+      <div class="flex gap-2">
+        <button id="wizard-prev" class="hidden rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold">Previous</button>
+        <button id="wizard-next" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white">Next</button>
+      </div>
+    </div>
+  </div>
+</div>`,
+
+  'modal-gallery': `<!-- Image Gallery Picker Modal -->
+<div id="modal-gallery" class="modal-overlay hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/50" onclick="closeModal('modal-gallery')"></div>
+  <div class="modal-panel relative w-full max-w-3xl rounded-2xl bg-white shadow-2xl overflow-hidden">
+    <div class="flex items-center justify-between border-b border-gray-200 px-5 py-4">
+      <h2 class="text-base font-semibold">Select Image</h2>
+      <button onclick="closeModal('modal-gallery')" class="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100"><!-- X --></button>
+    </div>
+    <div class="p-5">
+      <div class="grid grid-cols-3 gap-3 sm:grid-cols-6">
+        <!-- 6 thumbnail placeholders, selected one has blue border -->
+      </div>
+    </div>
+    <div class="flex items-center justify-end gap-3 border-t border-gray-200 px-5 py-4">
+      <button onclick="closeModal('modal-gallery')" class="rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold">Cancel</button>
+      <button class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white">Insert Image</button>
+    </div>
+  </div>
+</div>`,
+
+  'modal-alert': `<!-- Alert Notification Modal -->
+<div id="modal-alert" class="modal-overlay hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/50" onclick="closeModal('modal-alert')"></div>
+  <div class="modal-panel relative w-full max-w-sm rounded-2xl bg-white shadow-2xl p-6 text-center">
+    <div class="mb-4 flex justify-center">
+      <div class="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
+        <!-- Info icon -->
+      </div>
+    </div>
+    <h2 class="text-base font-semibold">Your session expires soon</h2>
+    <p class="mt-2 text-sm text-gray-500">You'll be automatically signed out in 5 minutes. Save your work now.</p>
+    <button class="mt-5 w-full rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700">Stay signed in</button>
+  </div>
+</div>`
+};
+
+function openSourceDrawer(id, title) {
+  document.getElementById('drawer-title').textContent = title + ' — Source';
+  document.getElementById('drawer-code').textContent = SOURCE_SNIPPETS[id] || '<!-- no source -->';
+  document.getElementById('source-drawer').classList.remove('hidden');
+  document.getElementById('source-drawer').dataset.currentId = id;
+  document.body.style.overflow = 'hidden';
+}
+function closeSourceDrawer() {
+  document.getElementById('source-drawer').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+function copyDrawerCode() {
+  const id = document.getElementById('source-drawer').dataset.currentId;
+  navigator.clipboard.writeText(SOURCE_SNIPPETS[id] || '').then(() => showToast('Copied to clipboard!'));
+}
+
+/* ── Multi-step Wizard ── */
+let wizardStep = 1;
+function setWizardStep(n) {
+  wizardStep = n;
+  [1, 2, 3].forEach(i => {
+    const el = document.getElementById('wizard-step-' + i);
+    if (el) el.classList.toggle('hidden', i !== n);
+    const dot = document.getElementById('wizard-dot-' + i);
+    if (dot) {
+      if (i <= n) {
+        dot.classList.add('bg-blue-600', 'text-white');
+        dot.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-500', 'dark:text-gray-400');
+      } else {
+        dot.classList.remove('bg-blue-600', 'text-white');
+        dot.classList.add('bg-gray-200', 'text-gray-500');
+      }
+    }
+    const bar = document.getElementById('wizard-bar-' + i);
+    if (bar) bar.style.width = (i < n) ? '100%' : '0%';
+  });
+  const prevBtn = document.getElementById('wizard-prev');
+  const nextBtn = document.getElementById('wizard-next');
+  if (prevBtn) prevBtn.classList.toggle('hidden', n === 1);
+  if (nextBtn) nextBtn.textContent = n === 3 ? 'Complete Setup' : 'Next';
+}
+
+/* ── Gallery selection ── */
+let selectedGalleryItem = 1;
+function selectGalleryItem(btn, idx) {
+  selectedGalleryItem = idx;
+  document.querySelectorAll('.gallery-thumb').forEach(function(el) {
+    el.classList.remove('border-blue-600');
+    el.classList.add('border-transparent');
+    const overlay = el.querySelector('.bg-blue-600\\/20');
+    const check = el.querySelector('.bg-blue-600.rounded-full');
+    if (overlay) overlay.classList.add('opacity-0');
+    if (check) check.classList.add('hidden');
+  });
+  btn.classList.remove('border-transparent');
+  btn.classList.add('border-blue-600');
+  const overlay = btn.querySelector('[class*="bg-blue-600/20"]');
+  if (overlay) overlay.classList.remove('opacity-0');
+  const check = btn.querySelector('.rounded-full.bg-blue-600');
+  if (check) check.classList.remove('hidden');
+  const lbl = document.getElementById('gallery-selected-label');
+  if (lbl) lbl.textContent = 'Image ' + idx + ' selected';
+}
+
+/* ── Escape key closes any open modal or source drawer ── */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay:not(.hidden)').forEach(function(m) {
+      m.classList.add('hidden');
+    });
+    closeSourceDrawer();
+    document.body.style.overflow = '';
+  }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  setWizardStep(1);
+});
+</script>
 </body>
 </html>

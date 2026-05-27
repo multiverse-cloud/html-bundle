@@ -26,28 +26,30 @@
   },
   {
     "id": "html-002",
-    "title": "Analytics Dashboard",
+    "title": "SaaS Analytics Dashboard",
     "slug": "analytics-dashboard",
     "framework": "html",
     "category": "dashboard",
-    "description": "An analytics-focused dashboard with detailed charts, metrics, and traffic insights.",
+    "description": "Premium SaaS analytics dashboard with KPI cards and sparklines, CSS bar chart, traffic sources breakdown, user retention cohort heatmap, recent event feed, skeleton loader, and empty state.",
     "previewImagePath": "/previews/html/02-analytics-dashboard.png",
     "sourceZipPath": "/source-zips/html/02-analytics-dashboard.zip",
     "livePreviewPath": "/live-previews/html/02-analytics-dashboard.html",
     "tags": [
       "analytics",
       "dashboard",
+      "saas",
+      "kpi",
       "charts",
-      "metrics",
+      "retention",
       "production-ready",
       "dark-mode",
-      "responsive",
-      "tailadmin"
+      "responsive"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-003",
@@ -55,7 +57,7 @@
     "slug": "ecommerce-dashboard",
     "framework": "html",
     "category": "dashboard",
-    "description": "An ecommerce admin dashboard with orders, revenue, product stats, and sales charts.",
+    "description": "Full ecommerce dashboard with KPI cards, CSS order volume bar chart, revenue by category, top products table with search and status badges, recent orders, customer new/returning breakdown, and top countries.",
     "previewImagePath": "/previews/html/03-ecommerce-dashboard.png",
     "sourceZipPath": "/source-zips/html/03-ecommerce-dashboard.zip",
     "livePreviewPath": "/live-previews/html/03-ecommerce-dashboard.html",
@@ -64,65 +66,71 @@
       "dashboard",
       "orders",
       "revenue",
+      "products",
+      "customers",
       "production-ready",
       "dark-mode",
-      "responsive",
-      "tailadmin"
+      "responsive"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-004",
-    "title": "AI Tools Dashboard",
+    "title": "CRM Dashboard",
     "slug": "ai-tools-dashboard",
     "framework": "html",
     "category": "dashboard",
-    "description": "An AI tools admin dashboard with usage metrics, model performance, and API call tracking.",
+    "description": "CRM dashboard with pipeline KPI cards, horizontal stage breakdown bar, active deals table with probability mini-bars and hover actions, top sales rep leaderboard, and CRM activity feed.",
     "previewImagePath": "/previews/html/04-ai-tools-dashboard.png",
     "sourceZipPath": "/source-zips/html/04-ai-tools-dashboard.zip",
     "livePreviewPath": "/live-previews/html/04-ai-tools-dashboard.html",
     "tags": [
-      "ai",
+      "crm",
       "dashboard",
-      "tools",
-      "ml",
+      "pipeline",
+      "deals",
+      "sales",
+      "contacts",
       "production-ready",
       "dark-mode",
-      "responsive",
-      "tailadmin"
+      "responsive"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-005",
-    "title": "Prompt CMS Dashboard",
+    "title": "Finance Dashboard",
     "slug": "prompt-cms-dashboard",
     "framework": "html",
     "category": "dashboard",
-    "description": "A CMS dashboard for managing AI prompts with usage stats and category breakdown.",
+    "description": "Finance dashboard with P&L summary table (revenue, EBITDA, net income), expense category bars, invoice table with status filters, and CSS cash flow chart with positive/negative bars.",
     "previewImagePath": "/previews/html/05-prompt-cms-dashboard.png",
     "sourceZipPath": "/source-zips/html/05-prompt-cms-dashboard.zip",
     "livePreviewPath": "/live-previews/html/05-prompt-cms-dashboard.html",
     "tags": [
-      "cms",
-      "prompts",
-      "ai",
+      "finance",
       "dashboard",
+      "p&l",
+      "invoices",
+      "cash-flow",
+      "expenses",
       "production-ready",
       "dark-mode",
-      "responsive",
-      "tailadmin"
+      "responsive"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-006",
@@ -301,28 +309,30 @@
   },
   {
     "id": "html-013",
-    "title": "AI Usage Analytics",
+    "title": "AI Operations Dashboard",
     "slug": "ai-usage-analytics",
     "framework": "html",
     "category": "analytics",
-    "description": "An analytics dashboard tracking AI model usage, token consumption, and API call statistics.",
+    "description": "AI operations dashboard tracking model performance (latency, error rate, cost/1K tokens), daily token usage bar chart, recent API request logs with status codes, cost by model, and error distribution.",
     "previewImagePath": "/previews/html/13-ai-usage-analytics.png",
     "sourceZipPath": "/source-zips/html/13-ai-usage-analytics.zip",
     "livePreviewPath": "/live-previews/html/13-ai-usage-analytics.html",
     "tags": [
       "ai",
-      "analytics",
-      "usage",
+      "dashboard",
+      "api",
       "tokens",
+      "latency",
+      "models",
       "production-ready",
       "dark-mode",
-      "responsive",
-      "tailadmin"
+      "responsive"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-014",
@@ -505,7 +515,7 @@
     "slug": "api-keys",
     "framework": "html",
     "category": "developer-tools",
-    "description": "An API keys management page with key listing, creation, revocation, and usage statistics.",
+    "description": "API key management page with stats row, create-key inline form with scope checkboxes and expiry selector, keys table with masked values and status badges, copy to clipboard, revoke with countdown confirmation, and cURL/JS/Python syntax-highlighted code examples.",
     "previewImagePath": "/previews/html/21-api-keys.png",
     "sourceZipPath": "/source-zips/html/21-api-keys.zip",
     "livePreviewPath": "/live-previews/html/21-api-keys.html",
@@ -514,15 +524,16 @@
       "keys",
       "developer",
       "security",
+      "tokens",
       "production-ready",
       "dark-mode",
-      "responsive",
-      "tailadmin"
+      "responsive"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-022",
@@ -651,78 +662,83 @@
   },
   {
     "id": "html-027",
-    "title": "Cards Pricing",
+    "title": "Pricing Page",
     "slug": "cards-pricing",
     "framework": "html",
     "category": "components",
-    "description": "Pricing plan card components with feature lists, highlighted plans, and CTA buttons.",
+    "description": "Pricing page with monthly/annual toggle (20% savings badge), three-tier cards (Starter/Pro/Enterprise) with feature lists and CTAs, animated price flip transition, FAQ accordion, and trusted-by brand logos.",
     "previewImagePath": "/previews/html/27-cards-pricing.png",
     "sourceZipPath": "/source-zips/html/27-cards-pricing.zip",
     "livePreviewPath": "/live-previews/html/27-cards-pricing.html",
     "tags": [
-      "cards",
       "pricing",
       "plans",
       "saas",
+      "toggle",
+      "faq",
       "production-ready",
       "dark-mode",
-      "responsive",
-      "tailadmin"
+      "responsive"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-028",
-    "title": "Tables Basic",
+    "title": "Basic Table",
     "slug": "tables-basic",
     "framework": "html",
     "category": "tables",
-    "description": "A basic data table with sortable columns, pagination, and row selection checkboxes.",
+    "description": "Clean orders data table with sortable columns, search filter, colored status badges (Paid/Processing/Refunded/Pending), pagination with prev/next and page numbers, empty state, and responsive horizontal scroll.",
     "previewImagePath": "/previews/html/28-tables-basic.png",
     "sourceZipPath": "/source-zips/html/28-tables-basic.zip",
     "livePreviewPath": "/live-previews/html/28-tables-basic.html",
     "tags": [
-      "tables",
-      "data",
-      "basic",
+      "table",
+      "orders",
       "pagination",
+      "sort",
+      "search",
       "production-ready",
       "dark-mode",
-      "responsive",
-      "tailadmin"
+      "responsive"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-029",
-    "title": "Tables Advanced",
+    "title": "Advanced Table",
     "slug": "tables-advanced",
     "framework": "html",
     "category": "tables",
-    "description": "An advanced data table with filtering, search, column toggles, bulk actions, and export.",
+    "description": "Feature-complete users table with bulk selection, select-all checkbox, bulk action bar, sortable columns with arrows, status badges, search + status filter dropdown, column toggle panel, CSV export, hover-reveal row actions, add-user modal, pagination, and empty state.",
     "previewImagePath": "/previews/html/29-tables-advanced.png",
     "sourceZipPath": "/source-zips/html/29-tables-advanced.zip",
     "livePreviewPath": "/live-previews/html/29-tables-advanced.html",
     "tags": [
-      "tables",
+      "table",
       "advanced",
-      "filters",
+      "bulk",
+      "sort",
+      "filter",
       "export",
+      "users",
       "production-ready",
       "dark-mode",
-      "responsive",
-      "tailadmin"
+      "responsive"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-030",
@@ -751,28 +767,30 @@
   },
   {
     "id": "html-031",
-    "title": "Forms Basic",
+    "title": "Basic Form Elements",
     "slug": "forms-basic",
     "framework": "html",
     "category": "forms",
-    "description": "A collection of basic form components including text inputs, selects, checkboxes, and radio buttons.",
+    "description": "Complete showcase of 50+ form controls across 13 sections: text inputs (12 variants), input sizes, textarea, select/multi-select, checkboxes, radio buttons with card style, interactive toggle switches, range sliders, file upload with drag-drop zone, date/time inputs, color picker, tags input, and validation states summary.",
     "previewImagePath": "/previews/html/31-forms-basic.png",
     "sourceZipPath": "/source-zips/html/31-forms-basic.zip",
     "livePreviewPath": "/live-previews/html/31-forms-basic.html",
     "tags": [
       "forms",
       "inputs",
-      "basic",
-      "components",
+      "controls",
+      "toggles",
+      "validation",
+      "upload",
       "production-ready",
       "dark-mode",
-      "responsive",
-      "tailadmin"
+      "responsive"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-032",
@@ -826,11 +844,11 @@
   },
   {
     "id": "html-034",
-    "title": "Forms Wizard",
+    "title": "Multi-Step Wizard",
     "slug": "forms-wizard",
     "framework": "html",
     "category": "forms",
-    "description": "A multi-step form wizard with progress indicators, step navigation, and form state persistence.",
+    "description": "4-step wizard with animated horizontal stepper and progress bar: Company Info (with team size radio cards), Team Setup (avatar upload, invite tags), Plan Selection (3 clickable plan cards), and Review & Confirm (populated summary, ToS checkbox, success state).",
     "previewImagePath": "/previews/html/34-forms-wizard.png",
     "sourceZipPath": "/source-zips/html/34-forms-wizard.zip",
     "livePreviewPath": "/live-previews/html/34-forms-wizard.html",
@@ -839,15 +857,17 @@
       "wizard",
       "multi-step",
       "onboarding",
+      "validation",
+      "plans",
       "production-ready",
       "dark-mode",
-      "responsive",
-      "tailadmin"
+      "responsive"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-035",
@@ -1251,28 +1271,29 @@
   },
   {
     "id": "html-051",
-    "title": "Billing Settings",
+    "title": "Billing & Subscription",
     "slug": "settings-billing",
     "framework": "html",
     "category": "settings",
-    "description": "A billing settings page with current plan display, payment method management, and invoice history.",
+    "description": "Billing settings page with current plan card, usage meters (API calls, storage, team seats), inline payment card update form with formatters, 6-row invoice history table, and danger zone with 5-second cancellation countdown.",
     "previewImagePath": "/previews/html/51-settings-billing.png",
     "sourceZipPath": "/source-zips/html/51-settings-billing.zip",
     "livePreviewPath": "/live-previews/html/51-settings-billing.html",
     "tags": [
-      "settings",
       "billing",
-      "payment",
+      "settings",
       "subscription",
+      "invoices",
+      "payment",
       "production-ready",
       "dark-mode",
-      "responsive",
-      "tailadmin"
+      "responsive"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-052",
@@ -1776,28 +1797,30 @@
   },
   {
     "id": "html-072",
-    "title": "Charts Line",
+    "title": "Charts",
     "slug": "charts-line",
     "framework": "html",
     "category": "charts",
-    "description": "Three SVG line chart panels: revenue trend with area fill, user growth dual-line, and API latency p50/p95/p99.",
+    "description": "5 interactive Canvas API charts: line chart (monthly revenue with area fill and hover tooltips), bar chart (weekly orders), multi-line chart (users vs revenue), sparklines (4 KPI metrics), and horizontal bar chart (traffic sources). All charts resize on window resize.",
     "previewImagePath": "/previews/html/72-charts-line.png",
     "sourceZipPath": "/source-zips/html/72-charts-line.zip",
     "livePreviewPath": "/live-previews/html/72-charts-line.html",
     "tags": [
       "charts",
+      "canvas",
       "line",
-      "svg",
-      "analytics",
+      "bar",
+      "sparklines",
+      "tooltips",
       "production-ready",
       "dark-mode",
-      "responsive",
-      "tailadmin"
+      "responsive"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-073",
@@ -2005,45 +2028,49 @@
     "slug": "auth-login",
     "framework": "html",
     "category": "authentication",
-    "description": "Responsive mtverse sign-in page with social auth, password visibility, and production-ready form actions.",
+    "description": "Split-panel sign-in page: left blue branding panel with benefit bullets and social proof, right form with Google/GitHub social buttons, email + password with show/hide toggle, real-time validation, loading state, and success redirect simulation.",
     "previewImagePath": "/previews/html/81-auth-login.png",
     "sourceZipPath": "/source-zips/html/81-auth-login.zip",
     "livePreviewPath": "/live-previews/html/81-auth-login.html",
     "tags": [
-      "tailadmin",
-      "html",
-      "production-ready",
-      "responsive",
+      "auth",
+      "sign-in",
+      "login",
+      "social",
+      "validation",
       "dark-mode",
-      "authentication"
+      "responsive"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-082",
-    "title": "Create Account",
+    "title": "Sign Up",
     "slug": "auth-register",
     "framework": "html",
     "category": "authentication",
-    "description": "Responsive mtverse sign-up page with social auth, account fields, and terms confirmation.",
+    "description": "Split-panel sign-up page: right indigo branding panel, left form with full name, work email, password with 4-segment strength meter (Weak/Fair/Good/Strong), confirm match check, terms checkbox, loading state, and success state.",
     "previewImagePath": "/previews/html/82-auth-register.png",
     "sourceZipPath": "/source-zips/html/82-auth-register.zip",
     "livePreviewPath": "/live-previews/html/82-auth-register.html",
     "tags": [
-      "tailadmin",
-      "html",
-      "production-ready",
-      "responsive",
+      "auth",
+      "sign-up",
+      "register",
+      "password-strength",
+      "validation",
       "dark-mode",
-      "authentication"
+      "responsive"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-083",
@@ -2051,22 +2078,23 @@
     "slug": "auth-forgot-password",
     "framework": "html",
     "category": "authentication",
-    "description": "Password recovery page with reset instructions and email capture.",
+    "description": "Centered forgot-password card with lock icon, email validation, 1.2s loading state, success state with Gmail/Outlook quick-open buttons, and 60-second resend countdown.",
     "previewImagePath": "/previews/html/83-auth-forgot-password.png",
     "sourceZipPath": "/source-zips/html/83-auth-forgot-password.zip",
     "livePreviewPath": "/live-previews/html/83-auth-forgot-password.html",
     "tags": [
-      "tailadmin",
-      "html",
-      "production-ready",
-      "responsive",
+      "auth",
+      "forgot-password",
+      "email",
+      "countdown",
       "dark-mode",
-      "authentication"
+      "responsive"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-084",
@@ -2074,22 +2102,23 @@
     "slug": "auth-reset-password",
     "framework": "html",
     "category": "authentication",
-    "description": "Password reset page with confirm password fields and validation-ready UI.",
+    "description": "Reset password card with key icon, 30-minute validity banner, new password with strength meter, real-time confirm match indicator (green ✓ / red ✗), loading state, and password-updated success card.",
     "previewImagePath": "/previews/html/84-auth-reset-password.png",
     "sourceZipPath": "/source-zips/html/84-auth-reset-password.zip",
     "livePreviewPath": "/live-previews/html/84-auth-reset-password.html",
     "tags": [
-      "tailadmin",
-      "html",
-      "production-ready",
-      "responsive",
+      "auth",
+      "reset-password",
+      "password-strength",
+      "validation",
       "dark-mode",
-      "authentication"
+      "responsive"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-085",
@@ -2097,22 +2126,23 @@
     "slug": "auth-verify-email",
     "framework": "html",
     "category": "authentication",
-    "description": "Email verification page with resend code actions and account guidance.",
+    "description": "Email verification page with animated pulse email icon, 4-step progress flow indicator, resend button with 60-second countdown, and slide-in change-email form.",
     "previewImagePath": "/previews/html/85-auth-verify-email.png",
     "sourceZipPath": "/source-zips/html/85-auth-verify-email.zip",
     "livePreviewPath": "/live-previews/html/85-auth-verify-email.html",
     "tags": [
-      "tailadmin",
-      "html",
-      "production-ready",
-      "responsive",
+      "auth",
+      "verify-email",
+      "countdown",
+      "progress",
       "dark-mode",
-      "authentication"
+      "responsive"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-086",
@@ -2120,22 +2150,24 @@
     "slug": "auth-2fa",
     "framework": "html",
     "category": "authentication",
-    "description": "Two-step verification page with OTP inputs and secure account messaging.",
+    "description": "OTP verification page with 6 individual digit inputs: auto-advance on input, backspace-to-previous, paste-to-fill all 6 digits, auto-submit on completion, 1.5s loading, success state, and 30-second resend countdown.",
     "previewImagePath": "/previews/html/86-auth-2fa.png",
     "sourceZipPath": "/source-zips/html/86-auth-2fa.zip",
     "livePreviewPath": "/live-previews/html/86-auth-2fa.html",
     "tags": [
-      "tailadmin",
-      "html",
-      "production-ready",
-      "responsive",
+      "auth",
+      "2fa",
+      "otp",
+      "verification",
+      "countdown",
       "dark-mode",
-      "authentication"
+      "responsive"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-087",
@@ -2162,28 +2194,26 @@
   },
   {
     "id": "html-088",
-    "title": "Error 404",
+    "title": "404 Error Page",
     "slug": "error-404",
     "framework": "html",
     "category": "error-pages",
-    "description": "A 404 not found page with large gray number, search bar, popular page links, and navigation buttons.",
+    "description": "Standalone 404 page with large faded numerals, dot-grid CSS background, search bar, go-back and go-to-dashboard buttons, quick links row, and dark mode toggle with localStorage persistence.",
     "previewImagePath": "/previews/html/88-error-404.png",
     "sourceZipPath": "/source-zips/html/88-error-404.zip",
     "livePreviewPath": "/live-previews/html/88-error-404.html",
     "tags": [
       "error",
       "404",
-      "not-found",
-      "pages",
-      "production-ready",
+      "standalone",
       "dark-mode",
-      "responsive",
-      "tailadmin"
+      "responsive"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-089",
@@ -2952,72 +2982,85 @@
   },
   {
     "id": "html-122",
-    "title": "Alerts",
+    "title": "Alerts & Notifications",
     "slug": "ui-alerts",
     "framework": "html",
     "category": "ui-elements",
-    "description": "Production-level TailAdmin alerts and toast patterns with 50+ live alert categories, unique alert families, incident banners, inline validation, progress alerts, activity alerts, undo toasts, and mobile-ready notification states.",
+    "description": "54 alert variants across 12 sections: inline (info/success/warning/error/neutral with dismiss), banners, live-launch toasts, destructive dialogs, validation summaries, incident status-page alerts, billing/payment alerts, security alerts, AI system alerts, progress/undo with countdown bar, activity feed notifications, and mobile push previews.",
     "previewImagePath": "/previews/html/122-ui-alerts.png",
     "sourceZipPath": "/source-zips/html/122-ui-alerts.zip",
     "livePreviewPath": "/live-previews/html/122-ui-alerts.html",
     "tags": [
-      "tailadmin",
-      "html",
+      "alerts",
+      "notifications",
+      "toast",
+      "banners",
+      "security",
+      "validation",
       "production-ready",
-      "responsive",
       "dark-mode",
-      "ui-elements"
+      "responsive",
+      "source-viewer"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-123",
-    "title": "Avatars",
+    "title": "Avatars & Profile Images",
     "slug": "ui-avatars",
     "framework": "html",
     "category": "ui-elements",
-    "description": "Avatar sizes, groups, and online/offline indicators using the bundled profile image.",
+    "description": "56 avatar variants across 10 sections: sizes (xs–2xl), shapes (circle/rounded/square/squircle/ring), initials (12 colors), status dots (online/offline/away/busy/in-meeting), group stacks with overflow badge, with badge/label, fallback states (silhouette/bot/system), upload/edit states, context appearances (comment/table/chat), and placeholder patterns.",
     "previewImagePath": "/previews/html/123-ui-avatars.png",
     "sourceZipPath": "/source-zips/html/123-ui-avatars.zip",
     "livePreviewPath": "/live-previews/html/123-ui-avatars.html",
     "tags": [
-      "tailadmin",
-      "html",
+      "avatars",
+      "profiles",
+      "status",
+      "groups",
+      "initials",
       "production-ready",
-      "responsive",
       "dark-mode",
-      "ui-elements"
+      "responsive",
+      "source-viewer"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-124",
-    "title": "Badge",
+    "title": "Badges & Labels",
     "slug": "ui-badge",
     "framework": "html",
     "category": "ui-elements",
-    "description": "Badge variants for status, category, count, and priority labels.",
+    "description": "58 badge variants across 12 sections: status badges, full color palette (15 colors), size variants (XS–XL), outline badges, dot badges, count/notification badges with icon overlay, icon+label badges, removable tag badges with JS fade-out, role/permission badges, product badges with PRO shimmer effect, priority badges in task context, and version/release badges.",
     "previewImagePath": "/previews/html/124-ui-badge.png",
     "sourceZipPath": "/source-zips/html/124-ui-badge.zip",
     "livePreviewPath": "/live-previews/html/124-ui-badge.html",
     "tags": [
-      "tailadmin",
-      "html",
+      "badges",
+      "labels",
+      "tags",
+      "status",
+      "colors",
       "production-ready",
-      "responsive",
       "dark-mode",
-      "ui-elements"
+      "responsive",
+      "source-viewer"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-125",
@@ -3048,22 +3091,27 @@
     "slug": "ui-buttons",
     "framework": "html",
     "category": "ui-elements",
-    "description": "Button variants with icons, loading states, destructive actions, and segmented controls.",
+    "description": "56 button variants across 16 sections: primary actions, sizes (XS–XL), icon buttons, ghost & outline, loading states (interactive demo), destructive & confirm-on-click, social login (Google/GitHub/Apple/X/Microsoft/Slack), split & dropdown, floating action buttons, payment CTAs, toolbar/table row actions, upload & file, pagination, mobile, copy & share, and segmented controls.",
     "previewImagePath": "/previews/html/126-ui-buttons.png",
     "sourceZipPath": "/source-zips/html/126-ui-buttons.zip",
     "livePreviewPath": "/live-previews/html/126-ui-buttons.html",
     "tags": [
-      "tailadmin",
-      "html",
+      "buttons",
+      "icons",
+      "social",
+      "loading",
+      "fab",
+      "segmented",
       "production-ready",
-      "responsive",
       "dark-mode",
-      "ui-elements"
+      "responsive",
+      "source-viewer"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-127",
@@ -3205,26 +3253,31 @@
   },
   {
     "id": "html-133",
-    "title": "Modals",
+    "title": "Modals & Dialogs",
     "slug": "ui-modals",
     "framework": "html",
     "category": "ui-elements",
-    "description": "Modal examples for confirmation, forms, billing, and command workflows.",
+    "description": "12 fully functional modals: confirmation, destructive delete, billing/upgrade, profile edit form, media preview (dark), command palette (⌘K), onboarding welcome, right-side drawer with toggle switches, mobile bottom sheet, multi-step wizard with plan selection, image gallery picker with selection state, and alert notification.",
     "previewImagePath": "/previews/html/133-ui-modals.png",
     "sourceZipPath": "/source-zips/html/133-ui-modals.zip",
     "livePreviewPath": "/live-previews/html/133-ui-modals.html",
     "tags": [
-      "tailadmin",
-      "html",
+      "modals",
+      "dialogs",
+      "drawer",
+      "bottom-sheet",
+      "wizard",
+      "command",
       "production-ready",
-      "responsive",
       "dark-mode",
-      "ui-elements"
+      "responsive",
+      "source-viewer"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-134",
@@ -3297,26 +3350,31 @@
   },
   {
     "id": "html-137",
-    "title": "Progressbar",
+    "title": "Progress & Loaders",
     "slug": "ui-progressbar",
     "framework": "html",
     "category": "ui-elements",
-    "description": "Progress bars for usage, onboarding, upload, and goal tracking.",
+    "description": "54 progress indicators across 10 sections: linear bars (12 variants incl. striped, multi-color, indeterminate shimmer), SVG circular progress (sizes, colors, percentages), horizontal/vertical steppers, file upload queue with done/error states, storage breakdown with file-type segments, billing usage with upgrade prompts, task/goal circular combos, skeleton loaders, realtime auto-advancing bar, and SVG spinners/dot-pulse/bounce loaders.",
     "previewImagePath": "/previews/html/137-ui-progressbar.png",
     "sourceZipPath": "/source-zips/html/137-ui-progressbar.zip",
     "livePreviewPath": "/live-previews/html/137-ui-progressbar.html",
     "tags": [
-      "tailadmin",
-      "html",
+      "progress",
+      "loaders",
+      "spinners",
+      "skeleton",
+      "circular",
+      "stepper",
       "production-ready",
-      "responsive",
       "dark-mode",
-      "ui-elements"
+      "responsive",
+      "source-viewer"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-138",
@@ -3366,26 +3424,30 @@
   },
   {
     "id": "html-140",
-    "title": "Tabs",
+    "title": "Tabs & Navigation",
     "slug": "ui-tabs",
     "framework": "html",
     "category": "ui-elements",
-    "description": "Tabs and segmented tab surfaces for dashboards and settings.",
+    "description": "52 tab variants across 10 sections: underline tabs with real content panels, pills/capsule, bordered (classic tabbed panel), vertical sidebar tabs, icon + label tabs (with icon-only variant), scrollable with arrow buttons, dashboard segmented controls (3 variants), settings-style sidebar tabs with profile/billing content, code preview tabs with syntax-highlighted pre block, and nested tabs (outer underline + inner pills by quarter).",
     "previewImagePath": "/previews/html/140-ui-tabs.png",
     "sourceZipPath": "/source-zips/html/140-ui-tabs.zip",
     "livePreviewPath": "/live-previews/html/140-ui-tabs.html",
     "tags": [
-      "tailadmin",
-      "html",
+      "tabs",
+      "navigation",
+      "segmented",
+      "vertical",
+      "pills",
       "production-ready",
-      "responsive",
       "dark-mode",
-      "ui-elements"
+      "responsive",
+      "source-viewer"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-141",

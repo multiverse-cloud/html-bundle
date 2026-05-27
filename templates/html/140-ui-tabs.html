@@ -3,20 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#465fff" />
-  <meta name="description" content="Tabs and segmented tab surfaces for dashboards and settings." />
-  <title>Tabs - mtverse</title>
+  <title>Tabs — mtverse</title>
   <style>
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-    .animate-slideDown { animation: slideDown 0.2s ease-out; }
+    .no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+    @keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes tabIndicator{from{width:0}to{width:100%}}
   </style>
   <link rel="stylesheet" href="tailwind-production.css">
   <link rel="stylesheet" href="pro-styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
 <div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
@@ -26,63 +20,1027 @@
     <div id="header-container"></div>
     <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
       <div class="mx-auto w-full max-w-screen-2xl">
+        <!-- PAGE HEADER -->
         <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <div class="mb-2 flex items-center gap-2 text-sm text-gray-500">
-              <span>mtverse</span><span>/</span><span>ui-elements</span><span>/</span>
+              <span>mtverse</span><span>/</span><span>UI Elements</span><span>/</span>
               <span class="font-medium text-gray-800 dark:text-white/90">Tabs</span>
             </div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white/90">Tabs</h1>
-            <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Tabs and segmented tab surfaces for dashboards and settings.</p>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <button type="button" class="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:bg-white/[0.03] dark:text-gray-300">Preview</button>
-            <button type="button" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">Use Component</button>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white/90">Tabs &amp; Navigation</h1>
+            <p class="mt-1 max-w-3xl text-sm text-gray-500 dark:text-gray-400">50+ tab variants — underline, pills, vertical, icon, responsive, dashboard, settings, code preview, and nested patterns</p>
           </div>
         </div>
-
-        <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <!-- STAT CARDS -->
+        <div class="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4">
           <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Components</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">24</p>
+            <p class="text-sm text-gray-500">Variants</p>
+            <p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">52</p>
           </div>
           <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">States</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">96</p>
+            <p class="text-sm text-gray-500">Patterns</p>
+            <p class="mt-2 text-3xl font-bold text-blue-600">10</p>
           </div>
           <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Responsive</p><p class="mt-2 text-3xl font-bold text-green-600">Ready</p>
+            <p class="text-sm text-gray-500">Interactive</p>
+            <p class="mt-2 text-3xl font-bold text-green-600">✓</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <p class="text-sm text-gray-500">Responsive</p>
+            <p class="mt-2 text-3xl font-bold text-green-600">✓</p>
           </div>
         </div>
-        <div class="mt-5 grid grid-cols-1 gap-5 xl:grid-cols-2">
+        <!-- SECTIONS -->
 
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Tabs surface</h2>
-            <div class="mt-5"><div class="rounded-xl border border-gray-200 p-2 dark:border-gray-800"><div class="flex gap-2 rounded-lg bg-gray-100 p-1 dark:bg-white/[0.04]"><button class="flex-1 rounded-lg px-4 py-2 text-sm font-semibold bg-white text-blue-600 shadow-sm dark:bg-gray-900">Overview</button><button class="flex-1 rounded-lg px-4 py-2 text-sm font-semibold text-gray-500">Activity</button><button class="flex-1 rounded-lg px-4 py-2 text-sm font-semibold text-gray-500">Settings</button></div><div class="p-5 text-sm text-gray-500">Tab panel content with production spacing.</div></div></div>
-          </section>
 
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] xl:col-span-2">
-            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-              <div>
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Tabs production states</h2>
-                <p class="mt-1 text-sm text-gray-500">Real dashboard states with actions, accessibility, responsive layout, and clean spacing.</p>
+        <!-- ============================
+             SECTION 1 — UNDERLINE TABS
+             ============================ -->
+        <div id="underline" class="mb-8 rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+          <div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Underline Tabs</h2>
+              <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Classic bottom-border underline style used in most web apps.</p>
+            </div>
+            <button onclick="openSourceDrawer('underline','Underline Tabs')" class="shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/[0.06] transition-colors">View Source</button>
+          </div>
+          <div role="tablist" class="flex border-b border-gray-200 dark:border-gray-700 overflow-x-auto no-scrollbar">
+            <button role="tab" data-tab="ul" data-tab-index="0"
+              data-active-class="text-blue-600 border-b-2 border-blue-600"
+              data-inactive-class="text-gray-500 border-b-2 border-transparent"
+              aria-selected="true"
+              onclick="activateTab('ul',0)"
+              class="shrink-0 px-4 py-2.5 text-sm font-semibold text-blue-600 border-b-2 border-blue-600 -mb-px transition-colors">Overview</button>
+            <button role="tab" data-tab="ul" data-tab-index="1"
+              data-active-class="text-blue-600 border-b-2 border-blue-600"
+              data-inactive-class="text-gray-500 border-b-2 border-transparent"
+              aria-selected="false"
+              onclick="activateTab('ul',1)"
+              class="shrink-0 px-4 py-2.5 text-sm font-medium text-gray-500 border-b-2 border-transparent -mb-px hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 transition-colors">Analytics</button>
+            <button role="tab" data-tab="ul" data-tab-index="2"
+              data-active-class="text-blue-600 border-b-2 border-blue-600"
+              data-inactive-class="text-gray-500 border-b-2 border-transparent"
+              aria-selected="false"
+              onclick="activateTab('ul',2)"
+              class="shrink-0 px-4 py-2.5 text-sm font-medium text-gray-500 border-b-2 border-transparent -mb-px hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 transition-colors">Reports</button>
+            <button role="tab" data-tab="ul" data-tab-index="3"
+              data-active-class="text-blue-600 border-b-2 border-blue-600"
+              data-inactive-class="text-gray-500 border-b-2 border-transparent"
+              aria-selected="false"
+              onclick="activateTab('ul',3)"
+              class="shrink-0 px-4 py-2.5 text-sm font-medium text-gray-500 border-b-2 border-transparent -mb-px hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 transition-colors">Members</button>
+            <button role="tab" data-tab="ul" data-tab-index="4"
+              data-active-class="text-blue-600 border-b-2 border-blue-600"
+              data-inactive-class="text-gray-500 border-b-2 border-transparent"
+              aria-selected="false"
+              onclick="activateTab('ul',4)"
+              class="shrink-0 px-4 py-2.5 text-sm font-medium text-gray-500 border-b-2 border-transparent -mb-px hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 transition-colors">Settings</button>
+          </div>
+          <!-- Overview Panel -->
+          <div data-tab-panel="ul" class="mt-4">
+            <p class="mb-3 text-sm text-gray-600 dark:text-gray-400">Project overview at a glance — key metrics from this month.</p>
+            <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+              <div class="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4">
+                <p class="text-xs text-gray-500">Total Users</p>
+                <p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">12,483</p>
+                <p class="mt-1 text-xs text-green-600">↑ 8.2% vs last month</p>
               </div>
-              <div class="inline-flex rounded-xl bg-gray-100 p-1 dark:bg-white/[0.04]">
-                <button class="rounded-lg bg-white px-4 py-2 text-sm font-bold text-blue-600 shadow-sm dark:bg-gray-900">Preview</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">Code</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">States</button>
+              <div class="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4">
+                <p class="text-xs text-gray-500">Revenue</p>
+                <p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">$48,290</p>
+                <p class="mt-1 text-xs text-green-600">↑ 12.4% vs last month</p>
+              </div>
+              <div class="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4">
+                <p class="text-xs text-gray-500">Active Sessions</p>
+                <p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">3,201</p>
+                <p class="mt-1 text-xs text-red-500">↓ 1.1% vs last month</p>
+              </div>
+              <div class="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4">
+                <p class="text-xs text-gray-500">Uptime</p>
+                <p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">99.98%</p>
+                <p class="mt-1 text-xs text-green-600">SLA target met</p>
               </div>
             </div>
-            <div class="mt-5 grid gap-4 md:grid-cols-3">
-              <div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Default</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Hover / active</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Loading / empty</p><span class="h-2.5 w-2.5 rounded-full bg-yellow-400"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div>
+          </div>
+
+          <!-- Analytics Panel -->
+          <div data-tab-panel="ul" class="mt-4 hidden">
+            <p class="mb-3 text-sm text-gray-600 dark:text-gray-400">Traffic analytics for the past 30 days.</p>
+            <div class="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4">
+              <p class="mb-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Page Views (Bar Chart)</p>
+              <div class="flex items-end gap-2 h-24">
+                <div class="flex-1 bg-blue-200 dark:bg-blue-900/50 rounded-t" style="height:40%"></div>
+                <div class="flex-1 bg-blue-300 dark:bg-blue-800/60 rounded-t" style="height:60%"></div>
+                <div class="flex-1 bg-blue-400 dark:bg-blue-700/70 rounded-t" style="height:80%"></div>
+                <div class="flex-1 bg-blue-500 dark:bg-blue-600/80 rounded-t" style="height:55%"></div>
+                <div class="flex-1 bg-blue-600 rounded-t" style="height:90%"></div>
+                <div class="flex-1 bg-blue-500 dark:bg-blue-600/80 rounded-t" style="height:70%"></div>
+                <div class="flex-1 bg-blue-400 dark:bg-blue-700/70 rounded-t" style="height:50%"></div>
+              </div>
+              <div class="mt-2 flex justify-between text-xs text-gray-400">
+                <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+              </div>
             </div>
-          </section>
+          </div>
+          <!-- Reports Panel -->
+          <div data-tab-panel="ul" class="mt-4 hidden">
+            <p class="mb-3 text-sm text-gray-600 dark:text-gray-400">Recent report exports and scheduled runs.</p>
+            <div class="overflow-x-auto rounded-xl border border-gray-100 dark:border-gray-800">
+              <table class="w-full text-sm">
+                <thead class="bg-gray-50 dark:bg-white/[0.03]">
+                  <tr>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Report</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Date</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Status</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+                  <tr><td class="px-4 py-3 font-medium text-gray-800 dark:text-gray-200">Monthly Revenue</td><td class="px-4 py-3 text-gray-500">May 1, 2025</td><td class="px-4 py-3"><span class="rounded-full bg-green-100 text-green-700 text-xs px-2 py-0.5">Done</span></td></tr>
+                  <tr><td class="px-4 py-3 font-medium text-gray-800 dark:text-gray-200">User Acquisition</td><td class="px-4 py-3 text-gray-500">Apr 28, 2025</td><td class="px-4 py-3"><span class="rounded-full bg-blue-100 text-blue-700 text-xs px-2 py-0.5">Scheduled</span></td></tr>
+                  <tr><td class="px-4 py-3 font-medium text-gray-800 dark:text-gray-200">Churn Analysis</td><td class="px-4 py-3 text-gray-500">Apr 15, 2025</td><td class="px-4 py-3"><span class="rounded-full bg-yellow-100 text-yellow-700 text-xs px-2 py-0.5">Pending</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Members Panel -->
+          <div data-tab-panel="ul" class="mt-4 hidden">
+            <p class="mb-3 text-sm text-gray-600 dark:text-gray-400">Active team members with access to this project.</p>
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center gap-3 rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-3">
+                <div class="h-9 w-9 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold text-sm">AK</div>
+                <div><p class="text-sm font-medium text-gray-800 dark:text-gray-200">Alice Kim</p><p class="text-xs text-gray-500">alice@example.com</p></div>
+                <span class="ml-auto rounded-full bg-green-100 text-green-700 text-xs px-2 py-0.5">Admin</span>
+              </div>
+              <div class="flex items-center gap-3 rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-3">
+                <div class="h-9 w-9 rounded-full bg-purple-500 flex items-center justify-center text-white font-semibold text-sm">BJ</div>
+                <div><p class="text-sm font-medium text-gray-800 dark:text-gray-200">Bob Johnson</p><p class="text-xs text-gray-500">bob@example.com</p></div>
+                <span class="ml-auto rounded-full bg-blue-100 text-blue-700 text-xs px-2 py-0.5">Editor</span>
+              </div>
+              <div class="flex items-center gap-3 rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-3">
+                <div class="h-9 w-9 rounded-full bg-orange-500 flex items-center justify-center text-white font-semibold text-sm">CL</div>
+                <div><p class="text-sm font-medium text-gray-800 dark:text-gray-200">Clara Lee</p><p class="text-xs text-gray-500">clara@example.com</p></div>
+                <span class="ml-auto rounded-full bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300 text-xs px-2 py-0.5">Viewer</span>
+              </div>
+            </div>
+          </div>
+          <!-- Settings Panel -->
+          <div data-tab-panel="ul" class="mt-4 hidden">
+            <p class="mb-3 text-sm text-gray-600 dark:text-gray-400">Project-level configuration options.</p>
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center justify-between rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4">
+                <div><p class="text-sm font-medium text-gray-800 dark:text-gray-200">Public Access</p><p class="text-xs text-gray-500">Allow anyone with the link to view</p></div>
+                <button onclick="this.classList.toggle('bg-blue-600');this.classList.toggle('bg-gray-300');this.querySelector('span').classList.toggle('translate-x-4')" class="relative inline-flex h-6 w-11 rounded-full bg-gray-300 dark:bg-gray-700 transition-colors">
+                  <span class="inline-block h-5 w-5 translate-x-0.5 translate-y-0.5 rounded-full bg-white shadow transition-transform"></span>
+                </button>
+              </div>
+              <div class="flex items-center justify-between rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4">
+                <div><p class="text-sm font-medium text-gray-800 dark:text-gray-200">Email Notifications</p><p class="text-xs text-gray-500">Send digest every Monday</p></div>
+                <button onclick="this.classList.toggle('bg-blue-600');this.classList.toggle('bg-gray-300');this.querySelector('span').classList.toggle('translate-x-4')" class="relative inline-flex h-6 w-11 rounded-full bg-blue-600 transition-colors">
+                  <span class="inline-block h-5 w-5 translate-x-5 translate-y-0.5 rounded-full bg-white shadow transition-transform"></span>
+                </button>
+              </div>
+              <div class="flex items-center justify-between rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4">
+                <div><p class="text-sm font-medium text-gray-800 dark:text-gray-200">Auto Archive</p><p class="text-xs text-gray-500">Archive inactive after 90 days</p></div>
+                <button onclick="this.classList.toggle('bg-blue-600');this.classList.toggle('bg-gray-300');this.querySelector('span').classList.toggle('translate-x-4')" class="relative inline-flex h-6 w-11 rounded-full bg-gray-300 dark:bg-gray-700 transition-colors">
+                  <span class="inline-block h-5 w-5 translate-x-0.5 translate-y-0.5 rounded-full bg-white shadow transition-transform"></span>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+
+
+        <!-- ============================
+             SECTION 2 — PILLS / CAPSULE TABS
+             ============================ -->
+        <div id="pills" class="mb-8 rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+          <div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Pills / Capsule Tabs</h2>
+              <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Rounded pill style where active tab has filled background.</p>
+            </div>
+            <button onclick="openSourceDrawer('pills','Pills Tabs')" class="shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/[0.06] transition-colors">View Source</button>
+          </div>
+          <div class="flex gap-1 rounded-full bg-gray-100 dark:bg-gray-800 p-1 w-fit" role="tablist">
+            <button role="tab" data-tab="pills" aria-selected="true" onclick="activateTab('pills',0)"
+              data-active-class="bg-blue-600 text-white shadow"
+              data-inactive-class="text-gray-600 dark:text-gray-300"
+              class="rounded-full bg-blue-600 px-4 py-1.5 text-sm font-semibold text-white shadow transition-all">All</button>
+            <button role="tab" data-tab="pills" aria-selected="false" onclick="activateTab('pills',1)"
+              data-active-class="bg-blue-600 text-white shadow"
+              data-inactive-class="text-gray-600 dark:text-gray-300"
+              class="rounded-full px-4 py-1.5 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">Active</button>
+            <button role="tab" data-tab="pills" aria-selected="false" onclick="activateTab('pills',2)"
+              data-active-class="bg-blue-600 text-white shadow"
+              data-inactive-class="text-gray-600 dark:text-gray-300"
+              class="rounded-full px-4 py-1.5 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">Completed</button>
+            <button role="tab" data-tab="pills" aria-selected="false" onclick="activateTab('pills',3)"
+              data-active-class="bg-blue-600 text-white shadow"
+              data-inactive-class="text-gray-600 dark:text-gray-300"
+              class="rounded-full px-4 py-1.5 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">Archived</button>
+          </div>
+          <div data-tab-panel="pills" class="mt-4">
+            <div class="flex items-center gap-3 rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4">
+              <div class="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 font-bold text-lg">24</div>
+              <div><p class="text-sm font-semibold text-gray-800 dark:text-gray-200">All Items</p><p class="text-xs text-gray-500">Showing all 24 items across every status</p></div>
+            </div>
+          </div>
+          <div data-tab-panel="pills" class="mt-4 hidden">
+            <div class="flex items-center gap-3 rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4">
+              <div class="h-10 w-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 font-bold text-lg">8</div>
+              <div><p class="text-sm font-semibold text-gray-800 dark:text-gray-200">Active Items</p><p class="text-xs text-gray-500">8 items currently in progress</p></div>
+            </div>
+          </div>
+          <div data-tab-panel="pills" class="mt-4 hidden">
+            <div class="flex items-center gap-3 rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4">
+              <div class="h-10 w-10 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 font-bold text-lg">14</div>
+              <div><p class="text-sm font-semibold text-gray-800 dark:text-gray-200">Completed</p><p class="text-xs text-gray-500">14 items marked as done</p></div>
+            </div>
+          </div>
+          <div data-tab-panel="pills" class="mt-4 hidden">
+            <div class="flex items-center gap-3 rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4">
+              <div class="h-10 w-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300 font-bold text-lg">2</div>
+              <div><p class="text-sm font-semibold text-gray-800 dark:text-gray-200">Archived</p><p class="text-xs text-gray-500">2 items archived and hidden from default view</p></div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- ============================
+             SECTION 3 — BORDERED TABS
+             ============================ -->
+        <div id="bordered" class="mb-8 rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+          <div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Bordered Tabs</h2>
+              <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Tabs with a containing border, active tab has white background lifting above the border.</p>
+            </div>
+            <button onclick="openSourceDrawer('bordered','Bordered Tabs')" class="shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/[0.06] transition-colors">View Source</button>
+          </div>
+          <div class="border-b border-gray-200 dark:border-gray-700">
+            <div role="tablist" class="-mb-px flex gap-0">
+              <button role="tab" data-tab="brd" aria-selected="true" onclick="activateTab('brd',0)"
+                data-active-class="bg-white dark:bg-gray-900 border border-b-white dark:border-b-gray-900 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white font-semibold"
+                data-inactive-class="border-b border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                class="rounded-t-lg border border-b-white dark:border-b-gray-900 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-5 py-2.5 text-sm font-semibold text-gray-900 dark:text-white transition-colors">Details</button>
+              <button role="tab" data-tab="brd" aria-selected="false" onclick="activateTab('brd',1)"
+                data-active-class="bg-white dark:bg-gray-900 border border-b-white dark:border-b-gray-900 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white font-semibold"
+                data-inactive-class="border-b border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                class="rounded-t-lg border-b border-transparent px-5 py-2.5 text-sm font-medium text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">Files</button>
+              <button role="tab" data-tab="brd" aria-selected="false" onclick="activateTab('brd',2)"
+                data-active-class="bg-white dark:bg-gray-900 border border-b-white dark:border-b-gray-900 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white font-semibold"
+                data-inactive-class="border-b border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                class="rounded-t-lg border-b border-transparent px-5 py-2.5 text-sm font-medium text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">Comments</button>
+              <button role="tab" data-tab="brd" aria-selected="false" onclick="activateTab('brd',3)"
+                data-active-class="bg-white dark:bg-gray-900 border border-b-white dark:border-b-gray-900 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white font-semibold"
+                data-inactive-class="border-b border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                class="rounded-t-lg border-b border-transparent px-5 py-2.5 text-sm font-medium text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">History</button>
+            </div>
+          </div>
+          <div class="rounded-b-lg border border-t-0 border-gray-200 dark:border-gray-700 p-5">
+            <div data-tab-panel="brd">
+              <p class="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">Project Details</p>
+              <dl class="grid grid-cols-2 gap-3 text-sm">
+                <div><dt class="text-gray-500">Created</dt><dd class="font-medium text-gray-800 dark:text-gray-200">Jan 12, 2025</dd></div>
+                <div><dt class="text-gray-500">Owner</dt><dd class="font-medium text-gray-800 dark:text-gray-200">Alice Kim</dd></div>
+                <div><dt class="text-gray-500">Status</dt><dd><span class="rounded-full bg-green-100 text-green-700 text-xs px-2 py-0.5">Active</span></dd></div>
+                <div><dt class="text-gray-500">Priority</dt><dd><span class="rounded-full bg-red-100 text-red-700 text-xs px-2 py-0.5">High</span></dd></div>
+              </dl>
+            </div>
+            <div data-tab-panel="brd" class="hidden">
+              <p class="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">Attached Files</p>
+              <div class="flex flex-col gap-2">
+                <div class="flex items-center gap-3 rounded-lg bg-gray-50 dark:bg-white/[0.03] p-3 text-sm">
+                  <svg class="h-5 w-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                  <span class="flex-1 text-gray-700 dark:text-gray-300">project-brief.pdf</span><span class="text-xs text-gray-400">2.4 MB</span>
+                </div>
+                <div class="flex items-center gap-3 rounded-lg bg-gray-50 dark:bg-white/[0.03] p-3 text-sm">
+                  <svg class="h-5 w-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                  <span class="flex-1 text-gray-700 dark:text-gray-300">requirements.xlsx</span><span class="text-xs text-gray-400">540 KB</span>
+                </div>
+              </div>
+            </div>
+            <div data-tab-panel="brd" class="hidden">
+              <p class="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">Comments (3)</p>
+              <div class="flex flex-col gap-3">
+                <div class="flex gap-3"><div class="h-8 w-8 shrink-0 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold">AK</div><div class="rounded-xl bg-gray-50 dark:bg-white/[0.03] p-3 text-sm text-gray-700 dark:text-gray-300 flex-1">Looks great, approved for next sprint!</div></div>
+                <div class="flex gap-3"><div class="h-8 w-8 shrink-0 rounded-full bg-purple-500 flex items-center justify-center text-white text-xs font-bold">BJ</div><div class="rounded-xl bg-gray-50 dark:bg-white/[0.03] p-3 text-sm text-gray-700 dark:text-gray-300 flex-1">Added the missing acceptance criteria.</div></div>
+              </div>
+            </div>
+            <div data-tab-panel="brd" class="hidden">
+              <p class="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">Change History</p>
+              <ol class="flex flex-col gap-2 text-sm">
+                <li class="flex gap-3 items-start"><span class="text-xs text-gray-400 shrink-0 pt-0.5">May 20</span><span class="text-gray-700 dark:text-gray-300">Status changed from <em>Draft</em> to <em>Active</em></span></li>
+                <li class="flex gap-3 items-start"><span class="text-xs text-gray-400 shrink-0 pt-0.5">May 15</span><span class="text-gray-700 dark:text-gray-300">Priority updated to <em>High</em></span></li>
+                <li class="flex gap-3 items-start"><span class="text-xs text-gray-400 shrink-0 pt-0.5">May 12</span><span class="text-gray-700 dark:text-gray-300">Project created by Alice Kim</span></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- ============================
+             SECTION 4 — VERTICAL TABS
+             ============================ -->
+        <div id="vertical" class="mb-8 rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+          <div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Vertical Tabs</h2>
+              <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Left sidebar tabs with content panel on the right. Collapses to horizontal on mobile.</p>
+            </div>
+            <button onclick="openSourceDrawer('vertical','Vertical Tabs')" class="shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/[0.06] transition-colors">View Source</button>
+          </div>
+          <div class="flex flex-col gap-4 lg:flex-row">
+            <div role="tablist" class="flex lg:flex-col gap-1 overflow-x-auto no-scrollbar lg:overflow-x-visible lg:w-48 flex-shrink-0">
+              <button role="tab" data-tab="vt" aria-selected="true" onclick="activateTab('vt',0)"
+                data-active-class="bg-blue-50 dark:bg-blue-900/20 text-blue-600 border-l-2 border-blue-600 font-semibold"
+                data-inactive-class="text-gray-600 dark:text-gray-400 border-l-2 border-transparent"
+                class="shrink-0 flex items-center gap-2 rounded-lg bg-blue-50 dark:bg-blue-900/20 border-l-2 border-blue-600 px-3 py-2 text-sm font-semibold text-blue-600 transition-all text-left">General</button>
+              <button role="tab" data-tab="vt" aria-selected="false" onclick="activateTab('vt',1)"
+                data-active-class="bg-blue-50 dark:bg-blue-900/20 text-blue-600 border-l-2 border-blue-600 font-semibold"
+                data-inactive-class="text-gray-600 dark:text-gray-400 border-l-2 border-transparent"
+                class="shrink-0 flex items-center gap-2 rounded-lg border-l-2 border-transparent px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all text-left">Appearance</button>
+              <button role="tab" data-tab="vt" aria-selected="false" onclick="activateTab('vt',2)"
+                data-active-class="bg-blue-50 dark:bg-blue-900/20 text-blue-600 border-l-2 border-blue-600 font-semibold"
+                data-inactive-class="text-gray-600 dark:text-gray-400 border-l-2 border-transparent"
+                class="shrink-0 flex items-center gap-2 rounded-lg border-l-2 border-transparent px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all text-left">Notifications</button>
+              <button role="tab" data-tab="vt" aria-selected="false" onclick="activateTab('vt',3)"
+                data-active-class="bg-blue-50 dark:bg-blue-900/20 text-blue-600 border-l-2 border-blue-600 font-semibold"
+                data-inactive-class="text-gray-600 dark:text-gray-400 border-l-2 border-transparent"
+                class="shrink-0 flex items-center gap-2 rounded-lg border-l-2 border-transparent px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all text-left">Security</button>
+              <button role="tab" data-tab="vt" aria-selected="false" onclick="activateTab('vt',4)"
+                data-active-class="bg-blue-50 dark:bg-blue-900/20 text-blue-600 border-l-2 border-blue-600 font-semibold"
+                data-inactive-class="text-gray-600 dark:text-gray-400 border-l-2 border-transparent"
+                class="shrink-0 flex items-center gap-2 rounded-lg border-l-2 border-transparent px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all text-left">Advanced</button>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div data-tab-panel="vt" class="rounded-xl border border-gray-100 dark:border-gray-800 p-4">
+                <p class="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-3">General Settings</p>
+                <div class="flex flex-col gap-3">
+                  <div><label class="block text-xs text-gray-500 mb-1">Workspace Name</label><input type="text" value="My Workspace" class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"></div>
+                  <div><label class="block text-xs text-gray-500 mb-1">Timezone</label><select class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"><option>UTC-05:00 Eastern Time</option><option>UTC+00:00 London</option><option>UTC+09:00 Tokyo</option></select></div>
+                </div>
+              </div>
+              <div data-tab-panel="vt" class="rounded-xl border border-gray-100 dark:border-gray-800 p-4 hidden">
+                <p class="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-3">Appearance</p>
+                <div class="flex gap-3">
+                  <div class="flex-1 rounded-xl border-2 border-blue-500 bg-white p-3 cursor-pointer text-center"><div class="h-6 w-full rounded bg-white border border-gray-200 mb-1"></div><p class="text-xs font-medium text-gray-700">Light</p></div>
+                  <div class="flex-1 rounded-xl border-2 border-transparent bg-gray-800 p-3 cursor-pointer text-center"><div class="h-6 w-full rounded bg-gray-700 mb-1"></div><p class="text-xs font-medium text-gray-300">Dark</p></div>
+                  <div class="flex-1 rounded-xl border-2 border-transparent bg-gray-100 dark:bg-gray-800 p-3 cursor-pointer text-center"><div class="h-6 w-full rounded bg-gradient-to-r from-white to-gray-700 mb-1"></div><p class="text-xs font-medium text-gray-600 dark:text-gray-300">System</p></div>
+                </div>
+              </div>
+              <div data-tab-panel="vt" class="rounded-xl border border-gray-100 dark:border-gray-800 p-4 hidden">
+                <p class="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-3">Notification Preferences</p>
+                <div class="flex flex-col gap-2 text-sm">
+                  <label class="flex items-center gap-3"><input type="checkbox" checked class="rounded border-gray-300 text-blue-600"><span class="text-gray-700 dark:text-gray-300">Email me on new comments</span></label>
+                  <label class="flex items-center gap-3"><input type="checkbox" checked class="rounded border-gray-300 text-blue-600"><span class="text-gray-700 dark:text-gray-300">Weekly digest every Monday</span></label>
+                  <label class="flex items-center gap-3"><input type="checkbox" class="rounded border-gray-300 text-blue-600"><span class="text-gray-700 dark:text-gray-300">Marketing and product news</span></label>
+                </div>
+              </div>
+              <div data-tab-panel="vt" class="rounded-xl border border-gray-100 dark:border-gray-800 p-4 hidden">
+                <p class="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-3">Security</p>
+                <div class="flex flex-col gap-3 text-sm">
+                  <div class="flex items-center justify-between"><span class="text-gray-700 dark:text-gray-300">Two-Factor Authentication</span><span class="rounded-full bg-green-100 text-green-700 text-xs px-2 py-0.5">Enabled</span></div>
+                  <div class="flex items-center justify-between"><span class="text-gray-700 dark:text-gray-300">Active Sessions</span><span class="text-gray-500">3 devices</span></div>
+                  <button class="w-fit text-xs text-red-600 hover:underline">Revoke all sessions</button>
+                </div>
+              </div>
+              <div data-tab-panel="vt" class="rounded-xl border border-gray-100 dark:border-gray-800 p-4 hidden">
+                <p class="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-3">Advanced</p>
+                <div class="flex flex-col gap-3 text-sm">
+                  <div class="flex items-center justify-between rounded-lg bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800 p-3"><div><p class="font-medium text-red-700 dark:text-red-400">Delete Workspace</p><p class="text-xs text-red-500">This action cannot be undone</p></div><button class="rounded-lg bg-red-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-red-700">Delete</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- ============================
+             SECTION 5 — ICON TABS
+             ============================ -->
+        <div id="icon-tabs" class="mb-8 rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+          <div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Icon Tabs</h2>
+              <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Tabs with inline SVG icons. Two variants: icon + label, and icon-only.</p>
+            </div>
+            <button onclick="openSourceDrawer('icon-tabs','Icon Tabs')" class="shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/[0.06] transition-colors">View Source</button>
+          </div>
+          <!-- Icon + Label variant -->
+          <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400">Icon + Label</p>
+          <div role="tablist" class="flex border-b border-gray-200 dark:border-gray-700 overflow-x-auto no-scrollbar mb-4">
+            <button role="tab" data-tab="ic" aria-selected="true" onclick="activateTab('ic',0)"
+              data-active-class="text-blue-600 border-b-2 border-blue-600"
+              data-inactive-class="text-gray-500 border-b-2 border-transparent"
+              class="shrink-0 flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-blue-600 border-b-2 border-blue-600 -mb-px transition-colors">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+              Dashboard
+            </button>
+            <button role="tab" data-tab="ic" aria-selected="false" onclick="activateTab('ic',1)"
+              data-active-class="text-blue-600 border-b-2 border-blue-600"
+              data-inactive-class="text-gray-500 border-b-2 border-transparent"
+              class="shrink-0 flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-gray-500 border-b-2 border-transparent -mb-px hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              Users
+            </button>
+            <button role="tab" data-tab="ic" aria-selected="false" onclick="activateTab('ic',2)"
+              data-active-class="text-blue-600 border-b-2 border-blue-600"
+              data-inactive-class="text-gray-500 border-b-2 border-transparent"
+              class="shrink-0 flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-gray-500 border-b-2 border-transparent -mb-px hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+              Tasks
+            </button>
+            <button role="tab" data-tab="ic" aria-selected="false" onclick="activateTab('ic',3)"
+              data-active-class="text-blue-600 border-b-2 border-blue-600"
+              data-inactive-class="text-gray-500 border-b-2 border-transparent"
+              class="shrink-0 flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-gray-500 border-b-2 border-transparent -mb-px hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              Settings
+            </button>
+          </div>
+          <!-- Icon-only variant -->
+          <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400">Icon Only</p>
+          <div role="tablist" class="flex gap-1 border-b border-gray-200 dark:border-gray-700">
+            <button role="tab" data-tab="ico" aria-selected="true" onclick="activateTab('ico',0)"
+              data-active-class="text-blue-600 border-b-2 border-blue-600 bg-blue-50 dark:bg-blue-900/20"
+              data-inactive-class="text-gray-500 border-b-2 border-transparent"
+              class="p-2.5 text-blue-600 border-b-2 border-blue-600 bg-blue-50 dark:bg-blue-900/20 rounded-t -mb-px transition-colors" title="Dashboard">
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+            </button>
+            <button role="tab" data-tab="ico" aria-selected="false" onclick="activateTab('ico',1)"
+              data-active-class="text-blue-600 border-b-2 border-blue-600 bg-blue-50 dark:bg-blue-900/20"
+              data-inactive-class="text-gray-500 border-b-2 border-transparent"
+              class="p-2.5 text-gray-500 border-b-2 border-transparent -mb-px hover:text-gray-700 dark:hover:text-gray-300 transition-colors" title="Users">
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            </button>
+            <button role="tab" data-tab="ico" aria-selected="false" onclick="activateTab('ico',2)"
+              data-active-class="text-blue-600 border-b-2 border-blue-600 bg-blue-50 dark:bg-blue-900/20"
+              data-inactive-class="text-gray-500 border-b-2 border-transparent"
+              class="p-2.5 text-gray-500 border-b-2 border-transparent -mb-px hover:text-gray-700 dark:hover:text-gray-300 transition-colors" title="Tasks">
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+            </button>
+            <button role="tab" data-tab="ico" aria-selected="false" onclick="activateTab('ico',3)"
+              data-active-class="text-blue-600 border-b-2 border-blue-600 bg-blue-50 dark:bg-blue-900/20"
+              data-inactive-class="text-gray-500 border-b-2 border-transparent"
+              class="p-2.5 text-gray-500 border-b-2 border-transparent -mb-px hover:text-gray-700 dark:hover:text-gray-300 transition-colors" title="Settings">
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            </button>
+          </div>
+          <!-- Shared content for icon-tab panels -->
+          <div data-tab-panel="ic" class="mt-4 rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4 text-sm text-gray-600 dark:text-gray-400">📊 <strong class="text-gray-800 dark:text-gray-200">Dashboard</strong> — Overview of key performance indicators and system health.</div>
+          <div data-tab-panel="ic" class="mt-4 rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4 text-sm text-gray-600 dark:text-gray-400 hidden">👥 <strong class="text-gray-800 dark:text-gray-200">Users</strong> — Manage team members, roles and permissions.</div>
+          <div data-tab-panel="ic" class="mt-4 rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4 text-sm text-gray-600 dark:text-gray-400 hidden">📋 <strong class="text-gray-800 dark:text-gray-200">Tasks</strong> — Track open tasks, priorities and assignees.</div>
+          <div data-tab-panel="ic" class="mt-4 rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4 text-sm text-gray-600 dark:text-gray-400 hidden">⚙️ <strong class="text-gray-800 dark:text-gray-200">Settings</strong> — Configure workspace preferences and integrations.</div>
+          <div data-tab-panel="ico" class="hidden"></div><div data-tab-panel="ico" class="hidden"></div><div data-tab-panel="ico" class="hidden"></div><div data-tab-panel="ico" class="hidden"></div>
+        </div>
+
+
+        <!-- ============================
+             SECTION 6 — RESPONSIVE / SCROLLABLE TABS
+             ============================ -->
+        <div id="scrollable" class="mb-8 rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+          <div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Responsive / Scrollable Tabs</h2>
+              <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Horizontally scrollable tab bar with arrow buttons for many tabs.</p>
+            </div>
+            <button onclick="openSourceDrawer('scrollable','Scrollable Tabs')" class="shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/[0.06] transition-colors">View Source</button>
+          </div>
+          <div class="relative flex items-center gap-1">
+            <button onclick="scrollTabs(-120)" class="shrink-0 rounded-lg p-1.5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 border border-gray-200 dark:border-gray-700 transition-colors">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <div class="flex-1 overflow-x-auto no-scrollbar" id="scrollable-tabs-container">
+              <div role="tablist" class="flex border-b border-gray-200 dark:border-gray-700" id="scrollable-tabs">
+                <button role="tab" data-tab="sc" aria-selected="true" onclick="activateTab('sc',0)"
+                  data-active-class="text-blue-600 border-b-2 border-blue-600"
+                  data-inactive-class="text-gray-500 border-b-2 border-transparent"
+                  class="shrink-0 whitespace-nowrap px-4 py-2.5 text-sm font-semibold text-blue-600 border-b-2 border-blue-600 -mb-px transition-colors">January</button>
+                <button role="tab" data-tab="sc" aria-selected="false" onclick="activateTab('sc',1)"
+                  data-active-class="text-blue-600 border-b-2 border-blue-600"
+                  data-inactive-class="text-gray-500 border-b-2 border-transparent"
+                  class="shrink-0 whitespace-nowrap px-4 py-2.5 text-sm font-medium text-gray-500 border-b-2 border-transparent -mb-px hover:text-gray-700 dark:hover:text-gray-300 transition-colors">February</button>
+                <button role="tab" data-tab="sc" aria-selected="false" onclick="activateTab('sc',2)"
+                  data-active-class="text-blue-600 border-b-2 border-blue-600"
+                  data-inactive-class="text-gray-500 border-b-2 border-transparent"
+                  class="shrink-0 whitespace-nowrap px-4 py-2.5 text-sm font-medium text-gray-500 border-b-2 border-transparent -mb-px hover:text-gray-700 dark:hover:text-gray-300 transition-colors">March</button>
+                <button role="tab" data-tab="sc" aria-selected="false" onclick="activateTab('sc',3)"
+                  data-active-class="text-blue-600 border-b-2 border-blue-600"
+                  data-inactive-class="text-gray-500 border-b-2 border-transparent"
+                  class="shrink-0 whitespace-nowrap px-4 py-2.5 text-sm font-medium text-gray-500 border-b-2 border-transparent -mb-px hover:text-gray-700 dark:hover:text-gray-300 transition-colors">April</button>
+                <button role="tab" data-tab="sc" aria-selected="false" onclick="activateTab('sc',4)"
+                  data-active-class="text-blue-600 border-b-2 border-blue-600"
+                  data-inactive-class="text-gray-500 border-b-2 border-transparent"
+                  class="shrink-0 whitespace-nowrap px-4 py-2.5 text-sm font-medium text-gray-500 border-b-2 border-transparent -mb-px hover:text-gray-700 dark:hover:text-gray-300 transition-colors">May</button>
+                <button role="tab" data-tab="sc" aria-selected="false" onclick="activateTab('sc',5)"
+                  data-active-class="text-blue-600 border-b-2 border-blue-600"
+                  data-inactive-class="text-gray-500 border-b-2 border-transparent"
+                  class="shrink-0 whitespace-nowrap px-4 py-2.5 text-sm font-medium text-gray-500 border-b-2 border-transparent -mb-px hover:text-gray-700 dark:hover:text-gray-300 transition-colors">June</button>
+                <button role="tab" data-tab="sc" aria-selected="false" onclick="activateTab('sc',6)"
+                  data-active-class="text-blue-600 border-b-2 border-blue-600"
+                  data-inactive-class="text-gray-500 border-b-2 border-transparent"
+                  class="shrink-0 whitespace-nowrap px-4 py-2.5 text-sm font-medium text-gray-500 border-b-2 border-transparent -mb-px hover:text-gray-700 dark:hover:text-gray-300 transition-colors">July</button>
+                <button role="tab" data-tab="sc" aria-selected="false" onclick="activateTab('sc',7)"
+                  data-active-class="text-blue-600 border-b-2 border-blue-600"
+                  data-inactive-class="text-gray-500 border-b-2 border-transparent"
+                  class="shrink-0 whitespace-nowrap px-4 py-2.5 text-sm font-medium text-gray-500 border-b-2 border-transparent -mb-px hover:text-gray-700 dark:hover:text-gray-300 transition-colors">August</button>
+              </div>
+            </div>
+            <button onclick="scrollTabs(120)" class="shrink-0 rounded-lg p-1.5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 border border-gray-200 dark:border-gray-700 transition-colors">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+          <div class="mt-4">
+            <div data-tab-panel="sc" class="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4 text-sm text-gray-600 dark:text-gray-400">📅 <strong class="text-gray-800 dark:text-gray-200">January 2025</strong> — Revenue: $38,200 · New Users: 1,240 · Churn: 2.1%</div>
+            <div data-tab-panel="sc" class="hidden rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4 text-sm text-gray-600 dark:text-gray-400">📅 <strong class="text-gray-800 dark:text-gray-200">February 2025</strong> — Revenue: $41,500 · New Users: 1,390 · Churn: 1.8%</div>
+            <div data-tab-panel="sc" class="hidden rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4 text-sm text-gray-600 dark:text-gray-400">📅 <strong class="text-gray-800 dark:text-gray-200">March 2025</strong> — Revenue: $44,800 · New Users: 1,520 · Churn: 1.6%</div>
+            <div data-tab-panel="sc" class="hidden rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4 text-sm text-gray-600 dark:text-gray-400">📅 <strong class="text-gray-800 dark:text-gray-200">April 2025</strong> — Revenue: $43,100 · New Users: 1,480 · Churn: 2.0%</div>
+            <div data-tab-panel="sc" class="hidden rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4 text-sm text-gray-600 dark:text-gray-400">📅 <strong class="text-gray-800 dark:text-gray-200">May 2025</strong> — Revenue: $48,290 · New Users: 1,680 · Churn: 1.4%</div>
+            <div data-tab-panel="sc" class="hidden rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4 text-sm text-gray-600 dark:text-gray-400">📅 <strong class="text-gray-800 dark:text-gray-200">June 2025</strong> — Revenue: $51,000 · New Users: 1,800 · Churn: 1.2%</div>
+            <div data-tab-panel="sc" class="hidden rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4 text-sm text-gray-600 dark:text-gray-400">📅 <strong class="text-gray-800 dark:text-gray-200">July 2025</strong> — Revenue: $53,400 · New Users: 1,950 · Churn: 1.1%</div>
+            <div data-tab-panel="sc" class="hidden rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4 text-sm text-gray-600 dark:text-gray-400">📅 <strong class="text-gray-800 dark:text-gray-200">August 2025</strong> — Revenue: $55,800 · New Users: 2,100 · Churn: 1.0%</div>
+          </div>
+        </div>
+
+
+        <!-- ============================
+             SECTION 7 — DASHBOARD TABS
+             ============================ -->
+        <div id="dashboard" class="mb-8 rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+          <div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Dashboard Tabs</h2>
+              <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Segmented control style for filtering charts and data on dashboards.</p>
+            </div>
+            <button onclick="openSourceDrawer('dashboard','Dashboard Tabs')" class="shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/[0.06] transition-colors">View Source</button>
+          </div>
+          <div class="flex flex-wrap gap-6">
+            <!-- Variant 1: Daily/Weekly/Monthly -->
+            <div>
+              <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400">Period</p>
+              <div role="tablist" class="flex rounded-lg bg-gray-100 dark:bg-gray-800 p-1">
+                <button role="tab" data-tab="dsh1" aria-selected="true" onclick="activateTab('dsh1',0)"
+                  data-active-class="bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm font-semibold"
+                  data-inactive-class="text-gray-500 dark:text-gray-400"
+                  class="rounded-md bg-white dark:bg-gray-700 shadow-sm px-4 py-1.5 text-sm font-semibold text-gray-900 dark:text-white transition-all">Daily</button>
+                <button role="tab" data-tab="dsh1" aria-selected="false" onclick="activateTab('dsh1',1)"
+                  data-active-class="bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm font-semibold"
+                  data-inactive-class="text-gray-500 dark:text-gray-400"
+                  class="rounded-md px-4 py-1.5 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-all">Weekly</button>
+                <button role="tab" data-tab="dsh1" aria-selected="false" onclick="activateTab('dsh1',2)"
+                  data-active-class="bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm font-semibold"
+                  data-inactive-class="text-gray-500 dark:text-gray-400"
+                  class="rounded-md px-4 py-1.5 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-all">Monthly</button>
+              </div>
+            </div>
+            <!-- Variant 2: Date range -->
+            <div>
+              <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400">Date Range</p>
+              <div role="tablist" class="flex rounded-lg bg-gray-100 dark:bg-gray-800 p-1">
+                <button role="tab" data-tab="dsh2" aria-selected="true" onclick="activateTab('dsh2',0)"
+                  data-active-class="bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm font-semibold"
+                  data-inactive-class="text-gray-500 dark:text-gray-400"
+                  class="rounded-md bg-white dark:bg-gray-700 shadow-sm px-3 py-1.5 text-sm font-semibold text-gray-900 dark:text-white transition-all">7d</button>
+                <button role="tab" data-tab="dsh2" aria-selected="false" onclick="activateTab('dsh2',1)"
+                  data-active-class="bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm font-semibold"
+                  data-inactive-class="text-gray-500 dark:text-gray-400"
+                  class="rounded-md px-3 py-1.5 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-all">30d</button>
+                <button role="tab" data-tab="dsh2" aria-selected="false" onclick="activateTab('dsh2',2)"
+                  data-active-class="bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm font-semibold"
+                  data-inactive-class="text-gray-500 dark:text-gray-400"
+                  class="rounded-md px-3 py-1.5 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-all">90d</button>
+                <button role="tab" data-tab="dsh2" aria-selected="false" onclick="activateTab('dsh2',3)"
+                  data-active-class="bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm font-semibold"
+                  data-inactive-class="text-gray-500 dark:text-gray-400"
+                  class="rounded-md px-3 py-1.5 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-all">1y</button>
+              </div>
+            </div>
+            <!-- Variant 3: Metric type -->
+            <div>
+              <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400">Metric</p>
+              <div role="tablist" class="flex rounded-lg bg-gray-100 dark:bg-gray-800 p-1">
+                <button role="tab" data-tab="dsh3" aria-selected="true" onclick="activateTab('dsh3',0)"
+                  data-active-class="bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm font-semibold"
+                  data-inactive-class="text-gray-500 dark:text-gray-400"
+                  class="rounded-md bg-white dark:bg-gray-700 shadow-sm px-3 py-1.5 text-sm font-semibold text-gray-900 dark:text-white transition-all">Revenue</button>
+                <button role="tab" data-tab="dsh3" aria-selected="false" onclick="activateTab('dsh3',1)"
+                  data-active-class="bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm font-semibold"
+                  data-inactive-class="text-gray-500 dark:text-gray-400"
+                  class="rounded-md px-3 py-1.5 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-all">Orders</button>
+                <button role="tab" data-tab="dsh3" aria-selected="false" onclick="activateTab('dsh3',2)"
+                  data-active-class="bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm font-semibold"
+                  data-inactive-class="text-gray-500 dark:text-gray-400"
+                  class="rounded-md px-3 py-1.5 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-all">Customers</button>
+              </div>
+            </div>
+          </div>
+          <!-- Hidden panels (needed for JS but no visible content for dashboard controls) -->
+          <div data-tab-panel="dsh1" class="hidden"></div><div data-tab-panel="dsh1" class="hidden"></div><div data-tab-panel="dsh1" class="hidden"></div>
+          <div data-tab-panel="dsh2" class="hidden"></div><div data-tab-panel="dsh2" class="hidden"></div><div data-tab-panel="dsh2" class="hidden"></div><div data-tab-panel="dsh2" class="hidden"></div>
+          <div data-tab-panel="dsh3" class="hidden"></div><div data-tab-panel="dsh3" class="hidden"></div><div data-tab-panel="dsh3" class="hidden"></div>
+        </div>
+
+
+        <!-- ============================
+             SECTION 8 — SETTINGS PAGE TABS
+             ============================ -->
+        <div id="settings" class="mb-8 rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+          <div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Settings Page Tabs</h2>
+              <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Vertical sidebar navigation tabs as used in settings pages. Responsive: top tabs on mobile, side tabs on desktop.</p>
+            </div>
+            <button onclick="openSourceDrawer('settings','Settings Page Tabs')" class="shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/[0.06] transition-colors">View Source</button>
+          </div>
+          <div class="flex flex-col gap-6 lg:flex-row">
+            <nav role="tablist" class="flex flex-row gap-1 overflow-x-auto no-scrollbar lg:flex-col lg:w-52 flex-shrink-0">
+              <button role="tab" data-tab="st" aria-selected="true" onclick="activateTab('st',0)"
+                data-active-class="bg-gray-100 dark:bg-gray-800 font-semibold text-gray-900 dark:text-white"
+                data-inactive-class="text-gray-600 dark:text-gray-400"
+                class="whitespace-nowrap rounded-lg bg-gray-100 dark:bg-gray-800 px-4 py-2 text-left text-sm font-semibold text-gray-900 dark:text-white transition-colors">Profile</button>
+              <button role="tab" data-tab="st" aria-selected="false" onclick="activateTab('st',1)"
+                data-active-class="bg-gray-100 dark:bg-gray-800 font-semibold text-gray-900 dark:text-white"
+                data-inactive-class="text-gray-600 dark:text-gray-400"
+                class="whitespace-nowrap rounded-lg px-4 py-2 text-left text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Account</button>
+              <button role="tab" data-tab="st" aria-selected="false" onclick="activateTab('st',2)"
+                data-active-class="bg-gray-100 dark:bg-gray-800 font-semibold text-gray-900 dark:text-white"
+                data-inactive-class="text-gray-600 dark:text-gray-400"
+                class="whitespace-nowrap rounded-lg px-4 py-2 text-left text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Appearance</button>
+              <button role="tab" data-tab="st" aria-selected="false" onclick="activateTab('st',3)"
+                data-active-class="bg-gray-100 dark:bg-gray-800 font-semibold text-gray-900 dark:text-white"
+                data-inactive-class="text-gray-600 dark:text-gray-400"
+                class="whitespace-nowrap rounded-lg px-4 py-2 text-left text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Notifications</button>
+              <button role="tab" data-tab="st" aria-selected="false" onclick="activateTab('st',4)"
+                data-active-class="bg-gray-100 dark:bg-gray-800 font-semibold text-gray-900 dark:text-white"
+                data-inactive-class="text-gray-600 dark:text-gray-400"
+                class="whitespace-nowrap rounded-lg px-4 py-2 text-left text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Billing</button>
+              <button role="tab" data-tab="st" aria-selected="false" onclick="activateTab('st',5)"
+                data-active-class="bg-gray-100 dark:bg-gray-800 font-semibold text-gray-900 dark:text-white"
+                data-inactive-class="text-gray-600 dark:text-gray-400"
+                class="whitespace-nowrap rounded-lg px-4 py-2 text-left text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Security</button>
+              <button role="tab" data-tab="st" aria-selected="false" onclick="activateTab('st',6)"
+                data-active-class="bg-gray-100 dark:bg-gray-800 font-semibold text-gray-900 dark:text-white"
+                data-inactive-class="text-gray-600 dark:text-gray-400"
+                class="whitespace-nowrap rounded-lg px-4 py-2 text-left text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">API</button>
+            </nav>
+            <div class="flex-1 min-w-0">
+              <!-- Profile panel -->
+              <div data-tab-panel="st">
+                <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-4">Profile Information</h3>
+                <div class="flex items-center gap-4 mb-5">
+                  <div class="h-16 w-16 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-xl font-bold">AK</div>
+                  <div><button class="rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">Change photo</button></div>
+                </div>
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div><label class="block text-xs text-gray-500 mb-1">First Name</label><input type="text" value="Alice" class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"></div>
+                  <div><label class="block text-xs text-gray-500 mb-1">Last Name</label><input type="text" value="Kim" class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"></div>
+                  <div class="sm:col-span-2"><label class="block text-xs text-gray-500 mb-1">Email</label><input type="email" value="alice@example.com" class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"></div>
+                  <div class="sm:col-span-2"><label class="block text-xs text-gray-500 mb-1">Bio</label><textarea rows="2" class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none">Product designer based in San Francisco.</textarea></div>
+                </div>
+                <div class="mt-4"><button class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors">Save Changes</button></div>
+              </div>
+              <!-- Account panel -->
+              <div data-tab-panel="st" class="hidden">
+                <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-4">Account Settings</h3>
+                <div class="flex flex-col gap-3 text-sm">
+                  <div class="flex items-center justify-between rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4"><span class="text-gray-700 dark:text-gray-300">Language</span><select class="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-2 py-1 text-sm text-gray-700 dark:text-gray-300"><option>English (US)</option><option>French</option><option>German</option></select></div>
+                  <div class="flex items-center justify-between rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4"><span class="text-gray-700 dark:text-gray-300">Date Format</span><select class="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-2 py-1 text-sm text-gray-700 dark:text-gray-300"><option>MM/DD/YYYY</option><option>DD/MM/YYYY</option><option>YYYY-MM-DD</option></select></div>
+                </div>
+              </div>
+              <!-- Appearance panel -->
+              <div data-tab-panel="st" class="hidden">
+                <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-4">Appearance</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Choose your theme preference.</p>
+                <div class="mt-3 flex gap-3">
+                  <div class="flex-1 cursor-pointer rounded-xl border-2 border-blue-500 p-3 text-center"><div class="mb-1 h-8 rounded bg-white border border-gray-200"></div><p class="text-xs font-medium text-gray-700 dark:text-gray-300">Light</p></div>
+                  <div class="flex-1 cursor-pointer rounded-xl border-2 border-transparent p-3 text-center"><div class="mb-1 h-8 rounded bg-gray-900"></div><p class="text-xs font-medium text-gray-700 dark:text-gray-300">Dark</p></div>
+                </div>
+              </div>
+              <!-- Notifications panel -->
+              <div data-tab-panel="st" class="hidden">
+                <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-4">Notification Settings</h3>
+                <div class="flex flex-col gap-2 text-sm">
+                  <label class="flex items-center gap-3 p-2"><input type="checkbox" checked class="rounded border-gray-300 text-blue-600"><span class="text-gray-700 dark:text-gray-300">Email on new activity</span></label>
+                  <label class="flex items-center gap-3 p-2"><input type="checkbox" class="rounded border-gray-300 text-blue-600"><span class="text-gray-700 dark:text-gray-300">Push notifications</span></label>
+                  <label class="flex items-center gap-3 p-2"><input type="checkbox" checked class="rounded border-gray-300 text-blue-600"><span class="text-gray-700 dark:text-gray-300">Weekly digest</span></label>
+                </div>
+              </div>
+              <!-- Billing panel -->
+              <div data-tab-panel="st" class="hidden">
+                <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-4">Billing &amp; Plan</h3>
+                <div class="rounded-xl border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/10 p-4 mb-4">
+                  <div class="flex items-center justify-between">
+                    <div><p class="font-semibold text-blue-700 dark:text-blue-400">Pro Plan</p><p class="text-xs text-blue-600 dark:text-blue-500 mt-0.5">$49 / month · Renews June 1, 2025</p></div>
+                    <span class="rounded-full bg-blue-600 text-white text-xs px-3 py-1 font-semibold">Active</span>
+                  </div>
+                  <div class="mt-3 flex gap-2">
+                    <button class="rounded-lg border border-blue-300 dark:border-blue-700 px-3 py-1.5 text-xs font-medium text-blue-700 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/30">Change Plan</button>
+                    <button class="rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">Cancel</button>
+                  </div>
+                </div>
+                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Recent Invoices</p>
+                <div class="flex flex-col gap-2 text-sm">
+                  <div class="flex items-center justify-between rounded-lg border border-gray-100 dark:border-gray-800 p-3"><span class="text-gray-700 dark:text-gray-300">May 2025</span><span class="text-gray-500">$49.00</span><span class="rounded-full bg-green-100 text-green-700 text-xs px-2 py-0.5">Paid</span></div>
+                  <div class="flex items-center justify-between rounded-lg border border-gray-100 dark:border-gray-800 p-3"><span class="text-gray-700 dark:text-gray-300">Apr 2025</span><span class="text-gray-500">$49.00</span><span class="rounded-full bg-green-100 text-green-700 text-xs px-2 py-0.5">Paid</span></div>
+                </div>
+              </div>
+              <!-- Security panel -->
+              <div data-tab-panel="st" class="hidden">
+                <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-4">Security</h3>
+                <div class="flex flex-col gap-3 text-sm">
+                  <div class="flex items-center justify-between rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4"><span class="text-gray-700 dark:text-gray-300">Two-Factor Auth</span><span class="rounded-full bg-green-100 text-green-700 text-xs px-2 py-0.5">Enabled</span></div>
+                  <div class="flex items-center justify-between rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4"><span class="text-gray-700 dark:text-gray-300">Password last changed</span><span class="text-gray-500">30 days ago</span></div>
+                </div>
+              </div>
+              <!-- API panel -->
+              <div data-tab-panel="st" class="hidden">
+                <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-4">API Keys</h3>
+                <div class="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4 font-mono text-xs text-gray-600 dark:text-gray-400 break-all">sk_live_••••••••••••••••••••••••••••••••4f9a</div>
+                <button class="mt-3 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Generate new key</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- ============================
+             SECTION 9 — CODE PREVIEW TABS
+             ============================ -->
+        <div id="code-preview" class="mb-8 rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+          <div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Code Preview Tabs</h2>
+              <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Tabs as used in documentation and component pages: Preview, Code, and Props.</p>
+            </div>
+            <button onclick="openSourceDrawer('code-preview','Code Preview Tabs')" class="shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/[0.06] transition-colors">View Source</button>
+          </div>
+          <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div role="tablist" class="flex border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
+              <button role="tab" data-tab="cp" aria-selected="true" onclick="activateTab('cp',0)"
+                data-active-class="text-blue-600 border-b-2 border-blue-600 bg-white dark:bg-gray-900 font-semibold"
+                data-inactive-class="text-gray-500 border-b-2 border-transparent"
+                class="px-5 py-2.5 text-xs font-semibold text-blue-600 border-b-2 border-blue-600 -mb-px bg-white dark:bg-gray-900 transition-colors">Preview</button>
+              <button role="tab" data-tab="cp" aria-selected="false" onclick="activateTab('cp',1)"
+                data-active-class="text-blue-600 border-b-2 border-blue-600 bg-white dark:bg-gray-900 font-semibold"
+                data-inactive-class="text-gray-500 border-b-2 border-transparent"
+                class="px-5 py-2.5 text-xs font-medium text-gray-500 border-b-2 border-transparent -mb-px hover:text-gray-700 dark:hover:text-gray-300 transition-colors">Code</button>
+              <button role="tab" data-tab="cp" aria-selected="false" onclick="activateTab('cp',2)"
+                data-active-class="text-blue-600 border-b-2 border-blue-600 bg-white dark:bg-gray-900 font-semibold"
+                data-inactive-class="text-gray-500 border-b-2 border-transparent"
+                class="px-5 py-2.5 text-xs font-medium text-gray-500 border-b-2 border-transparent -mb-px hover:text-gray-700 dark:hover:text-gray-300 transition-colors">Props</button>
+            </div>
+            <!-- Preview panel -->
+            <div data-tab-panel="cp" class="p-8 flex items-center justify-center bg-white dark:bg-gray-900 min-h-[120px]">
+              <div class="flex gap-3 flex-wrap items-center justify-center">
+                <button class="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 transition-colors shadow-sm">Primary Button</button>
+                <button class="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-5 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">Secondary</button>
+                <button class="rounded-lg bg-red-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-red-700 transition-colors">Destructive</button>
+              </div>
+            </div>
+            <!-- Code panel -->
+            <div data-tab-panel="cp" class="hidden bg-gray-950 p-5 overflow-x-auto">
+              <pre class="text-xs leading-relaxed font-mono"><code><span class="text-purple-400">&lt;button</span> <span class="text-yellow-300">class</span>=<span class="text-green-400">"rounded-lg bg-blue-600 px-5 py-2.5
+       text-sm font-semibold text-white
+       hover:bg-blue-700 transition-colors"</span><span class="text-purple-400">&gt;</span>
+  <span class="text-gray-100">Primary Button</span>
+<span class="text-purple-400">&lt;/button&gt;</span>
+
+<span class="text-purple-400">&lt;button</span> <span class="text-yellow-300">class</span>=<span class="text-green-400">"rounded-lg border border-gray-200
+       bg-white px-5 py-2.5 text-sm
+       font-semibold text-gray-700
+       hover:bg-gray-50 transition-colors"</span><span class="text-purple-400">&gt;</span>
+  <span class="text-gray-100">Secondary</span>
+<span class="text-purple-400">&lt;/button&gt;</span></code></pre>
+            </div>
+            <!-- Props panel -->
+            <div data-tab-panel="cp" class="hidden p-5 bg-white dark:bg-gray-900">
+              <div class="overflow-x-auto rounded-xl border border-gray-100 dark:border-gray-800">
+                <table class="w-full text-sm">
+                  <thead class="bg-gray-50 dark:bg-white/[0.03]">
+                    <tr>
+                      <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Prop</th>
+                      <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Type</th>
+                      <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Default</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+                    <tr>
+                      <td class="px-4 py-3 font-mono text-xs text-blue-600 dark:text-blue-400">variant</td>
+                      <td class="px-4 py-3 font-mono text-xs text-purple-600 dark:text-purple-400">string</td>
+                      <td class="px-4 py-3 font-mono text-xs text-green-600 dark:text-green-400">"primary"</td>
+                    </tr>
+                    <tr>
+                      <td class="px-4 py-3 font-mono text-xs text-blue-600 dark:text-blue-400">size</td>
+                      <td class="px-4 py-3 font-mono text-xs text-purple-600 dark:text-purple-400">string</td>
+                      <td class="px-4 py-3 font-mono text-xs text-green-600 dark:text-green-400">"md"</td>
+                    </tr>
+                    <tr>
+                      <td class="px-4 py-3 font-mono text-xs text-blue-600 dark:text-blue-400">disabled</td>
+                      <td class="px-4 py-3 font-mono text-xs text-purple-600 dark:text-purple-400">boolean</td>
+                      <td class="px-4 py-3 font-mono text-xs text-green-600 dark:text-green-400">false</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- ============================
+             SECTION 10 — NESTED TABS
+             ============================ -->
+        <div id="nested" class="mb-8 rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+          <div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Nested Tabs</h2>
+              <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Outer underline tabs with inner pill tabs — demonstrating real nested tab patterns.</p>
+            </div>
+            <button onclick="openSourceDrawer('nested','Nested Tabs')" class="shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/[0.06] transition-colors">View Source</button>
+          </div>
+          <!-- Outer tabs -->
+          <div role="tablist" class="flex border-b border-gray-200 dark:border-gray-700 mb-4">
+            <button role="tab" data-tab="nt" aria-selected="true" onclick="activateTab('nt',0)"
+              data-active-class="text-blue-600 border-b-2 border-blue-600"
+              data-inactive-class="text-gray-500 border-b-2 border-transparent"
+              class="px-4 py-2.5 text-sm font-semibold text-blue-600 border-b-2 border-blue-600 -mb-px transition-colors">Reports</button>
+            <button role="tab" data-tab="nt" aria-selected="false" onclick="activateTab('nt',1)"
+              data-active-class="text-blue-600 border-b-2 border-blue-600"
+              data-inactive-class="text-gray-500 border-b-2 border-transparent"
+              class="px-4 py-2.5 text-sm font-medium text-gray-500 border-b-2 border-transparent -mb-px hover:text-gray-700 dark:hover:text-gray-300 transition-colors">Analytics</button>
+          </div>
+          <!-- Reports outer panel (with inner tabs) -->
+          <div data-tab-panel="nt">
+            <div class="flex gap-1 rounded-full bg-gray-100 dark:bg-gray-800 p-1 w-fit mb-4" role="tablist">
+              <button role="tab" data-tab="qt" aria-selected="true" onclick="activateTab('qt',0)"
+                data-active-class="bg-blue-600 text-white shadow"
+                data-inactive-class="text-gray-600 dark:text-gray-300"
+                class="rounded-full bg-blue-600 px-4 py-1.5 text-xs font-semibold text-white shadow transition-all">Q1</button>
+              <button role="tab" data-tab="qt" aria-selected="false" onclick="activateTab('qt',1)"
+                data-active-class="bg-blue-600 text-white shadow"
+                data-inactive-class="text-gray-600 dark:text-gray-300"
+                class="rounded-full px-4 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">Q2</button>
+              <button role="tab" data-tab="qt" aria-selected="false" onclick="activateTab('qt',2)"
+                data-active-class="bg-blue-600 text-white shadow"
+                data-inactive-class="text-gray-600 dark:text-gray-300"
+                class="rounded-full px-4 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">Q3</button>
+              <button role="tab" data-tab="qt" aria-selected="false" onclick="activateTab('qt',3)"
+                data-active-class="bg-blue-600 text-white shadow"
+                data-inactive-class="text-gray-600 dark:text-gray-300"
+                class="rounded-full px-4 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">Q4</button>
+            </div>
+            <!-- Inner quarter panels -->
+            <div data-tab-panel="qt">
+              <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                <div class="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4"><p class="text-xs text-gray-500">Q1 Revenue</p><p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">$124k</p><p class="mt-1 text-xs text-green-600">↑ 9% YoY</p></div>
+                <div class="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4"><p class="text-xs text-gray-500">New MRR</p><p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">$18k</p><p class="mt-1 text-xs text-green-600">↑ 5% QoQ</p></div>
+                <div class="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4"><p class="text-xs text-gray-500">Churn MRR</p><p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">$3.2k</p><p class="mt-1 text-xs text-red-500">↑ 1.2%</p></div>
+                <div class="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4"><p class="text-xs text-gray-500">Net New</p><p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">$14.8k</p><p class="mt-1 text-xs text-green-600">Strong</p></div>
+              </div>
+            </div>
+            <div data-tab-panel="qt" class="hidden">
+              <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                <div class="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4"><p class="text-xs text-gray-500">Q2 Revenue</p><p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">$138k</p><p class="mt-1 text-xs text-green-600">↑ 11% YoY</p></div>
+                <div class="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4"><p class="text-xs text-gray-500">New MRR</p><p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">$22k</p><p class="mt-1 text-xs text-green-600">↑ 7% QoQ</p></div>
+                <div class="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4"><p class="text-xs text-gray-500">Churn MRR</p><p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">$2.8k</p><p class="mt-1 text-xs text-green-600">↓ 0.9%</p></div>
+                <div class="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4"><p class="text-xs text-gray-500">Net New</p><p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">$19.2k</p><p class="mt-1 text-xs text-green-600">Excellent</p></div>
+              </div>
+            </div>
+            <div data-tab-panel="qt" class="hidden">
+              <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                <div class="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4"><p class="text-xs text-gray-500">Q3 Revenue</p><p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">$151k</p><p class="mt-1 text-xs text-green-600">↑ 14% YoY</p></div>
+                <div class="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4"><p class="text-xs text-gray-500">New MRR</p><p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">$26k</p><p class="mt-1 text-xs text-green-600">↑ 9% QoQ</p></div>
+                <div class="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4"><p class="text-xs text-gray-500">Churn MRR</p><p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">$3.0k</p><p class="mt-1 text-xs text-gray-500">Flat</p></div>
+                <div class="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4"><p class="text-xs text-gray-500">Net New</p><p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">$23k</p><p class="mt-1 text-xs text-green-600">Best Q</p></div>
+              </div>
+            </div>
+            <div data-tab-panel="qt" class="hidden">
+              <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                <div class="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4"><p class="text-xs text-gray-500">Q4 Revenue</p><p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">$169k</p><p class="mt-1 text-xs text-green-600">↑ 18% YoY</p></div>
+                <div class="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4"><p class="text-xs text-gray-500">New MRR</p><p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">$31k</p><p class="mt-1 text-xs text-green-600">↑ 12% QoQ</p></div>
+                <div class="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4"><p class="text-xs text-gray-500">Churn MRR</p><p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">$2.5k</p><p class="mt-1 text-xs text-green-600">↓ Record low</p></div>
+                <div class="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4"><p class="text-xs text-gray-500">Net New</p><p class="mt-1 text-2xl font-bold text-gray-900 dark:text-white">$28.5k</p><p class="mt-1 text-xs text-green-600">Record</p></div>
+              </div>
+            </div>
+          </div>
+          <!-- Analytics outer panel -->
+          <div data-tab-panel="nt" class="hidden">
+            <div class="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-white/[0.03] p-4 text-sm text-gray-600 dark:text-gray-400">
+              <p class="font-semibold text-gray-800 dark:text-gray-200 mb-3">Analytics Overview</p>
+              <div class="grid grid-cols-3 gap-4">
+                <div class="text-center"><p class="text-xs text-gray-500">Avg Session</p><p class="text-xl font-bold text-gray-900 dark:text-white mt-1">4m 32s</p></div>
+                <div class="text-center"><p class="text-xs text-gray-500">Bounce Rate</p><p class="text-xl font-bold text-gray-900 dark:text-white mt-1">38%</p></div>
+                <div class="text-center"><p class="text-xs text-gray-500">Pages/Visit</p><p class="text-xl font-bold text-gray-900 dark:text-white mt-1">3.8</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end max-w-screen-2xl -->
     </main>
   </div>
 </div>
-<script src="common-loader.js"></script>
+
+
+<!-- SOURCE DRAWER + TOAST -->
+<div id="source-drawer" class="fixed inset-x-0 bottom-0 z-50 hidden">
+  <div class="fixed inset-0 bg-black/30" onclick="closeSourceDrawer()"></div>
+  <div class="relative bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 rounded-t-2xl shadow-2xl max-h-[65vh] flex flex-col mx-auto" style="max-width:720px;border-left:1px solid #e5e7eb;border-right:1px solid #e5e7eb;">
+    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-gray-800 flex-shrink-0">
+      <span id="drawer-title" class="text-sm font-semibold text-gray-900 dark:text-white">Source Code</span>
+      <div class="flex gap-2">
+        <button onclick="copyDrawerCode()" class="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700">Copy</button>
+        <button onclick="closeSourceDrawer()" class="rounded-lg border border-gray-200 dark:border-gray-700 p-1.5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+    </div>
+    <div class="overflow-auto flex-1 p-5">
+      <pre id="drawer-code" class="text-xs leading-relaxed text-gray-800 dark:text-gray-200 whitespace-pre-wrap font-mono"></pre>
+    </div>
+  </div>
+</div>
+<div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-2 pointer-events-none"></div>
+
 <script src="common-sidebar.js"></script>
 <script src="common-header.js"></script>
 <script src="app-shell.js"></script>
+<script>
+// ─── Generic Tab Switcher ───────────────────────────────────────────────────
+function activateTab(groupId, tabIndex) {
+  const panels = document.querySelectorAll('[data-tab-panel="' + groupId + '"]');
+  const tabs   = document.querySelectorAll('[data-tab="' + groupId + '"]');
+  panels.forEach(function(p, i) { p.classList.toggle('hidden', i !== tabIndex); });
+  tabs.forEach(function(t, i) {
+    var isActive = (i === tabIndex);
+    var activeClasses   = (t.dataset.activeClass   || 'text-blue-600 border-b-2 border-blue-600').split(' ');
+    var inactiveClasses = (t.dataset.inactiveClass || 'text-gray-500 border-b-2 border-transparent').split(' ');
+    if (isActive) {
+      activeClasses.forEach(function(c)   { if (c) t.classList.add(c); });
+      inactiveClasses.forEach(function(c) { if (c) t.classList.remove(c); });
+      t.setAttribute('aria-selected', 'true');
+    } else {
+      inactiveClasses.forEach(function(c) { if (c) t.classList.add(c); });
+      activeClasses.forEach(function(c)   { if (c) t.classList.remove(c); });
+      t.setAttribute('aria-selected', 'false');
+    }
+  });
+}
+
+// ─── Source Snippets ────────────────────────────────────────────────────────
+var SOURCE_SNIPPETS = {
+  'underline': '<!-- Underline Tabs -->\n<div role="tablist" class="flex border-b border-gray-200 dark:border-gray-700">\n  <button role="tab" aria-selected="true" class="px-4 py-2.5 text-sm font-semibold text-blue-600 border-b-2 border-blue-600 -mb-px">Overview</button>\n  <button role="tab" aria-selected="false" class="px-4 py-2.5 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300 -mb-px">Analytics</button>\n  <button role="tab" aria-selected="false" class="px-4 py-2.5 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300 -mb-px">Reports</button>\n</div>\n<div class="mt-4">\n  <div role="tabpanel"><!-- Tab content here --></div>\n</div>',
+  'pills': '<!-- Pill Tabs -->\n<div role="tablist" class="flex gap-1 rounded-full bg-gray-100 p-1 dark:bg-gray-800 w-fit">\n  <button role="tab" aria-selected="true" class="rounded-full bg-blue-600 px-4 py-1.5 text-sm font-semibold text-white">All</button>\n  <button role="tab" aria-selected="false" class="rounded-full px-4 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700">Active</button>\n  <button role="tab" aria-selected="false" class="rounded-full px-4 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700">Completed</button>\n  <button role="tab" aria-selected="false" class="rounded-full px-4 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700">Archived</button>\n</div>',
+  'bordered': '<!-- Bordered Tabs -->\n<div class="border-b border-gray-200 dark:border-gray-700">\n  <div role="tablist" class="-mb-px flex gap-0">\n    <button role="tab" aria-selected="true" class="rounded-t-lg border border-b-0 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-5 py-2.5 text-sm font-semibold text-gray-900 dark:text-white">Details</button>\n    <button role="tab" aria-selected="false" class="rounded-t-lg border-b border-gray-200 dark:border-gray-700 px-5 py-2.5 text-sm font-medium text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">Files</button>\n  </div>\n</div>\n<div class="rounded-b-lg border border-t-0 border-gray-200 dark:border-gray-700 p-5"><!-- Panel --></div>',
+  'vertical': '<!-- Vertical Tabs -->\n<div class="flex flex-col gap-4 lg:flex-row">\n  <div role="tablist" class="flex lg:flex-col gap-1 overflow-x-auto lg:overflow-x-visible lg:w-48 no-scrollbar">\n    <button role="tab" aria-selected="true" class="flex items-center gap-2 rounded-lg border-l-2 border-blue-600 bg-blue-50 px-3 py-2 text-sm font-semibold text-blue-600 dark:bg-blue-900/20">General</button>\n    <button role="tab" aria-selected="false" class="flex items-center gap-2 rounded-lg border-l-2 border-transparent px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">Appearance</button>\n  </div>\n  <div class="flex-1">\n    <div role="tabpanel"><!-- Panel content --></div>\n  </div>\n</div>',
+  'icon-tabs': '<!-- Icon Tabs -->\n<div role="tablist" class="flex gap-1 border-b border-gray-200 dark:border-gray-700">\n  <button role="tab" aria-selected="true" class="flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-blue-600 border-b-2 border-blue-600 -mb-px">\n    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><!-- chart icon --></svg>\n    Dashboard\n  </button>\n  <button role="tab" aria-selected="false" class="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-gray-500 border-b-2 border-transparent -mb-px hover:text-gray-700">\n    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><!-- users icon --></svg>\n    Users\n  </button>\n</div>',
+  'scrollable': '<!-- Scrollable Tabs -->\n<div class="relative flex items-center">\n  <button class="shrink-0 rounded-lg p-1 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800" onclick="scrollTabs(-120)">\n    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>\n  </button>\n  <div class="flex-1 overflow-x-auto no-scrollbar">\n    <div role="tablist" class="flex border-b border-gray-200 dark:border-gray-700" id="scrollable-tabs">\n      <button role="tab" class="shrink-0 whitespace-nowrap px-4 py-2.5 text-sm font-semibold text-blue-600 border-b-2 border-blue-600 -mb-px">January</button>\n    </div>\n  </div>\n  <button class="shrink-0 rounded-lg p-1 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800" onclick="scrollTabs(120)">\n    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>\n  </button>\n</div>',
+  'dashboard': '<!-- Dashboard Segmented Controls -->\n<div role="tablist" class="flex rounded-lg bg-gray-100 p-1 dark:bg-gray-800">\n  <button role="tab" aria-selected="true" class="rounded-md bg-white shadow-sm px-4 py-1.5 text-sm font-semibold text-gray-900 dark:bg-gray-700 dark:text-white">Daily</button>\n  <button role="tab" aria-selected="false" class="rounded-md px-4 py-1.5 text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">Weekly</button>\n  <button role="tab" aria-selected="false" class="rounded-md px-4 py-1.5 text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">Monthly</button>\n</div>',
+  'settings': '<!-- Settings Page Tabs -->\n<div class="flex flex-col gap-6 lg:flex-row">\n  <nav role="tablist" class="flex flex-row gap-1 overflow-x-auto no-scrollbar lg:flex-col lg:w-52 flex-shrink-0">\n    <button role="tab" aria-selected="true" class="whitespace-nowrap rounded-lg bg-gray-100 dark:bg-gray-800 px-4 py-2 text-left text-sm font-semibold text-gray-900 dark:text-white">Profile</button>\n    <button role="tab" aria-selected="false" class="whitespace-nowrap rounded-lg px-4 py-2 text-left text-sm font-medium text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800">Account</button>\n  </nav>\n  <div class="flex-1 min-w-0">\n    <div role="tabpanel"><!-- Settings content --></div>\n  </div>\n</div>',
+  'code-preview': '<!-- Code Preview Tabs -->\n<div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">\n  <div role="tablist" class="flex border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">\n    <button role="tab" aria-selected="true" class="px-4 py-2.5 text-xs font-semibold text-blue-600 border-b-2 border-blue-600 -mb-px bg-white dark:bg-gray-900">Preview</button>\n    <button role="tab" aria-selected="false" class="px-4 py-2.5 text-xs font-medium text-gray-500 border-b-2 border-transparent -mb-px hover:text-gray-700 dark:hover:text-gray-300">Code</button>\n    <button role="tab" aria-selected="false" class="px-4 py-2.5 text-xs font-medium text-gray-500 border-b-2 border-transparent -mb-px hover:text-gray-700 dark:hover:text-gray-300">Props</button>\n  </div>\n  <div class="p-5"><!-- Preview, Code, Props content --></div>\n</div>',
+  'nested': '<!-- Nested Tabs -->\n<!-- Outer underline tabs -->\n<div role="tablist" class="flex border-b border-gray-200 dark:border-gray-700 mb-4">\n  <button role="tab" aria-selected="true" class="px-4 py-2.5 text-sm font-semibold text-blue-600 border-b-2 border-blue-600 -mb-px">Reports</button>\n  <button role="tab" aria-selected="false" class="px-4 py-2.5 text-sm font-medium text-gray-500 border-b-2 border-transparent -mb-px hover:text-gray-700">Analytics</button>\n</div>\n<!-- Inner pill tabs inside Reports panel -->\n<div role="tablist" class="flex gap-1 rounded-full bg-gray-100 p-1 w-fit dark:bg-gray-800">\n  <button role="tab" aria-selected="true" class="rounded-full bg-blue-600 px-4 py-1.5 text-xs font-semibold text-white">Q1</button>\n  <button role="tab" aria-selected="false" class="rounded-full px-4 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-200">Q2</button>\n  <button role="tab" aria-selected="false" class="rounded-full px-4 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-200">Q3</button>\n  <button role="tab" aria-selected="false" class="rounded-full px-4 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-200">Q4</button>\n</div>'
+};
+
+// ─── Source Drawer ──────────────────────────────────────────────────────────
+function openSourceDrawer(id, title) {
+  document.getElementById('drawer-title').textContent = title + ' — Source';
+  document.getElementById('drawer-code').textContent = SOURCE_SNIPPETS[id] || '';
+  document.getElementById('source-drawer').classList.remove('hidden');
+  document.getElementById('source-drawer').dataset.currentId = id;
+  document.body.style.overflow = 'hidden';
+}
+function closeSourceDrawer() {
+  document.getElementById('source-drawer').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+function copyDrawerCode() {
+  var id = document.getElementById('source-drawer').dataset.currentId;
+  navigator.clipboard.writeText(SOURCE_SNIPPETS[id] || '').then(function() { showToast('Copied to clipboard!'); });
+}
+
+// ─── Toast ──────────────────────────────────────────────────────────────────
+function showToast(msg) {
+  var c = document.getElementById('toast-container');
+  var t = document.createElement('div');
+  t.className = 'pointer-events-auto flex items-center gap-2 rounded-xl border border-green-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 shadow-lg dark:border-green-800 dark:bg-gray-900 dark:text-white';
+  t.style.animation = 'toastIn .2s ease';
+  t.innerHTML = '<span class="h-2 w-2 rounded-full bg-green-500 flex-shrink-0"></span>' + msg;
+  c.appendChild(t);
+  setTimeout(function() {
+    t.style.opacity = '0';
+    t.style.transform = 'translateX(12px)';
+    t.style.transition = 'all .2s';
+    setTimeout(function() { t.remove(); }, 200);
+  }, 2500);
+}
+
+// ─── Scrollable Tabs ────────────────────────────────────────────────────────
+function scrollTabs(amount) {
+  var el = document.getElementById('scrollable-tabs-container');
+  if (el) el.scrollBy({ left: amount, behavior: 'smooth' });
+}
+
+// ─── Keyboard Escape ────────────────────────────────────────────────────────
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeSourceDrawer(); });
+</script>
 </body>
 </html>

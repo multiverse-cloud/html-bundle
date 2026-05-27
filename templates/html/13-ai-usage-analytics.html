@@ -1,192 +1,457 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#465fff" />
-  <meta name="description" content="Production-ready AI Usage Analytics HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
-  <title>AI Usage Analytics — mtverse</title>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Operations Dashboard — mtverse</title>
   <style>
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    .animate-slideDown {
-      animation: slideDown 0.2s ease-out;
-    }
-    .sidebar-text {
-      transition: opacity 0.2s ease-in-out;
-    }
+    .no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+    @keyframes countUp{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+    .count-up{animation:countUp .4s ease forwards}
+    .bar-col:hover .bar-fill{filter:brightness(1.12)}
+    .seg-btn.active{background:#2563eb;color:#fff}
+    .seg-btn{transition:all .15s ease}
+    .row-hover:hover{background:rgba(59,130,246,.04)}
+    @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+    .skeleton{background:linear-gradient(90deg,#f1f5f9 25%,#e2e8f0 50%,#f1f5f9 75%);background-size:200% 100%;animation:shimmer 1.4s infinite}
+    .dark .skeleton{background:linear-gradient(90deg,#1e293b 25%,#334155 50%,#1e293b 75%);background-size:200% 100%}
+    .token-bar-col{display:flex;flex-direction:column;align-items:center;flex:1;gap:4px}
+    .token-bar-fill{width:100%;border-radius:4px 4px 0 0;background:#7c3aed;min-height:4px}
+    .token-bar-fill.peak{background:#5b21b6}
+    .token-bar-label{font-size:10px;color:#6b7280;text-align:center}
+    .token-bar-val{font-size:10px;color:#6b7280;text-align:center}
   </style>
   <link rel="stylesheet" href="tailwind-production.css">
   <link rel="stylesheet" href="pro-styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
-
-<!-- Mobile overlay -->
 <div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
-
 <div class="flex h-screen overflow-hidden">
-  <!-- Sidebar Container -->
   <div id="sidebar-container"></div>
-
-  <!-- Main content -->
   <div class="flex-1 flex flex-col overflow-hidden">
-    <!-- Header Container -->
     <div id="header-container"></div>
-
-    <!-- Page content -->
     <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
       <div class="mx-auto w-full max-w-screen-2xl">
-<div class="flex items-center justify-between mb-6">
-        <div>
-          <div class="flex items-center gap-2 text-sm text-gray-500 mb-1"><span>Management</span><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg><span class="text-gray-800 font-medium">Usage Analytics</span></div>
-          <h1 class="text-xl font-bold text-gray-900">AI Usage Analytics</h1>
-        </div>
-        <div class="flex items-center gap-2">
-          <select class="text-sm border border-gray-200 rounded-lg px-3 py-1.5 text-gray-700 focus:outline-none bg-white">
-            <option>May 2026</option><option>April 2026</option><option>March 2026</option><option>Last 90 days</option>
-          </select>
-          <button class="px-3 py-1.5 text-sm border border-gray-200 rounded-lg hover:bg-gray-50 text-gray-600 flex items-center gap-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>Export</button>
-        </div>
-      </div>
-      <!-- KPI row -->
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div class="bg-white rounded-xl border border-gray-200 p-4"><p class="text-xs text-gray-500 uppercase tracking-wide mb-2">Total Tokens</p><p class="text-2xl font-bold text-gray-900">84.2M</p><p class="text-xs text-green-600 mt-1">↑ 18.3% MoM</p></div>
-        <div class="bg-white rounded-xl border border-gray-200 p-4"><p class="text-xs text-gray-500 uppercase tracking-wide mb-2">Total Cost</p><p class="text-2xl font-bold text-gray-900">$1,284</p><p class="text-xs text-red-500 mt-1">↑ 22.1% MoM</p></div>
-        <div class="bg-white rounded-xl border border-gray-200 p-4"><p class="text-xs text-gray-500 uppercase tracking-wide mb-2">API Calls</p><p class="text-2xl font-bold text-gray-900">142,891</p><p class="text-xs text-green-600 mt-1">↑ 9.7% MoM</p></div>
-        <div class="bg-white rounded-xl border border-gray-200 p-4"><p class="text-xs text-gray-500 uppercase tracking-wide mb-2">Avg Latency</p><p class="text-2xl font-bold text-gray-900">1.84s</p><p class="text-xs text-green-600 mt-1">↓ 0.3s vs last month</p></div>
-      </div>
-      <!-- Bar chart + Donut -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
-        <!-- Bar chart -->
-        <div class="lg:col-span-2 bg-white rounded-xl border border-gray-200 p-5">
-          <div class="flex items-center justify-between mb-4">
-            <h2 class="text-sm font-semibold text-gray-800">Monthly Token Usage</h2>
-            <div class="flex gap-3 text-xs text-gray-500">
-              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded bg-blue-500 inline-block"></span>GPT-4o</span>
-              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded bg-purple-500 inline-block"></span>Claude</span>
-              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded bg-green-500 inline-block"></span>Gemini</span>
+
+        <!-- Page Header -->
+        <div class="flex flex-wrap items-start justify-between gap-4 mb-6">
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">AI Operations Dashboard</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Model metrics, token usage, latency, error rates, and API logs</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-3">
+            <div class="flex items-center bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden p-1 gap-1">
+              <button class="seg-btn active px-3 py-1.5 text-sm font-medium rounded-lg">GPT-4</button>
+              <button class="seg-btn px-3 py-1.5 text-sm font-medium rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Claude 3</button>
+              <button class="seg-btn px-3 py-1.5 text-sm font-medium rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Gemini</button>
+            </div>
+            <div class="flex items-center gap-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-3 py-2">
+              <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              <span class="text-sm text-gray-600 dark:text-gray-300">Last 7 days</span>
             </div>
           </div>
-          <svg viewBox="0 0 420 130" class="w-full h-32">
-            <!-- Gridlines -->
-            <line x1="40" y1="10" x2="410" y2="10" stroke="#f3f4f6" stroke-width="1"/>
-            <line x1="40" y1="40" x2="410" y2="40" stroke="#f3f4f6" stroke-width="1"/>
-            <line x1="40" y1="70" x2="410" y2="70" stroke="#f3f4f6" stroke-width="1"/>
-            <line x1="40" y1="100" x2="410" y2="100" stroke="#f3f4f6" stroke-width="1"/>
-            <!-- Y axis labels -->
-            <text x="32" y="13" text-anchor="end" class="text-xs" font-size="9" fill="#9ca3af">80M</text>
-            <text x="32" y="43" text-anchor="end" class="text-xs" font-size="9" fill="#9ca3af">60M</text>
-            <text x="32" y="73" text-anchor="end" class="text-xs" font-size="9" fill="#9ca3af">40M</text>
-            <text x="32" y="103" text-anchor="end" class="text-xs" font-size="9" fill="#9ca3af">20M</text>
-            <!-- Bars: Jan-Jun, each month has 3 bars -->
-            <!-- Jan -->
-            <rect x="45" y="88" width="9" height="22" rx="2" fill="#3b82f6"/>
-            <rect x="55" y="95" width="9" height="15" rx="2" fill="#8b5cf6"/>
-            <rect x="65" y="99" width="9" height="11" rx="2" fill="#22c55e"/>
-            <!-- Feb -->
-            <rect x="105" y="82" width="9" height="28" rx="2" fill="#3b82f6"/>
-            <rect x="115" y="90" width="9" height="20" rx="2" fill="#8b5cf6"/>
-            <rect x="125" y="94" width="9" height="16" rx="2" fill="#22c55e"/>
-            <!-- Mar -->
-            <rect x="165" y="75" width="9" height="35" rx="2" fill="#3b82f6"/>
-            <rect x="175" y="85" width="9" height="25" rx="2" fill="#8b5cf6"/>
-            <rect x="185" y="90" width="9" height="20" rx="2" fill="#22c55e"/>
-            <!-- Apr -->
-            <rect x="225" y="68" width="9" height="42" rx="2" fill="#3b82f6"/>
-            <rect x="235" y="79" width="9" height="31" rx="2" fill="#8b5cf6"/>
-            <rect x="245" y="85" width="9" height="25" rx="2" fill="#22c55e"/>
-            <!-- May -->
-            <rect x="285" y="55" width="9" height="55" rx="2" fill="#3b82f6"/>
-            <rect x="295" y="68" width="9" height="42" rx="2" fill="#8b5cf6"/>
-            <rect x="305" y="76" width="9" height="34" rx="2" fill="#22c55e"/>
-            <!-- Jun (partial) -->
-            <rect x="345" y="45" width="9" height="65" rx="2" fill="#93c5fd"/>
-            <rect x="355" y="58" width="9" height="52" rx="2" fill="#c4b5fd"/>
-            <rect x="365" y="67" width="9" height="43" rx="2" fill="#86efac"/>
-            <!-- X labels -->
-            <text x="64" y="120" text-anchor="middle" font-size="9" fill="#9ca3af">Jan</text>
-            <text x="124" y="120" text-anchor="middle" font-size="9" fill="#9ca3af">Feb</text>
-            <text x="184" y="120" text-anchor="middle" font-size="9" fill="#9ca3af">Mar</text>
-            <text x="244" y="120" text-anchor="middle" font-size="9" fill="#9ca3af">Apr</text>
-            <text x="304" y="120" text-anchor="middle" font-size="9" fill="#9ca3af">May</text>
-            <text x="364" y="120" text-anchor="middle" font-size="9" fill="#9ca3af">Jun</text>
-          </svg>
         </div>
-        <!-- Donut cost breakdown -->
-        <div class="bg-white rounded-xl border border-gray-200 p-5">
-          <h2 class="text-sm font-semibold text-gray-800 mb-4">Cost by Model</h2>
-          <div class="flex justify-center mb-4">
-            <svg viewBox="0 0 120 120" class="w-32 h-32">
-              <!-- Donut segments: GPT-4o 50%, Claude 34%, Gemini 16% -->
-              <circle cx="60" cy="60" r="40" fill="none" stroke="#3b82f6" stroke-width="20" stroke-dasharray="125.6 125.6" stroke-dashoffset="0" transform="rotate(-90 60 60)"/>
-              <circle cx="60" cy="60" r="40" fill="none" stroke="#8b5cf6" stroke-width="20" stroke-dasharray="85.3 166" stroke-dashoffset="-125.6" transform="rotate(-90 60 60)"/>
-              <circle cx="60" cy="60" r="40" fill="none" stroke="#22c55e" stroke-width="20" stroke-dasharray="40 211.3" stroke-dashoffset="-210.9" transform="rotate(-90 60 60)"/>
-              <text x="60" y="57" text-anchor="middle" font-size="11" font-weight="bold" fill="#1f2937">$1,284</text>
-              <text x="60" y="70" text-anchor="middle" font-size="8" fill="#6b7280">total</text>
-            </svg>
+
+
+        <!-- KPI Cards -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <!-- Total API Calls -->
+          <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-5">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">API Calls (Today)</span>
+              <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30 px-2 py-0.5 rounded-full">↑ 14.2%</span>
+            </div>
+            <p class="text-2xl font-bold text-gray-900 dark:text-white count-up mb-3">84,230</p>
+            <div class="flex items-end gap-0.5 h-8">
+              <div class="flex-1 bg-violet-200 dark:bg-violet-700 rounded-sm" style="height:55%"></div>
+              <div class="flex-1 bg-violet-300 dark:bg-violet-600 rounded-sm" style="height:64%"></div>
+              <div class="flex-1 bg-violet-300 dark:bg-violet-600 rounded-sm" style="height:58%"></div>
+              <div class="flex-1 bg-violet-400 dark:bg-violet-500 rounded-sm" style="height:72%"></div>
+              <div class="flex-1 bg-violet-400 dark:bg-violet-500 rounded-sm" style="height:80%"></div>
+              <div class="flex-1 bg-violet-500 dark:bg-violet-400 rounded-sm" style="height:88%"></div>
+              <div class="flex-1 bg-violet-600 dark:bg-violet-300 rounded-sm" style="height:100%"></div>
+            </div>
           </div>
-          <div class="space-y-2">
-            <div class="flex items-center justify-between text-xs"><div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded bg-blue-500 inline-block"></span><span class="text-gray-600">GPT-4o</span></div><span class="font-semibold text-gray-800">$642 (50%)</span></div>
-            <div class="flex items-center justify-between text-xs"><div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded bg-purple-500 inline-block"></span><span class="text-gray-600">Claude 3.5</span></div><span class="font-semibold text-gray-800">$437 (34%)</span></div>
-            <div class="flex items-center justify-between text-xs"><div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded bg-green-500 inline-block"></span><span class="text-gray-600">Gemini Pro</span></div><span class="font-semibold text-gray-800">$205 (16%)</span></div>
+          <!-- Avg Latency -->
+          <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-5">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Avg Latency</span>
+              <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30 px-2 py-0.5 rounded-full">↓ 0.3s</span>
+            </div>
+            <p class="text-2xl font-bold text-gray-900 dark:text-white count-up mb-3">1.84s</p>
+            <div class="flex items-end gap-0.5 h-8">
+              <div class="flex-1 bg-blue-200 dark:bg-blue-700 rounded-sm" style="height:100%"></div>
+              <div class="flex-1 bg-blue-200 dark:bg-blue-700 rounded-sm" style="height:88%"></div>
+              <div class="flex-1 bg-blue-300 dark:bg-blue-600 rounded-sm" style="height:92%"></div>
+              <div class="flex-1 bg-blue-300 dark:bg-blue-600 rounded-sm" style="height:85%"></div>
+              <div class="flex-1 bg-blue-300 dark:bg-blue-600 rounded-sm" style="height:80%"></div>
+              <div class="flex-1 bg-blue-400 dark:bg-blue-500 rounded-sm" style="height:75%"></div>
+              <div class="flex-1 bg-blue-400 dark:bg-blue-500 rounded-sm" style="height:68%"></div>
+            </div>
+          </div>
+          <!-- Token Usage -->
+          <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-5">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Token Usage (MTD)</span>
+              <span class="text-xs font-semibold text-amber-600 bg-amber-50 dark:bg-amber-900/30 px-2 py-0.5 rounded-full">88%</span>
+            </div>
+            <p class="text-2xl font-bold text-gray-900 dark:text-white count-up mb-2">880K / 1M</p>
+            <div class="h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden mb-1">
+              <div class="h-2 bg-amber-500 rounded-full" style="width:88%"></div>
+            </div>
+            <p class="text-xs text-gray-400">120K tokens remaining</p>
+          </div>
+          <!-- Error Rate -->
+          <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-5">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Error Rate</span>
+              <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30 px-2 py-0.5 rounded-full">↓ 0.1pp</span>
+            </div>
+            <p class="text-2xl font-bold text-gray-900 dark:text-white count-up mb-3">0.42%</p>
+            <div class="flex items-end gap-0.5 h-8">
+              <div class="flex-1 bg-rose-200 dark:bg-rose-700 rounded-sm" style="height:80%"></div>
+              <div class="flex-1 bg-rose-200 dark:bg-rose-700 rounded-sm" style="height:90%"></div>
+              <div class="flex-1 bg-rose-300 dark:bg-rose-600 rounded-sm" style="height:70%"></div>
+              <div class="flex-1 bg-rose-200 dark:bg-rose-700 rounded-sm" style="height:85%"></div>
+              <div class="flex-1 bg-rose-300 dark:bg-rose-600 rounded-sm" style="height:100%"></div>
+              <div class="flex-1 bg-rose-200 dark:bg-rose-700 rounded-sm" style="height:65%"></div>
+              <div class="flex-1 bg-rose-200 dark:bg-rose-700 rounded-sm" style="height:55%"></div>
+            </div>
           </div>
         </div>
-      </div>
-      <!-- Top Users + API Key Usage -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div class="bg-white rounded-xl border border-gray-200 p-5">
-          <div class="flex items-center justify-between mb-4"><h2 class="text-sm font-semibold text-gray-800">Top Users by Token Usage</h2><a href="#" class="text-xs text-blue-600 hover:underline">View all</a></div>
-          <table class="w-full text-sm">
-            <thead><tr class="text-xs text-gray-400 uppercase border-b border-gray-100"><th class="pb-2 text-left font-medium">User</th><th class="pb-2 text-left font-medium">Tokens</th><th class="pb-2 text-left font-medium">Cost</th><th class="pb-2 text-left font-medium">Requests</th></tr></thead>
-            <tbody class="divide-y divide-gray-50">
-              <tr class="hover:bg-gray-50"><td class="py-2.5"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold">JD</div><span class="text-gray-800 font-medium">Jane Doe</span></div></td><td class="py-2.5 text-gray-600">18.4M</td><td class="py-2.5 text-gray-700 font-medium">$281</td><td class="py-2.5 text-gray-500">32,481</td></tr>
-              <tr class="hover:bg-gray-50"><td class="py-2.5"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-purple-600 flex items-center justify-center text-white text-xs font-bold">MP</div><span class="text-gray-800 font-medium">Marcus Park</span></div></td><td class="py-2.5 text-gray-600">12.1M</td><td class="py-2.5 text-gray-700 font-medium">$185</td><td class="py-2.5 text-gray-500">21,302</td></tr>
-              <tr class="hover:bg-gray-50"><td class="py-2.5"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-green-600 flex items-center justify-center text-white text-xs font-bold">AL</div><span class="text-gray-800 font-medium">Aisha Larsson</span></div></td><td class="py-2.5 text-gray-600">9.8M</td><td class="py-2.5 text-gray-700 font-medium">$149</td><td class="py-2.5 text-gray-500">17,640</td></tr>
-              <tr class="hover:bg-gray-50"><td class="py-2.5"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-orange-600 flex items-center justify-center text-white text-xs font-bold">RC</div><span class="text-gray-800 font-medium">Ryan Chen</span></div></td><td class="py-2.5 text-gray-600">7.2M</td><td class="py-2.5 text-gray-700 font-medium">$110</td><td class="py-2.5 text-gray-500">12,890</td></tr>
-            </tbody>
-          </table>
+
+
+        <!-- Model Performance Table -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-5 mb-6">
+          <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-4">Model Performance</h2>
+          <div class="overflow-x-auto no-scrollbar">
+            <table class="w-full min-w-[720px]">
+              <thead>
+                <tr class="border-b border-gray-100 dark:border-gray-700">
+                  <th class="text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide pb-3 pr-4">Model</th>
+                  <th class="text-right text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide pb-3 pr-4">Calls Today</th>
+                  <th class="text-right text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide pb-3 pr-4">Avg Latency</th>
+                  <th class="text-right text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide pb-3 pr-4">P99 Latency</th>
+                  <th class="text-right text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide pb-3 pr-4">Error Rate</th>
+                  <th class="text-right text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide pb-3 pr-4">Cost/1K</th>
+                  <th class="text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide pb-3">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="row-hover border-b border-gray-50 dark:border-gray-700/50 transition-colors">
+                  <td class="py-3 pr-4"><span class="text-sm font-mono font-medium text-gray-900 dark:text-white">gpt-4-turbo</span></td>
+                  <td class="py-3 pr-4 text-sm text-gray-700 dark:text-gray-300 text-right">42,180</td>
+                  <td class="py-3 pr-4 text-sm text-gray-700 dark:text-gray-300 text-right">1.84s</td>
+                  <td class="py-3 pr-4 text-sm text-gray-700 dark:text-gray-300 text-right">4.2s</td>
+                  <td class="py-3 pr-4 text-right"><span class="text-xs font-medium text-gray-600 dark:text-gray-400">0.38%</span></td>
+                  <td class="py-3 pr-4 text-sm text-gray-700 dark:text-gray-300 text-right">$0.030</td>
+                  <td class="py-3"><span class="flex items-center gap-1.5 text-xs font-medium text-emerald-600"><span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>Operational</span></td>
+                </tr>
+                <tr class="row-hover border-b border-gray-50 dark:border-gray-700/50 transition-colors">
+                  <td class="py-3 pr-4"><span class="text-sm font-mono font-medium text-gray-900 dark:text-white">claude-3-opus</span></td>
+                  <td class="py-3 pr-4 text-sm text-gray-700 dark:text-gray-300 text-right">22,840</td>
+                  <td class="py-3 pr-4 text-sm text-gray-700 dark:text-gray-300 text-right">2.12s</td>
+                  <td class="py-3 pr-4 text-sm text-gray-700 dark:text-gray-300 text-right">5.1s</td>
+                  <td class="py-3 pr-4 text-right"><span class="text-xs font-medium text-gray-600 dark:text-gray-400">0.44%</span></td>
+                  <td class="py-3 pr-4 text-sm text-gray-700 dark:text-gray-300 text-right">$0.025</td>
+                  <td class="py-3"><span class="flex items-center gap-1.5 text-xs font-medium text-emerald-600"><span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>Operational</span></td>
+                </tr>
+                <tr class="row-hover border-b border-gray-50 dark:border-gray-700/50 transition-colors">
+                  <td class="py-3 pr-4"><span class="text-sm font-mono font-medium text-gray-900 dark:text-white">gemini-pro</span></td>
+                  <td class="py-3 pr-4 text-sm text-gray-700 dark:text-gray-300 text-right">12,490</td>
+                  <td class="py-3 pr-4 text-sm text-gray-700 dark:text-gray-300 text-right">0.94s</td>
+                  <td class="py-3 pr-4 text-sm text-gray-700 dark:text-gray-300 text-right">2.8s</td>
+                  <td class="py-3 pr-4 text-right"><span class="text-xs font-medium text-amber-600">0.61%</span></td>
+                  <td class="py-3 pr-4 text-sm text-gray-700 dark:text-gray-300 text-right">$0.010</td>
+                  <td class="py-3"><span class="flex items-center gap-1.5 text-xs font-medium text-amber-600"><span class="w-2 h-2 rounded-full bg-amber-500 inline-block"></span>Degraded</span></td>
+                </tr>
+                <tr class="row-hover transition-colors">
+                  <td class="py-3 pr-4"><span class="text-sm font-mono font-medium text-gray-900 dark:text-white">gpt-3.5-turbo</span></td>
+                  <td class="py-3 pr-4 text-sm text-gray-700 dark:text-gray-300 text-right">6,720</td>
+                  <td class="py-3 pr-4 text-sm text-gray-700 dark:text-gray-300 text-right">0.62s</td>
+                  <td class="py-3 pr-4 text-sm text-gray-700 dark:text-gray-300 text-right">1.9s</td>
+                  <td class="py-3 pr-4 text-right"><span class="text-xs font-medium text-emerald-600">0.21%</span></td>
+                  <td class="py-3 pr-4 text-sm text-gray-700 dark:text-gray-300 text-right">$0.002</td>
+                  <td class="py-3"><span class="flex items-center gap-1.5 text-xs font-medium text-emerald-600"><span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>Operational</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-        <div class="bg-white rounded-xl border border-gray-200 p-5">
-          <div class="flex items-center justify-between mb-4"><h2 class="text-sm font-semibold text-gray-800">API Key Usage</h2><a href="#" class="text-xs text-blue-600 hover:underline">Manage keys</a></div>
-          <table class="w-full text-sm">
-            <thead><tr class="text-xs text-gray-400 uppercase border-b border-gray-100"><th class="pb-2 text-left font-medium">Key Name</th><th class="pb-2 text-left font-medium">Calls</th><th class="pb-2 text-left font-medium">Tokens</th><th class="pb-2 text-left font-medium">Status</th></tr></thead>
-            <tbody class="divide-y divide-gray-50">
-              <tr class="hover:bg-gray-50"><td class="py-2.5"><p class="font-medium text-gray-800">Production Key</p><p class="text-xs text-gray-400 font-mono">sk-live-...4f2a</p></td><td class="py-2.5 text-gray-600">98,420</td><td class="py-2.5 text-gray-600">62.1M</td><td class="py-2.5"><span class="px-2 py-0.5 bg-green-50 text-green-700 rounded-full text-xs">Active</span></td></tr>
-              <tr class="hover:bg-gray-50"><td class="py-2.5"><p class="font-medium text-gray-800">Staging Key</p><p class="text-xs text-gray-400 font-mono">sk-test-...8b1c</p></td><td class="py-2.5 text-gray-600">24,110</td><td class="py-2.5 text-gray-600">14.8M</td><td class="py-2.5"><span class="px-2 py-0.5 bg-green-50 text-green-700 rounded-full text-xs">Active</span></td></tr>
-              <tr class="hover:bg-gray-50"><td class="py-2.5"><p class="font-medium text-gray-800">Analytics Bot</p><p class="text-xs text-gray-400 font-mono">sk-live-...9e3d</p></td><td class="py-2.5 text-gray-600">20,361</td><td class="py-2.5 text-gray-600">7.3M</td><td class="py-2.5"><span class="px-2 py-0.5 bg-green-50 text-green-700 rounded-full text-xs">Active</span></td></tr>
-              <tr class="hover:bg-gray-50"><td class="py-2.5"><p class="font-medium text-gray-800">Dev Sandbox</p><p class="text-xs text-gray-400 font-mono">sk-test-...2f7b</p></td><td class="py-2.5 text-gray-600">0</td><td class="py-2.5 text-gray-600">0</td><td class="py-2.5"><span class="px-2 py-0.5 bg-gray-100 text-gray-500 rounded-full text-xs">Inactive</span></td></tr>
-            </tbody>
-          </table>
+
+        <!-- Token Usage Chart -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-5 mb-6">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-200">Daily Token Usage</h2>
+            <span class="text-xs text-gray-400">Past 7 days</span>
+          </div>
+          <div style="display:flex;align-items:flex-end;gap:8px;height:100px">
+            <!-- Mon 82k -->
+            <div class="token-bar-col">
+              <div class="token-bar-val">82k</div>
+              <div class="token-bar-fill" style="height:70%"></div>
+              <div class="token-bar-label">Mon</div>
+            </div>
+            <!-- Tue 94k -->
+            <div class="token-bar-col">
+              <div class="token-bar-val">94k</div>
+              <div class="token-bar-fill" style="height:80%"></div>
+              <div class="token-bar-label">Tue</div>
+            </div>
+            <!-- Wed 88k -->
+            <div class="token-bar-col">
+              <div class="token-bar-val">88k</div>
+              <div class="token-bar-fill" style="height:75%"></div>
+              <div class="token-bar-label">Wed</div>
+            </div>
+            <!-- Thu 102k -->
+            <div class="token-bar-col">
+              <div class="token-bar-val">102k</div>
+              <div class="token-bar-fill" style="height:87%"></div>
+              <div class="token-bar-label">Thu</div>
+            </div>
+            <!-- Fri 118k — peak -->
+            <div class="token-bar-col">
+              <div class="token-bar-val" style="font-weight:700;color:#5b21b6">118k</div>
+              <div class="token-bar-fill peak" style="height:100%"></div>
+              <div class="token-bar-label" style="font-weight:700;color:#5b21b6">Fri</div>
+            </div>
+            <!-- Sat 96k -->
+            <div class="token-bar-col">
+              <div class="token-bar-val">96k</div>
+              <div class="token-bar-fill" style="height:82%"></div>
+              <div class="token-bar-label">Sat</div>
+            </div>
+            <!-- Sun 84k -->
+            <div class="token-bar-col">
+              <div class="token-bar-val">84k</div>
+              <div class="token-bar-fill" style="height:71%"></div>
+              <div class="token-bar-label">Sun</div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-4 mt-3">
+            <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-violet-600 inline-block"></span><span class="text-xs text-gray-500 dark:text-gray-400">Daily Usage</span></div>
+            <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-violet-900 inline-block"></span><span class="text-xs text-gray-500 dark:text-gray-400">Peak Day (Fri)</span></div>
+          </div>
         </div>
-      </div>
+
+
+        <!-- API Logs -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-5 mb-6">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-200">Recent API Requests</h2>
+            <button class="text-xs text-blue-600 hover:underline font-medium">View All Logs</button>
+          </div>
+          <div class="overflow-x-auto no-scrollbar">
+            <table class="w-full min-w-[680px]">
+              <thead>
+                <tr class="border-b border-gray-100 dark:border-gray-700">
+                  <th class="text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide pb-3 pr-4">Time</th>
+                  <th class="text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide pb-3 pr-4">Model</th>
+                  <th class="text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide pb-3 pr-4">Endpoint</th>
+                  <th class="text-right text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide pb-3 pr-4">Tokens</th>
+                  <th class="text-right text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide pb-3 pr-4">Latency</th>
+                  <th class="text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide pb-3">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="row-hover border-b border-gray-50 dark:border-gray-700/50 transition-colors">
+                  <td class="py-2.5 pr-4 text-xs font-mono text-gray-500 dark:text-gray-400">14:32:01</td>
+                  <td class="py-2.5 pr-4 text-xs font-mono text-gray-700 dark:text-gray-300">gpt-4-turbo</td>
+                  <td class="py-2.5 pr-4 text-xs font-mono text-gray-500 dark:text-gray-400">/v1/chat/completions</td>
+                  <td class="py-2.5 pr-4 text-xs text-gray-600 dark:text-gray-400 text-right">1,842</td>
+                  <td class="py-2.5 pr-4 text-xs text-gray-600 dark:text-gray-400 text-right">1.92s</td>
+                  <td class="py-2.5"><span class="text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">200 OK</span></td>
+                </tr>
+                <tr class="row-hover border-b border-gray-50 dark:border-gray-700/50 transition-colors">
+                  <td class="py-2.5 pr-4 text-xs font-mono text-gray-500 dark:text-gray-400">14:31:58</td>
+                  <td class="py-2.5 pr-4 text-xs font-mono text-gray-700 dark:text-gray-300">claude-3-opus</td>
+                  <td class="py-2.5 pr-4 text-xs font-mono text-gray-500 dark:text-gray-400">/v1/messages</td>
+                  <td class="py-2.5 pr-4 text-xs text-gray-600 dark:text-gray-400 text-right">2,104</td>
+                  <td class="py-2.5 pr-4 text-xs text-gray-600 dark:text-gray-400 text-right">2.31s</td>
+                  <td class="py-2.5"><span class="text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">200 OK</span></td>
+                </tr>
+                <tr class="row-hover border-b border-gray-50 dark:border-gray-700/50 transition-colors">
+                  <td class="py-2.5 pr-4 text-xs font-mono text-gray-500 dark:text-gray-400">14:31:44</td>
+                  <td class="py-2.5 pr-4 text-xs font-mono text-gray-700 dark:text-gray-300">gemini-pro</td>
+                  <td class="py-2.5 pr-4 text-xs font-mono text-gray-500 dark:text-gray-400">/v1/generate</td>
+                  <td class="py-2.5 pr-4 text-xs text-gray-600 dark:text-gray-400 text-right">984</td>
+                  <td class="py-2.5 pr-4 text-xs text-gray-600 dark:text-gray-400 text-right">0.88s</td>
+                  <td class="py-2.5"><span class="text-xs font-medium px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">429 Rate Limited</span></td>
+                </tr>
+                <tr class="row-hover border-b border-gray-50 dark:border-gray-700/50 transition-colors">
+                  <td class="py-2.5 pr-4 text-xs font-mono text-gray-500 dark:text-gray-400">14:31:22</td>
+                  <td class="py-2.5 pr-4 text-xs font-mono text-gray-700 dark:text-gray-300">gpt-4-turbo</td>
+                  <td class="py-2.5 pr-4 text-xs font-mono text-gray-500 dark:text-gray-400">/v1/chat/completions</td>
+                  <td class="py-2.5 pr-4 text-xs text-gray-600 dark:text-gray-400 text-right">3,210</td>
+                  <td class="py-2.5 pr-4 text-xs text-gray-600 dark:text-gray-400 text-right">2.84s</td>
+                  <td class="py-2.5"><span class="text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">200 OK</span></td>
+                </tr>
+                <tr class="row-hover border-b border-gray-50 dark:border-gray-700/50 transition-colors">
+                  <td class="py-2.5 pr-4 text-xs font-mono text-gray-500 dark:text-gray-400">14:30:59</td>
+                  <td class="py-2.5 pr-4 text-xs font-mono text-gray-700 dark:text-gray-300">gpt-3.5-turbo</td>
+                  <td class="py-2.5 pr-4 text-xs font-mono text-gray-500 dark:text-gray-400">/v1/chat/completions</td>
+                  <td class="py-2.5 pr-4 text-xs text-gray-600 dark:text-gray-400 text-right">512</td>
+                  <td class="py-2.5 pr-4 text-xs text-gray-600 dark:text-gray-400 text-right">0.61s</td>
+                  <td class="py-2.5"><span class="text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">200 OK</span></td>
+                </tr>
+                <tr class="row-hover border-b border-gray-50 dark:border-gray-700/50 transition-colors">
+                  <td class="py-2.5 pr-4 text-xs font-mono text-gray-500 dark:text-gray-400">14:30:41</td>
+                  <td class="py-2.5 pr-4 text-xs font-mono text-gray-700 dark:text-gray-300">claude-3-opus</td>
+                  <td class="py-2.5 pr-4 text-xs font-mono text-gray-500 dark:text-gray-400">/v1/messages</td>
+                  <td class="py-2.5 pr-4 text-xs text-gray-600 dark:text-gray-400 text-right">1,688</td>
+                  <td class="py-2.5 pr-4 text-xs text-gray-600 dark:text-gray-400 text-right">2.08s</td>
+                  <td class="py-2.5"><span class="text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">200 OK</span></td>
+                </tr>
+                <tr class="row-hover border-b border-gray-50 dark:border-gray-700/50 transition-colors">
+                  <td class="py-2.5 pr-4 text-xs font-mono text-gray-500 dark:text-gray-400">14:30:18</td>
+                  <td class="py-2.5 pr-4 text-xs font-mono text-gray-700 dark:text-gray-300">gpt-4-turbo</td>
+                  <td class="py-2.5 pr-4 text-xs font-mono text-gray-500 dark:text-gray-400">/v1/chat/completions</td>
+                  <td class="py-2.5 pr-4 text-xs text-gray-600 dark:text-gray-400 text-right">4,420</td>
+                  <td class="py-2.5 pr-4 text-xs text-gray-600 dark:text-gray-400 text-right">4.12s</td>
+                  <td class="py-2.5"><span class="text-xs font-medium px-2 py-0.5 rounded-full bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400">500 Error</span></td>
+                </tr>
+                <tr class="row-hover transition-colors">
+                  <td class="py-2.5 pr-4 text-xs font-mono text-gray-500 dark:text-gray-400">14:29:55</td>
+                  <td class="py-2.5 pr-4 text-xs font-mono text-gray-700 dark:text-gray-300">gemini-pro</td>
+                  <td class="py-2.5 pr-4 text-xs font-mono text-gray-500 dark:text-gray-400">/v1/generate</td>
+                  <td class="py-2.5 pr-4 text-xs text-gray-600 dark:text-gray-400 text-right">756</td>
+                  <td class="py-2.5 pr-4 text-xs text-gray-600 dark:text-gray-400 text-right">0.91s</td>
+                  <td class="py-2.5"><span class="text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">200 OK</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+        <!-- Bottom Row -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <!-- Cost by Model -->
+          <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-5">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-200">Cost by Model (MTD)</h2>
+              <span class="text-xs font-bold text-gray-900 dark:text-white">$1,380 total</span>
+            </div>
+            <div class="space-y-3">
+              <div>
+                <div class="flex justify-between text-xs mb-1">
+                  <span class="font-mono font-medium text-gray-700 dark:text-gray-300">gpt-4-turbo</span>
+                  <span class="text-gray-500 dark:text-gray-400">$840 · 61%</span>
+                </div>
+                <div class="h-2.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                  <div class="h-2.5 bg-violet-600 rounded-full" style="width:61%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-xs mb-1">
+                  <span class="font-mono font-medium text-gray-700 dark:text-gray-300">claude-3-opus</span>
+                  <span class="text-gray-500 dark:text-gray-400">$312 · 23%</span>
+                </div>
+                <div class="h-2.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                  <div class="h-2.5 bg-indigo-500 rounded-full" style="width:23%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-xs mb-1">
+                  <span class="font-mono font-medium text-gray-700 dark:text-gray-300">gemini-pro</span>
+                  <span class="text-gray-500 dark:text-gray-400">$96 · 7%</span>
+                </div>
+                <div class="h-2.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                  <div class="h-2.5 bg-blue-400 rounded-full" style="width:7%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-xs mb-1">
+                  <span class="font-mono font-medium text-gray-700 dark:text-gray-300">gpt-3.5-turbo</span>
+                  <span class="text-gray-500 dark:text-gray-400">$48 · 3%</span>
+                </div>
+                <div class="h-2.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                  <div class="h-2.5 bg-sky-400 rounded-full" style="width:3%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-xs mb-1">
+                  <span class="font-medium text-gray-700 dark:text-gray-300">Other</span>
+                  <span class="text-gray-500 dark:text-gray-400">$84 · 6%</span>
+                </div>
+                <div class="h-2.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                  <div class="h-2.5 bg-gray-400 rounded-full" style="width:6%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Error Distribution -->
+          <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-5">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-200">Error Distribution</h2>
+              <span class="text-xs text-gray-400">Last 24h</span>
+            </div>
+            <div class="space-y-3">
+              <div>
+                <div class="flex justify-between text-xs mb-1">
+                  <span class="font-medium text-gray-700 dark:text-gray-300">Rate Limited (429)</span>
+                  <span class="text-gray-500 dark:text-gray-400">52% · 186 errors</span>
+                </div>
+                <div class="h-2.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                  <div class="h-2.5 bg-amber-500 rounded-full" style="width:52%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-xs mb-1">
+                  <span class="font-medium text-gray-700 dark:text-gray-300">Server Error (500)</span>
+                  <span class="text-gray-500 dark:text-gray-400">28% · 100 errors</span>
+                </div>
+                <div class="h-2.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                  <div class="h-2.5 bg-red-500 rounded-full" style="width:28%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-xs mb-1">
+                  <span class="font-medium text-gray-700 dark:text-gray-300">Timeout</span>
+                  <span class="text-gray-500 dark:text-gray-400">14% · 50 errors</span>
+                </div>
+                <div class="h-2.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                  <div class="h-2.5 bg-orange-400 rounded-full" style="width:14%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between text-xs mb-1">
+                  <span class="font-medium text-gray-700 dark:text-gray-300">Invalid Request (400)</span>
+                  <span class="text-gray-500 dark:text-gray-400">6% · 22 errors</span>
+                </div>
+                <div class="h-2.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                  <div class="h-2.5 bg-rose-400 rounded-full" style="width:6%"></div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-gray-100 dark:border-gray-700">
+              <div class="flex justify-between text-xs">
+                <span class="text-gray-500 dark:text-gray-400">Total Errors (24h)</span>
+                <span class="font-semibold text-gray-900 dark:text-white">358</span>
+              </div>
+              <div class="flex justify-between text-xs mt-1">
+                <span class="text-gray-500 dark:text-gray-400">Overall Error Rate</span>
+                <span class="font-semibold text-amber-600">0.42%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </main>
   </div>
 </div>
-
-<!-- Common Components -->
-<script src="common-loader.js"></script>
 <script src="common-sidebar.js"></script>
 <script src="common-header.js"></script>
 <script src="app-shell.js"></script>
-
+<script>
+  document.querySelectorAll('.seg-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.seg-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+</script>
 </body>
 </html>

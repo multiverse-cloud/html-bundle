@@ -1,354 +1,349 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#465fff" />
-  <meta name="description" content="Production-ready Advanced Data Table HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
-  <title>Advanced Data Table — mtverse</title>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced Table — mtverse</title>
   <style>
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    .animate-slideDown {
-      animation: slideDown 0.2s ease-out;
-    }
-    .sidebar-text {
-      transition: opacity 0.2s ease-in-out;
-    }
+    .no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+    @keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .sort-arrow{display:inline-block;margin-left:4px;opacity:.4;transition:opacity .15s}
+    th:hover .sort-arrow{opacity:1}
+    th.sorted-asc .sort-arrow::after{content:'↑';opacity:1}
+    th.sorted-desc .sort-arrow::after{content:'↓';opacity:1}
+    th .sort-arrow::after{content:'↕'}
+    .bulk-bar{transition:transform .2s,opacity .2s}
+    .bulk-bar.hidden-bar{transform:translateY(-100%);opacity:0;pointer-events:none}
+    .row-actions{opacity:0;transition:opacity .15s}
+    tr:hover .row-actions{opacity:1}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+    .skeleton{background:linear-gradient(90deg,#f3f4f6 25%,#e5e7eb 50%,#f3f4f6 75%);background-size:200% 100%;animation:shimmer 1.4s infinite}
+    @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+    .dark .skeleton{background:linear-gradient(90deg,#374151 25%,#4b5563 50%,#374151 75%);background-size:200% 100%}
   </style>
   <link rel="stylesheet" href="tailwind-production.css">
   <link rel="stylesheet" href="pro-styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
-
-<!-- Mobile overlay -->
 <div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
-
 <div class="flex h-screen overflow-hidden">
-  <!-- Sidebar Container -->
   <div id="sidebar-container"></div>
-
-  <!-- Main content -->
   <div class="flex-1 flex flex-col overflow-hidden">
-    <!-- Header Container -->
     <div id="header-container"></div>
-
-    <!-- Page content -->
     <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
       <div class="mx-auto w-full max-w-screen-2xl">
-<!-- Page Header -->
-      <div class="flex items-center justify-between mb-5">
-        <h1 class="text-2xl font-bold text-gray-900 flex items-center gap-2">
-          Orders
-          <span class="text-sm font-medium bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">1,284</span>
-        </h1>
-        <button class="flex items-center gap-2 px-3 py-2 text-sm border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50 font-medium">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-          Export
-        </button>
-      </div>
-      <!-- Bulk Actions Bar -->
-      <div id="bulk-bar" class="hidden mb-4 bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 flex items-center gap-3">
-        <span class="text-sm font-semibold text-blue-700" id="bulk-count">3 selected</span>
-        <div class="flex items-center gap-2 ml-2">
-          <button type="button" class="px-3 py-1.5 text-xs font-semibold bg-blue-600 text-white rounded-lg hover:bg-blue-700">Mark Shipped</button>
-          <button class="px-3 py-1.5 text-xs font-semibold border border-blue-300 text-blue-700 rounded-lg hover:bg-blue-100">Export</button>
-          <button class="px-3 py-1.5 text-xs font-semibold border border-red-300 text-red-600 rounded-lg hover:bg-red-50">Delete</button>
-        </div>
-        <button type="button" onclick="clearSelection()" class="ml-auto text-xs text-gray-500 hover:text-gray-700">✕ Clear</button>
-      </div>
-      <!-- Toolbar -->
-      <div class="bg-white rounded-xl border border-gray-200 p-4 mb-1">
-        <div class="flex flex-wrap items-center gap-3 mb-0">
-          <div class="relative flex-1 min-w-40">
-            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-            <input type="text" placeholder="Search orders..." class="w-full pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-          </div>
-          <input type="date" value="2026-05-01" class="px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700" />
-          <span class="text-gray-400 text-sm">to</span>
-          <input type="date" value="2026-05-31" class="px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700" />
-          <button type="button" onclick="toggleFilter()" class="flex items-center gap-1.5 px-3 py-2 text-sm border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50 font-medium">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z"/></svg>
-            Filters
-          </button>
-          <button class="flex items-center gap-1.5 px-3 py-2 text-sm border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50 font-medium">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>
-            Columns
-          </button>
-          <div class="flex border border-gray-200 rounded-lg overflow-hidden text-sm">
-            <button type="button" class="px-3 py-1.5 bg-blue-600 text-white font-medium">Default</button>
-            <button class="px-3 py-1.5 text-gray-600 hover:bg-gray-50">Compact</button>
-          </div>
-        </div>
-      </div>
-      <!-- Filter Panel -->
-      <div id="filter-panel" class="hidden bg-white border border-gray-200 border-t-0 rounded-b-xl px-4 py-4 mb-4">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div>
-            <p class="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2">Status</p>
-            <div class="space-y-1.5">
-              <label class="flex items-center gap-2 text-sm text-gray-600 cursor-pointer"><input type="checkbox" checked class="rounded border-gray-300 text-blue-600" /> Pending</label>
-              <label class="flex items-center gap-2 text-sm text-gray-600 cursor-pointer"><input type="checkbox" checked class="rounded border-gray-300 text-blue-600" /> Processing</label>
-              <label class="flex items-center gap-2 text-sm text-gray-600 cursor-pointer"><input type="checkbox" checked class="rounded border-gray-300 text-blue-600" /> Shipped</label>
-              <label class="flex items-center gap-2 text-sm text-gray-600 cursor-pointer"><input type="checkbox" checked class="rounded border-gray-300 text-blue-600" /> Delivered</label>
-              <label class="flex items-center gap-2 text-sm text-gray-600 cursor-pointer"><input type="checkbox" class="rounded border-gray-300 text-blue-600" /> Cancelled</label>
-            </div>
-          </div>
-          <div>
-            <p class="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2">Amount Range</p>
-            <div class="flex items-center gap-2">
-              <input type="number" placeholder="Min" value="0" class="w-full px-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:outline-none" />
-              <span class="text-gray-400">–</span>
-              <input type="number" placeholder="Max" value="5000" class="w-full px-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:outline-none" />
-            </div>
-            <div class="mt-3 h-2 bg-gray-200 rounded-full"><div class="h-2 bg-blue-500 rounded-full" style="width:85%"></div></div>
-          </div>
-          <div>
-            <p class="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2">Customer Type</p>
-            <div class="space-y-1.5">
-              <label class="flex items-center gap-2 text-sm text-gray-600 cursor-pointer"><input type="radio" name="custtype" checked class="text-blue-600" /> All</label>
-              <label class="flex items-center gap-2 text-sm text-gray-600 cursor-pointer"><input type="radio" name="custtype" class="text-blue-600" /> New</label>
-              <label class="flex items-center gap-2 text-sm text-gray-600 cursor-pointer"><input type="radio" name="custtype" class="text-blue-600" /> Returning</label>
-            </div>
-          </div>
-        </div>
-        <div class="flex gap-2 mt-4 pt-4 border-t border-gray-100">
-          <button type="button" class="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700">Apply Filters</button>
-          <button class="px-4 py-2 border border-gray-200 text-gray-600 text-sm font-medium rounded-lg hover:bg-gray-50">Reset</button>
-        </div>
-      </div>
 
-      <!-- Table -->
-      <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm">
-            <thead class="bg-gray-50 border-b border-gray-200">
-              <tr>
-                <th class="pl-4 pr-2 py-3"><input type="checkbox" class="rounded border-gray-300 text-blue-600" id="selectAll" onclick="handleSelectAll(this)" /></th>
-                <th class="px-3 py-3 text-left text-xs font-semibold text-gray-500 uppercase cursor-pointer hover:text-gray-700" onclick="sortBy('order')">Order # <span class="text-gray-400">↕</span></th>
-                <th class="px-3 py-3 text-left text-xs font-semibold text-gray-500 uppercase cursor-pointer hover:text-gray-700" onclick="sortBy('customer')">Customer <span class="text-gray-400">↕</span></th>
-                <th class="px-3 py-3 text-left text-xs font-semibold text-gray-500 uppercase cursor-pointer hover:text-gray-700" onclick="sortBy('amount')">Amount <span class="text-gray-400">↕</span></th>
-                <th class="px-3 py-3 text-left text-xs font-semibold text-gray-500 uppercase cursor-pointer hover:text-gray-700" onclick="sortBy('status')">Status <span class="text-gray-400">↕</span></th>
-                <th class="px-3 py-3 text-left text-xs font-semibold text-gray-500 uppercase cursor-pointer hover:text-gray-700" onclick="sortBy('items')">Items <span class="text-gray-400">↕</span></th>
-                <th class="px-3 py-3 text-left text-xs font-semibold text-gray-500 uppercase cursor-pointer hover:text-gray-700" onclick="sortBy('date')">Date <span class="text-gray-400">↕</span></th>
-                <th class="px-3 py-3 text-left text-xs font-semibold text-gray-500 uppercase cursor-pointer hover:text-gray-700" onclick="sortBy('channel')">Channel <span class="text-gray-400">↕</span></th>
-              </tr>
-            </thead>
-            <tbody id="order-table-body">
-              <!-- Row 1 -->
-              <tr class="hover:bg-gray-50 cursor-pointer border-b border-gray-100" onclick="toggleRow('row1-detail', this)">
-                <td class="pl-4 pr-2 py-3" onclick="event.stopPropagation()"><input type="checkbox" class="row-cb rounded border-gray-300 text-blue-600" onchange="updateBulk()" /></td>
-                <td class="px-3 py-3 font-mono text-blue-600 font-semibold text-xs">#ORD-8821</td>
-                <td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-7 h-7 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">SM</div><span class="font-medium text-gray-900">Sarah Mitchell</span></div></td>
-                <td class="px-3 py-3 font-semibold text-gray-900">$284.50</td>
-                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-semibold rounded-full">Delivered</span></td>
-                <td class="px-3 py-3 text-gray-600">3 items</td>
-                <td class="px-3 py-3 text-gray-600">May 24, 2026</td>
-                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-gray-100 text-gray-600 text-xs rounded-full">Web</span></td>
-              </tr>
-              <tr id="row1-detail" class="hidden bg-blue-50 border-b border-blue-100">
-                <td colspan="8" class="px-8 py-4">
-                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                    <div><p class="text-xs font-semibold text-gray-500 mb-1">Billing Address</p><p class="text-gray-700">42 Maple Street, Austin, TX 78701</p></div>
-                    <div><p class="text-xs font-semibold text-gray-500 mb-1">Payment Method</p><p class="text-gray-700">Visa •••• 4821</p></div>
-                    <div><p class="text-xs font-semibold text-gray-500 mb-1">Tracking Number</p><p class="text-blue-600 font-mono">1Z999AA10123456784</p></div>
-                    <div class="md:col-span-3"><p class="text-xs font-semibold text-gray-500 mb-1">Items</p><p class="text-gray-700">1× Wireless Headset ($120), 1× USB Hub ($64.50), 1× Laptop Stand ($100)</p></div>
-                  </div>
-                </td>
-              </tr>
-              <!-- Row 2 -->
-              <tr class="hover:bg-gray-50 cursor-pointer border-b border-gray-100" onclick="toggleRow('row2-detail', this)">
-                <td class="pl-4 pr-2 py-3" onclick="event.stopPropagation()"><input type="checkbox" class="row-cb rounded border-gray-300 text-blue-600" onchange="updateBulk()" /></td>
-                <td class="px-3 py-3 font-mono text-blue-600 font-semibold text-xs">#ORD-8820</td>
-                <td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-7 h-7 rounded-full bg-green-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">JP</div><span class="font-medium text-gray-900">James Patel</span></div></td>
-                <td class="px-3 py-3 font-semibold text-gray-900">$1,249.00</td>
-                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs font-semibold rounded-full">Processing</span></td>
-                <td class="px-3 py-3 text-gray-600">1 item</td>
-                <td class="px-3 py-3 text-gray-600">May 24, 2026</td>
-                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-purple-100 text-purple-700 text-xs rounded-full">API</span></td>
-              </tr>
-              <tr id="row2-detail" class="hidden bg-blue-50 border-b border-blue-100">
-                <td colspan="8" class="px-8 py-4">
-                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                    <div><p class="text-xs font-semibold text-gray-500 mb-1">Billing Address</p><p class="text-gray-700">88 Innovation Blvd, San Francisco, CA 94107</p></div>
-                    <div><p class="text-xs font-semibold text-gray-500 mb-1">Payment Method</p><p class="text-gray-700">Mastercard •••• 3390</p></div>
-                    <div><p class="text-xs font-semibold text-gray-500 mb-1">Tracking Number</p><p class="text-gray-400">Pending assignment</p></div>
-                    <div class="md:col-span-3"><p class="text-xs font-semibold text-gray-500 mb-1">Items</p><p class="text-gray-700">1× Enterprise API License ($1,249)</p></div>
-                  </div>
-                </td>
-              </tr>
-              <!-- Row 3 -->
-              <tr class="hover:bg-gray-50 cursor-pointer border-b border-gray-100" onclick="toggleRow('row3-detail', this)">
-                <td class="pl-4 pr-2 py-3" onclick="event.stopPropagation()"><input type="checkbox" class="row-cb rounded border-gray-300 text-blue-600" onchange="updateBulk()" /></td>
-                <td class="px-3 py-3 font-mono text-blue-600 font-semibold text-xs">#ORD-8819</td>
-                <td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-7 h-7 rounded-full bg-purple-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">LC</div><span class="font-medium text-gray-900">Laura Chen</span></div></td>
-                <td class="px-3 py-3 font-semibold text-gray-900">$67.99</td>
-                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-indigo-100 text-indigo-700 text-xs font-semibold rounded-full">Shipped</span></td>
-                <td class="px-3 py-3 text-gray-600">2 items</td>
-                <td class="px-3 py-3 text-gray-600">May 23, 2026</td>
-                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-orange-100 text-orange-700 text-xs rounded-full">Mobile</span></td>
-              </tr>
-              <tr id="row3-detail" class="hidden bg-blue-50 border-b border-blue-100">
-                <td colspan="8" class="px-8 py-4">
-                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                    <div><p class="text-xs font-semibold text-gray-500 mb-1">Billing Address</p><p class="text-gray-700">15 Harbor View, Seattle, WA 98101</p></div>
-                    <div><p class="text-xs font-semibold text-gray-500 mb-1">Payment Method</p><p class="text-gray-700">Apple Pay •••• 7712</p></div>
-                    <div><p class="text-xs font-semibold text-gray-500 mb-1">Tracking Number</p><p class="text-blue-600 font-mono">9400111899223344556</p></div>
-                    <div class="md:col-span-3"><p class="text-xs font-semibold text-gray-500 mb-1">Items</p><p class="text-gray-700">1× Design Asset Pack ($49.99), 1× Font License ($18)</p></div>
-                  </div>
-                </td>
-              </tr>
-              <!-- Row 4 -->
-              <tr class="hover:bg-gray-50 cursor-pointer border-b border-gray-100" onclick="toggleRow('row4-detail', this)">
-                <td class="pl-4 pr-2 py-3" onclick="event.stopPropagation()"><input type="checkbox" class="row-cb rounded border-gray-300 text-blue-600" onchange="updateBulk()" /></td>
-                <td class="px-3 py-3 font-mono text-blue-600 font-semibold text-xs">#ORD-8818</td>
-                <td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-7 h-7 rounded-full bg-orange-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">MR</div><span class="font-medium text-gray-900">Marco Rivera</span></div></td>
-                <td class="px-3 py-3 font-semibold text-gray-900">$512.40</td>
-                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-yellow-100 text-yellow-700 text-xs font-semibold rounded-full">Pending</span></td>
-                <td class="px-3 py-3 text-gray-600">5 items</td>
-                <td class="px-3 py-3 text-gray-600">May 23, 2026</td>
-                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-gray-100 text-gray-600 text-xs rounded-full">Web</span></td>
-              </tr>
-              <tr id="row4-detail" class="hidden bg-blue-50 border-b border-blue-100">
-                <td colspan="8" class="px-8 py-4">
-                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                    <div><p class="text-xs font-semibold text-gray-500 mb-1">Billing Address</p><p class="text-gray-700">300 Tech Park Dr, Denver, CO 80201</p></div>
-                    <div><p class="text-xs font-semibold text-gray-500 mb-1">Payment Method</p><p class="text-gray-700">Visa •••• 2245</p></div>
-                    <div><p class="text-xs font-semibold text-gray-500 mb-1">Tracking Number</p><p class="text-gray-400">Not yet assigned</p></div>
-                    <div class="md:col-span-3"><p class="text-xs font-semibold text-gray-500 mb-1">Items</p><p class="text-gray-700">2× Server RAM 16GB ($80ea), 1× SSD 1TB ($180), 2× Network Cable 10m ($46.20ea)</p></div>
-                  </div>
-                </td>
-              </tr>
-              <!-- Row 5 -->
-              <tr class="hover:bg-gray-50 cursor-pointer border-b border-gray-100" onclick="toggleRow('row5-detail', this)">
-                <td class="pl-4 pr-2 py-3" onclick="event.stopPropagation()"><input type="checkbox" class="row-cb rounded border-gray-300 text-blue-600" onchange="updateBulk()" /></td>
-                <td class="px-3 py-3 font-mono text-blue-600 font-semibold text-xs">#ORD-8817</td>
-                <td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-7 h-7 rounded-full bg-red-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">ET</div><span class="font-medium text-gray-900">Emma Thompson</span></div></td>
-                <td class="px-3 py-3 font-semibold text-gray-900">$39.00</td>
-                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-red-100 text-red-700 text-xs font-semibold rounded-full">Cancelled</span></td>
-                <td class="px-3 py-3 text-gray-600">1 item</td>
-                <td class="px-3 py-3 text-gray-600">May 22, 2026</td>
-                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-gray-100 text-gray-600 text-xs rounded-full">Web</span></td>
-              </tr>
-              <tr id="row5-detail" class="hidden bg-blue-50 border-b border-blue-100">
-                <td colspan="8" class="px-8 py-4">
-                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                    <div><p class="text-xs font-semibold text-gray-500 mb-1">Billing Address</p><p class="text-gray-700">7 Birchwood Lane, Portland, OR 97201</p></div>
-                    <div><p class="text-xs font-semibold text-gray-500 mb-1">Payment Method</p><p class="text-gray-700">PayPal •••• emma@work.com</p></div>
-                    <div><p class="text-xs font-semibold text-gray-500 mb-1">Tracking Number</p><p class="text-gray-400">Order cancelled — no shipment</p></div>
-                    <div class="md:col-span-3"><p class="text-xs font-semibold text-gray-500 mb-1">Items</p><p class="text-gray-700">1× Monthly Analytics Subscription ($39) — refund issued</p></div>
-                  </div>
-                </td>
-              </tr>
-              <!-- Row 6 -->
-              <tr class="hover:bg-gray-50 cursor-pointer border-b border-gray-100" onclick="toggleRow('row6-detail', this)">
-                <td class="pl-4 pr-2 py-3" onclick="event.stopPropagation()"><input type="checkbox" class="row-cb rounded border-gray-300 text-blue-600" onchange="updateBulk()" /></td>
-                <td class="px-3 py-3 font-mono text-blue-600 font-semibold text-xs">#ORD-8816</td>
-                <td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-7 h-7 rounded-full bg-pink-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">DK</div><span class="font-medium text-gray-900">Daniel Kim</span></div></td>
-                <td class="px-3 py-3 font-semibold text-gray-900">$890.25</td>
-                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-semibold rounded-full">Delivered</span></td>
-                <td class="px-3 py-3 text-gray-600">4 items</td>
-                <td class="px-3 py-3 text-gray-600">May 22, 2026</td>
-                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-purple-100 text-purple-700 text-xs rounded-full">API</span></td>
-              </tr>
-              <tr id="row6-detail" class="hidden bg-blue-50 border-b border-blue-100">
-                <td colspan="8" class="px-8 py-4">
-                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                    <div><p class="text-xs font-semibold text-gray-500 mb-1">Billing Address</p><p class="text-gray-700">91 Pine Street, Chicago, IL 60601</p></div>
-                    <div><p class="text-xs font-semibold text-gray-500 mb-1">Payment Method</p><p class="text-gray-700">Corporate Card •••• 0034</p></div>
-                    <div><p class="text-xs font-semibold text-gray-500 mb-1">Tracking Number</p><p class="text-blue-600 font-mono">7748291004837651</p></div>
-                    <div class="md:col-span-3"><p class="text-xs font-semibold text-gray-500 mb-1">Items</p><p class="text-gray-700">2× API Tokens Pack ($200ea), 1× Cloud Hosting 6mo ($350), 1× Domain Renewal ($140.25)</p></div>
-                  </div>
-                </td>
-              </tr>
-              <!-- Row 7 -->
-              <tr class="hover:bg-gray-50 cursor-pointer border-b border-gray-100" onclick="toggleRow('row7-detail', this)">
-                <td class="pl-4 pr-2 py-3" onclick="event.stopPropagation()"><input type="checkbox" class="row-cb rounded border-gray-300 text-blue-600" onchange="updateBulk()" /></td>
-                <td class="px-3 py-3 font-mono text-blue-600 font-semibold text-xs">#ORD-8815</td>
-                <td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-7 h-7 rounded-full bg-teal-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">PS</div><span class="font-medium text-gray-900">Priya Sharma</span></div></td>
-                <td class="px-3 py-3 font-semibold text-gray-900">$145.00</td>
-                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-indigo-100 text-indigo-700 text-xs font-semibold rounded-full">Shipped</span></td>
-                <td class="px-3 py-3 text-gray-600">2 items</td>
-                <td class="px-3 py-3 text-gray-600">May 21, 2026</td>
-                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-orange-100 text-orange-700 text-xs rounded-full">Mobile</span></td>
-              </tr>
-              <tr id="row7-detail" class="hidden bg-blue-50 border-b border-blue-100">
-                <td colspan="8" class="px-8 py-4">
-                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                    <div><p class="text-xs font-semibold text-gray-500 mb-1">Billing Address</p><p class="text-gray-700">23 Sunrise Ave, Boston, MA 02101</p></div>
-                    <div><p class="text-xs font-semibold text-gray-500 mb-1">Payment Method</p><p class="text-gray-700">Google Pay •••• 5534</p></div>
-                    <div><p class="text-xs font-semibold text-gray-500 mb-1">Tracking Number</p><p class="text-blue-600 font-mono">8810029938471122</p></div>
-                    <div class="md:col-span-3"><p class="text-xs font-semibold text-gray-500 mb-1">Items</p><p class="text-gray-700">1× Marketing Pro Plan ($99), 1× Email Credits 10k ($46)</p></div>
-                  </div>
-                </td>
-              </tr>
-              <!-- Row 8 -->
-              <tr class="hover:bg-gray-50 cursor-pointer" onclick="toggleRow('row8-detail', this)">
-                <td class="pl-4 pr-2 py-3" onclick="event.stopPropagation()"><input type="checkbox" class="row-cb rounded border-gray-300 text-blue-600" onchange="updateBulk()" /></td>
-                <td class="px-3 py-3 font-mono text-blue-600 font-semibold text-xs">#ORD-8814</td>
-                <td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-7 h-7 rounded-full bg-indigo-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">AJ</div><span class="font-medium text-gray-900">Alex Johnson</span></div></td>
-                <td class="px-3 py-3 font-semibold text-gray-900">$2,100.00</td>
-                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs font-semibold rounded-full">Processing</span></td>
-                <td class="px-3 py-3 text-gray-600">1 item</td>
-                <td class="px-3 py-3 text-gray-600">May 21, 2026</td>
-                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-gray-100 text-gray-600 text-xs rounded-full">Web</span></td>
-              </tr>
-              <tr id="row8-detail" class="hidden bg-blue-50">
-                <td colspan="8" class="px-8 py-4">
-                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                    <div><p class="text-xs font-semibold text-gray-500 mb-1">Billing Address</p><p class="text-gray-700">55 Oak Court, New York, NY 10001</p></div>
-                    <div><p class="text-xs font-semibold text-gray-500 mb-1">Payment Method</p><p class="text-gray-700">Amex •••• 9901</p></div>
-                    <div><p class="text-xs font-semibold text-gray-500 mb-1">Tracking Number</p><p class="text-gray-400">Processing — tracking pending</p></div>
-                    <div class="md:col-span-3"><p class="text-xs font-semibold text-gray-500 mb-1">Items</p><p class="text-gray-700">1× Annual Enterprise License ($2,100)</p></div>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+
+        <!-- Page Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Advanced Table</h1>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Sortable, filterable, searchable table with bulk actions, column toggles, and export</p>
+          </div>
+          <button onclick="openAddModal()" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            Add User
+          </button>
         </div>
-        <!-- Pagination -->
-        <div class="flex items-center justify-between px-4 py-3 border-t border-gray-200">
-          <div class="flex items-center gap-2">
-            <span class="text-sm text-gray-500">Rows per page:</span>
-            <select class="px-2 py-1 text-sm border border-gray-200 rounded-lg focus:outline-none">
-              <option>10</option><option>25</option><option>50</option><option>100</option>
+
+        <!-- Bulk Action Bar -->
+        <div id="bulkBar" class="bulk-bar hidden-bar bg-blue-600 text-white px-4 py-3 rounded-xl mb-4 flex items-center justify-between">
+          <span class="text-sm font-medium"><span id="bulkCount">0</span> users selected</span>
+          <div class="flex gap-2">
+            <button class="px-3 py-1.5 bg-white/20 hover:bg-white/30 rounded-lg text-xs font-medium transition">Delete</button>
+            <button class="px-3 py-1.5 bg-white/20 hover:bg-white/30 rounded-lg text-xs font-medium transition">Export</button>
+            <button onclick="clearSelection()" class="px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-lg text-xs font-medium transition">✕ Clear</button>
+          </div>
+        </div>
+
+        <!-- Controls Row -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 mb-0">
+          <div class="px-4 py-3 flex flex-wrap gap-3 items-center border-b border-gray-100 dark:border-gray-700">
+            <!-- Search -->
+            <div class="relative flex-1 min-w-48">
+              <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-gray-400">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg>
+              </span>
+              <input type="text" id="searchInput" placeholder="Search users…" oninput="filterTable()" class="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
+            </div>
+            <!-- Status filter -->
+            <select id="statusFilter" onchange="filterTable()" class="rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+              <option value="">All Status</option>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+              <option value="Pending">Pending</option>
             </select>
+            <!-- Column toggle -->
+            <div class="relative" id="colToggleWrap">
+              <button onclick="document.getElementById('colDropdown').classList.toggle('hidden')" class="flex items-center gap-2 px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m0 10a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 7a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m0 10V7m0 10a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2"/></svg>
+                Columns
+              </button>
+              <div id="colDropdown" class="hidden absolute right-0 top-10 z-20 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg p-3 min-w-40 space-y-2">
+                <label class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 cursor-pointer"><input type="checkbox" checked onchange="toggleColumn('role')" class="text-blue-600" />Role</label>
+                <label class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 cursor-pointer"><input type="checkbox" checked onchange="toggleColumn('joined')" class="text-blue-600" />Joined</label>
+                <label class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 cursor-pointer"><input type="checkbox" checked onchange="toggleColumn('lastActive')" class="text-blue-600" />Last Active</label>
+              </div>
+            </div>
+            <!-- Export -->
+            <button onclick="exportCSV()" class="flex items-center gap-2 px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-1m-4-4-4 4m0 0-4-4m4 4V4"/></svg>
+              Export CSV
+            </button>
           </div>
-          <p class="text-sm text-gray-500">Showing <span class="font-medium text-gray-700">1–8</span> of <span class="font-medium text-gray-700">1,284</span> orders</p>
-          <div class="flex items-center gap-2">
-            <button class="px-3 py-1.5 text-sm border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 disabled:opacity-40" disabled>← Prev</button>
-            <button class="px-3 py-1.5 text-sm border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50">Next →</button>
+
+          <!-- Table -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-gray-100 dark:border-gray-700 text-left">
+                  <th class="px-4 py-3 w-10">
+                    <input type="checkbox" id="selectAll" onchange="toggleSelectAll()" class="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500" />
+                  </th>
+                  <th class="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide w-8">#</th>
+                  <th class="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide cursor-pointer" onclick="sortTable('name')">
+                    Name<span class="sort-arrow"></span>
+                  </th>
+                  <th class="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide cursor-pointer col-role" onclick="sortTable('role')">
+                    Role<span class="sort-arrow"></span>
+                  </th>
+                  <th class="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide cursor-pointer" onclick="sortTable('status')">
+                    Status<span class="sort-arrow"></span>
+                  </th>
+                  <th class="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide cursor-pointer col-joined" onclick="sortTable('joined')">
+                    Joined<span class="sort-arrow"></span>
+                  </th>
+                  <th class="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide col-lastActive">Last Active</th>
+                  <th class="px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody"></tbody>
+            </table>
           </div>
-        </div>
-      </div>
+
+          <!-- Empty State -->
+          <div id="emptyState" class="hidden py-16 text-center">
+            <svg class="mx-auto mb-4 w-16 h-16 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 0 0-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 0 1 5.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 0 1 9.288 0M15 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/></svg>
+            <p class="text-base font-medium text-gray-500 dark:text-gray-400">No users found</p>
+            <p class="text-sm text-gray-400 dark:text-gray-500 mt-1">Try adjusting your search or filter criteria.</p>
+          </div>
+
+          <!-- Pagination -->
+          <div class="px-4 py-3 border-t border-gray-100 dark:border-gray-700 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p class="text-sm text-gray-500 dark:text-gray-400" id="paginationInfo">Showing 1-10 of 10 users</p>
+            <div class="flex items-center gap-1" id="paginationControls"></div>
+          </div>
+        </div><!-- /table card -->
+
       </div>
     </main>
   </div>
 </div>
 
-<!-- Common Components -->
-<script src="common-loader.js"></script>
+<!-- Add User Modal -->
+<div id="addModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/50">
+  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-md p-6">
+    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Add New User</h3>
+    <div class="space-y-3">
+      <div><label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Name</label><input type="text" id="addName" placeholder="Full name" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition" /></div>
+      <div><label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label><input type="email" id="addEmail" placeholder="user@example.com" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition" /></div>
+      <div><label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Role</label>
+        <select id="addRole" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+          <option>Admin</option><option>Editor</option><option>Viewer</option><option>Developer</option>
+        </select>
+      </div>
+    </div>
+    <div class="flex gap-3 mt-5">
+      <button onclick="closeAddModal()" class="flex-1 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition">Cancel</button>
+      <button onclick="addUser()" class="flex-1 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition">Add User</button>
+    </div>
+  </div>
+</div>
+
 <script src="common-sidebar.js"></script>
 <script src="common-header.js"></script>
 <script src="app-shell.js"></script>
+<script>
+const STATUS_STYLES = {
+  Active: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
+  Inactive: 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400',
+  Pending: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'
+};
+const AVATARS = ['bg-blue-500','bg-purple-500','bg-pink-500','bg-red-500','bg-orange-500','bg-yellow-500','bg-green-500','bg-teal-500','bg-cyan-500','bg-indigo-500'];
 
+let users = [
+  {id:1,name:'Alice Kim',email:'alice@example.com',role:'Admin',status:'Active',joined:'Jan 12',lastActive:'2h ago'},
+  {id:2,name:'Bob Jones',email:'bob@example.com',role:'Editor',status:'Active',joined:'Feb 3',lastActive:'1d ago'},
+  {id:3,name:'Carol Lee',email:'carol@example.com',role:'Viewer',status:'Pending',joined:'Feb 18',lastActive:'3d ago'},
+  {id:4,name:'Dan Miller',email:'dan@example.com',role:'Admin',status:'Inactive',joined:'Mar 1',lastActive:'14d ago'},
+  {id:5,name:'Emma Torres',email:'emma@example.com',role:'Editor',status:'Active',joined:'Mar 15',lastActive:'5h ago'},
+  {id:6,name:'Finn Nash',email:'finn@example.com',role:'Developer',status:'Active',joined:'Mar 22',lastActive:'30m ago'},
+  {id:7,name:'Grace Kim',email:'grace@example.com',role:'Viewer',status:'Pending',joined:'Apr 4',lastActive:'2d ago'},
+  {id:8,name:'Henry Park',email:'henry@example.com',role:'Editor',status:'Active',joined:'Apr 10',lastActive:'4h ago'},
+  {id:9,name:'Iris Chen',email:'iris@example.com',role:'Viewer',status:'Inactive',joined:'Apr 28',lastActive:'21d ago'},
+  {id:10,name:'Jake Wilson',email:'jake@example.com',role:'Developer',status:'Active',joined:'May 5',lastActive:'1h ago'}
+];
+
+let filtered = [...users];
+let sortCol = '', sortDir = 'asc';
+let currentPage = 1, pageSize = 10;
+let selectedIds = new Set();
+let hiddenCols = new Set();
+
+function avatarInitials(name){ return name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase(); }
+function avatarColor(name){ const i=name.charCodeAt(0)%AVATARS.length; return AVATARS[i]; }
+
+function renderTable() {
+  const tbody = document.getElementById('tableBody');
+  const start = (currentPage-1)*pageSize;
+  const page = filtered.slice(start, start+pageSize);
+  tbody.innerHTML = '';
+  document.getElementById('emptyState').classList.toggle('hidden', filtered.length > 0);
+  if (filtered.length === 0) return;
+  page.forEach(u => {
+    const tr = document.createElement('tr');
+    tr.className = 'border-b border-gray-50 dark:border-gray-700/50 hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors';
+    const checked = selectedIds.has(u.id);
+    tr.innerHTML = `
+      <td class="px-4 py-3">
+        <input type="checkbox" ${checked?'checked':''} onchange="toggleRow(${u.id},this)" class="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500" />
+      </td>
+      <td class="px-4 py-3 text-xs text-gray-400 dark:text-gray-500">${u.id}</td>
+      <td class="px-4 py-3">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full ${avatarColor(u.name)} text-white text-xs font-bold flex items-center justify-center shrink-0">${avatarInitials(u.name)}</div>
+          <div><p class="font-medium text-gray-900 dark:text-gray-100 text-sm">${u.name}</p><p class="text-xs text-gray-400 dark:text-gray-500">${u.email}</p></div>
+        </div>
+      </td>
+      <td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-300 col-role ${hiddenCols.has('role')?'hidden':''}">${u.role}</td>
+      <td class="px-4 py-3"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${STATUS_STYLES[u.status]||''}">${u.status}</span></td>
+      <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400 col-joined ${hiddenCols.has('joined')?'hidden':''}">${u.joined}</td>
+      <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400 col-lastActive ${hiddenCols.has('lastActive')?'hidden':''}">${u.lastActive}</td>
+      <td class="px-4 py-3 text-right">
+        <div class="row-actions inline-flex gap-1">
+          <button class="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition" title="Edit"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-5m-1.414-9.414a2 2 0 1 1 2.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>
+          <button onclick="deleteUser(${u.id})" class="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition" title="Delete"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0 1 16.138 21H7.862a2 2 0 0 1-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v3M4 7h16"/></svg></button>
+        </div>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+  renderPagination();
+}
+
+function renderPagination() {
+  const total = filtered.length;
+  const pages = Math.ceil(total/pageSize);
+  const start = (currentPage-1)*pageSize+1;
+  const end = Math.min(currentPage*pageSize, total);
+  document.getElementById('paginationInfo').textContent = `Showing ${start}–${end} of ${total} users`;
+  const ctrl = document.getElementById('paginationControls');
+  ctrl.innerHTML = '';
+  const btn = (label, page, disabled, active) => {
+    const b = document.createElement('button');
+    b.textContent = label;
+    b.className = `px-3 py-1.5 text-sm rounded-lg border transition ${active?'bg-blue-600 border-blue-600 text-white':'border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700'} ${disabled?'opacity-40 cursor-not-allowed':''}`;
+    if (!disabled) b.onclick = () => { currentPage=page; renderTable(); };
+    return b;
+  };
+  ctrl.appendChild(btn('←', currentPage-1, currentPage===1, false));
+  for (let p=1; p<=pages; p++) ctrl.appendChild(btn(p, p, false, p===currentPage));
+  ctrl.appendChild(btn('→', currentPage+1, currentPage===pages||pages===0, false));
+}
+
+function filterTable() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const st = document.getElementById('statusFilter').value;
+  filtered = users.filter(u => {
+    const match = !q || u.name.toLowerCase().includes(q)||u.email.toLowerCase().includes(q)||u.role.toLowerCase().includes(q);
+    const statusMatch = !st || u.status === st;
+    return match && statusMatch;
+  });
+  currentPage = 1;
+  renderTable();
+}
+
+function sortTable(col) {
+  if (sortCol === col) sortDir = sortDir==='asc'?'desc':'asc';
+  else { sortCol=col; sortDir='asc'; }
+  document.querySelectorAll('thead th').forEach(th=>th.classList.remove('sorted-asc','sorted-desc'));
+  const thMap = {name:2,role:3,status:4,joined:5};
+  const idx = thMap[col];
+  if (idx) {
+    const ths = document.querySelectorAll('thead th');
+    ths[idx].classList.add('sorted-'+sortDir);
+  }
+  filtered.sort((a,b)=>{
+    const va=String(a[col]||'').toLowerCase(), vb=String(b[col]||'').toLowerCase();
+    return sortDir==='asc'?va.localeCompare(vb):vb.localeCompare(va);
+  });
+  renderTable();
+}
+
+function toggleSelectAll() {
+  const all = document.getElementById('selectAll').checked;
+  const start = (currentPage-1)*pageSize;
+  filtered.slice(start,start+pageSize).forEach(u => { if(all) selectedIds.add(u.id); else selectedIds.delete(u.id); });
+  updateBulkBar();
+  renderTable();
+}
+
+function toggleRow(id, cb) {
+  if (cb.checked) selectedIds.add(id); else selectedIds.delete(id);
+  updateBulkBar();
+}
+
+function updateBulkBar() {
+  const bar = document.getElementById('bulkBar');
+  if (selectedIds.size > 0) {
+    bar.classList.remove('hidden-bar');
+    document.getElementById('bulkCount').textContent = selectedIds.size;
+  } else bar.classList.add('hidden-bar');
+}
+
+function clearSelection() { selectedIds.clear(); updateBulkBar(); renderTable(); }
+
+function toggleColumn(name) {
+  if (hiddenCols.has(name)) hiddenCols.delete(name); else hiddenCols.add(name);
+  document.querySelectorAll('.col-'+name).forEach(el=>el.classList.toggle('hidden', hiddenCols.has(name)));
+}
+
+function deleteUser(id) {
+  users = users.filter(u=>u.id!==id);
+  filtered = filtered.filter(u=>u.id!==id);
+  selectedIds.delete(id);
+  updateBulkBar();
+  renderTable();
+}
+
+function openAddModal() { document.getElementById('addModal').classList.remove('hidden'); }
+function closeAddModal() { document.getElementById('addModal').classList.add('hidden'); }
+function addUser() {
+  const name = document.getElementById('addName').value.trim();
+  const email = document.getElementById('addEmail').value.trim();
+  const role = document.getElementById('addRole').value;
+  if (!name||!email) return;
+  const newUser = {id:users.length+1,name,email,role,status:'Active',joined:'May 27',lastActive:'Just now'};
+  users.push(newUser); filtered.push(newUser);
+  closeAddModal();
+  document.getElementById('addName').value=''; document.getElementById('addEmail').value='';
+  renderTable();
+}
+
+function exportCSV() {
+  const headers = ['ID','Name','Email','Role','Status','Joined','Last Active'];
+  const rows = filtered.map(u=>[u.id,u.name,u.email,u.role,u.status,u.joined,u.lastActive]);
+  const csv = [headers,...rows].map(r=>r.join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download = 'users.csv'; a.click();
+}
+
+// Close col dropdown on outside click
+document.addEventListener('click', e=>{
+  const wrap = document.getElementById('colToggleWrap');
+  if (wrap && !wrap.contains(e.target)) document.getElementById('colDropdown').classList.add('hidden');
+});
+
+renderTable();
+</script>
 </body>
 </html>
