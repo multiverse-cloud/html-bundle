@@ -17,12 +17,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-002",
@@ -43,7 +45,9 @@
       "retention",
       "production-ready",
       "dark-mode",
-      "responsive"
+      "responsive",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -70,7 +74,9 @@
       "customers",
       "production-ready",
       "dark-mode",
-      "responsive"
+      "responsive",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -97,7 +103,9 @@
       "contacts",
       "production-ready",
       "dark-mode",
-      "responsive"
+      "responsive",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -124,7 +132,9 @@
       "expenses",
       "production-ready",
       "dark-mode",
-      "responsive"
+      "responsive",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -150,12 +160,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-007",
@@ -175,12 +187,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-008",
@@ -200,12 +214,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-009",
@@ -225,12 +241,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-010",
@@ -250,12 +268,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-011",
@@ -275,12 +295,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-012",
@@ -300,12 +322,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-013",
@@ -326,7 +350,9 @@
       "models",
       "production-ready",
       "dark-mode",
-      "responsive"
+      "responsive",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -352,12 +378,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-015",
@@ -377,12 +405,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-016",
@@ -402,12 +432,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-017",
@@ -427,12 +459,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-018",
@@ -452,12 +486,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-019",
@@ -477,12 +513,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-020",
@@ -502,12 +540,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-021",
@@ -527,7 +567,9 @@
       "tokens",
       "production-ready",
       "dark-mode",
-      "responsive"
+      "responsive",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -553,12 +595,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-023",
@@ -578,12 +622,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-024",
@@ -603,12 +649,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-025",
@@ -628,12 +676,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-026",
@@ -653,12 +703,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-027",
@@ -678,7 +730,9 @@
       "faq",
       "production-ready",
       "dark-mode",
-      "responsive"
+      "responsive",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -704,7 +758,9 @@
       "search",
       "production-ready",
       "dark-mode",
-      "responsive"
+      "responsive",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -732,7 +788,9 @@
       "users",
       "production-ready",
       "dark-mode",
-      "responsive"
+      "responsive",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -758,12 +816,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-031",
@@ -784,7 +844,9 @@
       "upload",
       "production-ready",
       "dark-mode",
-      "responsive"
+      "responsive",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -810,12 +872,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-033",
@@ -835,12 +899,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-034",
@@ -861,7 +927,9 @@
       "plans",
       "production-ready",
       "dark-mode",
-      "responsive"
+      "responsive",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -887,12 +955,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-036",
@@ -912,12 +982,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-037",
@@ -937,12 +1009,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-038",
@@ -962,12 +1036,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-039",
@@ -987,12 +1063,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-040",
@@ -1012,12 +1090,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-041",
@@ -1037,12 +1117,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-042",
@@ -1062,12 +1144,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-043",
@@ -1087,12 +1171,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-044",
@@ -1112,12 +1198,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-045",
@@ -1137,12 +1225,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-046",
@@ -1162,12 +1252,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-047",
@@ -1187,12 +1279,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-048",
@@ -1212,12 +1306,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-049",
@@ -1237,12 +1333,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-050",
@@ -1262,12 +1360,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-051",
@@ -1287,7 +1387,9 @@
       "payment",
       "production-ready",
       "dark-mode",
-      "responsive"
+      "responsive",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -1313,12 +1415,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-053",
@@ -1338,12 +1442,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-054",
@@ -1363,12 +1469,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-055",
@@ -1388,12 +1496,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-056",
@@ -1413,12 +1523,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-057",
@@ -1438,12 +1550,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-058",
@@ -1463,12 +1577,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-059",
@@ -1488,12 +1604,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-060",
@@ -1513,12 +1631,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-061",
@@ -1538,12 +1658,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-062",
@@ -1563,12 +1685,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-063",
@@ -1588,12 +1712,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-064",
@@ -1613,12 +1739,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-065",
@@ -1638,12 +1766,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-066",
@@ -1663,12 +1793,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-067",
@@ -1688,12 +1820,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-068",
@@ -1713,12 +1847,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-069",
@@ -1738,12 +1874,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-070",
@@ -1763,12 +1901,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-071",
@@ -1788,12 +1928,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-072",
@@ -1814,7 +1956,9 @@
       "tooltips",
       "production-ready",
       "dark-mode",
-      "responsive"
+      "responsive",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -1840,12 +1984,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-074",
@@ -1865,12 +2011,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-075",
@@ -1890,12 +2038,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-076",
@@ -1915,12 +2065,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-077",
@@ -1940,12 +2092,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-078",
@@ -1965,12 +2119,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-079",
@@ -1990,12 +2146,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-080",
@@ -2015,12 +2173,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-081",
@@ -2039,7 +2199,10 @@
       "social",
       "validation",
       "dark-mode",
-      "responsive"
+      "responsive",
+      "production-ready",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -2064,7 +2227,10 @@
       "password-strength",
       "validation",
       "dark-mode",
-      "responsive"
+      "responsive",
+      "production-ready",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -2088,7 +2254,10 @@
       "email",
       "countdown",
       "dark-mode",
-      "responsive"
+      "responsive",
+      "production-ready",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -2102,7 +2271,7 @@
     "slug": "auth-reset-password",
     "framework": "html",
     "category": "authentication",
-    "description": "Reset password card with key icon, 30-minute validity banner, new password with strength meter, real-time confirm match indicator (green ✓ / red ✗), loading state, and password-updated success card.",
+    "description": "Reset password card with key icon, 30-minute validity banner, new password with strength meter, real-time confirm match indicator (green \u2713 / red \u2717), loading state, and password-updated success card.",
     "previewImagePath": "/previews/html/84-auth-reset-password.png",
     "sourceZipPath": "/source-zips/html/84-auth-reset-password.zip",
     "livePreviewPath": "/live-previews/html/84-auth-reset-password.html",
@@ -2112,7 +2281,10 @@
       "password-strength",
       "validation",
       "dark-mode",
-      "responsive"
+      "responsive",
+      "production-ready",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -2136,7 +2308,10 @@
       "countdown",
       "progress",
       "dark-mode",
-      "responsive"
+      "responsive",
+      "production-ready",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -2161,7 +2336,10 @@
       "verification",
       "countdown",
       "dark-mode",
-      "responsive"
+      "responsive",
+      "production-ready",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -2190,7 +2368,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-088",
@@ -2207,7 +2386,10 @@
       "404",
       "standalone",
       "dark-mode",
-      "responsive"
+      "responsive",
+      "production-ready",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -2233,12 +2415,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-090",
@@ -2258,12 +2442,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-091",
@@ -2283,12 +2469,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-092",
@@ -2308,12 +2496,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-093",
@@ -2333,12 +2523,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-094",
@@ -2358,12 +2550,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-095",
@@ -2383,12 +2577,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-096",
@@ -2407,12 +2603,14 @@
       "admin",
       "production-ready",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-097",
@@ -2431,12 +2629,14 @@
       "responsive",
       "production-ready",
       "dark-mode",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-098",
@@ -2456,12 +2656,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-099",
@@ -2481,12 +2683,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-100",
@@ -2506,12 +2710,14 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "tailadmin"
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-24"
+    "createdAt": "2026-05-24",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-101",
@@ -2533,7 +2739,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-102",
@@ -2555,7 +2762,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-103",
@@ -2577,7 +2785,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-104",
@@ -2599,7 +2808,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-105",
@@ -2621,7 +2831,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-106",
@@ -2643,7 +2854,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-107",
@@ -2665,7 +2877,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-108",
@@ -2687,7 +2900,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-109",
@@ -2709,7 +2923,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-110",
@@ -2731,7 +2946,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-111",
@@ -2753,7 +2969,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-112",
@@ -2775,7 +2992,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-113",
@@ -2797,7 +3015,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-114",
@@ -2819,7 +3038,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-115",
@@ -2841,7 +3061,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-116",
@@ -2863,7 +3084,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-117",
@@ -2881,12 +3103,14 @@
       "ui-elements",
       "production-ready",
       "dark-mode",
-      "responsive"
+      "responsive",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-118",
@@ -2909,7 +3133,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-119",
@@ -2932,7 +3157,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-120",
@@ -2955,7 +3181,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-121",
@@ -2978,7 +3205,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-122",
@@ -3000,7 +3228,9 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "source-viewer"
+      "source-viewer",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -3014,7 +3244,7 @@
     "slug": "ui-avatars",
     "framework": "html",
     "category": "ui-elements",
-    "description": "56 avatar variants across 10 sections: sizes (xs–2xl), shapes (circle/rounded/square/squircle/ring), initials (12 colors), status dots (online/offline/away/busy/in-meeting), group stacks with overflow badge, with badge/label, fallback states (silhouette/bot/system), upload/edit states, context appearances (comment/table/chat), and placeholder patterns.",
+    "description": "56 avatar variants across 10 sections: sizes (xs\u20132xl), shapes (circle/rounded/square/squircle/ring), initials (12 colors), status dots (online/offline/away/busy/in-meeting), group stacks with overflow badge, with badge/label, fallback states (silhouette/bot/system), upload/edit states, context appearances (comment/table/chat), and placeholder patterns.",
     "previewImagePath": "/previews/html/123-ui-avatars.png",
     "sourceZipPath": "/source-zips/html/123-ui-avatars.zip",
     "livePreviewPath": "/live-previews/html/123-ui-avatars.html",
@@ -3027,7 +3257,9 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "source-viewer"
+      "source-viewer",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -3041,7 +3273,7 @@
     "slug": "ui-badge",
     "framework": "html",
     "category": "ui-elements",
-    "description": "58 badge variants across 12 sections: status badges, full color palette (15 colors), size variants (XS–XL), outline badges, dot badges, count/notification badges with icon overlay, icon+label badges, removable tag badges with JS fade-out, role/permission badges, product badges with PRO shimmer effect, priority badges in task context, and version/release badges.",
+    "description": "58 badge variants across 12 sections: status badges, full color palette (15 colors), size variants (XS\u2013XL), outline badges, dot badges, count/notification badges with icon overlay, icon+label badges, removable tag badges with JS fade-out, role/permission badges, product badges with PRO shimmer effect, priority badges in task context, and version/release badges.",
     "previewImagePath": "/previews/html/124-ui-badge.png",
     "sourceZipPath": "/source-zips/html/124-ui-badge.zip",
     "livePreviewPath": "/live-previews/html/124-ui-badge.html",
@@ -3054,7 +3286,9 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "source-viewer"
+      "source-viewer",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -3083,7 +3317,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-126",
@@ -3091,7 +3326,7 @@
     "slug": "ui-buttons",
     "framework": "html",
     "category": "ui-elements",
-    "description": "56 button variants across 16 sections: primary actions, sizes (XS–XL), icon buttons, ghost & outline, loading states (interactive demo), destructive & confirm-on-click, social login (Google/GitHub/Apple/X/Microsoft/Slack), split & dropdown, floating action buttons, payment CTAs, toolbar/table row actions, upload & file, pagination, mobile, copy & share, and segmented controls.",
+    "description": "56 button variants across 16 sections: primary actions, sizes (XS\u2013XL), icon buttons, ghost & outline, loading states (interactive demo), destructive & confirm-on-click, social login (Google/GitHub/Apple/X/Microsoft/Slack), split & dropdown, floating action buttons, payment CTAs, toolbar/table row actions, upload & file, pagination, mobile, copy & share, and segmented controls.",
     "previewImagePath": "/previews/html/126-ui-buttons.png",
     "sourceZipPath": "/source-zips/html/126-ui-buttons.zip",
     "livePreviewPath": "/live-previews/html/126-ui-buttons.html",
@@ -3105,7 +3340,9 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "source-viewer"
+      "source-viewer",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -3134,7 +3371,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-128",
@@ -3157,7 +3395,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-129",
@@ -3180,7 +3419,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-130",
@@ -3203,7 +3443,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-131",
@@ -3226,7 +3467,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-132",
@@ -3249,7 +3491,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-133",
@@ -3257,7 +3500,7 @@
     "slug": "ui-modals",
     "framework": "html",
     "category": "ui-elements",
-    "description": "12 fully functional modals: confirmation, destructive delete, billing/upgrade, profile edit form, media preview (dark), command palette (⌘K), onboarding welcome, right-side drawer with toggle switches, mobile bottom sheet, multi-step wizard with plan selection, image gallery picker with selection state, and alert notification.",
+    "description": "12 fully functional modals: confirmation, destructive delete, billing/upgrade, profile edit form, media preview (dark), command palette (\u2318K), onboarding welcome, right-side drawer with toggle switches, mobile bottom sheet, multi-step wizard with plan selection, image gallery picker with selection state, and alert notification.",
     "previewImagePath": "/previews/html/133-ui-modals.png",
     "sourceZipPath": "/source-zips/html/133-ui-modals.zip",
     "livePreviewPath": "/live-previews/html/133-ui-modals.html",
@@ -3271,7 +3514,9 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "source-viewer"
+      "source-viewer",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -3300,7 +3545,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-135",
@@ -3323,7 +3569,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-136",
@@ -3346,7 +3593,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-137",
@@ -3368,7 +3616,9 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "source-viewer"
+      "source-viewer",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -3397,7 +3647,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-139",
@@ -3420,7 +3671,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-140",
@@ -3441,7 +3693,9 @@
       "production-ready",
       "dark-mode",
       "responsive",
-      "source-viewer"
+      "source-viewer",
+      "tailadmin",
+      "html"
     ],
     "responsive": true,
     "darkModeReady": true,
@@ -3470,7 +3724,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-142",
@@ -3493,7 +3748,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-143",
@@ -3516,7 +3772,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-144",
@@ -3539,7 +3796,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-145",
@@ -3562,7 +3820,8 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   },
   {
     "id": "html-146",
@@ -3585,6 +3844,7 @@
     "responsive": true,
     "darkModeReady": true,
     "difficulty": "advanced",
-    "createdAt": "2026-05-26"
+    "createdAt": "2026-05-26",
+    "updatedAt": "2026-05-27"
   }
 ]
