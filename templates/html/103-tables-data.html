@@ -1,35 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#465fff" />
-  <meta name="description" content="Production-ready Data Table HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
-  <title>Data Table — mtverse</title>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#2563eb" />
+  <title>Data Explorer — mtverse</title>
   <style>
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    .animate-slideDown {
-      animation: slideDown 0.2s ease-out;
-    }
-    .sidebar-text {
-      transition: opacity 0.2s ease-in-out;
-    }
+    .no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+    @keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .editable-cell[contenteditable=true]{outline:2px solid #3b82f6;border-radius:4px;padding:2px 6px;background:#eff6ff;min-width:40px;cursor:text;}
+    html.dark .editable-cell[contenteditable=true]{background:#1e3a5f;}
+    th.sortable{cursor:pointer;user-select:none;}
+    th.sortable:hover{color:#2563eb;}
+    th.sortable.asc::after{content:' ↑';}
+    th.sortable.desc::after{content:' ↓';}
+    /* Density */
+    .density-comfortable tr td, .density-comfortable tr th{padding:.75rem 1rem;}
+    .density-dense tr td, .density-dense tr th{padding:.35rem .75rem;font-size:.8rem;}
+    .density-spacious tr td, .density-spacious tr th{padding:1.1rem 1.25rem;}
+    /* Column resize hint */
+    th{resize:horizontal;overflow:hidden;}
   </style>
   <link rel="stylesheet" href="tailwind-production.css">
   <link rel="stylesheet" href="pro-styles.css">
@@ -37,68 +26,230 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
-
-<!-- Mobile overlay -->
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100" style="font-family:'Outfit',sans-serif;">
 <div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
-
 <div class="flex h-screen overflow-hidden">
-  <!-- Sidebar Container -->
   <div id="sidebar-container"></div>
-
-  <!-- Main content -->
   <div class="flex-1 flex flex-col overflow-hidden">
-    <!-- Header Container -->
     <div id="header-container"></div>
-
-    <!-- Page content -->
     <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
       <div class="mx-auto w-full max-w-screen-2xl">
-<div class="mb-6 flex items-center justify-between"><div><h1 class="text-2xl font-bold text-gray-900">Data Table</h1><p class="text-sm text-gray-500 mt-1">Sortable, filterable records table</p></div><button type="button" class="bg-blue-600 text-white text-sm px-4 py-2 rounded-lg hover:bg-blue-700 transition">+ Add Record</button></div>
-      <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
-        <div class="px-5 py-4 border-b border-gray-200 flex flex-col sm:flex-row gap-3">
-          <input type="text" placeholder="Search records..." class="flex-1 text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-          <select class="text-sm border border-gray-200 rounded-lg px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"><option>All Status</option><option>Active</option><option>Pending</option><option>Inactive</option></select>
-          <button class="text-sm border border-gray-200 rounded-lg px-3 py-2 text-gray-700 hover:bg-gray-50">Export CSV</button>
+
+        <!-- Page header -->
+        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Data Explorer</h1>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Browse, sort, and inline-edit key-value configuration records</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button type="button" class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition dark:border-gray-700 dark:bg-white/[.03] dark:text-gray-300">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Import
+            </button>
+            <button type="button" class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition dark:border-gray-700 dark:bg-white/[.03] dark:text-gray-300">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Export CSV
+            </button>
+            <button type="button" class="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition shadow-sm">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Add Record
+            </button>
+          </div>
         </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm">
-            <thead class="bg-gray-50 border-b border-gray-200">
-              <tr>
-                <th class="text-left px-5 py-3 font-semibold text-gray-600"><input type="checkbox" class="rounded"/></th>
-                <th class="text-left px-5 py-3 font-semibold text-gray-600">ID</th>
-                <th class="text-left px-5 py-3 font-semibold text-gray-600">Name</th>
-                <th class="text-left px-5 py-3 font-semibold text-gray-600">Category</th>
-                <th class="text-left px-5 py-3 font-semibold text-gray-600">Status</th>
-                <th class="text-left px-5 py-3 font-semibold text-gray-600">Value</th>
-                <th class="text-left px-5 py-3 font-semibold text-gray-600">Date</th>
-                <th class="text-left px-5 py-3 font-semibold text-gray-600">Actions</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-100">
-              <tr class="hover:bg-gray-50"><td class="px-5 py-3"><input type="checkbox" class="rounded"/></td><td class="px-5 py-3 text-gray-500">#1001</td><td class="px-5 py-3 font-medium text-gray-900">Alpha Project</td><td class="px-5 py-3 text-gray-600">Engineering</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-green-100 text-green-700">Active</span></td><td class="px-5 py-3 text-gray-900">$12,400</td><td class="px-5 py-3 text-gray-400">Jan 12, 2026</td><td class="px-5 py-3"><button class="text-blue-600 hover:underline text-xs mr-2">Edit</button><button class="text-red-500 hover:underline text-xs">Delete</button></td></tr>
-              <tr class="hover:bg-gray-50"><td class="px-5 py-3"><input type="checkbox" class="rounded"/></td><td class="px-5 py-3 text-gray-500">#1002</td><td class="px-5 py-3 font-medium text-gray-900">Beta Launch</td><td class="px-5 py-3 text-gray-600">Marketing</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-yellow-100 text-yellow-700">Pending</span></td><td class="px-5 py-3 text-gray-900">$8,200</td><td class="px-5 py-3 text-gray-400">Feb 3, 2026</td><td class="px-5 py-3"><button class="text-blue-600 hover:underline text-xs mr-2">Edit</button><button class="text-red-500 hover:underline text-xs">Delete</button></td></tr>
-              <tr class="hover:bg-gray-50"><td class="px-5 py-3"><input type="checkbox" class="rounded"/></td><td class="px-5 py-3 text-gray-500">#1003</td><td class="px-5 py-3 font-medium text-gray-900">Gamma Pipeline</td><td class="px-5 py-3 text-gray-600">DevOps</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-green-100 text-green-700">Active</span></td><td class="px-5 py-3 text-gray-900">$31,000</td><td class="px-5 py-3 text-gray-400">Mar 18, 2026</td><td class="px-5 py-3"><button class="text-blue-600 hover:underline text-xs mr-2">Edit</button><button class="text-red-500 hover:underline text-xs">Delete</button></td></tr>
-              <tr class="hover:bg-gray-50"><td class="px-5 py-3"><input type="checkbox" class="rounded"/></td><td class="px-5 py-3 text-gray-500">#1004</td><td class="px-5 py-3 font-medium text-gray-900">Delta Research</td><td class="px-5 py-3 text-gray-600">Analytics</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-gray-100 text-gray-500">Inactive</span></td><td class="px-5 py-3 text-gray-900">$5,750</td><td class="px-5 py-3 text-gray-400">Aug 14, 2025</td><td class="px-5 py-3"><button class="text-blue-600 hover:underline text-xs mr-2">Edit</button><button class="text-red-500 hover:underline text-xs">Delete</button></td></tr>
-              <tr class="hover:bg-gray-50"><td class="px-5 py-3"><input type="checkbox" class="rounded"/></td><td class="px-5 py-3 text-gray-500">#1005</td><td class="px-5 py-3 font-medium text-gray-900">Epsilon Suite</td><td class="px-5 py-3 text-gray-600">Design</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-green-100 text-green-700">Active</span></td><td class="px-5 py-3 text-gray-900">$19,800</td><td class="px-5 py-3 text-gray-400">Apr 1, 2026</td><td class="px-5 py-3"><button class="text-blue-600 hover:underline text-xs mr-2">Edit</button><button class="text-red-500 hover:underline text-xs">Delete</button></td></tr>
-            </tbody>
-          </table>
+
+        <div class="rounded-2xl border border-gray-200 bg-white overflow-hidden dark:border-gray-800 dark:bg-white/[.03]">
+          <!-- Toolbar -->
+          <div class="px-5 py-4 border-b border-gray-200 dark:border-gray-800 flex flex-wrap gap-3 items-center">
+            <div class="relative flex-1 min-w-[160px]">
+              <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              <input type="text" id="searchInput" placeholder="Search keys, values…" oninput="filterTable()"
+                class="w-full pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-500" />
+            </div>
+            <select id="typeFilter" onchange="filterTable()"
+              class="text-sm border border-gray-200 rounded-lg px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">
+              <option value="">All Types</option>
+              <option>string</option>
+              <option>boolean</option>
+              <option>number</option>
+              <option>json</option>
+            </select>
+            <!-- Density toggle -->
+            <div class="flex items-center gap-0.5 rounded-lg border border-gray-200 p-0.5 dark:border-gray-700">
+              <button id="d-dense" onclick="setDensity('dense')" title="Dense" class="rounded-md p-1.5 text-xs font-medium text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><rect y="1" width="16" height="2" rx="1"/><rect y="5" width="16" height="2" rx="1"/><rect y="9" width="16" height="2" rx="1"/><rect y="13" width="16" height="2" rx="1"/></svg>
+              </button>
+              <button id="d-comfortable" onclick="setDensity('comfortable')" title="Comfortable" class="rounded-md p-1.5 text-xs font-medium text-blue-600 bg-blue-50 dark:bg-blue-500/15 transition">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><rect y="1" width="16" height="3" rx="1"/><rect y="7" width="16" height="3" rx="1"/><rect y="13" width="16" height="3" rx="1"/></svg>
+              </button>
+              <button id="d-spacious" onclick="setDensity('spacious')" title="Spacious" class="rounded-md p-1.5 text-xs font-medium text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><rect y="0" width="16" height="4" rx="1"/><rect y="8" width="16" height="4" rx="1"/></svg>
+              </button>
+            </div>
+            <span class="text-xs text-gray-400 dark:text-gray-500 hidden sm:block">Click a Value cell to edit inline</span>
+          </div>
+
+          <!-- Table -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm density-comfortable" id="dataTable">
+              <thead>
+                <tr class="border-b border-gray-200 dark:border-gray-800 bg-gray-50/80 dark:bg-white/[.02]">
+                  <th class="px-4 py-3 text-left font-semibold text-xs text-gray-500 uppercase tracking-wider w-12 sortable" onclick="sortTable('id')">ID</th>
+                  <th class="px-4 py-3 text-left font-semibold text-xs text-gray-500 uppercase tracking-wider sortable" onclick="sortTable('name')">Key / Name</th>
+                  <th class="px-4 py-3 text-left font-semibold text-xs text-gray-500 uppercase tracking-wider sortable" onclick="sortTable('type')">Type</th>
+                  <th class="px-4 py-3 text-left font-semibold text-xs text-gray-500 uppercase tracking-wider" style="min-width:200px;">Value</th>
+                  <th class="px-4 py-3 text-left font-semibold text-xs text-gray-500 uppercase tracking-wider sortable" onclick="sortTable('updated')">Last Updated</th>
+                  <th class="px-4 py-3 text-left font-semibold text-xs text-gray-500 uppercase tracking-wider">Tags</th>
+                  <th class="px-4 py-3 text-left font-semibold text-xs text-gray-500 uppercase tracking-wider sortable" onclick="sortTable('status')">Status</th>
+                </tr>
+              </thead>
+              <tbody id="dataBody"></tbody>
+            </table>
+          </div>
+
+          <div id="emptyState" class="hidden px-5 py-14 text-center">
+            <svg class="mx-auto mb-3 text-gray-300" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <p class="text-gray-500 dark:text-gray-400 font-medium">No records match your search</p>
+            <button onclick="clearFilters()" class="mt-2 text-sm text-blue-600 hover:underline">Clear filters</button>
+          </div>
+
+          <div class="px-5 py-4 border-t border-gray-200 dark:border-gray-800 flex flex-wrap items-center justify-between gap-3">
+            <span class="text-sm text-gray-500 dark:text-gray-400" id="paginationInfo">10 records</span>
+            <div class="flex items-center gap-1">
+              <button class="rounded-lg border border-gray-200 px-3 py-1.5 text-sm text-gray-500 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400">← Prev</button>
+              <button class="rounded-lg border border-blue-600 bg-blue-600 px-3 py-1.5 text-sm text-white">1</button>
+              <button class="rounded-lg border border-gray-200 px-3 py-1.5 text-sm text-gray-500 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400">Next →</button>
+            </div>
+          </div>
         </div>
-        <div class="px-5 py-3 border-t border-gray-200 flex items-center justify-between text-xs text-gray-500">
-          <span>Showing 1–5 of 128 results</span>
-          <div class="flex gap-1"><button class="px-2 py-1 rounded border border-gray-200 hover:bg-gray-50">Prev</button><button type="button" class="px-2 py-1 rounded bg-blue-600 text-white">1</button><button class="px-2 py-1 rounded border border-gray-200 hover:bg-gray-50">2</button><button class="px-2 py-1 rounded border border-gray-200 hover:bg-gray-50">3</button><button class="px-2 py-1 rounded border border-gray-200 hover:bg-gray-50">Next</button></div>
-        </div>
-      </div>
+
       </div>
     </main>
   </div>
 </div>
-
-<!-- Common Components -->
-<script src="common-loader.js"></script>
 <script src="common-sidebar.js"></script>
 <script src="common-header.js"></script>
 <script src="app-shell.js"></script>
+<script>
+const records = [
+  { id:1,  name:'config.api_url',          type:'string',  value:'"https://api.mtverse.io"',     updated:'2m ago',  tags:['system'],       status:'Active' },
+  { id:2,  name:'feature.dark_mode',       type:'boolean', value:'true',                         updated:'1h ago',  tags:['ui'],           status:'Active' },
+  { id:3,  name:'billing.trial_days',      type:'number',  value:'14',                           updated:'3h ago',  tags:['billing'],      status:'Active' },
+  { id:4,  name:'cache.ttl_seconds',       type:'number',  value:'3600',                         updated:'1d ago',  tags:['performance'],  status:'Active' },
+  { id:5,  name:'feature.ai_tools',        type:'boolean', value:'false',                        updated:'2d ago',  tags:['feature'],      status:'Inactive' },
+  { id:6,  name:'email.from_address',      type:'string',  value:'"noreply@mtverse.io"',         updated:'5d ago',  tags:['email'],        status:'Active' },
+  { id:7,  name:'rate_limit.requests',     type:'number',  value:'1000',                         updated:'1w ago',  tags:['security'],     status:'Active' },
+  { id:8,  name:'logging.level',           type:'string',  value:'"info"',                       updated:'1w ago',  tags:['system'],       status:'Active' },
+  { id:9,  name:'ui.theme_config',         type:'json',    value:'{"primary":"#2563eb"}',        updated:'2w ago',  tags:['ui'],           status:'Active' },
+  { id:10, name:'feature.beta_signup',     type:'boolean', value:'true',                         updated:'3w ago',  tags:['feature'],      status:'Active' },
+];
 
+const typeColors = {
+  string: 'bg-blue-100 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300',
+  boolean: 'bg-violet-100 text-violet-700 dark:bg-violet-500/15 dark:text-violet-300',
+  number: 'bg-green-100 text-green-700 dark:bg-green-500/15 dark:text-green-300',
+  json: 'bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300',
+};
+
+let filtered = [...records];
+let sortKey = null, sortAsc = true;
+let currentDensity = 'comfortable';
+
+function renderTable() {
+  const tbody = document.getElementById('dataBody');
+  const empty = document.getElementById('emptyState');
+  if (filtered.length === 0) { tbody.innerHTML = ''; empty.classList.remove('hidden'); return; }
+  empty.classList.add('hidden');
+  tbody.innerHTML = filtered.map(r => `
+    <tr class="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-white/[.02] transition group">
+      <td class="px-4 py-3 text-xs font-mono text-gray-400">${r.id}</td>
+      <td class="px-4 py-3 font-mono text-xs font-semibold text-gray-800 dark:text-gray-200">${r.name}</td>
+      <td class="px-4 py-3"><span class="rounded-full px-2.5 py-0.5 text-xs font-medium ${typeColors[r.type]}">${r.type}</span></td>
+      <td class="px-4 py-3">
+        <span class="editable-cell font-mono text-xs text-gray-700 dark:text-gray-300 rounded cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 px-1.5 py-0.5 transition"
+          onclick="makeEditable(this)"
+          title="Click to edit">${escapeHtml(r.value)}</span>
+      </td>
+      <td class="px-4 py-3 text-xs text-gray-500 dark:text-gray-400">${r.updated}</td>
+      <td class="px-4 py-3">
+        <div class="flex flex-wrap gap-1">
+          ${r.tags.map(t => `<span class="rounded px-1.5 py-0.5 text-xs bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400">${t}</span>`).join('')}
+        </div>
+      </td>
+      <td class="px-4 py-3">
+        <span class="rounded-full px-2.5 py-0.5 text-xs font-semibold ${r.status==='Active'?'bg-green-100 text-green-700 dark:bg-green-500/15 dark:text-green-400':'bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400'}">${r.status}</span>
+      </td>
+    </tr>
+  `).join('');
+  document.getElementById('dataTable').className = `w-full text-sm density-${currentDensity}`;
+  document.getElementById('paginationInfo').textContent = `${filtered.length} of ${records.length} records`;
+}
+
+function escapeHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function makeEditable(el) {
+  el.contentEditable = 'true';
+  el.focus();
+  const range = document.createRange();
+  range.selectNodeContents(el);
+  window.getSelection().removeAllRanges();
+  window.getSelection().addRange(range);
+  el.onblur = () => {
+    el.contentEditable = 'false';
+    showToast(`Value updated: ${el.textContent.substring(0,30)}${el.textContent.length>30?'…':''}`);
+  };
+  el.onkeydown = e => { if (e.key==='Enter' || e.key==='Escape') { e.preventDefault(); el.blur(); } };
+}
+
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.className = 'fixed bottom-5 right-5 z-[9999] flex items-center gap-2 rounded-xl bg-gray-900 text-white text-sm font-medium px-4 py-3 shadow-xl';
+  t.style.animation = 'toastIn .25s ease-out both';
+  t.innerHTML = `<svg width="16" height="16" fill="none" stroke="#4ade80" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>${msg}`;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3000);
+}
+
+function filterTable() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const tp = document.getElementById('typeFilter').value;
+  filtered = records.filter(r =>
+    (!q || r.name.toLowerCase().includes(q) || r.value.toLowerCase().includes(q)) &&
+    (!tp || r.type === tp)
+  );
+  renderTable();
+}
+
+function clearFilters() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('typeFilter').value = '';
+  filtered = [...records];
+  renderTable();
+}
+
+function sortTable(key) {
+  if (sortKey === key) sortAsc = !sortAsc; else { sortKey = key; sortAsc = true; }
+  filtered.sort((a,b) => {
+    const av = a[key], bv = b[key];
+    return (av < bv ? -1 : av > bv ? 1 : 0) * (sortAsc ? 1 : -1);
+  });
+  document.querySelectorAll('th.sortable').forEach(th => { th.classList.remove('asc','desc'); });
+  const ths = document.querySelectorAll('th.sortable');
+  const keys = ['id','name','type',null,'updated',null,'status'];
+  ths.forEach((th,i) => { if(keys[i]===sortKey) th.classList.add(sortAsc?'asc':'desc'); });
+  renderTable();
+}
+
+function setDensity(d) {
+  currentDensity = d;
+  ['dense','comfortable','spacious'].forEach(n => {
+    const btn = document.getElementById('d-'+n);
+    if (n === d) { btn.classList.add('text-blue-600','bg-blue-50','dark:bg-blue-500/15'); btn.classList.remove('text-gray-400'); }
+    else { btn.classList.remove('text-blue-600','bg-blue-50','dark:bg-blue-500/15'); btn.classList.add('text-gray-400'); }
+  });
+  renderTable();
+}
+
+renderTable();
+</script>
 </body>
 </html>
