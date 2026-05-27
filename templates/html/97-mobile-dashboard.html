@@ -1,35 +1,62 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#465fff" />
-  <meta name="description" content="Production-ready Mobile Dashboard HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#2563eb" />
   <title>Mobile Dashboard — mtverse</title>
   <style>
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
+    .no-scrollbar::-webkit-scrollbar{display:none}
+    .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+    @keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    /* Phone mockup */
+    .phone-frame{
+      width:390px;max-width:100%;
+      background:#fff;
+      border-radius:44px;
+      border:8px solid #1e293b;
+      box-shadow:0 0 0 2px #334155,0 24px 64px rgba(0,0,0,.25),inset 0 0 0 1px rgba(255,255,255,.05);
+      overflow:hidden;position:relative;
     }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    .animate-slideDown {
-      animation: slideDown 0.2s ease-out;
-    }
-    .sidebar-text {
-      transition: opacity 0.2s ease-in-out;
-    }
+    html.dark .phone-frame{background:#0f172a;border-color:#cbd5e1;box-shadow:0 0 0 2px #94a3b8,0 24px 64px rgba(0,0,0,.6);}
+    .phone-notch{height:28px;background:inherit;display:flex;align-items:center;justify-content:center;padding:0 16px;}
+    .notch-pill{width:100px;height:10px;background:#1e293b;border-radius:999px;}
+    html.dark .notch-pill{background:#cbd5e1;}
+    .phone-screen{padding:0 0 16px;}
+
+    /* Mini dashboard inside phone */
+    .mini-status-bar{display:flex;justify-content:space-between;padding:4px 16px;font-size:11px;font-weight:600;color:#374151;}
+    html.dark .mini-status-bar{color:#cbd5e1;}
+    .mini-header{padding:12px 16px 8px;border-bottom:1px solid #f1f5f9;}
+    html.dark .mini-header{border-color:#1e293b;}
+    .mini-kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 16px;}
+    .mini-kpi{background:#f8fafc;border-radius:12px;padding:10px 12px;}
+    html.dark .mini-kpi{background:#1e293b;}
+    .mini-kpi-val{font-size:18px;font-weight:800;color:#0f172a;}
+    html.dark .mini-kpi-val{color:#f8fafc;}
+    .mini-kpi-label{font-size:9px;font-weight:500;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-top:2px;}
+    .mini-chart{padding:4px 16px 8px;}
+    .chart-bars{display:flex;align-items:flex-end;gap:5px;height:64px;}
+    .bar{border-radius:4px 4px 0 0;flex:1;transition:height .3s;}
+    .mini-list{padding:0 16px;}
+    .mini-list-item{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #f1f5f9;}
+    html.dark .mini-list-item{border-color:#1e293b;}
+    .mini-list-item:last-child{border-bottom:none;}
+    .mini-avatar{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;}
+    .mini-list-name{font-size:10px;font-weight:600;color:#374151;flex:1;}
+    html.dark .mini-list-name{color:#e2e8f0;}
+    .mini-list-amount{font-size:10px;font-weight:700;color:#0f172a;}
+    html.dark .mini-list-amount{color:#f8fafc;}
+    .mini-tab-bar{display:flex;border-top:1px solid #e2e8f0;padding:6px 0 2px;}
+    html.dark .mini-tab-bar{border-color:#1e293b;}
+    .mini-tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:2px 0;font-size:8px;font-weight:600;color:#94a3b8;cursor:pointer;}
+    .mini-tab.active{color:#2563eb;}
+    .mini-tab svg{width:16px;height:16px;}
+
+    /* Breakpoint cards */
+    .bp-card{border:1.5px solid #e2e8f0;border-radius:1rem;overflow:hidden;background:#fff;}
+    html.dark .bp-card{border-color:#1e293b;background:#0f172a;}
+    .bp-header{padding:.6rem 1rem;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;background:#f8fafc;border-bottom:1px solid #e2e8f0;color:#64748b;}
+    html.dark .bp-header{background:#1e293b;border-color:#334155;color:#94a3b8;}
   </style>
   <link rel="stylesheet" href="tailwind-production.css">
   <link rel="stylesheet" href="pro-styles.css">
@@ -37,34 +64,165 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
-
-<!-- Mobile overlay -->
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100" style="font-family:'Outfit',sans-serif;">
 <div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
-
 <div class="flex h-screen overflow-hidden">
-  <!-- Sidebar Container -->
   <div id="sidebar-container"></div>
-
-  <!-- Main content -->
   <div class="flex-1 flex flex-col overflow-hidden">
-    <!-- Header Container -->
     <div id="header-container"></div>
-
-    <!-- Page content -->
     <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
       <div class="mx-auto w-full max-w-screen-2xl">
+
+        <!-- Header -->
+        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Mobile Dashboard</h1>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Mobile-first dashboard preview — optimized for 390px viewport width</p>
+          </div>
+          <div class="flex gap-2">
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700 dark:bg-blue-500/10 dark:text-blue-300">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+              Mobile-First
+            </span>
+          </div>
+        </div>
+
+        <!-- Phone mockup + breakpoints row -->
+        <div class="flex flex-wrap gap-8 items-start justify-center xl:justify-start mb-8">
+
+          <!-- iPhone-style mockup -->
+          <div class="flex flex-col items-center gap-3">
+            <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider">390px — Mobile</div>
+            <div class="phone-frame">
+              <div class="phone-notch"><div class="notch-pill"></div></div>
+              <div class="phone-screen">
+                <div class="mini-status-bar">
+                  <span>9:41</span>
+                  <div class="flex gap-1.5 items-center">
+                    <svg width="14" height="10" viewBox="0 0 24 16" fill="currentColor"><rect x="0" y="4" width="5" height="12" rx="1"/><rect x="6" y="2" width="5" height="14" rx="1"/><rect x="12" y="0" width="5" height="16" rx="1"/><rect x="19" y="1" width="4" height="13" rx="1" opacity=".3"/></svg>
+                    <svg width="14" height="10" viewBox="0 0 24 16" fill="currentColor"><path d="M12 2C8 2 4.5 3.5 2 6l2 2c2-2 4.7-3 8-3s6 1 8 3l2-2C19.5 3.5 16 2 12 2z" opacity=".4"/><path d="M12 6c-3 0-5.5 1.2-7 3l2 2c1.2-1.3 3-2 5-2s3.8.7 5 2l2-2C17.5 7.2 15 6 12 6z" opacity=".7"/><path d="M12 10c-1.5 0-3 .7-4 2l4 4 4-4c-1-1.3-2.5-2-4-2z"/></svg>
+                    <span style="font-size:11px;font-weight:700">100%</span>
+                  </div>
+                </div>
+                <div class="mini-header">
+                  <div style="font-size:16px;font-weight:800;color:#0f172a;" class="dark:text-white">Good morning, Alex 👋</div>
+                  <div style="font-size:10px;color:#94a3b8;margin-top:1px;">Tuesday, May 27</div>
+                </div>
+                <div class="mini-kpi-grid">
+                  <div class="mini-kpi"><div class="mini-kpi-val">$24.8K</div><div class="mini-kpi-label">Revenue</div></div>
+                  <div class="mini-kpi"><div class="mini-kpi-val" style="color:#16a34a">+12.4%</div><div class="mini-kpi-label">Growth</div></div>
+                  <div class="mini-kpi"><div class="mini-kpi-val">1,284</div><div class="mini-kpi-label">Users</div></div>
+                  <div class="mini-kpi"><div class="mini-kpi-val" style="color:#2563eb">48</div><div class="mini-kpi-label">Orders</div></div>
+                </div>
+                <div class="mini-chart">
+                  <div style="font-size:9px;font-weight:600;color:#94a3b8;margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em;">Weekly Revenue</div>
+                  <div class="chart-bars">
+                    <div class="bar" style="height:40%;background:#bfdbfe;"></div>
+                    <div class="bar" style="height:55%;background:#93c5fd;"></div>
+                    <div class="bar" style="height:45%;background:#bfdbfe;"></div>
+                    <div class="bar" style="height:70%;background:#2563eb;"></div>
+                    <div class="bar" style="height:60%;background:#bfdbfe;"></div>
+                    <div class="bar" style="height:85%;background:#1d4ed8;"></div>
+                    <div class="bar" style="height:75%;background:#bfdbfe;"></div>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;font-size:8px;color:#94a3b8;margin-top:3px;padding:0 2px;">
+                    <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                  </div>
+                </div>
+                <div style="padding:4px 16px 2px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#94a3b8;">Recent Orders</div>
+                <div class="mini-list">
+                  <div class="mini-list-item">
+                    <div class="mini-avatar" style="background:#7c3aed;">A</div>
+                    <div><div class="mini-list-name">Alice Johnson</div><div style="font-size:9px;color:#94a3b8;">Pro Plan</div></div>
+                    <div class="mini-list-amount">$49</div>
+                  </div>
+                  <div class="mini-list-item">
+                    <div class="mini-avatar" style="background:#0891b2;">B</div>
+                    <div><div class="mini-list-name">Bob Martinez</div><div style="font-size:9px;color:#94a3b8;">Design Kit</div></div>
+                    <div class="mini-list-amount">$29</div>
+                  </div>
+                  <div class="mini-list-item">
+                    <div class="mini-avatar" style="background:#b45309;">C</div>
+                    <div><div class="mini-list-name">Carol White</div><div style="font-size:9px;color:#94a3b8;">Annual Plan</div></div>
+                    <div class="mini-list-amount">$399</div>
+                  </div>
+                </div>
+                <div class="mini-tab-bar">
+                  <div class="mini-tab active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                    Home
+                  </div>
+                  <div class="mini-tab">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    Stats
+                  </div>
+                  <div class="mini-tab">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                    Orders
+                  </div>
+                  <div class="mini-tab">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    Profile
+                  </div>
+                  <div class="mini-tab">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M20 12h2M2 12h2M19.07 19.07l-1.41-1.41M4.93 19.07l1.41-1.41M12 20v2M12 2v2"/></svg>
+                    Settings
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="width:134px;height:4px;background:#1e293b;border-radius:999px;margin-top:8px;"></div>
+          </div>
+
+          <!-- Breakpoint info cards -->
+          <div class="flex flex-col gap-4 flex-1 min-w-[260px]">
+            <h2 class="text-base font-semibold text-gray-700 dark:text-gray-300">Responsive Breakpoints</h2>
+
+            <div class="bp-card">
+              <div class="bp-header">📱 Mobile — 390px (xs)</div>
+              <div class="p-4 text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                <div class="flex items-center gap-2"><span class="inline-block w-2 h-2 rounded-full bg-green-500"></span>Single column layout</div>
+                <div class="flex items-center gap-2"><span class="inline-block w-2 h-2 rounded-full bg-green-500"></span>Bottom tab navigation</div>
+                <div class="flex items-center gap-2"><span class="inline-block w-2 h-2 rounded-full bg-green-500"></span>Full-width cards</div>
+                <div class="flex items-center gap-2"><span class="inline-block w-2 h-2 rounded-full bg-green-500"></span>Touch-friendly targets (44px)</div>
+                <div class="mt-2 text-xs text-gray-400">Tailwind: default (no prefix)</div>
+              </div>
+            </div>
+
+            <div class="bp-card">
+              <div class="bp-header">📟 Tablet — 768px (md)</div>
+              <div class="p-4 text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                <div class="flex items-center gap-2"><span class="inline-block w-2 h-2 rounded-full bg-blue-500"></span>2-column KPI grid</div>
+                <div class="flex items-center gap-2"><span class="inline-block w-2 h-2 rounded-full bg-blue-500"></span>Side-by-side sections</div>
+                <div class="flex items-center gap-2"><span class="inline-block w-2 h-2 rounded-full bg-blue-500"></span>Inline sidebar (collapsible)</div>
+                <div class="flex items-center gap-2"><span class="inline-block w-2 h-2 rounded-full bg-blue-500"></span>Condensed top header</div>
+                <div class="mt-2 text-xs text-gray-400">Tailwind: md: prefix</div>
+              </div>
+            </div>
+
+            <div class="bp-card">
+              <div class="bp-header">🖥️ Desktop — 1280px+ (xl)</div>
+              <div class="p-4 text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                <div class="flex items-center gap-2"><span class="inline-block w-2 h-2 rounded-full bg-violet-500"></span>4-column KPI grid</div>
+                <div class="flex items-center gap-2"><span class="inline-block w-2 h-2 rounded-full bg-violet-500"></span>Persistent sidebar</div>
+                <div class="flex items-center gap-2"><span class="inline-block w-2 h-2 rounded-full bg-violet-500"></span>Chart + table side by side</div>
+                <div class="flex items-center gap-2"><span class="inline-block w-2 h-2 rounded-full bg-violet-500"></span>Full data tables visible</div>
+                <div class="mt-2 text-xs text-gray-400">Tailwind: xl: / 2xl: prefix</div>
+              </div>
+            </div>
+
+            <div class="rounded-xl bg-blue-50 dark:bg-blue-500/10 p-4 text-sm text-blue-700 dark:text-blue-300">
+              <strong>Mobile-first approach:</strong> Design for 390px first, then progressively enhance for larger screens using Tailwind's responsive prefixes.
+            </div>
+          </div>
+        </div>
 
       </div>
     </main>
   </div>
 </div>
-
-<!-- Common Components -->
-<script src="common-loader.js"></script>
 <script src="common-sidebar.js"></script>
 <script src="common-header.js"></script>
 <script src="app-shell.js"></script>
-
 </body>
 </html>

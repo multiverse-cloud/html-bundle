@@ -1,35 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#465fff" />
-  <meta name="description" content="Production-ready Activity Logs HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
-  <title>Activity Logs — mtverse</title>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#2563eb" />
+  <title>System Logs — mtverse</title>
   <style>
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    .animate-slideDown {
-      animation: slideDown 0.2s ease-out;
-    }
-    .sidebar-text {
-      transition: opacity 0.2s ease-in-out;
-    }
+    .no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+    @keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+    .live-dot{animation:blink 1.4s ease-in-out infinite;}
+    tr.expanded-row td{background:#f8fafc!important;}
+    html.dark tr.expanded-row td{background:#0f172a!important;}
+    .log-detail{display:none;}
+    .log-detail.open{display:table-row;}
   </style>
   <link rel="stylesheet" href="tailwind-production.css">
   <link rel="stylesheet" href="pro-styles.css">
@@ -37,63 +20,257 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
-
-<!-- Mobile overlay -->
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100" style="font-family:'Outfit',sans-serif;">
 <div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
-
 <div class="flex h-screen overflow-hidden">
-  <!-- Sidebar Container -->
   <div id="sidebar-container"></div>
-
-  <!-- Main content -->
   <div class="flex-1 flex flex-col overflow-hidden">
-    <!-- Header Container -->
     <div id="header-container"></div>
-
-    <!-- Page content -->
     <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
       <div class="mx-auto w-full max-w-screen-2xl">
-<div class="mb-6 flex items-center justify-between"><div><h1 class="text-2xl font-bold text-gray-900">Activity Logs</h1><p class="text-sm text-gray-500 mt-1">Audit trail of all system events</p></div><button class="border border-gray-300 text-gray-700 text-sm px-4 py-2 rounded-lg hover:bg-gray-50 transition">Export Logs</button></div>
-      <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
-        <div class="px-5 py-4 border-b border-gray-200 flex flex-col sm:flex-row gap-3">
-          <input type="text" placeholder="Search logs..." class="flex-1 text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-          <select class="text-sm border border-gray-200 rounded-lg px-3 py-2 text-gray-700 focus:outline-none"><option>All Types</option><option>Auth</option><option>API</option><option>Admin</option><option>Error</option></select>
-          <input type="date" class="text-sm border border-gray-200 rounded-lg px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+
+        <!-- Page header -->
+        <div class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">System Logs</h1>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Real-time application and service logs</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <!-- Auto-refresh toggle -->
+            <button id="autoRefreshBtn" onclick="toggleAutoRefresh()"
+              class="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition dark:border-gray-700 dark:bg-white/[.03] dark:text-gray-300">
+              <span class="live-dot h-2 w-2 rounded-full bg-green-500 hidden" id="liveDot"></span>
+              <svg id="refreshIcon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              <span id="autoRefreshLabel">Auto-refresh</span>
+            </button>
+            <button onclick="clearLogs()" class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-red-500 hover:bg-red-50 transition dark:border-gray-700 dark:bg-white/[.03]">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+              Clear Logs
+            </button>
+          </div>
         </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm">
-            <thead class="bg-gray-50 border-b border-gray-200">
-              <tr>
-                <th class="text-left px-5 py-3 font-semibold text-gray-600">Timestamp</th>
-                <th class="text-left px-5 py-3 font-semibold text-gray-600">User</th>
-                <th class="text-left px-5 py-3 font-semibold text-gray-600">Action</th>
-                <th class="text-left px-5 py-3 font-semibold text-gray-600">Type</th>
-                <th class="text-left px-5 py-3 font-semibold text-gray-600">IP Address</th>
-                <th class="text-left px-5 py-3 font-semibold text-gray-600">Status</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-100">
-              <tr class="hover:bg-gray-50"><td class="px-5 py-3 text-gray-400 font-mono text-xs">2026-05-07 09:42:11</td><td class="px-5 py-3 text-gray-700">sarah@company.com</td><td class="px-5 py-3 text-gray-900">User login</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-blue-100 text-blue-700">Auth</span></td><td class="px-5 py-3 font-mono text-xs text-gray-500">192.168.1.10</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-green-100 text-green-700">Success</span></td></tr>
-              <tr class="hover:bg-gray-50"><td class="px-5 py-3 text-gray-400 font-mono text-xs">2026-05-07 09:38:03</td><td class="px-5 py-3 text-gray-700">james@company.com</td><td class="px-5 py-3 text-gray-900">API key created</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-purple-100 text-purple-700">API</span></td><td class="px-5 py-3 font-mono text-xs text-gray-500">10.0.0.42</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-green-100 text-green-700">Success</span></td></tr>
-              <tr class="hover:bg-gray-50"><td class="px-5 py-3 text-gray-400 font-mono text-xs">2026-05-07 09:21:55</td><td class="px-5 py-3 text-gray-700">jane@company.com</td><td class="px-5 py-3 text-gray-900">User role changed</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-orange-100 text-orange-700">Admin</span></td><td class="px-5 py-3 font-mono text-xs text-gray-500">172.16.0.5</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-green-100 text-green-700">Success</span></td></tr>
-              <tr class="hover:bg-gray-50"><td class="px-5 py-3 text-gray-400 font-mono text-xs">2026-05-07 08:59:47</td><td class="px-5 py-3 text-gray-700">system</td><td class="px-5 py-3 text-gray-900">Backup completed</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-gray-100 text-gray-600">System</span></td><td class="px-5 py-3 font-mono text-xs text-gray-500">—</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-green-100 text-green-700">Success</span></td></tr>
-              <tr class="hover:bg-gray-50"><td class="px-5 py-3 text-gray-400 font-mono text-xs">2026-05-07 08:44:22</td><td class="px-5 py-3 text-gray-700">marco@company.com</td><td class="px-5 py-3 text-gray-900">Failed login attempt</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-blue-100 text-blue-700">Auth</span></td><td class="px-5 py-3 font-mono text-xs text-gray-500">203.0.113.8</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-red-100 text-red-700">Failed</span></td></tr>
-            </tbody>
-          </table>
+
+        <!-- Severity filter chips -->
+        <div class="mb-4 flex flex-wrap gap-2">
+          <button class="chip active" data-level="ALL" onclick="setLevel(this)">ALL</button>
+          <button class="chip" data-level="ERROR" onclick="setLevel(this)">ERROR</button>
+          <button class="chip" data-level="WARN" onclick="setLevel(this)">WARN</button>
+          <button class="chip" data-level="INFO" onclick="setLevel(this)">INFO</button>
+          <button class="chip" data-level="DEBUG" onclick="setLevel(this)">DEBUG</button>
+          <div class="relative ml-auto min-w-[180px]">
+            <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input type="text" id="searchInput" placeholder="Search logs…" oninput="filterLogs()"
+              class="w-full pl-8 pr-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-500" />
+          </div>
         </div>
-        <div class="px-5 py-3 border-t border-gray-200 flex items-center justify-between text-xs text-gray-500"><span>Showing 1–5 of 2,148 entries</span><div class="flex gap-1"><button class="px-2 py-1 rounded border border-gray-200 hover:bg-gray-50">Prev</button><button type="button" class="px-2 py-1 rounded bg-blue-600 text-white">1</button><button class="px-2 py-1 rounded border border-gray-200 hover:bg-gray-50">2</button><button class="px-2 py-1 rounded border border-gray-200 hover:bg-gray-50">Next</button></div></div>
-      </div>
+
+        <div class="rounded-2xl border border-gray-200 bg-white overflow-hidden dark:border-gray-800 dark:bg-white/[.03]">
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm font-mono">
+              <thead>
+                <tr class="border-b border-gray-200 dark:border-gray-800 bg-gray-50/80 dark:bg-white/[.02]">
+                  <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider" style="font-family:system-ui,sans-serif">Timestamp</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider" style="font-family:system-ui,sans-serif">Level</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider" style="font-family:system-ui,sans-serif">Service</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider min-w-[300px]" style="font-family:system-ui,sans-serif">Message</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider" style="font-family:system-ui,sans-serif">Request ID</th>
+                  <th class="px-4 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider" style="font-family:system-ui,sans-serif">Copy</th>
+                </tr>
+              </thead>
+              <tbody id="logsBody"></tbody>
+            </table>
+          </div>
+          <div id="emptyState" class="hidden px-5 py-14 text-center" style="font-family:system-ui,sans-serif">
+            <p class="text-gray-400 font-medium">No logs match your filters</p>
+          </div>
+          <div class="px-5 py-3 border-t border-gray-200 dark:border-gray-800 flex items-center justify-between" style="font-family:system-ui,sans-serif">
+            <span class="text-xs text-gray-400" id="logCount">12 entries</span>
+            <span class="text-xs text-gray-400" id="lastRefresh">Last refreshed: just now</span>
+          </div>
+        </div>
+
       </div>
     </main>
   </div>
 </div>
 
-<!-- Common Components -->
-<script src="common-loader.js"></script>
+<style>
+.chip {
+  padding: .35rem .9rem;
+  border-radius: 999px;
+  font-size: .78rem;
+  font-weight: 700;
+  border: 1.5px solid #e2e8f0;
+  background: #fff;
+  color: #64748b;
+  cursor: pointer;
+  transition: all .15s;
+  letter-spacing: .03em;
+}
+html.dark .chip { border-color: #334155; background: transparent; color: #94a3b8; }
+.chip:hover { border-color: #9ca3af; color: #374151; }
+html.dark .chip:hover { border-color: #64748b; color: #e2e8f0; }
+.chip.active { background: #1e3a5f; border-color: #2563eb; color: #60a5fa; }
+html.dark .chip.active { background: #1e3a5f; border-color: #3b82f6; color: #93c5fd; }
+.chip[data-level="ERROR"].active { background: #fef2f2; border-color: #ef4444; color: #dc2626; }
+html.dark .chip[data-level="ERROR"].active { background: #450a0a; border-color: #ef4444; color: #fca5a5; }
+.chip[data-level="WARN"].active { background: #fffbeb; border-color: #f59e0b; color: #d97706; }
+html.dark .chip[data-level="WARN"].active { background: #1c1300; border-color: #f59e0b; color: #fcd34d; }
+.chip[data-level="INFO"].active { background: #eff6ff; border-color: #2563eb; color: #1d4ed8; }
+.chip[data-level="DEBUG"].active { background: #f0fdf4; border-color: #22c55e; color: #16a34a; }
+html.dark .chip[data-level="DEBUG"].active { background: #052e16; border-color: #22c55e; color: #4ade80; }
+</style>
+
 <script src="common-sidebar.js"></script>
 <script src="common-header.js"></script>
 <script src="app-shell.js"></script>
+<script>
+const logs = [
+  { ts:'14:32:01.421', level:'ERROR', service:'api-gateway',    msg:'Rate limit exceeded for user_id:4821 (IP: 192.168.1.42)',  reqId:'req_a8f2k9', trace:'Stack trace: RateLimitError at middleware/rate-limit.js:42' },
+  { ts:'14:31:58.103', level:'INFO',  service:'auth-service',   msg:'User login successful: alice@example.com (method: email)', reqId:'req_b1e2m3', trace:'User agent: Mozilla/5.0, Session: sess_xK9p' },
+  { ts:'14:31:44.872', level:'WARN',  service:'database',       msg:'Query took 2.84s (threshold: 1s) — SELECT orders WHERE user_id=?', reqId:'req_c3d4n5', trace:'Query: SELECT * FROM orders WHERE user_id = 4821 LIMIT 50 OFFSET 0' },
+  { ts:'14:31:22.510', level:'INFO',  service:'email-service',  msg:'Digest sent to 3,240 subscribers (batch_id: digest_0527)', reqId:'req_e5f6p7', trace:'Delivery rate: 97.4% open rate 42.1%' },
+  { ts:'14:30:59.004', level:'ERROR', service:'payment',        msg:'Stripe webhook validation failed: invalid signature',      reqId:'req_g7h8q9', trace:'WebhookError: No signatures found matching the expected signature for payload' },
+  { ts:'14:30:41.333', level:'DEBUG', service:'cache',          msg:'Cache miss for key: user:4821:profile (TTL expired)',     reqId:'req_i9j0r1', trace:'Redis key: user:4821:profile, expired at: 14:25:41' },
+  { ts:'14:30:18.219', level:'INFO',  service:'file-service',   msg:'Upload completed: design-kit-v2.zip (4.7MB) by user 281', reqId:'req_k1l2s3', trace:'S3 path: uploads/2025/05/27/design-kit-v2.zip' },
+  { ts:'14:29:55.887', level:'WARN',  service:'auth-service',   msg:'Failed login attempt #3 for unknown@example.com',         reqId:'req_m3n4t5', trace:'IP: 203.0.113.7 — account will lock after 2 more attempts' },
+  { ts:'14:29:33.601', level:'ERROR', service:'scheduler',      msg:'Cron job "reports:weekly" timed out after 30s',           reqId:'req_o5p6u7', trace:'TimeoutError: Job exceeded maximum execution time of 30000ms' },
+  { ts:'14:29:12.445', level:'INFO',  service:'api-gateway',    msg:'Health check passed — all 6 services healthy',           reqId:'req_q7r8v9', trace:'Services: api-gateway ✓, auth ✓, payment ✓, email ✓, db ✓, cache ✓' },
+  { ts:'14:28:50.190', level:'DEBUG', service:'database',       msg:'Connection pool: 12/50 connections in use',               reqId:'req_s9t0w1', trace:'Pool stats: active=12, idle=38, waiting=0' },
+  { ts:'14:28:29.073', level:'INFO',  service:'billing',        msg:'Subscription renewed: plan=pro user_id=1182 amount=$49',  reqId:'req_u1v2x3', trace:'Next renewal: 2025-06-27, payment_method: card_***4242' },
+];
 
+const levelColors = {
+  ERROR: 'bg-red-100 text-red-700 dark:bg-red-500/15 dark:text-red-400',
+  WARN:  'bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400',
+  INFO:  'bg-blue-100 text-blue-700 dark:bg-blue-500/15 dark:text-blue-400',
+  DEBUG: 'bg-green-100 text-green-700 dark:bg-green-500/15 dark:text-green-400',
+};
+
+let currentLevel = 'ALL';
+let expandedIdx = null;
+let autoRefresh = false;
+let refreshTimer = null;
+
+function filterLogs() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const filtered = logs.filter(l =>
+    (currentLevel === 'ALL' || l.level === currentLevel) &&
+    (!q || l.msg.toLowerCase().includes(q) || l.service.toLowerCase().includes(q) || l.reqId.toLowerCase().includes(q))
+  );
+  renderLogs(filtered);
+}
+
+function renderLogs(data) {
+  const tbody = document.getElementById('logsBody');
+  const empty = document.getElementById('emptyState');
+  if (data.length === 0) { tbody.innerHTML = ''; empty.classList.remove('hidden'); return; }
+  empty.classList.add('hidden');
+  tbody.innerHTML = data.map((l, i) => `
+    <tr class="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-white/[.02] transition cursor-pointer${expandedIdx===i?' expanded-row':''}" onclick="toggleExpand(${i})">
+      <td class="px-4 py-2.5 text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">${l.ts}</td>
+      <td class="px-4 py-2.5">
+        <span class="inline-flex items-center rounded px-2 py-0.5 text-xs font-bold tracking-wide ${levelColors[l.level]}">${l.level}</span>
+      </td>
+      <td class="px-4 py-2.5 text-xs text-gray-600 dark:text-gray-400 whitespace-nowrap">${l.service}</td>
+      <td class="px-4 py-2.5 text-xs text-gray-800 dark:text-gray-200 max-w-[400px] truncate">${escapeHtml(l.msg)}</td>
+      <td class="px-4 py-2.5 text-xs text-gray-400 whitespace-nowrap">${l.reqId}</td>
+      <td class="px-4 py-2.5 text-right" onclick="event.stopPropagation()">
+        <button onclick="copyLog(${i})" title="Copy log" class="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-200 transition">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </td>
+    </tr>
+    <tr class="log-detail${expandedIdx===i?' open':''}">
+      <td colspan="6" class="px-6 py-4 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+        <div class="space-y-2">
+          <div class="flex gap-3 text-xs">
+            <span class="font-semibold text-gray-500 dark:text-gray-400 w-20 shrink-0">Timestamp</span>
+            <span class="text-gray-700 dark:text-gray-300">${l.ts}</span>
+          </div>
+          <div class="flex gap-3 text-xs">
+            <span class="font-semibold text-gray-500 dark:text-gray-400 w-20 shrink-0">Level</span>
+            <span class="rounded px-2 py-0.5 text-xs font-bold ${levelColors[l.level]}">${l.level}</span>
+          </div>
+          <div class="flex gap-3 text-xs">
+            <span class="font-semibold text-gray-500 dark:text-gray-400 w-20 shrink-0">Service</span>
+            <span class="text-gray-700 dark:text-gray-300">${l.service}</span>
+          </div>
+          <div class="flex gap-3 text-xs">
+            <span class="font-semibold text-gray-500 dark:text-gray-400 w-20 shrink-0">Message</span>
+            <span class="text-gray-700 dark:text-gray-300 break-all">${escapeHtml(l.msg)}</span>
+          </div>
+          <div class="flex gap-3 text-xs">
+            <span class="font-semibold text-gray-500 dark:text-gray-400 w-20 shrink-0">Request ID</span>
+            <span class="font-mono text-gray-700 dark:text-gray-300">${l.reqId}</span>
+          </div>
+          <div class="mt-2 rounded-lg bg-gray-100 dark:bg-gray-800 px-3 py-2 text-xs font-mono text-gray-600 dark:text-gray-400">${escapeHtml(l.trace)}</div>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+  document.getElementById('logCount').textContent = `${data.length} entries`;
+}
+
+function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function toggleExpand(i) {
+  expandedIdx = expandedIdx === i ? null : i;
+  filterLogs();
+}
+
+function setLevel(btn) {
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  currentLevel = btn.dataset.level;
+  filterLogs();
+}
+
+function clearLogs() {
+  if (confirm('Clear all displayed logs?')) {
+    document.getElementById('logsBody').innerHTML = '';
+    document.getElementById('emptyState').classList.remove('hidden');
+    document.getElementById('logCount').textContent = '0 entries';
+  }
+}
+
+function copyLog(i) {
+  const l = logs[i];
+  const text = `[${l.ts}] [${l.level}] [${l.service}] ${l.msg} (${l.reqId})`;
+  navigator.clipboard.writeText(text).catch(() => {});
+  showToast('Log entry copied!');
+}
+
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:9999;animation:toastIn .25s ease-out both;background:#1e293b;color:#f8fafc;font-size:.85rem;font-weight:500;padding:.65rem 1.1rem;border-radius:.75rem;box-shadow:0 8px 24px rgba(0,0,0,.2);';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2500);
+}
+
+function toggleAutoRefresh() {
+  autoRefresh = !autoRefresh;
+  const btn = document.getElementById('autoRefreshBtn');
+  const dot = document.getElementById('liveDot');
+  const label = document.getElementById('autoRefreshLabel');
+  if (autoRefresh) {
+    dot.classList.remove('hidden');
+    label.textContent = 'Live';
+    btn.classList.add('border-green-400','text-green-600','dark:border-green-600','dark:text-green-400');
+    refreshTimer = setInterval(() => {
+      document.getElementById('lastRefresh').textContent = 'Last refreshed: just now';
+      showToast('Logs refreshed');
+    }, 5000);
+  } else {
+    dot.classList.add('hidden');
+    label.textContent = 'Auto-refresh';
+    btn.classList.remove('border-green-400','text-green-600','dark:border-green-600','dark:text-green-400');
+    clearInterval(refreshTimer);
+  }
+}
+
+filterLogs();
+</script>
 </body>
 </html>

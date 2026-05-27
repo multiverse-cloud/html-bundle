@@ -1,70 +1,106 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#465fff" />
-  <meta name="description" content="Production-ready 500 – Server Error | mtverse HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
-  <title>500 – Server Error | mtverse — mtverse</title>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>500 — Internal Server Error — mtverse</title>
   <style>
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    .animate-slideDown {
-      animation: slideDown 0.2s ease-out;
-    }
-    .sidebar-text {
-      transition: opacity 0.2s ease-in-out;
-    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;}
+    body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#ffffff;color:#0f172a;position:relative;overflow:hidden;}
+    html.dark body{background:#030712;color:#f8fafc;}
+
+    body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle,#e2e8f0 1px,transparent 1px);background-size:28px 28px;opacity:.6;pointer-events:none;}
+    html.dark body::before{background-image:radial-gradient(circle,#1e293b 1px,transparent 1px);opacity:1;}
+
+    .page{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:2rem;max-width:540px;width:100%;}
+    .num-500{font-size:clamp(6rem,20vw,10rem);font-weight:900;line-height:1;color:#f1f5f9;letter-spacing:-4px;user-select:none;}
+    html.dark .num-500{color:#1e293b;}
+    .heading{font-size:1.75rem;font-weight:700;margin-top:-1rem;margin-bottom:.5rem;color:#0f172a;}
+    html.dark .heading{color:#f8fafc;}
+    .sub{color:#64748b;font-size:1rem;line-height:1.6;margin-bottom:1.5rem;}
+    html.dark .sub{color:#94a3b8;}
+
+    /* Pulsing status indicator */
+    .status-bar{display:flex;align-items:center;gap:.6rem;background:#fef2f2;border:1px solid #fecaca;border-radius:.75rem;padding:.65rem 1.1rem;margin-bottom:1.75rem;font-size:.85rem;font-weight:500;color:#b91c1c;}
+    html.dark .status-bar{background:#450a0a;border-color:#7f1d1d;color:#fca5a5;}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.85);}}
+    .pulse-dot{width:8px;height:8px;border-radius:50%;background:#ef4444;animation:pulse 1.5s ease-in-out infinite;flex-shrink:0;}
+
+    .btn-row{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center;margin-bottom:2rem;}
+    .btn-outline{padding:.65rem 1.4rem;border:1.5px solid #e2e8f0;border-radius:.6rem;font-size:.9rem;font-weight:600;color:#374151;background:transparent;cursor:pointer;transition:border-color .15s,background .15s;}
+    .btn-outline:hover{border-color:#9ca3af;background:#f9fafb;}
+    html.dark .btn-outline{border-color:#334155;color:#d1d5db;}
+    html.dark .btn-outline:hover{background:#1e293b;}
+    .btn-solid{padding:.65rem 1.4rem;border-radius:.6rem;font-size:.9rem;font-weight:600;color:#fff;background:#2563eb;border:none;cursor:pointer;transition:background .15s;}
+    .btn-solid:hover{background:#1d4ed8;}
+
+    .quick-links{display:flex;gap:1.25rem;flex-wrap:wrap;justify-content:center;margin-bottom:1.75rem;}
+    .quick-links a{font-size:.85rem;color:#2563eb;text-decoration:none;font-weight:500;}
+    html.dark .quick-links a{color:#60a5fa;}
+    .quick-links a:hover{text-decoration:underline;}
+    .quick-links span{color:#cbd5e1;}
+
+    .refresh-note{font-size:.8rem;color:#94a3b8;margin-top:.5rem;}
+    html.dark .refresh-note{color:#64748b;}
+
+    #darkToggle{position:fixed;top:1.25rem;right:1.25rem;z-index:100;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:999px;padding:.5rem .85rem;font-size:.8rem;font-weight:600;cursor:pointer;color:#374151;transition:background .15s;}
+    html.dark #darkToggle{background:#1e293b;border-color:#334155;color:#e2e8f0;}
+    #darkToggle:hover{background:#e2e8f0;}
+    html.dark #darkToggle:hover{background:#334155;}
   </style>
-  <link rel="stylesheet" href="tailwind-production.css">
-  <link rel="stylesheet" href="pro-styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+<body>
+  <button id="darkToggle" onclick="toggleDark()" title="Toggle dark mode"><span id="darkIcon">🌙 Dark</span></button>
 
-<!-- Mobile overlay -->
-<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+  <div class="page">
+    <div class="num-500" aria-hidden="true">500</div>
+    <h1 class="heading">Internal Server Error</h1>
+    <p class="sub">Something went wrong on our end.<br>Our engineers have been notified and are on it.</p>
 
-<div class="flex h-screen overflow-hidden">
-  <!-- Sidebar Container -->
-  <div id="sidebar-container"></div>
+    <div class="status-bar" role="status" aria-live="polite">
+      <span class="pulse-dot"></span>
+      <span>Our team is investigating this issue…</span>
+    </div>
 
-  <!-- Main content -->
-  <div class="flex-1 flex flex-col overflow-hidden">
-    <!-- Header Container -->
-    <div id="header-container"></div>
+    <div class="btn-row">
+      <button class="btn-outline" onclick="history.back()">← Go Back</button>
+      <button class="btn-solid" onclick="location.href='01-main-dashboard.html'">Go to Dashboard</button>
+    </div>
 
-    <!-- Page content -->
-    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
-      <div class="mx-auto w-full max-w-screen-2xl">
+    <nav class="quick-links" aria-label="Quick links">
+      <a href="#">Status Page</a>
+      <span aria-hidden="true">·</span>
+      <a href="60-chat-support.html">Contact Support</a>
+      <span aria-hidden="true">·</span>
+      <a href="118-faq.html">Documentation</a>
+    </nav>
 
-      </div>
-    </main>
+    <p class="refresh-note" id="countdownMsg">Auto-refreshing in <strong id="countdown">30</strong>s…</p>
   </div>
-</div>
 
-<!-- Common Components -->
-<script src="common-loader.js"></script>
-<script src="common-sidebar.js"></script>
-<script src="common-header.js"></script>
-<script src="app-shell.js"></script>
+  <script>
+    // Dark mode
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let dark = localStorage.getItem('dark') === '1' || (localStorage.getItem('dark') === null && prefersDark);
+    function applyDark() {
+      document.documentElement.classList.toggle('dark', dark);
+      document.getElementById('darkIcon').textContent = dark ? '☀️ Light' : '🌙 Dark';
+    }
+    applyDark();
+    function toggleDark() { dark = !dark; localStorage.setItem('dark', dark ? '1' : '0'); applyDark(); }
 
+    // Countdown + auto-refresh
+    let secs = 30;
+    const el = document.getElementById('countdown');
+    const interval = setInterval(() => {
+      secs--;
+      el.textContent = secs;
+      if (secs <= 0) {
+        clearInterval(interval);
+        document.getElementById('countdownMsg').textContent = 'Refreshing…';
+        location.reload();
+      }
+    }, 1000);
+  </script>
 </body>
 </html>

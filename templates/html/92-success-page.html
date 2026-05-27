@@ -1,70 +1,166 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#465fff" />
-  <meta name="description" content="Production-ready Payment Successful | mtverse HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
-  <title>Payment Successful | mtverse — mtverse</title>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment Successful — mtverse</title>
   <style>
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;}
+    body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f0fdf4;color:#0f172a;position:relative;overflow:hidden;}
+    html.dark body{background:#030712;color:#f8fafc;}
+
+    /* Confetti dots */
+    body::before,body::after{content:'';position:fixed;pointer-events:none;}
+    body::before{
+      inset:0;
+      background-image:
+        radial-gradient(circle,#bbf7d0 2px,transparent 2px),
+        radial-gradient(circle,#a5f3fc 2px,transparent 2px),
+        radial-gradient(circle,#fde68a 2px,transparent 2px),
+        radial-gradient(circle,#f9a8d4 2px,transparent 2px),
+        radial-gradient(circle,#c4b5fd 2px,transparent 2px);
+      background-size:120px 120px,90px 90px,150px 150px,80px 80px,110px 110px;
+      background-position:10px 10px,40px 50px,70px 20px,20px 80px,90px 60px;
+      opacity:.5;
     }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    .animate-slideDown {
-      animation: slideDown 0.2s ease-out;
-    }
-    .sidebar-text {
-      transition: opacity 0.2s ease-in-out;
-    }
+    html.dark body::before{opacity:.12;}
+
+    .page{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:2rem;max-width:500px;width:100%;}
+
+    /* Animated checkmark */
+    @keyframes circleIn{from{stroke-dashoffset:200;}to{stroke-dashoffset:0;}}
+    @keyframes checkIn{0%,40%{stroke-dashoffset:60;}100%{stroke-dashoffset:0;}}
+    @keyframes popIn{0%{transform:scale(.6);opacity:0;}70%{transform:scale(1.1);}100%{transform:scale(1);opacity:1;}}
+    .check-wrap{width:88px;height:88px;margin-bottom:1.5rem;animation:popIn .5s cubic-bezier(.34,1.56,.64,1) both;}
+    .check-circle{stroke-dasharray:200;stroke-dashoffset:200;animation:circleIn .5s .1s ease-out forwards;}
+    .check-mark{stroke-dasharray:60;stroke-dashoffset:60;animation:checkIn .4s .5s ease-out forwards;}
+
+    .heading{font-size:1.9rem;font-weight:800;margin-bottom:.4rem;color:#14532d;}
+    html.dark .heading{color:#bbf7d0;}
+    .sub{color:#64748b;font-size:.95rem;margin-bottom:1.75rem;}
+    html.dark .sub{color:#94a3b8;}
+
+    /* Order card */
+    .order-card{width:100%;background:#fff;border:1.5px solid #dcfce7;border-radius:1rem;padding:1.25rem 1.5rem;margin-bottom:1.75rem;text-align:left;}
+    html.dark .order-card{background:#0f172a;border-color:#166534;}
+    .order-card-title{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#16a34a;margin-bottom:.85rem;}
+    html.dark .order-card-title{color:#4ade80;}
+    .order-row{display:flex;justify-content:space-between;align-items:center;padding:.4rem 0;border-bottom:1px solid #f0fdf4;font-size:.9rem;}
+    .order-row:last-child{border-bottom:none;padding-top:.6rem;font-weight:700;font-size:.95rem;}
+    html.dark .order-row{border-bottom-color:#1e293b;}
+    .order-label{color:#64748b;}
+    html.dark .order-label{color:#94a3b8;}
+    .order-val{color:#0f172a;font-weight:500;}
+    html.dark .order-val{color:#f8fafc;}
+    .badge-green{display:inline-flex;align-items:center;gap:.3rem;background:#dcfce7;color:#16a34a;font-size:.78rem;font-weight:600;padding:.2rem .6rem;border-radius:999px;}
+    html.dark .badge-green{background:#14532d;color:#4ade80;}
+
+    /* Next steps */
+    .steps{width:100%;text-align:left;margin-bottom:1.75rem;}
+    .steps-title{font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#94a3b8;margin-bottom:.85rem;}
+    .step{display:flex;gap:.85rem;align-items:flex-start;margin-bottom:.85rem;}
+    .step-num{width:28px;height:28px;border-radius:50%;background:#2563eb;color:#fff;font-size:.8rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.05rem;}
+    .step-text strong{display:block;font-size:.9rem;font-weight:600;color:#0f172a;margin-bottom:.1rem;}
+    html.dark .step-text strong{color:#f8fafc;}
+    .step-text span{font-size:.83rem;color:#64748b;}
+    html.dark .step-text span{color:#94a3b8;}
+
+    .btn-row{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center;}
+    .btn-outline{padding:.65rem 1.4rem;border:1.5px solid #e2e8f0;border-radius:.6rem;font-size:.9rem;font-weight:600;color:#374151;background:transparent;cursor:pointer;transition:all .15s;text-decoration:none;display:inline-block;}
+    .btn-outline:hover{border-color:#9ca3af;background:#f9fafb;}
+    html.dark .btn-outline{border-color:#334155;color:#d1d5db;}
+    html.dark .btn-outline:hover{background:#1e293b;}
+    .btn-solid{padding:.65rem 1.4rem;border-radius:.6rem;font-size:.9rem;font-weight:600;color:#fff;background:#2563eb;border:none;cursor:pointer;transition:background .15s;text-decoration:none;display:inline-block;}
+    .btn-solid:hover{background:#1d4ed8;}
+
+    #darkToggle{position:fixed;top:1.25rem;right:1.25rem;z-index:100;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:999px;padding:.5rem .85rem;font-size:.8rem;font-weight:600;cursor:pointer;color:#374151;transition:background .15s;}
+    html.dark #darkToggle{background:#1e293b;border-color:#334155;color:#e2e8f0;}
   </style>
-  <link rel="stylesheet" href="tailwind-production.css">
-  <link rel="stylesheet" href="pro-styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+<body>
+  <button id="darkToggle" onclick="toggleDark()"><span id="darkIcon">🌙 Dark</span></button>
 
-<!-- Mobile overlay -->
-<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+  <div class="page">
+    <!-- Animated checkmark -->
+    <div class="check-wrap">
+      <svg width="88" height="88" viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle class="check-circle" cx="44" cy="44" r="38" stroke="#16a34a" stroke-width="5" fill="none"/>
+        <polyline class="check-mark" points="27,46 38,57 61,32" stroke="#16a34a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+    </div>
 
-<div class="flex h-screen overflow-hidden">
-  <!-- Sidebar Container -->
-  <div id="sidebar-container"></div>
+    <h1 class="heading">Payment Successful!</h1>
+    <p class="sub">Your subscription is now active. A receipt has been sent to your email.</p>
 
-  <!-- Main content -->
-  <div class="flex-1 flex flex-col overflow-hidden">
-    <!-- Header Container -->
-    <div id="header-container"></div>
-
-    <!-- Page content -->
-    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
-      <div class="mx-auto w-full max-w-screen-2xl">
-
+    <!-- Order summary -->
+    <div class="order-card">
+      <div class="order-card-title">Order Summary</div>
+      <div class="order-row">
+        <span class="order-label">Order Number</span>
+        <span class="order-val">#ORD-4821</span>
       </div>
-    </main>
+      <div class="order-row">
+        <span class="order-label">Plan</span>
+        <span class="order-val">Pro Monthly</span>
+      </div>
+      <div class="order-row">
+        <span class="order-label">Date</span>
+        <span class="order-val" id="orderDate">—</span>
+      </div>
+      <div class="order-row">
+        <span class="order-label">Status</span>
+        <span class="order-val"><span class="badge-green"><svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="3"/></svg>Paid</span></span>
+      </div>
+      <div class="order-row">
+        <span class="order-label">Amount Charged</span>
+        <span class="order-val">$49.00</span>
+      </div>
+    </div>
+
+    <!-- What's next -->
+    <div class="steps">
+      <div class="steps-title">What's Next</div>
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <strong>Access your dashboard</strong>
+          <span>All Pro features are now unlocked and ready to use.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <strong>Check your email</strong>
+          <span>We sent a receipt and onboarding guide to your inbox.</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <strong>Set up your workspace</strong>
+          <span>Invite team members and configure your integrations.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <a href="01-main-dashboard.html" class="btn-solid">Go to Dashboard</a>
+      <a href="54-billing-invoices.html" class="btn-outline">View Invoice</a>
+    </div>
   </div>
-</div>
 
-<!-- Common Components -->
-<script src="common-loader.js"></script>
-<script src="common-sidebar.js"></script>
-<script src="common-header.js"></script>
-<script src="app-shell.js"></script>
+  <script>
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let dark = localStorage.getItem('dark') === '1' || (localStorage.getItem('dark') === null && prefersDark);
+    function applyDark() {
+      document.documentElement.classList.toggle('dark', dark);
+      document.getElementById('darkIcon').textContent = dark ? '☀️ Light' : '🌙 Dark';
+    }
+    applyDark();
+    function toggleDark() { dark = !dark; localStorage.setItem('dark', dark ? '1' : '0'); applyDark(); }
 
+    // Set today's date
+    document.getElementById('orderDate').textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  </script>
 </body>
 </html>
