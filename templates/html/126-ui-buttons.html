@@ -4,13 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#465fff" />
-  <meta name="description" content="Button variants with icons, loading states, destructive actions, and segmented controls." />
-  <title>Buttons - mtverse</title>
+  <meta name="description" content="Comprehensive button showcase: 56 variants, loading states, icon buttons, social login, FABs, segmented controls, and more." />
+  <title>Buttons — mtverse</title>
   <style>
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
     .animate-slideDown { animation: slideDown 0.2s ease-out; }
+    @keyframes toastIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .animate-spin-btn { animation: spin 0.8s linear infinite; }
+    @keyframes pulse-skeleton { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    .skeleton-pulse { animation: pulse-skeleton 1.5s ease-in-out infinite; }
+    .btn-section { transition: box-shadow 0.15s ease; }
+    .btn-section:hover { box-shadow: 0 4px 20px rgba(15,23,42,.06); }
+    .filter-tab { transition: all 0.15s ease; }
+    .filter-tab.active { background: #fff; color: #2563eb; box-shadow: 0 1px 4px rgba(15,23,42,.10); }
+    .dark .filter-tab.active { background: #1f2937; color: #60a5fa; }
+    .source-drawer-enter { animation: drawerUp 0.22s ease-out; }
+    @keyframes drawerUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .split-dropdown { position: relative; }
+    .split-dropdown-menu { display: none; position: absolute; top: 100%; right: 0; z-index: 20; min-width: 140px; margin-top: 4px; background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; box-shadow: 0 8px 24px rgba(15,23,42,.12); overflow: hidden; }
+    .dark .split-dropdown-menu { background: #1f2937; border-color: #374151; }
+    .split-dropdown.open .split-dropdown-menu { display: block; }
+    .seg-btn { transition: all 0.15s ease; }
   </style>
   <link rel="stylesheet" href="tailwind-production.css">
   <link rel="stylesheet" href="pro-styles.css">
@@ -19,6 +36,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
 <div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
 <div class="flex h-screen overflow-hidden">
   <div id="sidebar-container"></div>
@@ -26,63 +44,1158 @@
     <div id="header-container"></div>
     <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
       <div class="mx-auto w-full max-w-screen-2xl">
+
+        <!-- PAGE HEADER -->
         <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <div class="mb-2 flex items-center gap-2 text-sm text-gray-500">
-              <span>mtverse</span><span>/</span><span>ui-elements</span><span>/</span>
+              <span>mtverse</span><span>/</span><span>UI Elements</span><span>/</span>
               <span class="font-medium text-gray-800 dark:text-white/90">Buttons</span>
             </div>
             <h1 class="text-2xl font-bold text-gray-900 dark:text-white/90">Buttons</h1>
-            <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Button variants with icons, loading states, destructive actions, and segmented controls.</p>
+            <p class="mt-1 max-w-3xl text-sm text-gray-500 dark:text-gray-400">Complete button system — 56 variants covering actions, icons, states, social login, FABs, segmented controls, payment CTAs, and more.</p>
           </div>
           <div class="flex flex-wrap gap-2">
-            <button type="button" class="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:bg-white/[0.03] dark:text-gray-300">Preview</button>
+            <button type="button" class="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:bg-white/[0.03] dark:text-gray-300">Documentation</button>
             <button type="button" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">Use Component</button>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <!-- STAT CARDS -->
+        <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
           <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Components</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">24</p>
+            <p class="text-sm text-gray-500">Total Variants</p>
+            <p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">56</p>
           </div>
           <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">States</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">96</p>
+            <p class="text-sm text-gray-500">States</p>
+            <p class="mt-2 text-3xl font-bold text-blue-600">180+</p>
           </div>
           <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Responsive</p><p class="mt-2 text-3xl font-bold text-green-600">Ready</p>
+            <p class="text-sm text-gray-500">Responsive</p>
+            <p class="mt-2 text-3xl font-bold text-green-600">✓</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <p class="text-sm text-gray-500">Dark Mode</p>
+            <p class="mt-2 text-3xl font-bold text-green-600">✓</p>
           </div>
         </div>
-        <div class="mt-5 grid grid-cols-1 gap-5 xl:grid-cols-2">
 
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Action buttons</h2>
-            <div class="mt-5"><div class="flex flex-wrap gap-3"><button type="button" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white">Primary</button><button class="rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold">Secondary</button><button class="rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white">Save</button><button class="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white">Delete</button><button class="is-busy rounded-lg bg-gray-900 px-4 py-2 text-sm font-semibold text-white">Loading</button></div></div>
-          </section>
+        <!-- FILTER TABS -->
+        <div class="mt-5 flex flex-wrap gap-2 rounded-2xl border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-white/[0.03]">
+          <button data-filter-tab="all" class="filter-tab active rounded-lg px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-200">All</button>
+          <button data-filter-tab="action" class="filter-tab rounded-lg px-4 py-2 text-sm font-semibold text-gray-500 dark:text-gray-400">Action</button>
+          <button data-filter-tab="icon" class="filter-tab rounded-lg px-4 py-2 text-sm font-semibold text-gray-500 dark:text-gray-400">Icon</button>
+          <button data-filter-tab="social" class="filter-tab rounded-lg px-4 py-2 text-sm font-semibold text-gray-500 dark:text-gray-400">Social</button>
+          <button data-filter-tab="state" class="filter-tab rounded-lg px-4 py-2 text-sm font-semibold text-gray-500 dark:text-gray-400">State</button>
+          <button data-filter-tab="destructive" class="filter-tab rounded-lg px-4 py-2 text-sm font-semibold text-gray-500 dark:text-gray-400">Destructive</button>
+          <button data-filter-tab="special" class="filter-tab rounded-lg px-4 py-2 text-sm font-semibold text-gray-500 dark:text-gray-400">Special</button>
+        </div>
 
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] xl:col-span-2">
-            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <!-- SECTIONS GRID -->
+        <div class="mt-5 grid grid-cols-1 gap-5">
+
+
+          <!-- SECTION 1: PRIMARY ACTIONS -->
+          <section id="sec-primary" class="btn-section rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex items-start justify-between gap-4">
               <div>
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Buttons production states</h2>
-                <p class="mt-1 text-sm text-gray-500">Real dashboard states with actions, accessibility, responsive layout, and clean spacing.</p>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Primary Actions</h2>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Core semantic button palette — primary, secondary, tertiary, and status variants.</p>
               </div>
-              <div class="inline-flex rounded-xl bg-gray-100 p-1 dark:bg-white/[0.04]">
-                <button class="rounded-lg bg-white px-4 py-2 text-sm font-bold text-blue-600 shadow-sm dark:bg-gray-900">Preview</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">Code</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">States</button>
-              </div>
+              <button onclick="openSourceDrawer('primary','Primary Actions')" class="flex shrink-0 items-center gap-1.5 rounded-lg border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-100 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                View Source
+              </button>
             </div>
-            <div class="mt-5 grid gap-4 md:grid-cols-3">
-              <div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Default</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Hover / active</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Loading / empty</p><span class="h-2.5 w-2.5 rounded-full bg-yellow-400"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div>
+            <div class="mt-5 flex flex-wrap gap-3">
+              <button class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors">Primary</button>
+              <button class="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors dark:border-gray-600 dark:bg-white/[0.04] dark:text-gray-200 dark:hover:bg-white/[0.08]">Secondary</button>
+              <button class="rounded-lg px-4 py-2 text-sm font-semibold text-blue-600 hover:bg-blue-50 transition-colors dark:hover:bg-blue-600/10">Tertiary</button>
+              <button class="rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700 transition-colors">Success</button>
+              <button class="rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-white hover:bg-amber-600 transition-colors">Warning</button>
+              <button class="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 transition-colors">Danger</button>
+              <button class="rounded-lg bg-sky-500 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-600 transition-colors">Info</button>
             </div>
           </section>
-        </div>
+
+          <!-- SECTION 2: SIZES -->
+          <section id="sec-sizes" class="btn-section rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Sizes</h2>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Five size tiers from XS to XL — same weight, just scaled proportionally.</p>
+              </div>
+              <button onclick="openSourceDrawer('sizes','Sizes')" class="flex shrink-0 items-center gap-1.5 rounded-lg border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-100 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                View Source
+              </button>
+            </div>
+            <div class="mt-5 flex flex-wrap items-center gap-3">
+              <button class="rounded-md bg-blue-600 px-2.5 py-1 text-xs font-semibold text-white hover:bg-blue-700 transition-colors">XS</button>
+              <button class="rounded-md bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700 transition-colors">SM</button>
+              <button class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors">MD (default)</button>
+              <button class="rounded-lg bg-blue-600 px-5 py-2.5 text-base font-semibold text-white hover:bg-blue-700 transition-colors">LG</button>
+              <button class="rounded-xl bg-blue-600 px-6 py-3 text-lg font-semibold text-white hover:bg-blue-700 transition-colors">XL</button>
+            </div>
+          </section>
+
+
+
+          <!-- SECTION 3: ICON BUTTONS -->
+          <section id="sec-icon-buttons" class="btn-section rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Icon Buttons</h2>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Icon-left, icon-right, icon-only round, icon-only square, and icon with notification badge.</p>
+              </div>
+              <button onclick="openSourceDrawer('icon-buttons','Icon Buttons')" class="flex shrink-0 items-center gap-1.5 rounded-lg border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-100 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                View Source
+              </button>
+            </div>
+            <div class="mt-5 flex flex-wrap items-center gap-3">
+              <!-- Icon Left -->
+              <button class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                Add Item
+              </button>
+              <!-- Icon Right -->
+              <button class="flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors dark:border-gray-600 dark:bg-white/[0.04] dark:text-gray-200">
+                Edit
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+              </button>
+              <!-- Icon only round -->
+              <button class="flex items-center justify-center w-9 h-9 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors" aria-label="Delete">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+              </button>
+              <!-- Icon only square -->
+              <button class="flex items-center justify-center w-9 h-9 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 transition-colors dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300" aria-label="Download">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              </button>
+              <!-- Share icon -->
+              <button class="flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700 transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>
+                Share
+              </button>
+              <!-- Icon with badge -->
+              <div class="relative inline-flex">
+                <button class="flex items-center justify-center w-9 h-9 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 transition-colors dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300" aria-label="Settings">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                </button>
+                <span class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">3</span>
+              </div>
+            </div>
+          </section>
+
+
+
+          <!-- SECTION 4: GHOST & OUTLINE -->
+          <section id="sec-ghost-outline" class="btn-section rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Ghost &amp; Outline</h2>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Transparent background ghosts and colored border outlines for secondary actions.</p>
+              </div>
+              <button onclick="openSourceDrawer('ghost-outline','Ghost & Outline')" class="flex shrink-0 items-center gap-1.5 rounded-lg border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-100 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                View Source
+              </button>
+            </div>
+            <div class="mt-5 flex flex-wrap gap-3">
+              <button class="rounded-lg px-4 py-2 text-sm font-semibold text-blue-600 hover:bg-blue-50 transition-colors dark:hover:bg-blue-600/10">Ghost Blue</button>
+              <button class="rounded-lg px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-100 transition-colors dark:text-gray-300 dark:hover:bg-white/[0.06]">Ghost Gray</button>
+              <button class="rounded-lg px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-50 transition-colors dark:hover:bg-red-600/10">Ghost Red</button>
+              <button class="rounded-lg border border-blue-600 px-4 py-2 text-sm font-semibold text-blue-600 hover:bg-blue-50 transition-colors dark:hover:bg-blue-600/10">Outline Blue</button>
+              <button class="rounded-lg border border-green-600 px-4 py-2 text-sm font-semibold text-green-600 hover:bg-green-50 transition-colors dark:hover:bg-green-600/10">Outline Green</button>
+              <button class="rounded-lg border border-purple-600 px-4 py-2 text-sm font-semibold text-purple-600 hover:bg-purple-50 transition-colors dark:hover:bg-purple-600/10">Outline Purple</button>
+              <button class="rounded-lg border border-red-600 px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-50 transition-colors dark:hover:bg-red-600/10">Outline Red</button>
+              <button class="rounded-lg px-4 py-2 text-sm font-semibold text-blue-600 underline underline-offset-2 hover:text-blue-700 transition-colors">Link Style</button>
+            </div>
+          </section>
+
+          <!-- SECTION 5: LOADING STATES -->
+          <section id="sec-loading" class="btn-section rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Loading States</h2>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Spinner, saving text, disabled, and skeleton pulse patterns for async actions.</p>
+              </div>
+              <button onclick="openSourceDrawer('loading','Loading States')" class="flex shrink-0 items-center gap-1.5 rounded-lg border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-100 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                View Source
+              </button>
+            </div>
+            <div class="mt-5 flex flex-wrap items-center gap-3">
+              <!-- Spinner only -->
+              <button class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white cursor-wait opacity-80" disabled>
+                <svg class="animate-spin-btn w-4 h-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/></svg>
+                Loading
+              </button>
+              <!-- Interactive loading demo -->
+              <button data-loading-demo class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors">
+                Save Changes
+              </button>
+              <!-- Loading destructive -->
+              <button class="flex items-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white cursor-wait opacity-80" disabled>
+                <svg class="animate-spin-btn w-4 h-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/></svg>
+                Deleting...
+              </button>
+              <!-- Loading success -->
+              <button class="flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white cursor-wait opacity-80" disabled>
+                <svg class="animate-spin-btn w-4 h-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/></svg>
+                Saving...
+              </button>
+              <!-- Skeleton pulse -->
+              <div class="skeleton-pulse h-9 w-28 rounded-lg bg-gray-200 dark:bg-gray-700"></div>
+              <!-- Disabled -->
+              <button class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white opacity-40 cursor-not-allowed" disabled>Disabled</button>
+            </div>
+          </section>
+
+
+
+          <!-- SECTION 6: DESTRUCTIVE & CONFIRMATION -->
+          <section id="sec-destructive" class="btn-section rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Destructive &amp; Confirmation</h2>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Destructive button styles plus double-click confirmation pattern for dangerous actions.</p>
+              </div>
+              <button onclick="openSourceDrawer('destructive','Destructive & Confirmation')" class="flex shrink-0 items-center gap-1.5 rounded-lg border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-100 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                View Source
+              </button>
+            </div>
+            <div class="mt-5 flex flex-wrap items-center gap-3">
+              <button class="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 transition-colors">Destructive Primary</button>
+              <button class="rounded-lg border border-red-600 px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-50 transition-colors dark:hover:bg-red-600/10">Destructive Outline</button>
+              <button class="rounded-lg px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-50 transition-colors dark:hover:bg-red-600/10">Destructive Ghost</button>
+              <!-- Confirm delete pattern -->
+              <button data-confirm-delete class="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition-colors">Delete</button>
+              <!-- Delete account -->
+              <button class="flex items-center gap-2 rounded-lg bg-red-700 px-4 py-2 text-sm font-semibold text-white hover:bg-red-800 transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                Delete Account
+              </button>
+            </div>
+            <p class="mt-3 text-xs text-gray-400 dark:text-gray-500">Tip: Click the "Delete" button twice to trigger the confirmation pattern.</p>
+          </section>
+
+          <!-- SECTION 7: SOCIAL LOGIN BUTTONS -->
+          <section id="sec-social" class="btn-section rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Social Login Buttons</h2>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">OAuth provider buttons with brand logos for one-click sign-in flows.</p>
+              </div>
+              <button onclick="openSourceDrawer('social','Social Login Buttons')" class="flex shrink-0 items-center gap-1.5 rounded-lg border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-100 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                View Source
+              </button>
+            </div>
+            <div class="mt-5 flex flex-wrap gap-3">
+              <!-- Google -->
+              <button class="flex items-center gap-2.5 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors dark:border-gray-600 dark:bg-white/[0.04] dark:text-gray-200">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                Continue with Google
+              </button>
+              <!-- GitHub -->
+              <button class="flex items-center gap-2.5 rounded-lg bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-800 transition-colors dark:bg-gray-700 dark:hover:bg-gray-600">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                Continue with GitHub
+              </button>
+              <!-- Apple -->
+              <button class="flex items-center gap-2.5 rounded-lg bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-gray-900 transition-colors">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                Continue with Apple
+              </button>
+              <!-- Twitter / X -->
+              <button class="flex items-center gap-2.5 rounded-lg bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-gray-900 transition-colors">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.843L1.813 2.25H8.38l4.265 5.638 5.599-5.638zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
+                Continue with X
+              </button>
+              <!-- Microsoft -->
+              <button class="flex items-center gap-2.5 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors dark:border-gray-600 dark:bg-white/[0.04] dark:text-gray-200">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><rect x="1" y="1" width="10" height="10" fill="#f25022"/><rect x="13" y="1" width="10" height="10" fill="#7fba00"/><rect x="1" y="13" width="10" height="10" fill="#00a4ef"/><rect x="13" y="13" width="10" height="10" fill="#ffb900"/></svg>
+                Microsoft
+              </button>
+              <!-- Slack -->
+              <button class="flex items-center gap-2.5 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors dark:border-gray-600 dark:bg-white/[0.04] dark:text-gray-200">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M5.042 15.165a2.528 2.528 0 01-2.52 2.523A2.528 2.528 0 010 15.165a2.527 2.527 0 012.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 012.521-2.52 2.527 2.527 0 012.521 2.52v6.313A2.528 2.528 0 018.834 24a2.528 2.528 0 01-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 01-2.521-2.52A2.528 2.528 0 018.834 0a2.528 2.528 0 012.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 012.521 2.521 2.528 2.528 0 01-2.521 2.521H2.522A2.528 2.528 0 010 8.834a2.528 2.528 0 012.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 012.522-2.521A2.528 2.528 0 0124 8.834a2.528 2.528 0 01-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 01-2.523 2.521 2.527 2.527 0 01-2.52-2.521V2.522A2.527 2.527 0 0115.165 0a2.528 2.528 0 012.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 012.523 2.522A2.528 2.528 0 0115.165 24a2.527 2.527 0 01-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 01-2.52-2.523 2.526 2.526 0 012.52-2.52h6.313A2.527 2.527 0 0124 15.165a2.528 2.528 0 01-2.522 2.523h-6.313z" fill="#E01E5A"/></svg>
+                Slack
+              </button>
+            </div>
+          </section>
+
+
+
+          <!-- SECTION 8: SPLIT & DROPDOWN BUTTONS -->
+          <section id="sec-split" class="btn-section rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Split &amp; Dropdown Buttons</h2>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Split action + chevron, button groups, and segmented controls.</p>
+              </div>
+              <button onclick="openSourceDrawer('split','Split & Dropdown Buttons')" class="flex shrink-0 items-center gap-1.5 rounded-lg border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-100 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                View Source
+              </button>
+            </div>
+            <div class="mt-5 flex flex-wrap items-start gap-5">
+              <!-- Split button -->
+              <div class="split-dropdown" id="split-main">
+                <div class="flex items-stretch rounded-lg overflow-hidden border border-blue-600">
+                  <button class="bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors">Deploy</button>
+                  <button onclick="document.getElementById('split-main').classList.toggle('open')" class="bg-blue-600 border-l border-blue-500 px-2 py-2 text-white hover:bg-blue-700 transition-colors" aria-label="More options">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                  </button>
+                </div>
+                <div class="split-dropdown-menu">
+                  <button class="block w-full px-4 py-2.5 text-left text-sm font-medium text-gray-700 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-white/[0.06]">Deploy to staging</button>
+                  <button class="block w-full px-4 py-2.5 text-left text-sm font-medium text-gray-700 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-white/[0.06]">Deploy to production</button>
+                  <button class="block w-full px-4 py-2.5 text-left text-sm font-medium text-red-600 hover:bg-red-50 dark:hover:bg-red-600/10">Rollback</button>
+                </div>
+              </div>
+
+              <!-- Button group -->
+              <div class="flex items-stretch overflow-hidden rounded-lg border border-gray-300 dark:border-gray-600">
+                <button class="bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors dark:bg-white/[0.04] dark:text-gray-200 dark:hover:bg-white/[0.08]">Left</button>
+                <button class="border-x border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors dark:border-gray-600 dark:bg-white/[0.04] dark:text-gray-200 dark:hover:bg-white/[0.08]">Middle</button>
+                <button class="bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors dark:bg-white/[0.04] dark:text-gray-200 dark:hover:bg-white/[0.08]">Right</button>
+              </div>
+
+              <!-- Segmented control -->
+              <div class="flex items-stretch overflow-hidden rounded-lg bg-gray-100 p-1 dark:bg-white/[0.06]">
+                <button data-seg="seg1" onclick="setSegment('seg1',this)" class="seg-btn rounded-md bg-white shadow-sm px-4 py-1.5 text-sm font-semibold text-gray-900 dark:bg-gray-800 dark:text-white">List</button>
+                <button data-seg="seg1" onclick="setSegment('seg1',this)" class="seg-btn rounded-md px-4 py-1.5 text-sm font-semibold text-gray-500 dark:text-gray-400">Grid</button>
+                <button data-seg="seg1" onclick="setSegment('seg1',this)" class="seg-btn rounded-md px-4 py-1.5 text-sm font-semibold text-gray-500 dark:text-gray-400">Board</button>
+              </div>
+            </div>
+          </section>
+
+          <!-- SECTION 9: FLOATING ACTION BUTTONS -->
+          <section id="sec-fab" class="btn-section rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Floating Action Buttons</h2>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">FAB circle, extended, badge, and mini variants — shown inline for preview.</p>
+              </div>
+              <button onclick="openSourceDrawer('fab','Floating Action Buttons')" class="flex shrink-0 items-center gap-1.5 rounded-lg border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-100 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                View Source
+              </button>
+            </div>
+            <div class="mt-5 flex flex-wrap items-center gap-4">
+              <!-- FAB circle -->
+              <button class="flex items-center justify-center w-14 h-14 rounded-full bg-blue-600 text-white shadow-lg hover:bg-blue-700 transition-colors" aria-label="Create new">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+              </button>
+              <!-- FAB extended -->
+              <button class="flex items-center gap-2 rounded-full bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg hover:bg-blue-700 transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                New Project
+              </button>
+              <!-- FAB with notification badge -->
+              <div class="relative inline-flex">
+                <button class="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-600 text-white shadow-lg hover:bg-indigo-700 transition-colors">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+                </button>
+                <span class="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">5</span>
+              </div>
+              <!-- FAB mini -->
+              <button class="flex items-center justify-center w-10 h-10 rounded-full bg-green-600 text-white shadow-md hover:bg-green-700 transition-colors" aria-label="Quick add">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+              </button>
+            </div>
+          </section>
+
+
+
+          <!-- SECTION 10: PAYMENT & CTA -->
+          <section id="sec-payment" class="btn-section rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Payment &amp; CTA</h2>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">High-conversion CTA buttons for checkout, subscription, and purchase flows.</p>
+              </div>
+              <button onclick="openSourceDrawer('payment','Payment & CTA')" class="flex shrink-0 items-center gap-1.5 rounded-lg border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-100 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                View Source
+              </button>
+            </div>
+            <div class="mt-5 flex flex-wrap gap-3">
+              <!-- Pay button -->
+              <button class="flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                Pay $49/mo
+              </button>
+              <!-- Free trial -->
+              <button class="rounded-lg bg-green-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-green-700 transition-colors">Start Free Trial</button>
+              <!-- Upgrade to Pro -->
+              <button class="rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700 transition-colors">Upgrade to Pro</button>
+              <!-- Add to Cart -->
+              <button class="flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors dark:border-gray-600 dark:bg-white/[0.04] dark:text-gray-200">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                Add to Cart
+              </button>
+              <!-- Buy Now -->
+              <button class="rounded-lg bg-gray-900 px-5 py-2.5 text-sm font-semibold text-white hover:bg-gray-800 transition-colors dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100">Buy Now</button>
+              <!-- Subscribe -->
+              <button class="rounded-lg bg-purple-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-purple-700 transition-colors">Subscribe</button>
+            </div>
+          </section>
+
+          <!-- SECTION 11: TOOLBAR & TABLE ACTIONS -->
+          <section id="sec-toolbar" class="btn-section rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Toolbar &amp; Table Actions</h2>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Small icon-only row actions, bulk action bar, and filter button with count.</p>
+              </div>
+              <button onclick="openSourceDrawer('toolbar','Toolbar & Table Actions')" class="flex shrink-0 items-center gap-1.5 rounded-lg border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-100 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                View Source
+              </button>
+            </div>
+            <div class="mt-5 space-y-4">
+              <!-- Row actions -->
+              <div>
+                <p class="mb-2 text-xs font-semibold uppercase text-gray-400">Row Actions</p>
+                <div class="flex flex-wrap items-center gap-2">
+                  <button class="flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50 transition-colors dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300" title="Edit">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                    Edit
+                  </button>
+                  <button class="flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50 transition-colors dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300" title="Duplicate">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                    Duplicate
+                  </button>
+                  <button class="flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50 transition-colors dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300" title="Archive">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+                    Archive
+                  </button>
+                  <button class="flex items-center gap-1.5 rounded-md border border-red-200 bg-red-50 px-2.5 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-100 transition-colors dark:border-red-800 dark:bg-red-600/10 dark:text-red-400" title="Delete">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                    Delete
+                  </button>
+                </div>
+              </div>
+              <!-- Bulk actions bar -->
+              <div class="flex flex-wrap items-center gap-3 rounded-xl border border-blue-200 bg-blue-50 px-4 py-3 dark:border-blue-800 dark:bg-blue-600/10">
+                <span class="text-sm font-semibold text-blue-700 dark:text-blue-300">12 selected</span>
+                <div class="flex flex-wrap gap-2">
+                  <button class="rounded-lg bg-white border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors dark:border-gray-700 dark:bg-white/[0.08] dark:text-gray-200">Export</button>
+                  <button class="rounded-lg bg-white border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors dark:border-gray-700 dark:bg-white/[0.08] dark:text-gray-200">Archive</button>
+                  <button class="rounded-lg bg-red-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-red-700 transition-colors">Delete All</button>
+                </div>
+                <button class="ml-auto text-xs font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400">Clear</button>
+              </div>
+              <!-- Filter button with badge -->
+              <div class="flex flex-wrap gap-2">
+                <button class="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-200">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+                  Filters
+                  <span class="flex items-center justify-center w-5 h-5 rounded-full bg-blue-600 text-[10px] font-bold text-white">3</span>
+                </button>
+              </div>
+            </div>
+          </section>
+
+
+
+          <!-- SECTION 12: UPLOAD & FILE BUTTONS -->
+          <section id="sec-upload" class="btn-section rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Upload &amp; File Buttons</h2>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Upload, import, drag target, and file chooser styled buttons.</p>
+              </div>
+              <button onclick="openSourceDrawer('upload','Upload & File Buttons')" class="flex shrink-0 items-center gap-1.5 rounded-lg border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-100 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                View Source
+              </button>
+            </div>
+            <div class="mt-5 flex flex-wrap items-center gap-3">
+              <!-- Upload file -->
+              <button class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                Upload File
+              </button>
+              <!-- Import CSV -->
+              <button class="flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors dark:border-gray-600 dark:bg-white/[0.04] dark:text-gray-200">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                Import CSV
+              </button>
+              <!-- Drag target -->
+              <button class="flex flex-col items-center gap-2 rounded-xl border-2 border-dashed border-gray-300 px-8 py-4 text-sm font-semibold text-gray-500 hover:border-blue-400 hover:bg-blue-50 hover:text-blue-600 transition-colors dark:border-gray-600 dark:hover:border-blue-500 dark:hover:bg-blue-600/10">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                Drop files here
+              </button>
+              <!-- Choose file -->
+              <label class="flex cursor-pointer items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors dark:border-gray-600 dark:bg-white/[0.04] dark:text-gray-200">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg>
+                Choose File
+                <input type="file" class="sr-only" />
+              </label>
+            </div>
+          </section>
+
+          <!-- SECTION 13: PAGINATION BUTTONS -->
+          <section id="sec-pagination" class="btn-section rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Pagination Buttons</h2>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Previous/Next pairs, numbered pagination rows, and simple text nav.</p>
+              </div>
+              <button onclick="openSourceDrawer('pagination','Pagination Buttons')" class="flex shrink-0 items-center gap-1.5 rounded-lg border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-100 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                View Source
+              </button>
+            </div>
+            <div class="mt-5 space-y-4">
+              <!-- Previous / Next pair -->
+              <div class="flex items-center gap-2">
+                <button class="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-200">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                  Previous
+                </button>
+                <button class="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-200">
+                  Next
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </button>
+              </div>
+              <!-- Numbered pagination -->
+              <div class="flex flex-wrap items-center gap-1">
+                <button class="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                </button>
+                <button class="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600 text-sm font-semibold text-white">1</button>
+                <button class="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300">2</button>
+                <button class="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300">3</button>
+                <span class="flex h-9 w-9 items-center justify-center text-sm text-gray-400">…</span>
+                <button class="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300">8</button>
+                <button class="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300">9</button>
+                <button class="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </button>
+              </div>
+              <!-- Simple prev/next text links -->
+              <div class="flex items-center justify-between border-t border-gray-100 pt-4 dark:border-gray-800">
+                <button class="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors">← Previous</button>
+                <span class="text-sm text-gray-500">Page 1 of 9</span>
+                <button class="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors">Next →</button>
+              </div>
+            </div>
+          </section>
+
+
+
+          <!-- SECTION 14: MOBILE ACTION BUTTONS -->
+          <section id="sec-mobile" class="btn-section rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Mobile Action Buttons</h2>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Full-width, stacked, and bottom-bar button patterns for mobile screens.</p>
+              </div>
+              <button onclick="openSourceDrawer('mobile','Mobile Action Buttons')" class="flex shrink-0 items-center gap-1.5 rounded-lg border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-100 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                View Source
+              </button>
+            </div>
+            <!-- Phone shell mockup -->
+            <div class="mt-5 mx-auto max-w-xs">
+              <div class="rounded-3xl border border-gray-300 bg-gray-100 p-4 shadow-inner dark:border-gray-600 dark:bg-gray-800">
+                <div class="mx-auto mb-4 h-1 w-10 rounded-full bg-gray-400 dark:bg-gray-600"></div>
+                <div class="space-y-3">
+                  <!-- Full-width primary -->
+                  <button class="w-full rounded-xl bg-blue-600 py-3 text-sm font-semibold text-white hover:bg-blue-700 transition-colors">Confirm Booking</button>
+                  <!-- Full-width outlined -->
+                  <button class="w-full rounded-xl border border-gray-300 bg-white py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200">Cancel</button>
+                </div>
+                <!-- Bottom bar demo -->
+                <div class="mt-6 rounded-2xl border border-gray-200 bg-white p-3 shadow-lg dark:border-gray-700 dark:bg-gray-900">
+                  <div class="flex gap-2">
+                    <button class="flex-1 rounded-lg border border-gray-200 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-50 transition-colors dark:border-gray-700 dark:text-gray-300">Save Draft</button>
+                    <button class="flex-1 rounded-lg bg-blue-600 py-2 text-xs font-semibold text-white hover:bg-blue-700 transition-colors">Publish</button>
+                  </div>
+                  <div class="mt-1.5 mx-auto h-1 w-16 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SECTION 15: COPY & SHARE BUTTONS -->
+          <section id="sec-copy-share" class="btn-section rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Copy &amp; Share Buttons</h2>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Interactive clipboard copy, share link, download, and print with live feedback.</p>
+              </div>
+              <button onclick="openSourceDrawer('copy-share','Copy & Share Buttons')" class="flex shrink-0 items-center gap-1.5 rounded-lg border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-100 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                View Source
+              </button>
+            </div>
+            <div class="mt-5 flex flex-wrap gap-3">
+              <!-- Copy to clipboard -->
+              <button data-copy-demo="https://mtverse.io/share/abc123" class="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors dark:border-gray-600 dark:bg-white/[0.04] dark:text-gray-200">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                Copy Link
+              </button>
+              <!-- Share link -->
+              <button class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+                Share
+              </button>
+              <!-- Download report -->
+              <button class="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors dark:border-gray-600 dark:bg-white/[0.04] dark:text-gray-200">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                Download Report
+              </button>
+              <!-- Print -->
+              <button class="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors dark:border-gray-600 dark:bg-white/[0.04] dark:text-gray-200" onclick="window.print()">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                Print
+              </button>
+            </div>
+          </section>
+
+
+
+          <!-- SECTION 16: SEGMENTED CONTROLS -->
+          <section id="sec-segmented" class="btn-section rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Segmented Controls</h2>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">2-option toggle, 3-option text, icon-only, and pill-style segmented control variants.</p>
+              </div>
+              <button onclick="openSourceDrawer('segmented','Segmented Controls')" class="flex shrink-0 items-center gap-1.5 rounded-lg border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-100 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                View Source
+              </button>
+            </div>
+            <div class="mt-5 flex flex-wrap items-center gap-5">
+              <!-- 2-option toggle -->
+              <div class="flex items-center overflow-hidden rounded-lg bg-gray-100 p-1 dark:bg-white/[0.06]">
+                <button data-seg="seg-toggle" onclick="setSegment('seg-toggle',this)" class="seg-btn rounded-md bg-white shadow-sm px-5 py-2 text-sm font-semibold text-gray-900 dark:bg-gray-800 dark:text-white">Monthly</button>
+                <button data-seg="seg-toggle" onclick="setSegment('seg-toggle',this)" class="seg-btn rounded-md px-5 py-2 text-sm font-semibold text-gray-500 dark:text-gray-400">Annual</button>
+              </div>
+
+              <!-- 3-option Daily/Weekly/Monthly -->
+              <div class="flex items-center overflow-hidden rounded-lg bg-gray-100 p-1 dark:bg-white/[0.06]">
+                <button data-seg="seg-period" onclick="setSegment('seg-period',this)" class="seg-btn rounded-md bg-white shadow-sm px-4 py-2 text-sm font-semibold text-gray-900 dark:bg-gray-800 dark:text-white">Daily</button>
+                <button data-seg="seg-period" onclick="setSegment('seg-period',this)" class="seg-btn rounded-md px-4 py-2 text-sm font-semibold text-gray-500 dark:text-gray-400">Weekly</button>
+                <button data-seg="seg-period" onclick="setSegment('seg-period',this)" class="seg-btn rounded-md px-4 py-2 text-sm font-semibold text-gray-500 dark:text-gray-400">Monthly</button>
+              </div>
+
+              <!-- Icon-only 3-way -->
+              <div class="flex items-center overflow-hidden rounded-lg bg-gray-100 p-1 dark:bg-white/[0.06]">
+                <button data-seg="seg-view" onclick="setSegment('seg-view',this)" class="seg-btn rounded-md bg-white shadow-sm px-3 py-2 text-gray-900 dark:bg-gray-800 dark:text-white" aria-label="List view">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+                <button data-seg="seg-view" onclick="setSegment('seg-view',this)" class="seg-btn rounded-md px-3 py-2 text-gray-500 dark:text-gray-400" aria-label="Grid view">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+                </button>
+                <button data-seg="seg-view" onclick="setSegment('seg-view',this)" class="seg-btn rounded-md px-3 py-2 text-gray-500 dark:text-gray-400" aria-label="Board view">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>
+                </button>
+              </div>
+
+              <!-- Pill style -->
+              <div class="flex items-center overflow-hidden rounded-full bg-gray-100 p-1 dark:bg-white/[0.06]">
+                <button data-seg="seg-pill" onclick="setSegment('seg-pill',this)" class="seg-btn rounded-full bg-white shadow-sm px-4 py-1.5 text-sm font-semibold text-gray-900 dark:bg-gray-800 dark:text-white">All</button>
+                <button data-seg="seg-pill" onclick="setSegment('seg-pill',this)" class="seg-btn rounded-full px-4 py-1.5 text-sm font-semibold text-gray-500 dark:text-gray-400">Active</button>
+                <button data-seg="seg-pill" onclick="setSegment('seg-pill',this)" class="seg-btn rounded-full px-4 py-1.5 text-sm font-semibold text-gray-500 dark:text-gray-400">Archived</button>
+              </div>
+            </div>
+          </section>
+
+        </div><!-- /sections grid -->
       </div>
     </main>
   </div>
 </div>
-<script src="common-loader.js"></script>
+
+
+<!-- Source Viewer Drawer -->
+<div id="source-drawer" class="fixed inset-x-0 bottom-0 z-50 hidden">
+  <div id="source-overlay" class="fixed inset-0 bg-black/30" onclick="closeSourceDrawer()"></div>
+  <div class="source-drawer-enter relative bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 rounded-t-2xl shadow-2xl max-h-[70vh] flex flex-col" style="max-width:720px;margin:0 auto;border-left:1px solid #e5e7eb;border-right:1px solid #e5e7eb;">
+    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-gray-800">
+      <div class="flex items-center gap-2">
+        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+        <span id="drawer-title" class="text-sm font-semibold text-gray-900 dark:text-white">Source Code</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="copyDrawerCode()" class="flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700 transition-colors">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+          Copy
+        </button>
+        <button onclick="closeSourceDrawer()" class="rounded-lg border border-gray-200 dark:border-gray-700 p-1.5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="overflow-auto flex-1 p-5">
+      <pre id="drawer-code" class="text-xs leading-relaxed text-gray-800 dark:text-gray-200 whitespace-pre-wrap font-mono"></pre>
+    </div>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-2 pointer-events-none"></div>
+
 <script src="common-sidebar.js"></script>
 <script src="common-header.js"></script>
 <script src="app-shell.js"></script>
+
+<script>
+/* ─── Source snippets keyed by section id ─── */
+const SOURCE_SNIPPETS = {
+  'primary': `<!-- Primary Actions -->
+<button class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors">Primary</button>
+<button class="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors">Secondary</button>
+<button class="rounded-lg px-4 py-2 text-sm font-semibold text-blue-600 hover:bg-blue-50 transition-colors">Tertiary</button>
+<button class="rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700 transition-colors">Success</button>
+<button class="rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-white hover:bg-amber-600 transition-colors">Warning</button>
+<button class="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 transition-colors">Danger</button>
+<button class="rounded-lg bg-sky-500 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-600 transition-colors">Info</button>`,
+
+  'sizes': `<!-- Button Sizes -->
+<button class="rounded-md bg-blue-600 px-2.5 py-1 text-xs font-semibold text-white hover:bg-blue-700">XS</button>
+<button class="rounded-md bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700">SM</button>
+<button class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">MD (default)</button>
+<button class="rounded-lg bg-blue-600 px-5 py-2.5 text-base font-semibold text-white hover:bg-blue-700">LG</button>
+<button class="rounded-xl bg-blue-600 px-6 py-3 text-lg font-semibold text-white hover:bg-blue-700">XL</button>`,
+
+  'icon-buttons': `<!-- Icon Left -->
+<button class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">
+  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+  Add Item
+</button>
+
+<!-- Icon Right -->
+<button class="flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50">
+  Edit
+  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+</button>
+
+<!-- Icon Only Round -->
+<button class="flex items-center justify-center w-9 h-9 rounded-full bg-blue-600 text-white hover:bg-blue-700" aria-label="Delete">
+  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+</button>
+
+<!-- Icon Only Square -->
+<button class="flex items-center justify-center w-9 h-9 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50" aria-label="Download">
+  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+</button>
+
+<!-- Icon with Badge -->
+<div class="relative inline-flex">
+  <button class="flex items-center justify-center w-9 h-9 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><!-- settings icon --></svg>
+  </button>
+  <span class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">3</span>
+</div>`,
+
+  'ghost-outline': `<!-- Ghost Buttons -->
+<button class="rounded-lg px-4 py-2 text-sm font-semibold text-blue-600 hover:bg-blue-50 transition-colors">Ghost Blue</button>
+<button class="rounded-lg px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-100 transition-colors">Ghost Gray</button>
+<button class="rounded-lg px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-50 transition-colors">Ghost Red</button>
+
+<!-- Outline Buttons -->
+<button class="rounded-lg border border-blue-600 px-4 py-2 text-sm font-semibold text-blue-600 hover:bg-blue-50 transition-colors">Outline Blue</button>
+<button class="rounded-lg border border-green-600 px-4 py-2 text-sm font-semibold text-green-600 hover:bg-green-50 transition-colors">Outline Green</button>
+<button class="rounded-lg border border-purple-600 px-4 py-2 text-sm font-semibold text-purple-600 hover:bg-purple-50 transition-colors">Outline Purple</button>
+<button class="rounded-lg border border-red-600 px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-50 transition-colors">Outline Red</button>
+
+<!-- Link Style -->
+<button class="rounded-lg px-4 py-2 text-sm font-semibold text-blue-600 underline underline-offset-2 hover:text-blue-700 transition-colors">Link Style</button>`,
+
+  'loading': `<!-- Loading Spinner -->
+<button class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white cursor-wait opacity-80" disabled>
+  <svg class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
+  </svg>
+  Loading
+</button>
+
+<!-- Skeleton Pulse -->
+<div class="animate-pulse h-9 w-28 rounded-lg bg-gray-200"></div>
+
+<!-- Disabled -->
+<button class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white opacity-40 cursor-not-allowed" disabled>Disabled</button>`,
+
+  'destructive': `<!-- Destructive Buttons -->
+<button class="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 transition-colors">Destructive Primary</button>
+<button class="rounded-lg border border-red-600 px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-50 transition-colors">Destructive Outline</button>
+<button class="rounded-lg px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-50 transition-colors">Destructive Ghost</button>
+
+<!-- Confirm-delete pattern (double-click) -->
+<button data-confirm-delete class="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition-colors">Delete</button>
+
+<!-- Delete account -->
+<button class="flex items-center gap-2 rounded-lg bg-red-700 px-4 py-2 text-sm font-semibold text-white hover:bg-red-800 transition-colors">
+  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+  Delete Account
+</button>`,
+
+  'social': `<!-- Google -->
+<button class="flex items-center gap-2.5 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors">
+  <!-- Google SVG logo -->
+  Continue with Google
+</button>
+
+<!-- GitHub -->
+<button class="flex items-center gap-2.5 rounded-lg bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-800 transition-colors">
+  <!-- GitHub SVG logo -->
+  Continue with GitHub
+</button>
+
+<!-- Apple -->
+<button class="flex items-center gap-2.5 rounded-lg bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-gray-900 transition-colors">
+  <!-- Apple SVG logo -->
+  Continue with Apple
+</button>
+
+<!-- Twitter/X -->
+<button class="flex items-center gap-2.5 rounded-lg bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-gray-900 transition-colors">
+  <!-- X SVG logo -->
+  Continue with X
+</button>`,
+
+  'split': `<!-- Split Button -->
+<div class="flex items-stretch rounded-lg overflow-hidden border border-blue-600">
+  <button class="bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">Deploy</button>
+  <button class="bg-blue-600 border-l border-blue-500 px-2 py-2 text-white hover:bg-blue-700">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+  </button>
+</div>
+
+<!-- Button Group -->
+<div class="flex items-stretch overflow-hidden rounded-lg border border-gray-300">
+  <button class="bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50">Left</button>
+  <button class="border-x border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50">Middle</button>
+  <button class="bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50">Right</button>
+</div>
+
+<!-- Segmented Control -->
+<div class="flex items-stretch overflow-hidden rounded-lg bg-gray-100 p-1">
+  <button class="rounded-md bg-white shadow-sm px-4 py-1.5 text-sm font-semibold text-gray-900">List</button>
+  <button class="rounded-md px-4 py-1.5 text-sm font-semibold text-gray-500">Grid</button>
+  <button class="rounded-md px-4 py-1.5 text-sm font-semibold text-gray-500">Board</button>
+</div>`,
+
+  'fab': `<!-- FAB Circle -->
+<button class="flex items-center justify-center w-14 h-14 rounded-full bg-blue-600 text-white shadow-lg hover:bg-blue-700" aria-label="Create new">
+  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+</button>
+
+<!-- FAB Extended -->
+<button class="flex items-center gap-2 rounded-full bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg hover:bg-blue-700">
+  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+  New Project
+</button>
+
+<!-- FAB Mini -->
+<button class="flex items-center justify-center w-10 h-10 rounded-full bg-green-600 text-white shadow-md hover:bg-green-700" aria-label="Quick add">
+  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+</button>
+
+<!-- FAB with Badge -->
+<div class="relative inline-flex">
+  <button class="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-600 text-white shadow-lg hover:bg-indigo-700">
+    <!-- bell icon -->
+  </button>
+  <span class="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">5</span>
+</div>`,
+
+  'payment': `<!-- Pay Button -->
+<button class="flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-700">
+  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+  Pay $49/mo
+</button>
+<button class="rounded-lg bg-green-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-green-700">Start Free Trial</button>
+<button class="rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700">Upgrade to Pro</button>
+<button class="rounded-lg bg-gray-900 px-5 py-2.5 text-sm font-semibold text-white hover:bg-gray-800">Buy Now</button>
+<button class="rounded-lg bg-purple-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-purple-700">Subscribe</button>`,
+
+  'toolbar': `<!-- Row Actions (table) -->
+<button class="flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50">Edit</button>
+<button class="flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50">Duplicate</button>
+<button class="flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50">Archive</button>
+<button class="flex items-center gap-1.5 rounded-md border border-red-200 bg-red-50 px-2.5 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-100">Delete</button>
+
+<!-- Bulk Actions Bar -->
+<div class="flex items-center gap-3 rounded-xl border border-blue-200 bg-blue-50 px-4 py-3">
+  <span class="text-sm font-semibold text-blue-700">12 selected</span>
+  <button class="rounded-lg bg-white border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-700">Export</button>
+  <button class="rounded-lg bg-red-600 px-3 py-1.5 text-xs font-semibold text-white">Delete All</button>
+</div>
+
+<!-- Filter with Count -->
+<button class="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50">
+  Filters
+  <span class="flex items-center justify-center w-5 h-5 rounded-full bg-blue-600 text-[10px] font-bold text-white">3</span>
+</button>`,
+
+  'upload': `<!-- Upload File -->
+<button class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">
+  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+  Upload File
+</button>
+
+<!-- Import CSV -->
+<button class="flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50">Import CSV</button>
+
+<!-- Drag Target -->
+<button class="flex flex-col items-center gap-2 rounded-xl border-2 border-dashed border-gray-300 px-8 py-4 text-sm font-semibold text-gray-500 hover:border-blue-400 hover:bg-blue-50 hover:text-blue-600">
+  Drop files here
+</button>
+
+<!-- Choose File (custom) -->
+<label class="flex cursor-pointer items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50">
+  Choose File
+  <input type="file" class="sr-only" />
+</label>`,
+
+  'pagination': `<!-- Previous / Next -->
+<button class="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50">
+  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+  Previous
+</button>
+<button class="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50">
+  Next
+  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+</button>
+
+<!-- Numbered -->
+<button class="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600 text-sm font-semibold text-white">1</button>
+<button class="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-sm font-semibold text-gray-600 hover:bg-gray-50">2</button>
+<span class="flex h-9 w-9 items-center justify-center text-sm text-gray-400">…</span>
+<button class="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-sm font-semibold text-gray-600 hover:bg-gray-50">9</button>`,
+
+  'mobile': `<!-- Full-width Primary -->
+<button class="w-full rounded-xl bg-blue-600 py-3 text-sm font-semibold text-white hover:bg-blue-700">Confirm Booking</button>
+
+<!-- Full-width Outlined -->
+<button class="w-full rounded-xl border border-gray-300 bg-white py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50">Cancel</button>
+
+<!-- Stacked Two-Button Group (bottom bar) -->
+<div class="flex gap-2">
+  <button class="flex-1 rounded-lg border border-gray-200 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-50">Save Draft</button>
+  <button class="flex-1 rounded-lg bg-blue-600 py-2 text-xs font-semibold text-white hover:bg-blue-700">Publish</button>
+</div>`,
+
+  'copy-share': `<!-- Copy to Clipboard -->
+<button data-copy-demo="https://mtverse.io/share/abc123" class="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50">
+  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+  Copy Link
+</button>
+
+<!-- Share -->
+<button class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">Share</button>
+
+<!-- Download -->
+<button class="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50">Download Report</button>
+
+<!-- Print -->
+<button onclick="window.print()" class="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50">Print</button>`,
+
+  'segmented': `<!-- 2-Option Toggle -->
+<div class="flex items-center overflow-hidden rounded-lg bg-gray-100 p-1">
+  <button class="rounded-md bg-white shadow-sm px-5 py-2 text-sm font-semibold text-gray-900">Monthly</button>
+  <button class="rounded-md px-5 py-2 text-sm font-semibold text-gray-500">Annual</button>
+</div>
+
+<!-- 3-Option Daily/Weekly/Monthly -->
+<div class="flex items-center overflow-hidden rounded-lg bg-gray-100 p-1">
+  <button class="rounded-md bg-white shadow-sm px-4 py-2 text-sm font-semibold text-gray-900">Daily</button>
+  <button class="rounded-md px-4 py-2 text-sm font-semibold text-gray-500">Weekly</button>
+  <button class="rounded-md px-4 py-2 text-sm font-semibold text-gray-500">Monthly</button>
+</div>
+
+<!-- Pill Style -->
+<div class="flex items-center overflow-hidden rounded-full bg-gray-100 p-1">
+  <button class="rounded-full bg-white shadow-sm px-4 py-1.5 text-sm font-semibold text-gray-900">All</button>
+  <button class="rounded-full px-4 py-1.5 text-sm font-semibold text-gray-500">Active</button>
+  <button class="rounded-full px-4 py-1.5 text-sm font-semibold text-gray-500">Archived</button>
+</div>`
+};
+
+
+/* ─── Utility ─── */
+function escapeHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ─── Source drawer ─── */
+function openSourceDrawer(sectionId, title) {
+  const snippet = SOURCE_SNIPPETS[sectionId] || '<!-- No source available -->';
+  document.getElementById('drawer-title').textContent = title + ' — Source';
+  document.getElementById('drawer-code').textContent = snippet;
+  const drawer = document.getElementById('source-drawer');
+  drawer.classList.remove('hidden');
+  drawer.dataset.currentId = sectionId;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSourceDrawer() {
+  document.getElementById('source-drawer').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+function copyDrawerCode() {
+  const id = document.getElementById('source-drawer').dataset.currentId;
+  const text = SOURCE_SNIPPETS[id] || '';
+  navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard!'));
+}
+
+/* ─── Toast ─── */
+function showToast(msg) {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = 'pointer-events-auto flex items-center gap-2 rounded-xl border border-green-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 shadow-lg dark:border-green-800 dark:bg-gray-900 dark:text-white';
+  t.style.cssText = 'animation: toastIn .2s ease; opacity:1;';
+  t.innerHTML = '<span class="h-2 w-2 rounded-full bg-green-500 flex-shrink-0"></span><span>' + msg + '</span>';
+  c.appendChild(t);
+  setTimeout(() => {
+    t.style.opacity = '0';
+    t.style.transform = 'translateX(12px)';
+    t.style.transition = 'all .2s';
+    setTimeout(() => t.remove(), 200);
+  }, 2500);
+}
+
+/* ─── Segmented control ─── */
+function setSegment(groupId, btn) {
+  document.querySelectorAll('[data-seg="' + groupId + '"]').forEach(function(b) {
+    b.classList.remove('bg-white','dark:bg-gray-800','shadow-sm','text-gray-900','dark:text-white','font-semibold');
+    b.classList.add('text-gray-500');
+    b.classList.remove('text-gray-500' + ''); // remove duplicate just in case
+  });
+  // remove text-gray-500 from active btn if applied, add active styles
+  btn.classList.remove('text-gray-500');
+  btn.classList.add('bg-white','shadow-sm','text-gray-900','font-semibold');
+  // dark mode
+  if (document.documentElement.classList.contains('dark') || document.body.classList.contains('dark')) {
+    btn.classList.add('dark:bg-gray-800','dark:text-white');
+  }
+}
+
+/* ─── Confirm delete ─── */
+function initConfirmDelete() {
+  document.querySelectorAll('[data-confirm-delete]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      if (this.dataset.confirmState === 'confirm') {
+        showToast('Item deleted');
+        this.dataset.confirmState = '';
+        this.textContent = 'Delete';
+        this.classList.remove('bg-red-700');
+        this.classList.add('bg-red-600');
+      } else {
+        this.dataset.confirmState = 'confirm';
+        this.textContent = 'Click again to confirm';
+        this.classList.remove('bg-red-600');
+        this.classList.add('bg-red-700');
+        var self = this;
+        setTimeout(function() {
+          if (self.dataset.confirmState === 'confirm') {
+            self.dataset.confirmState = '';
+            self.textContent = 'Delete';
+            self.classList.remove('bg-red-700');
+            self.classList.add('bg-red-600');
+          }
+        }, 3000);
+      }
+    });
+  });
+}
+
+/* ─── Loading button demo ─── */
+function initLoadingButtons() {
+  document.querySelectorAll('[data-loading-demo]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var orig = this.innerHTML;
+      this.disabled = true;
+      this.innerHTML = '<svg class="animate-spin-btn w-4 h-4 mr-2 inline" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/></svg>Saving...';
+      var self = this;
+      setTimeout(function() {
+        self.innerHTML = '<svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Saved!';
+        self.classList.add('bg-green-600');
+        self.classList.remove('bg-blue-600');
+        setTimeout(function() {
+          self.innerHTML = orig;
+          self.disabled = false;
+          self.classList.remove('bg-green-600');
+          self.classList.add('bg-blue-600');
+        }, 1500);
+      }, 1800);
+    });
+  });
+}
+
+/* ─── Copy button demo ─── */
+function initCopyButtons() {
+  document.querySelectorAll('[data-copy-demo]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var text = this.dataset.copyDemo || 'https://example.com';
+      var self = this;
+      var orig = self.innerHTML;
+      navigator.clipboard.writeText(text).then(function() {
+        self.innerHTML = '<svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Copied!';
+        showToast('Copied to clipboard!');
+        setTimeout(function() { self.innerHTML = orig; }, 1500);
+      });
+    });
+  });
+}
+
+/* ─── Split dropdown close on outside click ─── */
+function initSplitDropdowns() {
+  document.addEventListener('click', function(e) {
+    document.querySelectorAll('.split-dropdown.open').forEach(function(d) {
+      if (!d.contains(e.target)) d.classList.remove('open');
+    });
+  });
+}
+
+/* ─── Filter tabs (display-only for now) ─── */
+function initFilterTabs() {
+  var tabs = document.querySelectorAll('[data-filter-tab]');
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      tabs.forEach(function(t) {
+        t.classList.remove('active');
+      });
+      this.classList.add('active');
+    });
+  });
+}
+
+/* ─── DOMContentLoaded ─── */
+document.addEventListener('DOMContentLoaded', function() {
+  initConfirmDelete();
+  initLoadingButtons();
+  initCopyButtons();
+  initSplitDropdowns();
+  initFilterTabs();
+
+  // Inject toastIn keyframe if not already present
+  if (!document.querySelector('#toast-style')) {
+    var s = document.createElement('style');
+    s.id = 'toast-style';
+    s.textContent = '@keyframes toastIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }';
+    document.head.appendChild(s);
+  }
+
+  // Close source drawer on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeSourceDrawer();
+  });
+});
+</script>
 </body>
 </html>
