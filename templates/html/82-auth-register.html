@@ -4,25 +4,61 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Create Account — mtverse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tailwind-production.css" />
+  <link rel="stylesheet" href="pro-styles.css" />
   <style>
-    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-    .auth-card{animation:fadeIn .3s ease}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    .animate-spin{animation:spin 1s linear infinite}
-    .field-error input,.field-error select{border-color:#ef4444!important;box-shadow:0 0 0 3px rgba(239,68,68,.12)!important}
-    .field-error .error-msg{display:flex!important}
-    @media(prefers-reduced-motion:reduce){.auth-card,.animate-spin{animation:none!important}}
-    .dot-pattern{background-image:radial-gradient(circle,rgba(255,255,255,.18) 1px,transparent 1px);background-size:24px 24px}
-    .strength-bar{height:4px;border-radius:2px;transition:background .3s,width .3s}
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: 'Outfit', sans-serif; }
+
+    /* Dot-grid background */
+    body {
+      background-image: radial-gradient(circle, rgba(99,102,241,.12) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .dark body {
+      background-image: radial-gradient(circle, rgba(99,102,241,.06) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    /* Entrance */
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .card-enter { animation: slideUp 0.5s cubic-bezier(0.16,1,0.3,1) both; }
+
+    /* Spinner */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spin { animation: spin 0.8s linear infinite; }
+
+    /* Strength segments */
+    .seg { height: 4px; border-radius: 9999px; background: #e5e7eb; transition: background 0.3s ease; }
+    .seg.s-weak  { background: #ef4444; }
+    .seg.s-fair  { background: #f59e0b; }
+    .seg.s-good  { background: #3b82f6; }
+    .seg.s-strong { background: #22c55e; }
+
+    /* Input icon wrapper */
+    .iw { position: relative; }
+    .iw svg.icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: #9ca3af; pointer-events: none; }
+    .iw input { padding-left: 2.5rem; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .card-enter, .spin { animation: none !important; }
+      .seg { transition: none !important; }
+    }
   </style>
-  <link rel="stylesheet" href="tailwind-production.css">
-  <link rel="stylesheet" href="pro-styles.css">
 </head>
-<body class="min-h-screen bg-gray-50 dark:bg-gray-950 font-sans">
+<body class="min-h-screen bg-gray-50 dark:bg-gray-950 py-12 px-4">
+
+
   <!-- Dark mode toggle -->
   <button id="darkToggle" aria-label="Toggle dark mode"
-    class="fixed top-4 right-4 z-50 rounded-full p-2 bg-white dark:bg-gray-800 shadow border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-    <svg class="w-5 h-5 text-gray-600 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    class="fixed top-4 right-4 z-50 w-10 h-10 rounded-full bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+    <svg class="w-5 h-5 text-gray-500 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
       <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/>
     </svg>
     <svg class="w-5 h-5 text-yellow-400 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -32,300 +68,274 @@
     </svg>
   </button>
 
-  <div class="min-h-screen flex">
-    <!-- Left form panel -->
-    <div class="flex-1 flex items-center justify-center px-4 py-12 bg-gray-50 dark:bg-gray-950 order-2 lg:order-1">
-      <div class="auth-card w-full max-w-md">
-        <!-- Mobile logo -->
-        <div class="lg:hidden flex items-center justify-center gap-2 mb-8">
-          <div class="w-9 h-9 bg-indigo-700 rounded-xl flex items-center justify-center">
-            <span class="text-white font-bold text-base leading-none">M</span>
-          </div>
-          <span class="text-gray-900 dark:text-white font-bold text-xl tracking-tight">mtverse</span>
+  <div class="max-w-lg mx-auto card-enter">
+
+    <!-- Above card: logo + progress -->
+    <div class="text-center mb-8">
+      <!-- Logo -->
+      <div class="inline-flex items-center gap-2.5 mb-6">
+        <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-md">
+          <span class="text-white font-bold text-lg select-none leading-none">M</span>
         </div>
-        <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl px-8 py-10 border border-gray-100 dark:border-gray-800">
-          <div class="mb-8">
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Create your account</h2>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Start your 14-day free trial, no credit card required</p>
+        <span class="text-gray-900 dark:text-white font-bold text-2xl tracking-tight">mtverse</span>
+      </div>
+
+      <!-- Step progress -->
+      <div class="flex items-center justify-center gap-3">
+        <!-- Step 1: active/current -->
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center shadow-md">
+            <span class="text-white text-xs font-bold">1</span>
           </div>
-          <form id="registerForm" novalidate class="space-y-5">
+          <span class="text-xs font-semibold text-blue-600">Account</span>
+        </div>
+        <!-- Connector -->
+        <div class="w-10 h-0.5 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+        <!-- Step 2: upcoming -->
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-full border-2 border-gray-200 dark:border-gray-700 flex items-center justify-center">
+            <span class="text-xs font-bold text-gray-400 dark:text-gray-600">2</span>
+          </div>
+          <span class="text-xs font-medium text-gray-400 dark:text-gray-600">Profile</span>
+        </div>
+      </div>
+      <p class="text-xs text-gray-400 mt-2">Step 1 of 2</p>
+    </div>
 
-            <!-- Full name -->
-            <div id="nameField" class="space-y-1.5">
-              <label for="fullName" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Full name</label>
-              <div class="relative">
-                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                  <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                  </svg>
-                </div>
-                <input id="fullName" name="fullName" type="text" autocomplete="name" placeholder="Alice Johnson"
-                  class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 pl-10 pr-3.5 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow" />
-              </div>
-              <p class="error-msg hidden items-center gap-1 text-xs text-red-600 dark:text-red-400">
-                <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
-                <span>Full name is required</span>
-              </p>
-            </div>
-            <!-- Work email -->
-            <div id="emailField" class="space-y-1.5">
-              <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Work email</label>
-              <div class="relative">
-                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                  <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                  </svg>
-                </div>
-                <input id="email" name="email" type="email" autocomplete="email" placeholder="you@company.com"
-                  class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 pl-10 pr-3.5 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow" />
-              </div>
-              <p class="error-msg hidden items-center gap-1 text-xs text-red-600 dark:text-red-400">
-                <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
-                <span id="emailErrMsg">Work email is required</span>
-              </p>
-            </div>
+    <!-- Card -->
+    <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 px-8 py-8">
 
-            <!-- Password + strength meter -->
-            <div id="passwordField" class="space-y-1.5">
-              <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
-              <div class="relative">
-                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                  <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-                  </svg>
-                </div>
-                <input id="password" name="password" type="password" autocomplete="new-password" placeholder="Create a strong password"
-                  class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 pl-10 pr-10 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow" />
-                <button type="button" id="togglePassword" aria-label="Toggle password visibility"
-                  class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
-                  <svg id="eyeOpen" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                  </svg>
-                  <svg id="eyeOff" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>
-                  </svg>
-                </button>
-              </div>
-              <!-- Strength meter -->
-              <div id="strengthMeter" class="hidden">
-                <div class="flex gap-1.5 mt-2">
-                  <div id="seg1" class="flex-1 h-1 rounded-full bg-gray-200 dark:bg-gray-700 transition-colors duration-300"></div>
-                  <div id="seg2" class="flex-1 h-1 rounded-full bg-gray-200 dark:bg-gray-700 transition-colors duration-300"></div>
-                  <div id="seg3" class="flex-1 h-1 rounded-full bg-gray-200 dark:bg-gray-700 transition-colors duration-300"></div>
-                  <div id="seg4" class="flex-1 h-1 rounded-full bg-gray-200 dark:bg-gray-700 transition-colors duration-300"></div>
-                </div>
-                <p id="strengthLabel" class="text-xs mt-1 text-gray-500 dark:text-gray-400"></p>
-              </div>
-              <p class="error-msg hidden items-center gap-1 text-xs text-red-600 dark:text-red-400">
-                <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
-                <span>Password must be at least 8 characters</span>
-              </p>
-            </div>
+      <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-1">Create your account</h1>
+      <p class="text-sm text-gray-500 dark:text-gray-400 mb-7">Join 12,000+ teams using mtverse</p>
 
-            <!-- Confirm password -->
-            <div id="confirmField" class="space-y-1.5">
-              <label for="confirmPassword" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Confirm password</label>
-              <div class="relative">
-                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                  <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                  </svg>
-                </div>
-                <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" placeholder="Re-enter your password"
-                  class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 pl-10 pr-3.5 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow" />
-              </div>
-              <p class="error-msg hidden items-center gap-1 text-xs text-red-600 dark:text-red-400">
-                <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
-                <span>Passwords do not match</span>
-              </p>
-            </div>
-            <!-- Terms checkbox -->
-            <div id="termsField" class="space-y-1.5">
-              <label class="flex items-start gap-3 cursor-pointer group">
-                <input id="termsCheck" type="checkbox"
-                  class="mt-0.5 w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 bg-white dark:bg-gray-800 flex-shrink-0" />
-                <span class="text-sm text-gray-600 dark:text-gray-400">
-                  I agree to the
-                  <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline font-medium">Terms of Service</a>
-                  and
-                  <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline font-medium">Privacy Policy</a>
-                </span>
-              </label>
-              <p class="error-msg hidden items-center gap-1 text-xs text-red-600 dark:text-red-400">
-                <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
-                <span>You must accept the terms to continue</span>
-              </p>
-            </div>
-            <!-- Submit -->
-            <button type="submit" id="submitBtn"
-              class="w-full rounded-lg bg-blue-600 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2">
-              <svg id="btnSpinner" class="w-4 h-4 animate-spin hidden" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
+      <form id="regForm" novalidate>
+
+        <!-- Full Name -->
+        <div class="mb-5">
+          <label for="fullName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Full name</label>
+          <div class="iw">
+            <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
+            <input id="fullName" type="text" autocomplete="name" placeholder="Jane Smith"
+              class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 pr-3.5 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
+          </div>
+          <p id="nameErr" class="hidden mt-1.5 text-xs text-red-500" style="display:none">Full name is required</p>
+        </div>
+
+        <!-- Work Email -->
+        <div class="mb-5">
+          <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Work email</label>
+          <div class="iw">
+            <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+            <input id="email" type="email" autocomplete="email" placeholder="you@company.com"
+              class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 pr-3.5 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
+          </div>
+          <p id="emailErr" class="hidden mt-1.5 text-xs text-red-500" style="display:none">Please enter a valid work email</p>
+        </div>
+
+
+        <!-- Password with strength meter -->
+        <div class="mb-5">
+          <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Password</label>
+          <div class="iw relative">
+            <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+            <input id="password" type="password" autocomplete="new-password" placeholder="Min. 8 characters"
+              class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 pr-10 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
+            <button type="button" id="pwdToggle" aria-label="Toggle password visibility"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+              <svg id="pEyeShow" style="width:18px;height:18px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
               </svg>
-              <span id="btnText">Create account</span>
+              <svg id="pEyeHide" class="hidden" style="width:18px;height:18px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>
+              </svg>
             </button>
-          </form>
+          </div>
+          <!-- Strength meter: 4 segments -->
+          <div class="mt-2 grid grid-cols-4 gap-1.5">
+            <div id="seg0" class="seg"></div>
+            <div id="seg1" class="seg"></div>
+            <div id="seg2" class="seg"></div>
+            <div id="seg3" class="seg"></div>
+          </div>
+          <div class="flex items-center justify-between mt-1">
+            <p id="strengthLabel" class="text-xs text-gray-400"></p>
+            <p id="pwdErr" class="hidden text-xs text-red-500" style="display:none">Password is required</p>
+          </div>
+        </div>
 
-          <!-- Success state -->
-          <div id="successState" class="hidden text-center py-4">
-            <div class="w-14 h-14 bg-green-50 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg class="w-7 h-7 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <!-- Confirm Password -->
+        <div class="mb-5">
+          <label for="confirmPwd" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Confirm password</label>
+          <div class="relative iw">
+            <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+            <input id="confirmPwd" type="password" autocomplete="new-password" placeholder="Re-enter your password"
+              class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 pr-10 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
+            <!-- Match indicator -->
+            <span id="matchIcon" class="absolute right-3 top-1/2 -translate-y-1/2 hidden">
+              <!-- Green check -->
+              <svg id="matchCheck" class="hidden" style="width:18px;height:18px;color:#22c55e" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
               </svg>
-            </div>
-            <p class="font-semibold text-gray-900 dark:text-white mb-1">Account created!</p>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Check your email to verify your account.</p>
+              <!-- Red X -->
+              <svg id="matchX" class="hidden" style="width:18px;height:18px;color:#ef4444" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </span>
           </div>
-          <p class="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
-            Already have an account?
-            <a href="81-auth-login.html" class="text-blue-600 dark:text-blue-400 font-medium hover:underline">Sign in</a>
-          </p>
+          <p id="confirmErr" class="hidden mt-1.5 text-xs text-red-500" style="display:none">Passwords do not match</p>
         </div>
-      </div>
-    </div>
 
-    <!-- Right branding panel -->
-    <div class="hidden lg:flex lg:w-1/2 bg-indigo-700 flex-col justify-between px-12 py-16 relative overflow-hidden dot-pattern order-1 lg:order-2">
-      <div class="absolute -top-20 -right-20 w-80 h-80 bg-white opacity-5 rounded-full"></div>
-      <div class="absolute bottom-0 left-0 w-96 h-96 bg-white opacity-5 rounded-full -translate-x-1/3 translate-y-1/3"></div>
-      <div class="relative z-10">
-        <div class="flex items-center gap-3 mb-16">
-          <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg">
-            <span class="text-indigo-700 font-bold text-lg leading-none">M</span>
-          </div>
-          <span class="text-white font-bold text-xl tracking-tight">mtverse</span>
+        <!-- Terms checkbox -->
+        <div class="mb-6">
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input id="terms" type="checkbox" class="mt-0.5 w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer flex-shrink-0" />
+            <span class="text-sm text-gray-600 dark:text-gray-400 select-none">
+              I agree to the
+              <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline font-medium">Terms of Service</a>
+              and
+              <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline font-medium">Privacy Policy</a>
+            </span>
+          </label>
+          <p id="termsErr" class="hidden mt-1.5 text-xs text-red-500 pl-7" style="display:none">You must agree to continue</p>
         </div>
-        <h1 class="text-4xl font-bold text-white mb-4 leading-tight">Build something<br/>extraordinary</h1>
-        <p class="text-indigo-100 text-lg mb-12">Join thousands of teams shipping faster with mtverse.</p>
-        <ul class="space-y-5">
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-6 h-6 bg-white/20 rounded-full flex items-center justify-center mt-0.5">
-              <svg class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-            </span>
-            <span class="text-indigo-50 text-sm leading-relaxed">Set up in minutes — no credit card, no commitment</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-6 h-6 bg-white/20 rounded-full flex items-center justify-center mt-0.5">
-              <svg class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-            </span>
-            <span class="text-indigo-50 text-sm leading-relaxed">Invite your entire team — unlimited collaborators on all plans</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-6 h-6 bg-white/20 rounded-full flex items-center justify-center mt-0.5">
-              <svg class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-            </span>
-            <span class="text-indigo-50 text-sm leading-relaxed">Enterprise-grade security and 99.9% uptime SLA</span>
-          </li>
-        </ul>
-      </div>
-      <div class="relative z-10 flex items-center gap-3 pt-8 border-t border-white/20">
-        <div class="flex -space-x-2">
-          <div class="w-8 h-8 rounded-full bg-white/30 border-2 border-indigo-700 flex items-center justify-center text-white text-xs font-semibold">A</div>
-          <div class="w-8 h-8 rounded-full bg-white/25 border-2 border-indigo-700 flex items-center justify-center text-white text-xs font-semibold">B</div>
-          <div class="w-8 h-8 rounded-full bg-white/20 border-2 border-indigo-700 flex items-center justify-center text-white text-xs font-semibold">C</div>
-          <div class="w-8 h-8 rounded-full bg-white/15 border-2 border-indigo-700 flex items-center justify-center text-white text-xs font-semibold">+</div>
-        </div>
-        <p class="text-indigo-100 text-xs">Join <strong class="text-white">12,000+</strong> teams building with mtverse</p>
-      </div>
-    </div>
-  </div>
+
+        <!-- CTA button -->
+        <button id="submitBtn" type="submit"
+          class="w-full flex items-center justify-center gap-2 rounded-lg bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-sm font-semibold py-2.5 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 disabled:opacity-60 disabled:cursor-not-allowed">
+          <svg id="btnSpinner" class="spin hidden" style="width:16px;height:16px" fill="none" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" class="opacity-25"/>
+            <path fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" class="opacity-75"/>
+          </svg>
+          <span id="btnTxt">Create account</span>
+        </button>
+      </form>
+
+      <!-- Sign in link -->
+      <p class="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
+        Already have an account?
+        <a href="81-auth-login.html" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Sign in</a>
+      </p>
+    </div><!-- /card -->
+  </div><!-- /max-w-lg -->
 
 
 <script>
-/* Dark mode */
-(function(){if(localStorage.getItem('darkMode')==='true')document.documentElement.classList.add('dark');})();
-document.getElementById('darkToggle').addEventListener('click',function(){
-  localStorage.setItem('darkMode',document.documentElement.classList.toggle('dark'));
+/* ── Dark mode persistence ── */
+(function () {
+  if (localStorage.getItem('dm') === '1') document.documentElement.classList.add('dark');
+})();
+document.getElementById('darkToggle').addEventListener('click', function () {
+  var on = document.documentElement.classList.toggle('dark');
+  localStorage.setItem('dm', on ? '1' : '0');
 });
 
-/* Password toggle */
-const passInput=document.getElementById('password');
-document.getElementById('togglePassword').addEventListener('click',function(){
-  const t=passInput.type==='text';
-  passInput.type=t?'password':'text';
-  document.getElementById('eyeOpen').classList.toggle('hidden',!t);
-  document.getElementById('eyeOff').classList.toggle('hidden',t);
+/* ── Password eye toggle ── */
+var pwd = document.getElementById('password');
+document.getElementById('pwdToggle').addEventListener('click', function () {
+  var show = pwd.type === 'password';
+  pwd.type = show ? 'text' : 'password';
+  document.getElementById('pEyeShow').classList.toggle('hidden', show);
+  document.getElementById('pEyeHide').classList.toggle('hidden', !show);
 });
 
-/* Strength meter */
-function checkStrength(pw){
-  let score=0;
-  if(pw.length>=8) score++;
-  if(/[A-Z]/.test(pw)) score++;
-  if(/[0-9]/.test(pw)) score++;
-  if(/[^A-Za-z0-9]/.test(pw)) score++;
-  return score;
+/* ── Password strength meter ── */
+var segs = [
+  document.getElementById('seg0'), document.getElementById('seg1'),
+  document.getElementById('seg2'), document.getElementById('seg3')
+];
+var labels = ['', 'Weak', 'Fair', 'Good', 'Strong'];
+var labelColors = ['', '#ef4444', '#f59e0b', '#3b82f6', '#22c55e'];
+var segClasses = ['', 's-weak', 's-fair', 's-good', 's-strong'];
+
+function getStrength(v) {
+  var score = 0;
+  if (v.length >= 8) score++;
+  if (/[A-Z]/.test(v)) score++;
+  if (/[0-9]/.test(v)) score++;
+  if (/[^A-Za-z0-9]/.test(v)) score++;
+  return v.length === 0 ? 0 : Math.max(1, score);
 }
-const segColors=['bg-red-500','bg-amber-400','bg-blue-500','bg-green-500'];
-const segLabels=['','Weak','Fair','Good','Strong'];
-const segLabelColors=['','text-red-500','text-amber-500','text-blue-500','text-green-600'];
-passInput.addEventListener('input',function(){
-  const v=passInput.value;
-  const meter=document.getElementById('strengthMeter');
-  if(!v){meter.classList.add('hidden');return;}
-  meter.classList.remove('hidden');
-  const score=checkStrength(v);
-  for(let i=1;i<=4;i++){
-    const seg=document.getElementById('seg'+i);
-    seg.className='flex-1 h-1 rounded-full transition-colors duration-300 '+(i<=score?segColors[score-1]:'bg-gray-200 dark:bg-gray-700');
+
+pwd.addEventListener('input', function () {
+  var v = pwd.value;
+  var s = getStrength(v);
+  segs.forEach(function (seg, i) {
+    seg.className = 'seg';
+    if (i < s) seg.classList.add(segClasses[s]);
+  });
+  var lbl = document.getElementById('strengthLabel');
+  lbl.textContent = v.length ? labels[s] : '';
+  lbl.style.color = v.length ? labelColors[s] : '';
+  // also re-check confirm match
+  checkMatch();
+});
+
+/* ── Confirm password real-time match ── */
+var confirmInput = document.getElementById('confirmPwd');
+var matchIcon    = document.getElementById('matchIcon');
+var matchCheck   = document.getElementById('matchCheck');
+var matchX       = document.getElementById('matchX');
+
+function checkMatch() {
+  var cv = confirmInput.value;
+  if (!cv) {
+    matchIcon.classList.add('hidden');
+    matchCheck.classList.add('hidden');
+    matchX.classList.add('hidden');
+    return;
   }
-  const lbl=document.getElementById('strengthLabel');
-  lbl.textContent=score>0?segLabels[score]+' password':'';
-  lbl.className='text-xs mt-1 '+(score>0?segLabelColors[score]:'text-gray-500');
-});
-
-/* Confirm password match on blur */
-document.getElementById('confirmPassword').addEventListener('blur',function(){
-  if(this.value && this.value!==passInput.value){
-    setError('confirmField','Passwords do not match');
-  } else { clearError('confirmField'); }
-});
-
-/* Validation helpers */
-function setError(id,msg){
-  const w=document.getElementById(id);
-  w.classList.add('field-error');
-  const s=w.querySelector('.error-msg span');
-  if(s && msg) s.textContent=msg;
-  const e=w.querySelector('.error-msg');
-  if(e){e.classList.remove('hidden');e.style.display='flex';}
+  var matches = cv === pwd.value;
+  matchIcon.classList.remove('hidden');
+  matchCheck.classList.toggle('hidden', !matches);
+  matchX.classList.toggle('hidden', matches);
 }
-function clearError(id){
-  const w=document.getElementById(id);
-  w.classList.remove('field-error');
-  const e=w.querySelector('.error-msg');
-  if(e){e.classList.add('hidden');e.style.display='';}
+confirmInput.addEventListener('input', checkMatch);
+
+/* ── Validation helpers ── */
+var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+function showErr(el, show, msg) {
+  el.style.display = show ? 'block' : 'none';
+  el.classList.toggle('hidden', !show);
+  if (msg) el.textContent = msg;
 }
 
-/* Form submit */
-document.getElementById('registerForm').addEventListener('submit',function(e){
+function validateName()  { var v = document.getElementById('fullName').value.trim(); showErr(document.getElementById('nameErr'), !v); return !!v; }
+function validateEmail() { var v = document.getElementById('email').value.trim(); var ok = !!v && emailRe.test(v); showErr(document.getElementById('emailErr'), !ok); return ok; }
+function validatePwd()   { var v = pwd.value; showErr(document.getElementById('pwdErr'), !v); return !!v; }
+function validateConfirm() {
+  var cv = confirmInput.value; var ok = !!cv && cv === pwd.value;
+  showErr(document.getElementById('confirmErr'), !ok, cv ? 'Passwords do not match' : 'Please confirm your password');
+  return ok;
+}
+function validateTerms() { var ok = document.getElementById('terms').checked; showErr(document.getElementById('termsErr'), !ok); return ok; }
+
+/* Blur hooks */
+document.getElementById('fullName').addEventListener('blur', validateName);
+document.getElementById('email').addEventListener('blur', validateEmail);
+pwd.addEventListener('blur', validatePwd);
+confirmInput.addEventListener('blur', validateConfirm);
+
+/* ── Form submit ── */
+document.getElementById('regForm').addEventListener('submit', function (e) {
   e.preventDefault();
-  let valid=true;
-  const name=document.getElementById('fullName').value.trim();
-  const email=document.getElementById('email').value.trim();
-  const pass=passInput.value;
-  const confirm=document.getElementById('confirmPassword').value;
-  const terms=document.getElementById('termsCheck').checked;
-
-  if(!name){setError('nameField');valid=false;}else{clearError('nameField');}
-  if(!email){setError('emailField','Work email is required');valid=false;}
-  else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){setError('emailField','Please enter a valid email');valid=false;}
-  else{clearError('emailField');}
-  if(!pass||pass.length<8){setError('passwordField','Password must be at least 8 characters');valid=false;}else{clearError('passwordField');}
-  if(!confirm||confirm!==pass){setError('confirmField','Passwords do not match');valid=false;}else{clearError('confirmField');}
-  if(!terms){setError('termsField');valid=false;}else{clearError('termsField');}
-
-  if(!valid)return;
-  const btn=document.getElementById('submitBtn');
-  document.getElementById('btnSpinner').classList.remove('hidden');
-  document.getElementById('btnText').textContent='Creating account…';
-  btn.disabled=true;
-  setTimeout(function(){
-    document.getElementById('registerForm').classList.add('hidden');
-    document.getElementById('successState').classList.remove('hidden');
-  },1500);
+  var ok = validateName() & validateEmail() & validatePwd() & validateConfirm() & validateTerms();
+  if (!ok) return;
+  var btn = document.getElementById('submitBtn');
+  var sp  = document.getElementById('btnSpinner');
+  var tx  = document.getElementById('btnTxt');
+  btn.disabled = true;
+  sp.classList.remove('hidden');
+  tx.textContent = 'Creating account…';
+  setTimeout(function () { tx.textContent = '✓ Account created! Redirecting…'; }, 1800);
 });
 </script>
 </body>

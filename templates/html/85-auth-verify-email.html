@@ -1,251 +1,452 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Verify Email — mtverse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/tailwind-production.css" />
+  <link rel="stylesheet" href="../css/pro-styles.css" />
   <style>
-    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-    .auth-card{animation:fadeIn .3s ease}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    .animate-spin{animation:spin 1s linear infinite}
-    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.75;transform:scale(1.05)}}
-    .email-pulse{animation:pulse 2.5s ease-in-out infinite}
-    @keyframes slideDown{from{opacity:0;max-height:0;transform:translateY(-8px)}to{opacity:1;max-height:200px;transform:translateY(0)}}
-    .slide-down{animation:slideDown .3s ease forwards}
-    .field-error input{border-color:#ef4444!important;box-shadow:0 0 0 3px rgba(239,68,68,.12)!important}
-    @media(prefers-reduced-motion:reduce){.auth-card,.animate-spin,.email-pulse,.slide-down{animation:none!important}}
+    /* ── Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-family: 'Outfit', sans-serif; }
+
+    /* ── Dark mode colours ── */
+    html.dark body { background-color: #030712; color: #f9fafb; }
+    html.dark .card  { background-color: #111827; border-color: #1f2937; }
+    html.dark .otp-input {
+      background-color: #1f2937; border-color: #374151;
+      color: #f9fafb;
+    }
+    html.dark .otp-input.filled  { background-color: #1e3a5f; border-color: #3b82f6; }
+    html.dark .otp-input:focus   { border-color: #3b82f6; background-color: #1e3a5f; }
+    html.dark .step-label        { color: #9ca3af; }
+    html.dark .step-connector    { background-color: #374151; }
+    html.dark .change-email-link { color: #6b7280; }
+    html.dark #resendRow         { color: #9ca3af; }
+
+    /* ── Envelope SVG animation ── */
+    @keyframes flapOpen {
+      0%,  60%, 100% { transform: rotateX(0deg); }
+      20%, 40%       { transform: rotateX(-160deg); }
+    }
+    .envelope-flap {
+      transform-origin: top center;
+      animation: flapOpen 3s ease-in-out infinite;
+      transform-box: fill-box;
+    }
+
+    /* ── Card entrance ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .card { animation: fadeUp 0.5s ease both; }
+
+
+    /* ── Success checkmark ── */
+    @keyframes checkPop {
+      0%   { transform: scale(0) rotate(-15deg); opacity: 0; }
+      60%  { transform: scale(1.15) rotate(3deg); opacity: 1; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+    .check-circle { animation: checkPop 0.55s cubic-bezier(.34,1.56,.64,1) both; }
+
+    /* ── Active step pulse ── */
+    @keyframes stepPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(59,130,246,0.5); }
+      50%      { box-shadow: 0 0 0 8px rgba(59,130,246,0); }
+    }
+    .step-active-dot { animation: stepPulse 1.6s ease-in-out infinite; }
+
+    /* ── OTP boxes ── */
+    .otp-input {
+      width: 48px; height: 56px;
+      text-align: center; font-size: 1.5rem; font-weight: 700;
+      border: 2px solid #d1d5db; border-radius: 0.5rem;
+      background: #fff; color: #111827;
+      transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+      outline: none;
+      -moz-appearance: textfield;
+    }
+    .otp-input::-webkit-inner-spin-button,
+    .otp-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    .otp-input:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.25);
+    }
+    .otp-input.filled {
+      border-color: #3b82f6;
+      background-color: #eff6ff;
+    }
+
+    /* ── Verify button states ── */
+    #verifyBtn {
+      transition: background-color 0.2s, opacity 0.2s, transform 0.1s;
+    }
+    #verifyBtn:disabled {
+      opacity: 0.45; cursor: not-allowed;
+    }
+    #verifyBtn:not(:disabled):hover  { filter: brightness(1.08); }
+    #verifyBtn:not(:disabled):active { transform: scale(0.97); }
+
+    /* ── Reduced motion ── */
+    @media (prefers-reduced-motion: reduce) {
+      .envelope-flap, .card, .check-circle, .step-active-dot {
+        animation: none !important;
+      }
+    }
   </style>
-  <link rel="stylesheet" href="tailwind-production.css">
-  <link rel="stylesheet" href="pro-styles.css">
 </head>
-<body class="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center px-4 py-12 font-sans">
+<body class="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col items-center justify-center px-4 py-10 transition-colors duration-300">
 
   <!-- Dark mode toggle -->
-  <button id="darkToggle" aria-label="Toggle dark mode"
-    class="fixed top-4 right-4 z-50 rounded-full p-2 bg-white dark:bg-gray-800 shadow border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-    <svg class="w-5 h-5 text-gray-600 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/>
+  <button id="darkToggle"
+    class="fixed top-4 right-4 z-50 p-2.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
+    aria-label="Toggle dark mode">
+    <svg id="iconSun" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
     </svg>
-    <svg class="w-5 h-5 text-yellow-400 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-      <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-      <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+    <svg id="iconMoon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
     </svg>
   </button>
 
-  <div class="auth-card w-full max-w-md">
-    <!-- Logo -->
-    <div class="flex items-center justify-center gap-2 mb-8">
-      <div class="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center">
-        <span class="text-white font-bold text-base leading-none">M</span>
-      </div>
-      <span class="text-gray-900 dark:text-white font-bold text-xl tracking-tight">mtverse</span>
-    </div>
+
+  <!-- ══════════════════════════════════════════════
+       MAIN CARD
+  ══════════════════════════════════════════════ -->
+  <div class="w-full max-w-md">
 
     <!-- Card -->
-    <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl px-8 py-10 border border-gray-100 dark:border-gray-800">
+    <div id="mainCard" class="card bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-800 p-8 flex flex-col items-center gap-6">
 
-      <!-- Animated email icon -->
-      <div class="flex justify-center mb-6">
-        <div class="email-pulse w-20 h-20 bg-blue-50 dark:bg-blue-900/20 rounded-3xl flex items-center justify-center">
-          <svg class="w-10 h-10 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+      <!-- ── INITIAL STATE ── -->
+      <div id="stateVerify" class="w-full flex flex-col items-center gap-6">
+
+        <!-- Animated envelope SVG -->
+        <div style="perspective: 300px; width:80px; height:80px;">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" overflow="visible">
+            <!-- Envelope body -->
+            <rect x="6" y="22" width="68" height="46" rx="6" ry="6" fill="#3b82f6"/>
+            <!-- Shadow/depth bottom -->
+            <rect x="6" y="50" width="68" height="18" rx="0" ry="0" fill="#2563eb" opacity="0.4"/>
+            <!-- Inner V fold (always visible) -->
+            <polyline points="6,68 40,44 74,68" fill="none" stroke="white" stroke-width="2.5" stroke-linejoin="round" opacity="0.6"/>
+            <!-- Left seal crease -->
+            <line x1="6" y1="22" x2="40" y2="44" stroke="white" stroke-width="2" opacity="0.5"/>
+            <!-- Right seal crease -->
+            <line x1="74" y1="22" x2="40" y2="44" stroke="white" stroke-width="2" opacity="0.5"/>
+            <!-- Animated flap (trapezoid pointing up) -->
+            <polygon class="envelope-flap"
+              points="6,22 40,48 74,22 68,14 12,14"
+              fill="#60a5fa"
+              stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+            <!-- Flap highlight crease -->
+            <line class="envelope-flap" x1="12" y1="14" x2="40" y2="48" stroke="white" stroke-width="1" opacity="0.4"/>
+            <line class="envelope-flap" x1="68" y1="14" x2="40" y2="48" stroke="white" stroke-width="1" opacity="0.4"/>
           </svg>
         </div>
-      </div>
 
-      <div class="text-center mb-8">
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Check your email</h2>
-        <p class="text-sm text-gray-500 dark:text-gray-400">
-          We sent a verification link to<br/>
-          <strong class="text-gray-700 dark:text-gray-300">alice@example.com</strong>
-        </p>
-      </div>
+        <!-- Title -->
+        <div class="text-center">
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Verify your email</h1>
+          <p class="mt-2 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+            We sent a 6-digit code to&nbsp;<span class="font-semibold text-blue-600 dark:text-blue-400">alice@example.com</span>
+          </p>
+        </div>
 
-      <!-- Progress steps -->
-      <div class="flex items-center justify-center gap-0 mb-8">
-        <!-- Step 1: Account created -->
-        <div class="flex flex-col items-center">
-          <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center">
-            <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <!-- OTP boxes -->
+        <div id="otpGroup" class="flex gap-2.5" role="group" aria-label="One-time password">
+          <input class="otp-input" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="one-time-code" aria-label="Digit 1" />
+          <input class="otp-input" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" aria-label="Digit 2" />
+          <input class="otp-input" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" aria-label="Digit 3" />
+          <input class="otp-input" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" aria-label="Digit 4" />
+          <input class="otp-input" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" aria-label="Digit 5" />
+          <input class="otp-input" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" aria-label="Digit 6" />
+        </div>
+
+
+        <!-- Verify button -->
+        <button id="verifyBtn" disabled
+          class="w-full py-3 px-6 rounded-xl font-semibold text-white bg-blue-600 dark:bg-blue-500 text-sm tracking-wide"
+          onclick="handleVerify()">
+          Verify email
+        </button>
+
+        <!-- Resend row -->
+        <div id="resendRow" class="text-sm text-gray-500 dark:text-gray-400 text-center">
+          Didn't receive it?&nbsp;
+          <span id="resendCountdown" class="font-medium text-gray-600 dark:text-gray-300">
+            Resend in <span id="countdownNum">60</span>s
+          </span>
+          <button id="resendBtn" class="hidden font-semibold text-blue-600 dark:text-blue-400 underline underline-offset-2 hover:text-blue-700" onclick="startResend()">
+            Resend
+          </button>
+        </div>
+
+        <!-- Change email -->
+        <a href="#" class="change-email-link text-xs text-gray-400 dark:text-gray-500 underline underline-offset-2 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+          Change email address
+        </a>
+
+      </div><!-- /stateVerify -->
+
+      <!-- ── SUCCESS STATE ── -->
+      <div id="stateSuccess" class="w-full flex flex-col items-center gap-5 hidden">
+
+        <!-- Green checkmark -->
+        <div class="check-circle w-20 h-20 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+          <svg class="w-10 h-10 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+          </svg>
+        </div>
+
+        <div class="text-center">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Email verified!</h2>
+          <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Welcome to mtverse, Alice!</p>
+        </div>
+
+        <a href="01-main-dashboard.html"
+          class="w-full py-3 px-6 rounded-xl font-semibold text-white text-sm text-center bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-colors tracking-wide">
+          Go to dashboard →
+        </a>
+
+      </div><!-- /stateSuccess -->
+
+    </div><!-- /card -->
+
+    <!-- ══════════════════════════════════════════════
+         4-STEP STEPPER
+    ══════════════════════════════════════════════ -->
+    <div class="mt-8 px-2">
+      <div class="flex items-center justify-between w-full">
+
+        <!-- Step 1: Account (completed) -->
+        <div class="flex flex-col items-center gap-1.5 flex-1">
+          <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center shadow-sm">
+            <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
               <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
             </svg>
           </div>
-          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1.5 text-center leading-tight">Account<br/>created</p>
+          <span class="step-label text-xs font-medium text-gray-500 dark:text-gray-400">Account</span>
         </div>
-        <div class="flex-1 h-0.5 bg-green-500 mx-1 mb-5"></div>
-        <!-- Step 2: Email sent (active) -->
-        <div class="flex flex-col items-center">
-          <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center ring-4 ring-blue-100 dark:ring-blue-900/40">
-            <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+
+
+        <!-- Connector 1→2 -->
+        <div class="step-connector flex-1 h-0.5 bg-green-400 dark:bg-green-600 mx-1 mb-5 rounded"></div>
+
+        <!-- Step 2: Email sent (completed) -->
+        <div class="flex flex-col items-center gap-1.5 flex-1">
+          <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center shadow-sm">
+            <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
             </svg>
           </div>
-          <p class="text-xs text-blue-600 dark:text-blue-400 font-semibold mt-1.5 text-center leading-tight">Email<br/>sent</p>
+          <span class="step-label text-xs font-medium text-gray-500 dark:text-gray-400 text-center leading-tight">Email<br>sent</span>
         </div>
-        <div class="flex-1 h-0.5 bg-gray-200 dark:bg-gray-700 mx-1 mb-5"></div>
-        <!-- Step 3: Verify -->
-        <div class="flex flex-col items-center">
-          <div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-            <svg class="w-4 h-4 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
+
+        <!-- Connector 2→3 -->
+        <div class="step-connector flex-1 h-0.5 bg-blue-300 dark:bg-blue-700 mx-1 mb-5 rounded"></div>
+
+        <!-- Step 3: Verify (active) -->
+        <div class="flex flex-col items-center gap-1.5 flex-1">
+          <div class="step-active-dot w-8 h-8 rounded-full bg-blue-600 dark:bg-blue-500 flex items-center justify-center shadow-md ring-2 ring-blue-300 dark:ring-blue-700">
+            <span class="text-white text-xs font-bold">3</span>
           </div>
-          <p class="text-xs text-gray-400 dark:text-gray-500 mt-1.5 text-center leading-tight">Verify<br/>email</p>
+          <span class="text-xs font-semibold text-blue-600 dark:text-blue-400">Verify</span>
         </div>
-        <div class="flex-1 h-0.5 bg-gray-200 dark:bg-gray-700 mx-1 mb-5"></div>
-        <!-- Step 4: Done -->
-        <div class="flex flex-col items-center">
-          <div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-            <svg class="w-4 h-4 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
-            </svg>
+
+        <!-- Connector 3→4 -->
+        <div class="step-connector flex-1 h-0.5 bg-gray-200 dark:bg-gray-700 mx-1 mb-5 rounded"></div>
+
+        <!-- Step 4: Active (upcoming) -->
+        <div class="flex flex-col items-center gap-1.5 flex-1">
+          <div class="w-8 h-8 rounded-full border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 flex items-center justify-center">
+            <span class="text-gray-400 dark:text-gray-500 text-xs font-bold">4</span>
           </div>
-          <p class="text-xs text-gray-400 dark:text-gray-500 mt-1.5 text-center leading-tight">Done</p>
+          <span class="step-label text-xs font-medium text-gray-400 dark:text-gray-500">Active</span>
         </div>
+
       </div>
+    </div><!-- /stepper -->
 
-      <!-- Primary CTA -->
-      <a href="mailto:" class="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 transition-colors mb-6">
-        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-        </svg>
-        Open Email App
-      </a>
+  </div><!-- /max-w-md -->
+
+  <!-- ══════════════════════════════════════════════
+       JAVASCRIPT
+  ══════════════════════════════════════════════ -->
+  <script>
+    /* ─── Dark mode ─── */
+    (function () {
+      const html = document.documentElement;
+      const stored = localStorage.getItem('theme');
+      if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        html.classList.add('dark');
+      } else {
+        html.classList.remove('dark');
+      }
+    })();
+
+    document.getElementById('darkToggle').addEventListener('click', function () {
+      const html = document.documentElement;
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        html.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    });
 
 
-      <!-- Didn't get it + resend -->
-      <div class="rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 px-4 py-4 mb-5">
-        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Didn't get it?</p>
-        <button id="resendBtn"
-          class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
-          <svg id="resendSpinner" class="w-4 h-4 animate-spin hidden" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
-          </svg>
-          <span id="resendTxt">Resend verification email</span>
-        </button>
-        <p id="countdownTxt" class="text-xs text-gray-400 dark:text-gray-500 mt-2 text-center hidden">Resend available in <span id="countdown">60</span>s</p>
-      </div>
+    /* ─── OTP logic ─── */
+    const inputs  = Array.from(document.querySelectorAll('.otp-input'));
+    const verifyBtn = document.getElementById('verifyBtn');
 
-      <!-- Wrong email — toggle change email form -->
-      <div class="mb-5">
-        <button id="wrongEmailBtn" class="w-full text-center text-sm text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-          Wrong email? <span class="text-blue-600 dark:text-blue-400 font-medium underline">Change email address</span>
-        </button>
-
-        <!-- Slide-in change email form -->
-        <div id="changeEmailForm" class="hidden overflow-hidden mt-4">
-          <div class="rounded-lg border border-blue-100 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/10 px-4 py-4 space-y-3">
-            <p class="text-xs font-semibold text-blue-700 dark:text-blue-300 uppercase tracking-wide">Update email address</p>
-            <div>
-              <label for="newEmail" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">New email address</label>
-              <input id="newEmail" type="email" placeholder="newemail@example.com"
-                class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3.5 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow" />
-              <p id="newEmailErr" class="hidden mt-1 text-xs text-red-600 dark:text-red-400">Please enter a valid email</p>
-            </div>
-            <button id="saveEmailBtn" type="button"
-              class="w-full rounded-lg bg-blue-600 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
-              <svg id="saveSpinner" class="w-4 h-4 animate-spin hidden" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
-              </svg>
-              <span id="saveTxt">Save & resend</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Back to sign in -->
-      <div class="text-center">
-        <a href="81-auth-login.html" class="inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-          </svg>
-          Back to sign in
-        </a>
-      </div>
-    </div>
-  </div>
-
-<script>
-(function(){if(localStorage.getItem('darkMode')==='true')document.documentElement.classList.add('dark');})();
-document.getElementById('darkToggle').addEventListener('click',function(){
-  localStorage.setItem('darkMode',document.documentElement.classList.toggle('dark'));
-});
-
-/* Resend countdown */
-function startResendCountdown(){
-  const btn=document.getElementById('resendBtn');
-  const cdTxt=document.getElementById('countdownTxt');
-  const cdEl=document.getElementById('countdown');
-  btn.disabled=true;
-  cdTxt.classList.remove('hidden');
-  let secs=60;
-  const timer=setInterval(function(){
-    secs--;
-    if(cdEl) cdEl.textContent=secs;
-    if(secs<=0){
-      clearInterval(timer);
-      btn.disabled=false;
-      cdTxt.classList.add('hidden');
-      document.getElementById('resendTxt').textContent='Resend verification email';
+    function updateVerifyBtn() {
+      const allFilled = inputs.every(inp => inp.value.length === 1 && /\d/.test(inp.value));
+      verifyBtn.disabled = !allFilled;
     }
-  },1000);
-}
 
-/* Resend button */
-document.getElementById('resendBtn').addEventListener('click',function(){
-  if(this.disabled)return;
-  const spinner=document.getElementById('resendSpinner');
-  const txt=document.getElementById('resendTxt');
-  spinner.classList.remove('hidden');
-  txt.textContent='Sending…';
-  setTimeout(function(){
-    spinner.classList.add('hidden');
-    txt.textContent='Email sent!';
-    setTimeout(function(){txt.textContent='Resend verification email';},2000);
-    startResendCountdown();
-  },1200);
-});
+    function markFilled(input) {
+      if (input.value.length === 1 && /\d/.test(input.value)) {
+        input.classList.add('filled');
+      } else {
+        input.classList.remove('filled');
+      }
+    }
 
-/* Wrong email toggle */
-const changeForm=document.getElementById('changeEmailForm');
-document.getElementById('wrongEmailBtn').addEventListener('click',function(){
-  const hidden=changeForm.classList.contains('hidden');
-  if(hidden){
-    changeForm.classList.remove('hidden');
-    changeForm.classList.add('slide-down');
-  } else {
-    changeForm.classList.add('hidden');
-    changeForm.classList.remove('slide-down');
-  }
-});
+    inputs.forEach(function (input, idx) {
 
-/* Save & resend */
-document.getElementById('saveEmailBtn').addEventListener('click',function(){
-  const emailVal=document.getElementById('newEmail').value.trim();
-  const errEl=document.getElementById('newEmailErr');
-  if(!emailVal||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)){
-    errEl.classList.remove('hidden'); return;
-  }
-  errEl.classList.add('hidden');
-  const spinner=document.getElementById('saveSpinner');
-  const saveTxt=document.getElementById('saveTxt');
-  spinner.classList.remove('hidden');
-  saveTxt.textContent='Saving…';
-  setTimeout(function(){
-    spinner.classList.add('hidden');
-    saveTxt.textContent='Save & resend';
-    changeForm.classList.add('hidden');
-    document.querySelector('.text-center p strong').textContent=emailVal;
-    startResendCountdown();
-  },1200);
-});
+      /* keydown: handle backspace & left arrow */
+      input.addEventListener('keydown', function (e) {
+        if (e.key === 'Backspace') {
+          if (input.value === '') {
+            // move to previous
+            if (idx > 0) {
+              inputs[idx - 1].value = '';
+              inputs[idx - 1].classList.remove('filled');
+              inputs[idx - 1].focus();
+              inputs[idx - 1].select();
+            }
+          } else {
+            input.value = '';
+            input.classList.remove('filled');
+          }
+          updateVerifyBtn();
+          e.preventDefault();
+        } else if (e.key === 'ArrowLeft' && idx > 0) {
+          inputs[idx - 1].focus();
+          inputs[idx - 1].select();
+          e.preventDefault();
+        } else if (e.key === 'ArrowRight' && idx < inputs.length - 1) {
+          inputs[idx + 1].focus();
+          inputs[idx + 1].select();
+          e.preventDefault();
+        }
+      });
 
-/* Start initial countdown */
-startResendCountdown();
-</script>
+      /* input: accept only one digit, then advance */
+      input.addEventListener('input', function () {
+        // Strip non-digits and keep only last char
+        const cleaned = input.value.replace(/\D/g, '');
+        if (cleaned.length > 0) {
+          input.value = cleaned[cleaned.length - 1];
+          markFilled(input);
+          if (idx < inputs.length - 1) {
+            inputs[idx + 1].focus();
+            inputs[idx + 1].select();
+          }
+        } else {
+          input.value = '';
+          input.classList.remove('filled');
+        }
+        updateVerifyBtn();
+      });
+
+      /* focus: select existing content */
+      input.addEventListener('focus', function () {
+        setTimeout(() => input.select(), 0);
+      });
+
+      /* paste: fill all 6 boxes */
+      input.addEventListener('paste', function (e) {
+        e.preventDefault();
+        const pasted = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '');
+        if (pasted.length >= 1) {
+          for (let i = 0; i < inputs.length; i++) {
+            inputs[i].value = pasted[i] || '';
+            markFilled(inputs[i]);
+          }
+          // Focus last filled or last
+          const focusIdx = Math.min(pasted.length, inputs.length - 1);
+          inputs[focusIdx].focus();
+          updateVerifyBtn();
+        }
+      });
+    });
+
+
+    /* ─── 60-second resend countdown ─── */
+    let countdownInterval = null;
+
+    function startCountdown(seconds) {
+      const numEl      = document.getElementById('countdownNum');
+      const countdownEl = document.getElementById('resendCountdown');
+      const resendBtn  = document.getElementById('resendBtn');
+
+      if (countdownInterval) clearInterval(countdownInterval);
+
+      let remaining = seconds;
+      numEl.textContent = remaining;
+      countdownEl.classList.remove('hidden');
+      resendBtn.classList.add('hidden');
+
+      countdownInterval = setInterval(function () {
+        remaining--;
+        numEl.textContent = remaining;
+        if (remaining <= 0) {
+          clearInterval(countdownInterval);
+          countdownEl.classList.add('hidden');
+          resendBtn.classList.remove('hidden');
+        }
+      }, 1000);
+    }
+
+    function startResend() {
+      // reset OTP
+      inputs.forEach(function (inp) {
+        inp.value = '';
+        inp.classList.remove('filled');
+      });
+      verifyBtn.disabled = true;
+      inputs[0].focus();
+      startCountdown(60);
+    }
+
+    // Start on page load
+    startCountdown(60);
+
+    /* ─── Verify handler ─── */
+    function handleVerify() {
+      const code = inputs.map(i => i.value).join('');
+      if (code.length !== 6 || !/^\d{6}$/.test(code)) return;
+
+      // Show success state
+      document.getElementById('stateVerify').classList.add('hidden');
+      const successEl = document.getElementById('stateSuccess');
+      successEl.classList.remove('hidden');
+
+      // Re-trigger animation by cloning the check circle
+      const circle = successEl.querySelector('.check-circle');
+      const clone   = circle.cloneNode(true);
+      circle.parentNode.replaceChild(clone, circle);
+    }
+  </script>
+
 </body>
 </html>
