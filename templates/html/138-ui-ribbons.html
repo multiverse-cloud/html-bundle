@@ -3,20 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#465fff" />
-  <meta name="description" content="Ribbon labels for featured, beta, sale, and priority content." />
-  <title>Ribbons - mtverse</title>
+  <meta name="description" content="Ribbon and label components — mtverse UI" />
+  <title>Ribbons &amp; Labels — mtverse</title>
   <style>
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-    .animate-slideDown { animation: slideDown 0.2s ease-out; }
+    .no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+    @keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
   </style>
   <link rel="stylesheet" href="tailwind-production.css">
   <link rel="stylesheet" href="pro-styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
 <div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
@@ -26,63 +20,509 @@
     <div id="header-container"></div>
     <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
       <div class="mx-auto w-full max-w-screen-2xl">
-        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <div class="mb-2 flex items-center gap-2 text-sm text-gray-500">
-              <span>mtverse</span><span>/</span><span>ui-elements</span><span>/</span>
-              <span class="font-medium text-gray-800 dark:text-white/90">Ribbons</span>
+
+        <!-- Breadcrumb + Hero -->
+        <nav class="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 mb-4 flex-wrap">
+          <a href="#" class="hover:text-gray-700 dark:hover:text-gray-200 transition-colors">mtverse</a>
+          <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          <a href="#" class="hover:text-gray-700 dark:hover:text-gray-200 transition-colors">UI Elements</a>
+          <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          <span class="text-gray-700 dark:text-gray-200 font-medium">Ribbons &amp; Labels</span>
+        </nav>
+
+        <div class="mb-6">
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-white tracking-tight mb-1">Ribbons &amp; Labels</h1>
+          <p class="text-gray-500 dark:text-gray-400 text-sm max-w-2xl">Decorative ribbon and label components for highlighting products, promotions, and statuses. CSS-only variants included.</p>
+        </div>
+
+        <!-- Stat Cards -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+          <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4 flex flex-col gap-1">
+            <span class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wide">Variants</span>
+            <span class="text-2xl font-bold text-gray-900 dark:text-white">12</span>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4 flex flex-col gap-1">
+            <span class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wide">Styles</span>
+            <span class="text-2xl font-bold text-gray-900 dark:text-white">6</span>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4 flex flex-col gap-1">
+            <span class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wide">CSS-only</span>
+            <span class="text-2xl font-bold text-emerald-500">✓</span>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4 flex flex-col gap-1">
+            <span class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wide">Responsive</span>
+            <span class="text-2xl font-bold text-emerald-500">✓</span>
+          </div>
+        </div>
+
+        <!-- SECTION 1: Corner Ribbon -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between gap-4 mb-5">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-0.5">Corner Ribbon</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400">Small badge pinned to the top-right corner of a product card.</p>
             </div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white/90">Ribbons</h1>
-            <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Ribbon labels for featured, beta, sale, and priority content.</p>
+            <button onclick="openSourceDrawer('corner','Corner Ribbon')" class="flex-shrink-0 flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
           </div>
-          <div class="flex flex-wrap gap-2">
-            <button type="button" class="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:bg-white/[0.03] dark:text-gray-300">Preview</button>
-            <button type="button" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">Use Component</button>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Components</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">24</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">States</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">96</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Responsive</p><p class="mt-2 text-3xl font-bold text-green-600">Ready</p>
-          </div>
-        </div>
-        <div class="mt-5 grid grid-cols-1 gap-5 xl:grid-cols-2">
-
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Ribbon cards</h2>
-            <div class="mt-5"><div class="grid gap-4 md:grid-cols-3"><article class="relative overflow-hidden rounded-xl border border-gray-200 p-5 dark:border-gray-800"><span class="absolute right-[-34px] top-5 rotate-45 bg-blue-600 px-10 py-1 text-xs font-bold text-white">Featured</span><h3 class="text-lg font-bold">Plan 1</h3><p class="mt-2 text-sm text-gray-500">Ribbon-ready product card.</p></article><article class="relative overflow-hidden rounded-xl border border-gray-200 p-5 dark:border-gray-800"><span class="absolute right-[-34px] top-5 rotate-45 bg-blue-600 px-10 py-1 text-xs font-bold text-white">Beta</span><h3 class="text-lg font-bold">Plan 2</h3><p class="mt-2 text-sm text-gray-500">Ribbon-ready product card.</p></article><article class="relative overflow-hidden rounded-xl border border-gray-200 p-5 dark:border-gray-800"><span class="absolute right-[-34px] top-5 rotate-45 bg-blue-600 px-10 py-1 text-xs font-bold text-white">Popular</span><h3 class="text-lg font-bold">Plan 3</h3><p class="mt-2 text-sm text-gray-500">Ribbon-ready product card.</p></article></div></div>
-          </section>
-
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] xl:col-span-2">
-            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-              <div>
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Ribbons production states</h2>
-                <p class="mt-1 text-sm text-gray-500">Real dashboard states with actions, accessibility, responsive layout, and clean spacing.</p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <!-- Card: NEW -->
+            <div class="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+              <span class="absolute top-3 right-3 z-10 text-xs font-bold px-2 py-0.5 rounded bg-blue-600 text-white">NEW</span>
+              <div class="h-24 bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center">
+                <svg class="w-8 h-8 text-blue-300 dark:text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" stroke-width="1.5"/><path stroke-linecap="round" stroke-width="1.5" d="M3 9h18M9 21V9"/></svg>
               </div>
-              <div class="inline-flex rounded-xl bg-gray-100 p-1 dark:bg-white/[0.04]">
-                <button class="rounded-lg bg-white px-4 py-2 text-sm font-bold text-blue-600 shadow-sm dark:bg-gray-900">Preview</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">Code</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">States</button>
+              <div class="p-3">
+                <p class="text-sm font-semibold text-gray-800 dark:text-gray-100">Product Alpha</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">$29.99</p>
               </div>
             </div>
-            <div class="mt-5 grid gap-4 md:grid-cols-3">
-              <div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Default</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Hover / active</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Loading / empty</p><span class="h-2.5 w-2.5 rounded-full bg-yellow-400"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div>
+            <!-- Card: SALE -->
+            <div class="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+              <span class="absolute top-3 right-3 z-10 text-xs font-bold px-2 py-0.5 rounded bg-red-600 text-white">SALE</span>
+              <div class="h-24 bg-red-50 dark:bg-red-900/30 flex items-center justify-center">
+                <svg class="w-8 h-8 text-red-300 dark:text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-width="1.5"/><path stroke-linecap="round" stroke-width="1.5" d="M9.5 9.5h.01M14.5 14.5h.01M9.5 14.5l5-5"/></svg>
+              </div>
+              <div class="p-3">
+                <p class="text-sm font-semibold text-gray-800 dark:text-gray-100">Product Beta</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5"><span class="line-through mr-1">$49.99</span>$34.99</p>
+              </div>
             </div>
-          </section>
+            <!-- Card: HOT -->
+            <div class="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+              <span class="absolute top-3 right-3 z-10 text-xs font-bold px-2 py-0.5 rounded bg-orange-500 text-white">HOT</span>
+              <div class="h-24 bg-orange-50 dark:bg-orange-900/30 flex items-center justify-center">
+                <svg class="w-8 h-8 text-orange-300 dark:text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/></svg>
+              </div>
+              <div class="p-3">
+                <p class="text-sm font-semibold text-gray-800 dark:text-gray-100">Product Gamma</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">$59.99</p>
+              </div>
+            </div>
+            <!-- Card: PRO -->
+            <div class="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+              <span class="absolute top-3 right-3 z-10 text-xs font-bold px-2 py-0.5 rounded bg-amber-500 text-white">PRO</span>
+              <div class="h-24 bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center">
+                <svg class="w-8 h-8 text-amber-300 dark:text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+              </div>
+              <div class="p-3">
+                <p class="text-sm font-semibold text-gray-800 dark:text-gray-100">Product Delta</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">$99.99</p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+
+
+
+        <!-- SECTION 2: Top Banner Ribbon -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between gap-4 mb-5">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-0.5">Top Banner Ribbon</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400">Full-width colored band spanning the top of a card to highlight its category or status.</p>
+            </div>
+            <button onclick="openSourceDrawer('banner','Top Banner Ribbon')" class="flex-shrink-0 flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <!-- Featured -->
+            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden bg-white dark:bg-gray-800">
+              <div class="h-8 w-full flex items-center justify-center text-xs font-bold tracking-wide uppercase bg-blue-600 text-white">Featured</div>
+              <div class="p-4">
+                <p class="font-semibold text-gray-800 dark:text-gray-100 mb-1">Starter Plan</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">Perfect for individuals and small teams getting started.</p>
+                <p class="text-xl font-bold text-blue-600 dark:text-blue-400">$9<span class="text-sm font-normal text-gray-400">/mo</span></p>
+              </div>
+            </div>
+            <!-- Recommended -->
+            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden bg-white dark:bg-gray-800">
+              <div class="h-8 w-full flex items-center justify-center text-xs font-bold tracking-wide uppercase bg-emerald-600 text-white">Recommended</div>
+              <div class="p-4">
+                <p class="font-semibold text-gray-800 dark:text-gray-100 mb-1">Pro Plan</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">Advanced features for growing businesses with higher demands.</p>
+                <p class="text-xl font-bold text-emerald-600 dark:text-emerald-400">$29<span class="text-sm font-normal text-gray-400">/mo</span></p>
+              </div>
+            </div>
+            <!-- Limited Offer -->
+            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden bg-white dark:bg-gray-800">
+              <div class="h-8 w-full flex items-center justify-center text-xs font-bold tracking-wide uppercase bg-amber-500 text-white">Limited Offer</div>
+              <div class="p-4">
+                <p class="font-semibold text-gray-800 dark:text-gray-100 mb-1">Enterprise Plan</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">Full access with dedicated support for large organizations.</p>
+                <p class="text-xl font-bold text-amber-600 dark:text-amber-400">$79<span class="text-sm font-normal text-gray-400">/mo</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 3: Side Ribbon -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between gap-4 mb-5">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-0.5">Side Ribbon</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400">A vertical colored strip along the left edge of a card for categorical color-coding.</p>
+            </div>
+            <button onclick="openSourceDrawer('side','Side Ribbon')" class="flex-shrink-0 flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="flex flex-col gap-3">
+            <!-- Blue side strip -->
+            <div class="relative rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden pl-5">
+              <span class="absolute left-0 top-0 bottom-0 w-1 rounded-l-xl bg-blue-600"></span>
+              <div class="p-4">
+                <p class="font-semibold text-gray-800 dark:text-gray-100 text-sm">Update Available</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Version 3.2.1 is ready to install. New performance improvements and bug fixes included.</p>
+              </div>
+            </div>
+            <!-- Emerald side strip -->
+            <div class="relative rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden pl-5">
+              <span class="absolute left-0 top-0 bottom-0 w-1 rounded-l-xl bg-emerald-500"></span>
+              <div class="p-4">
+                <p class="font-semibold text-gray-800 dark:text-gray-100 text-sm">Deployment Successful</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Your application was deployed to production at 14:32 UTC. No errors detected.</p>
+              </div>
+            </div>
+            <!-- Rose side strip -->
+            <div class="relative rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden pl-5">
+              <span class="absolute left-0 top-0 bottom-0 w-1 rounded-l-xl bg-rose-500"></span>
+              <div class="p-4">
+                <p class="font-semibold text-gray-800 dark:text-gray-100 text-sm">Action Required</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Your payment method has expired. Please update your billing details to avoid interruption.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 4: Diagonal Ribbon -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between gap-4 mb-5">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-0.5">Diagonal Ribbon</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400">Classic 45° corner diagonal ribbon — a timeless e-commerce staple using CSS rotation.</p>
+            </div>
+            <button onclick="openSourceDrawer('diagonal','Diagonal Ribbon')" class="flex-shrink-0 flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-lg">
+            <!-- SALE diagonal -->
+            <div class="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+              <span class="absolute top-4 -right-6 bg-red-600 text-white text-xs font-bold px-8 py-1 rotate-45 shadow z-10">SALE</span>
+              <div class="h-28 bg-red-50 dark:bg-red-900/20 flex items-center justify-center">
+                <svg class="w-10 h-10 text-red-200 dark:text-red-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10"/></svg>
+              </div>
+              <div class="p-3">
+                <p class="text-sm font-semibold text-gray-800 dark:text-gray-100">Summer Collection</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5"><span class="line-through mr-1">$79.99</span><span class="text-red-600 font-semibold">$49.99</span></p>
+              </div>
+            </div>
+            <!-- NEW diagonal -->
+            <div class="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+              <span class="absolute top-4 -right-6 bg-blue-600 text-white text-xs font-bold px-8 py-1 rotate-45 shadow z-10">NEW</span>
+              <div class="h-28 bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
+                <svg class="w-10 h-10 text-blue-200 dark:text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              </div>
+              <div class="p-3">
+                <p class="text-sm font-semibold text-gray-800 dark:text-gray-100">Turbo Boost Kit</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">$129.99</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- SECTION 5: Folded Ribbon -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between gap-4 mb-5">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-0.5">Folded Ribbon</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400">Classic ribbon badge with a folded ear effect using CSS border triangles.</p>
+            </div>
+            <button onclick="openSourceDrawer('folded','Folded Ribbon')" class="flex-shrink-0 flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            <!-- Blue folded ribbon -->
+            <div class="relative rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 pt-10 overflow-hidden">
+              <div class="absolute top-0 left-5">
+                <div class="relative inline-block">
+                  <div class="bg-blue-600 text-white px-4 pt-2 pb-3 text-xs font-bold text-center min-w-[64px]">BEST<br>SELLER</div>
+                  <div class="flex">
+                    <div style="width:0;height:0;border-left:32px solid transparent;border-right:0px solid transparent;border-top:10px solid #1d4ed8;"></div>
+                    <div style="width:0;height:0;border-right:32px solid transparent;border-left:0px solid transparent;border-top:10px solid #1d4ed8;"></div>
+                  </div>
+                </div>
+              </div>
+              <p class="font-semibold text-gray-800 dark:text-gray-100 text-sm mt-1">Analytics Suite</p>
+              <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Real-time dashboards and insights.</p>
+              <p class="text-sm font-bold text-blue-600 dark:text-blue-400 mt-2">$49/mo</p>
+            </div>
+            <!-- Emerald folded ribbon -->
+            <div class="relative rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 pt-10 overflow-hidden">
+              <div class="absolute top-0 left-5">
+                <div class="relative inline-block">
+                  <div class="bg-emerald-600 text-white px-4 pt-2 pb-3 text-xs font-bold text-center min-w-[64px]">TOP<br>RATED</div>
+                  <div class="flex">
+                    <div style="width:0;height:0;border-left:32px solid transparent;border-right:0px solid transparent;border-top:10px solid #065f46;"></div>
+                    <div style="width:0;height:0;border-right:32px solid transparent;border-left:0px solid transparent;border-top:10px solid #065f46;"></div>
+                  </div>
+                </div>
+              </div>
+              <p class="font-semibold text-gray-800 dark:text-gray-100 text-sm mt-1">Cloud Storage</p>
+              <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Unlimited secure file storage.</p>
+              <p class="text-sm font-bold text-emerald-600 dark:text-emerald-400 mt-2">$19/mo</p>
+            </div>
+            <!-- Amber folded ribbon -->
+            <div class="relative rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 pt-10 overflow-hidden">
+              <div class="absolute top-0 left-5">
+                <div class="relative inline-block">
+                  <div class="bg-amber-500 text-white px-4 pt-2 pb-3 text-xs font-bold text-center min-w-[64px]">PROMO</div>
+                  <div class="flex">
+                    <div style="width:0;height:0;border-left:32px solid transparent;border-right:0px solid transparent;border-top:10px solid #92400e;"></div>
+                    <div style="width:0;height:0;border-right:32px solid transparent;border-left:0px solid transparent;border-top:10px solid #92400e;"></div>
+                  </div>
+                </div>
+              </div>
+              <p class="font-semibold text-gray-800 dark:text-gray-100 text-sm mt-1">Email Marketing</p>
+              <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Automated campaign tools.</p>
+              <p class="text-sm font-bold text-amber-600 dark:text-amber-400 mt-2">$29/mo</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 6: Badge Ribbon -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between gap-4 mb-5">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-0.5">Badge Ribbon</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400">Pill-shaped badge overlapping the corner of a card — great for notification counts and status labels.</p>
+            </div>
+            <button onclick="openSourceDrawer('badge','Badge Ribbon')" class="flex-shrink-0 flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-6">
+            <!-- Blue badge -->
+            <div class="relative rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4">
+              <span class="absolute -top-2 -right-2 rounded-full px-2.5 py-0.5 text-xs font-bold border-2 border-white dark:border-gray-800 bg-blue-600 text-white z-10">NEW</span>
+              <div class="h-16 bg-blue-50 dark:bg-blue-900/30 rounded-lg mb-3 flex items-center justify-center">
+                <svg class="w-7 h-7 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              </div>
+              <p class="text-xs font-semibold text-gray-700 dark:text-gray-200">Dashboard</p>
+              <p class="text-xs text-gray-400 mt-0.5">Analytics</p>
+            </div>
+            <!-- Red badge -->
+            <div class="relative rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4">
+              <span class="absolute -top-2 -right-2 rounded-full px-2.5 py-0.5 text-xs font-bold border-2 border-white dark:border-gray-800 bg-red-600 text-white z-10">HOT</span>
+              <div class="h-16 bg-red-50 dark:bg-red-900/30 rounded-lg mb-3 flex items-center justify-center">
+                <svg class="w-7 h-7 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/></svg>
+              </div>
+              <p class="text-xs font-semibold text-gray-700 dark:text-gray-200">Trending</p>
+              <p class="text-xs text-gray-400 mt-0.5">Products</p>
+            </div>
+            <!-- Emerald badge -->
+            <div class="relative rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4">
+              <span class="absolute -top-2 -right-2 rounded-full px-2.5 py-0.5 text-xs font-bold border-2 border-white dark:border-gray-800 bg-emerald-600 text-white z-10">ECO</span>
+              <div class="h-16 bg-emerald-50 dark:bg-emerald-900/30 rounded-lg mb-3 flex items-center justify-center">
+                <svg class="w-7 h-7 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+              </div>
+              <p class="text-xs font-semibold text-gray-700 dark:text-gray-200">Eco Pack</p>
+              <p class="text-xs text-gray-400 mt-0.5">Sustainable</p>
+            </div>
+            <!-- Purple badge -->
+            <div class="relative rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4">
+              <span class="absolute -top-2 -right-2 rounded-full px-2.5 py-0.5 text-xs font-bold border-2 border-white dark:border-gray-800 bg-purple-600 text-white z-10">PRO</span>
+              <div class="h-16 bg-purple-50 dark:bg-purple-900/30 rounded-lg mb-3 flex items-center justify-center">
+                <svg class="w-7 h-7 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+              </div>
+              <p class="text-xs font-semibold text-gray-700 dark:text-gray-200">Pro Vault</p>
+              <p class="text-xs text-gray-400 mt-0.5">Security</p>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- SECTION 7: Color Variants -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between gap-4 mb-5">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-0.5">Color Variants</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400">All five ribbon color variants shown side-by-side in a consistent card format.</p>
+            </div>
+            <button onclick="openSourceDrawer('colors','Color Variants')" class="flex-shrink-0 flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+            <!-- Blue NEW -->
+            <div class="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+              <span class="absolute top-2.5 right-2.5 text-xs font-bold px-2 py-0.5 rounded bg-blue-600 text-white">NEW</span>
+              <div class="h-16 bg-blue-50 dark:bg-blue-900/30"></div>
+              <div class="p-2.5">
+                <p class="text-xs font-medium text-gray-700 dark:text-gray-300">Blue</p>
+                <p class="text-xs text-gray-400">bg-blue-600</p>
+              </div>
+            </div>
+            <!-- Red SALE -->
+            <div class="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+              <span class="absolute top-2.5 right-2.5 text-xs font-bold px-2 py-0.5 rounded bg-red-600 text-white">SALE</span>
+              <div class="h-16 bg-red-50 dark:bg-red-900/30"></div>
+              <div class="p-2.5">
+                <p class="text-xs font-medium text-gray-700 dark:text-gray-300">Red</p>
+                <p class="text-xs text-gray-400">bg-red-600</p>
+              </div>
+            </div>
+            <!-- Green ECO -->
+            <div class="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+              <span class="absolute top-2.5 right-2.5 text-xs font-bold px-2 py-0.5 rounded bg-green-600 text-white">ECO</span>
+              <div class="h-16 bg-green-50 dark:bg-green-900/30"></div>
+              <div class="p-2.5">
+                <p class="text-xs font-medium text-gray-700 dark:text-gray-300">Green</p>
+                <p class="text-xs text-gray-400">bg-green-600</p>
+              </div>
+            </div>
+            <!-- Amber PRO -->
+            <div class="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+              <span class="absolute top-2.5 right-2.5 text-xs font-bold px-2 py-0.5 rounded bg-amber-500 text-white">PRO</span>
+              <div class="h-16 bg-amber-50 dark:bg-amber-900/30"></div>
+              <div class="p-2.5">
+                <p class="text-xs font-medium text-gray-700 dark:text-gray-300">Amber</p>
+                <p class="text-xs text-gray-400">bg-amber-500</p>
+              </div>
+            </div>
+            <!-- Purple BETA -->
+            <div class="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+              <span class="absolute top-2.5 right-2.5 text-xs font-bold px-2 py-0.5 rounded bg-purple-600 text-white">BETA</span>
+              <div class="h-16 bg-purple-50 dark:bg-purple-900/30"></div>
+              <div class="p-2.5">
+                <p class="text-xs font-medium text-gray-700 dark:text-gray-300">Purple</p>
+                <p class="text-xs text-gray-400">bg-purple-600</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /max-w-screen-2xl -->
     </main>
   </div>
 </div>
-<script src="common-loader.js"></script>
+
+<!-- Source Drawer -->
+<div id="source-drawer" class="fixed inset-x-0 bottom-0 z-50 hidden">
+  <div class="fixed inset-0 bg-black/30" onclick="closeSourceDrawer()"></div>
+  <div class="relative bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 rounded-t-2xl shadow-2xl max-h-[65vh] flex flex-col mx-auto" style="max-width:720px;border-left:1px solid #e5e7eb;border-right:1px solid #e5e7eb;">
+    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-gray-800 flex-shrink-0">
+      <div class="flex items-center gap-2">
+        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+        <span id="drawer-title" class="text-sm font-semibold text-gray-900 dark:text-white">Source Code</span>
+      </div>
+      <div class="flex gap-2">
+        <button onclick="copyDrawerCode()" class="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700 transition-colors">Copy</button>
+        <button onclick="closeSourceDrawer()" class="rounded-lg border border-gray-200 dark:border-gray-700 p-1.5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+    </div>
+    <div class="overflow-auto flex-1 p-5"><pre id="drawer-code" class="text-xs leading-relaxed text-gray-800 dark:text-gray-200 whitespace-pre-wrap font-mono"></pre></div>
+  </div>
+</div>
+<div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-2 pointer-events-none"></div>
 <script src="common-sidebar.js"></script>
 <script src="common-header.js"></script>
 <script src="app-shell.js"></script>
+<script>
+const SOURCE_SNIPPETS = {
+  corner: `<!-- Corner Ribbon Card -->
+<div class="relative overflow-hidden rounded-xl border border-gray-200 bg-white">
+  <span class="absolute top-3 right-3 z-10 text-xs font-bold px-2 py-0.5 rounded bg-blue-600 text-white">NEW</span>
+  <div class="h-24 bg-blue-50 flex items-center justify-center"><!-- image --></div>
+  <div class="p-3">
+    <p class="text-sm font-semibold">Product Name</p>
+    <p class="text-xs text-gray-500">$29.99</p>
+  </div>
+</div>`,
+  banner: `<!-- Top Banner Ribbon Card -->
+<div class="rounded-xl border border-gray-200 overflow-hidden bg-white">
+  <div class="h-8 w-full flex items-center justify-center text-xs font-bold
+    tracking-wide uppercase bg-blue-600 text-white">Featured</div>
+  <div class="p-4">
+    <p class="font-semibold">Starter Plan</p>
+    <p class="text-xs text-gray-500">Perfect for individuals.</p>
+    <p class="text-xl font-bold text-blue-600 mt-2">$9<span class="text-sm font-normal text-gray-400">/mo</span></p>
+  </div>
+</div>`,
+  side: `<!-- Side Ribbon Card -->
+<div class="relative rounded-xl border border-gray-200 bg-white overflow-hidden pl-5">
+  <span class="absolute left-0 top-0 bottom-0 w-1 rounded-l-xl bg-blue-600"></span>
+  <div class="p-4">
+    <p class="font-semibold text-sm">Update Available</p>
+    <p class="text-xs text-gray-500 mt-0.5">Version 3.2.1 is ready to install.</p>
+  </div>
+</div>`,
+  diagonal: `<!-- Diagonal Ribbon Card -->
+<div class="relative overflow-hidden rounded-xl border border-gray-200 bg-white">
+  <span class="absolute top-4 -right-6 bg-red-600 text-white text-xs
+    font-bold px-8 py-1 rotate-45 shadow z-10">SALE</span>
+  <div class="h-28 bg-red-50 flex items-center justify-center"><!-- image --></div>
+  <div class="p-3">
+    <p class="text-sm font-semibold">Summer Collection</p>
+    <p class="text-xs text-gray-500">
+      <span class="line-through mr-1">$79.99</span>
+      <span class="text-red-600 font-semibold">$49.99</span>
+    </p>
+  </div>
+</div>`,
+  folded: `<!-- Folded Ribbon Card -->
+<div class="relative rounded-xl border border-gray-200 bg-white p-4 pt-10 overflow-hidden">
+  <div class="absolute top-0 left-5">
+    <div class="relative inline-block">
+      <div class="bg-blue-600 text-white px-4 pt-2 pb-3 text-xs font-bold text-center min-w-[64px]">
+        BEST<br>SELLER
+      </div>
+      <div class="flex">
+        <div style="width:0;height:0;border-left:32px solid transparent;border-top:10px solid #1d4ed8;"></div>
+        <div style="width:0;height:0;border-right:32px solid transparent;border-top:10px solid #1d4ed8;"></div>
+      </div>
+    </div>
+  </div>
+  <p class="font-semibold text-sm mt-1">Analytics Suite</p>
+  <p class="text-xs text-gray-500 mt-1">Real-time dashboards.</p>
+  <p class="text-sm font-bold text-blue-600 mt-2">$49/mo</p>
+</div>`,
+  badge: `<!-- Badge Ribbon Card -->
+<div class="relative rounded-xl border border-gray-200 bg-white p-4">
+  <span class="absolute -top-2 -right-2 rounded-full px-2.5 py-0.5 text-xs font-bold
+    border-2 border-white bg-blue-600 text-white z-10">NEW</span>
+  <div class="h-16 bg-blue-50 rounded-lg mb-3"></div>
+  <p class="text-xs font-semibold">Dashboard</p>
+  <p class="text-xs text-gray-400">Analytics</p>
+</div>`,
+  colors: `<!-- Color Variant Ribbons -->
+<!-- Blue -->  <span class="text-xs font-bold px-2 py-0.5 rounded bg-blue-600 text-white">NEW</span>
+<!-- Red -->   <span class="text-xs font-bold px-2 py-0.5 rounded bg-red-600 text-white">SALE</span>
+<!-- Green --> <span class="text-xs font-bold px-2 py-0.5 rounded bg-green-600 text-white">ECO</span>
+<!-- Amber --> <span class="text-xs font-bold px-2 py-0.5 rounded bg-amber-500 text-white">PRO</span>
+<!-- Purple --><span class="text-xs font-bold px-2 py-0.5 rounded bg-purple-600 text-white">BETA</span>`
+};
+
+function openSourceDrawer(id,title){document.getElementById('drawer-title').textContent=title+' — Source';document.getElementById('drawer-code').textContent=SOURCE_SNIPPETS[id]||'<!-- No source available -->';document.getElementById('source-drawer').classList.remove('hidden');document.getElementById('source-drawer').dataset.currentId=id;document.body.style.overflow='hidden';}
+function closeSourceDrawer(){document.getElementById('source-drawer').classList.add('hidden');document.body.style.overflow='';}
+function copyDrawerCode(){navigator.clipboard.writeText(SOURCE_SNIPPETS[document.getElementById('source-drawer').dataset.currentId]||'').then(()=>showToast('Copied to clipboard!'));}
+function showToast(msg){const c=document.getElementById('toast-container');const t=document.createElement('div');t.className='pointer-events-auto flex items-center gap-2 rounded-xl border border-green-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 shadow-lg dark:border-green-800 dark:bg-gray-900 dark:text-white';t.style.animation='toastIn .2s ease';t.innerHTML='<span class="h-2 w-2 rounded-full bg-green-500 flex-shrink-0"></span>'+msg;c.appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(12px)';t.style.transition='all .2s';setTimeout(()=>t.remove(),200);},2500);}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSourceDrawer();});
+/* page-specific JS below */
+</script>
 </body>
 </html>

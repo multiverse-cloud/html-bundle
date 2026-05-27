@@ -1,22 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#465fff" />
-  <meta name="description" content="Popover cards for quick previews, filters, and contextual details." />
-  <title>Popovers - mtverse</title>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Popover components — mtverse UI" />
+  <title>Popovers — mtverse</title>
   <style>
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-    .animate-slideDown { animation: slideDown 0.2s ease-out; }
+    .no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+    @keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
   </style>
   <link rel="stylesheet" href="tailwind-production.css">
   <link rel="stylesheet" href="pro-styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
 <div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
@@ -26,63 +19,561 @@
     <div id="header-container"></div>
     <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
       <div class="mx-auto w-full max-w-screen-2xl">
-        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <div class="mb-2 flex items-center gap-2 text-sm text-gray-500">
-              <span>mtverse</span><span>/</span><span>ui-elements</span><span>/</span>
-              <span class="font-medium text-gray-800 dark:text-white/90">Popovers</span>
+
+        <!-- PAGE HEADER -->
+        <div class="mb-8">
+          <nav class="mb-3 flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
+            <a href="#" class="hover:text-blue-600">mtverse</a>
+            <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <a href="#" class="hover:text-blue-600">UI Elements</a>
+            <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <span class="text-gray-800 dark:text-gray-100">Popovers</span>
+          </nav>
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Popovers</h1>
+          <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">10+ popover patterns for tooltips, confirmations, and rich content</p>
+          <div class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div class="rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-white/[0.03]"><div class="text-2xl font-bold text-gray-900 dark:text-white">10</div><div class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">Variants</div></div>
+            <div class="rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-white/[0.03]"><div class="text-2xl font-bold text-gray-900 dark:text-white">4</div><div class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">Positions</div></div>
+            <div class="rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-white/[0.03]"><div class="text-2xl font-bold text-green-600">✓</div><div class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">Interactive</div></div>
+            <div class="rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-white/[0.03]"><div class="text-2xl font-bold text-green-600">✓</div><div class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">Accessible</div></div>
+          </div>
+        </div>
+
+        <!-- SECTION 1: Basic Popover -->
+        <section id="basic" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">Basic Popover</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Click to toggle a floating card with info and a close button.</p></div>
+              <button onclick="openSourceDrawer('basic','Basic Popover')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
             </div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white/90">Popovers</h1>
-            <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Popover cards for quick previews, filters, and contextual details.</p>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <button type="button" class="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:bg-white/[0.03] dark:text-gray-300">Preview</button>
-            <button type="button" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">Use Component</button>
-          </div>
-        </div>
 
-        <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Components</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">24</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">States</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">96</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Responsive</p><p class="mt-2 text-3xl font-bold text-green-600">Ready</p>
-          </div>
-        </div>
-        <div class="mt-5 grid grid-cols-1 gap-5 xl:grid-cols-2">
-
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Context popovers</h2>
-            <div class="mt-5"><div class="grid gap-4 md:grid-cols-3"><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><button class="rounded-lg bg-gray-900 px-4 py-2 text-sm font-semibold text-white">User preview</button><div class="mt-3 rounded-xl bg-gray-50 p-4 text-sm text-gray-500 dark:bg-white/[0.04]">Popover copy with quick actions and concise context.</div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><button class="rounded-lg bg-gray-900 px-4 py-2 text-sm font-semibold text-white">Metric detail</button><div class="mt-3 rounded-xl bg-gray-50 p-4 text-sm text-gray-500 dark:bg-white/[0.04]">Popover copy with quick actions and concise context.</div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><button class="rounded-lg bg-gray-900 px-4 py-2 text-sm font-semibold text-white">Filter help</button><div class="mt-3 rounded-xl bg-gray-50 p-4 text-sm text-gray-500 dark:bg-white/[0.04]">Popover copy with quick actions and concise context.</div></div></div></div>
-          </section>
-
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] xl:col-span-2">
-            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-              <div>
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Popovers production states</h2>
-                <p class="mt-1 text-sm text-gray-500">Real dashboard states with actions, accessibility, responsive layout, and clean spacing.</p>
-              </div>
-              <div class="inline-flex rounded-xl bg-gray-100 p-1 dark:bg-white/[0.04]">
-                <button class="rounded-lg bg-white px-4 py-2 text-sm font-bold text-blue-600 shadow-sm dark:bg-gray-900">Preview</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">Code</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">States</button>
+            <div class="flex items-start gap-4 py-4">
+              <div class="relative inline-block">
+                <button onclick="togglePopover('basic-pop')" class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">More Info</button>
+                <div id="basic-pop" class="hidden absolute z-20 top-full mt-2 left-0 w-64 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-4">
+                  <div class="flex items-start justify-between gap-2 mb-2">
+                    <h3 class="text-sm font-semibold text-gray-900 dark:text-white">About this feature</h3>
+                    <button onclick="togglePopover('basic-pop')" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 flex-shrink-0 leading-none text-base">&times;</button>
+                  </div>
+                  <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">This feature helps you manage your workflow efficiently with smart automation.</p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed mt-1">Enable it from settings to get started with the guided setup wizard.</p>
+                </div>
               </div>
             </div>
-            <div class="mt-5 grid gap-4 md:grid-cols-3">
-              <div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Default</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Hover / active</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Loading / empty</p><span class="h-2.5 w-2.5 rounded-full bg-yellow-400"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: Positions -->
+        <section id="positions" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">Positions</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Popovers anchored to top, right, bottom, and left of a trigger button.</p></div>
+              <button onclick="openSourceDrawer('positions','Positions')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
             </div>
-          </section>
-        </div>
-      </div>
+            <div class="flex flex-wrap gap-16 py-8 px-4 items-center justify-center">
+              <!-- Top -->
+              <div class="relative inline-block">
+                <button onclick="togglePopover('pos-top')" class="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">Top</button>
+                <div id="pos-top" class="hidden absolute z-20 bottom-full mb-2 left-1/2 -translate-x-1/2 w-44 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-3">
+                  <div class="absolute top-full left-1/2 -translate-x-1/2 w-2 h-2 bg-white dark:bg-gray-800 border-r border-b border-gray-200 dark:border-gray-700 rotate-45 -mt-1"></div>
+                  <p class="text-xs font-semibold text-gray-900 dark:text-white mb-1">Top Popover</p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400">Appears above the trigger button.</p>
+                </div>
+              </div>
+              <!-- Right -->
+              <div class="relative inline-block">
+                <button onclick="togglePopover('pos-right')" class="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">Right</button>
+                <div id="pos-right" class="hidden absolute z-20 left-full ml-2 top-1/2 -translate-y-1/2 w-44 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-3">
+                  <div class="absolute right-full top-1/2 -translate-y-1/2 w-2 h-2 bg-white dark:bg-gray-800 border-l border-b border-gray-200 dark:border-gray-700 rotate-45 mr-0 -translate-x-0"></div>
+                  <p class="text-xs font-semibold text-gray-900 dark:text-white mb-1">Right Popover</p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400">Appears to the right of the trigger.</p>
+                </div>
+              </div>
+              <!-- Bottom -->
+              <div class="relative inline-block">
+                <button onclick="togglePopover('pos-bottom')" class="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">Bottom</button>
+                <div id="pos-bottom" class="hidden absolute z-20 top-full mt-2 left-1/2 -translate-x-1/2 w-44 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-3">
+                  <div class="absolute bottom-full left-1/2 -translate-x-1/2 w-2 h-2 bg-white dark:bg-gray-800 border-l border-t border-gray-200 dark:border-gray-700 rotate-45 mb-0"></div>
+                  <p class="text-xs font-semibold text-gray-900 dark:text-white mb-1">Bottom Popover</p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400">Appears below the trigger button.</p>
+                </div>
+              </div>
+              <!-- Left -->
+              <div class="relative inline-block">
+                <button onclick="togglePopover('pos-left')" class="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">Left</button>
+                <div id="pos-left" class="hidden absolute z-20 right-full mr-2 top-1/2 -translate-y-1/2 w-44 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-3">
+                  <p class="text-xs font-semibold text-gray-900 dark:text-white mb-1">Left Popover</p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400">Appears to the left of the trigger.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- SECTION 3: Filter Popover -->
+        <section id="filter" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">Filter Popover</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Checkbox filters with apply and reset actions.</p></div>
+              <button onclick="openSourceDrawer('filter','Filter Popover')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div class="py-4">
+              <div class="relative inline-block">
+                <button onclick="togglePopover('filter-pop')" class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h18M7 12h10M11 20h2"/></svg>
+                  Filter
+                </button>
+                <div id="filter-pop" class="hidden absolute z-20 top-full mt-2 left-0 w-56 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-4">
+                  <p class="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-3 uppercase tracking-wide">Filter by Status</p>
+                  <div class="space-y-2 mb-4">
+                    <label class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 cursor-pointer">
+                      <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500" checked> Active
+                    </label>
+                    <label class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 cursor-pointer">
+                      <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"> Inactive
+                    </label>
+                    <label class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 cursor-pointer">
+                      <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"> Pending
+                    </label>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <button onclick="applyFilters()" class="flex-1 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700">Apply</button>
+                    <button onclick="resetFilters()" class="text-xs text-gray-500 hover:text-blue-600 dark:text-gray-400">Reset</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 4: User Card Popover -->
+        <section id="user-card" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">User Card Popover</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Hover or click a username to preview a profile card.</p></div>
+              <button onclick="openSourceDrawer('user-card','User Card Popover')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div class="py-4 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+              Assigned to
+              <div class="relative inline-block">
+                <span onmouseenter="showPopover('user-pop')" onmouseleave="scheduleHidePopover('user-pop')" onclick="togglePopover('user-pop')"
+                  class="cursor-pointer font-semibold text-blue-600 hover:underline">Sarah Mitchell</span>
+                <div id="user-pop" class="hidden absolute z-20 top-full mt-2 left-0 w-64 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-4"
+                  onmouseenter="cancelHidePopover('user-pop')" onmouseleave="scheduleHidePopover('user-pop')">
+                  <div class="flex items-center gap-3 mb-3">
+                    <div class="h-10 w-10 rounded-full bg-violet-600 flex items-center justify-center text-white text-sm font-bold flex-shrink-0">SM</div>
+                    <div>
+                      <p class="text-sm font-semibold text-gray-900 dark:text-white">Sarah Mitchell</p>
+                      <p class="text-xs text-gray-500 dark:text-gray-400">Senior Designer</p>
+                    </div>
+                  </div>
+                  <div class="grid grid-cols-3 gap-2 mb-3 text-center">
+                    <div><p class="text-sm font-bold text-gray-900 dark:text-white">42</p><p class="text-xs text-gray-500">Posts</p></div>
+                    <div><p class="text-sm font-bold text-gray-900 dark:text-white">1.2k</p><p class="text-xs text-gray-500">Followers</p></div>
+                    <div><p class="text-sm font-bold text-gray-900 dark:text-white">89</p><p class="text-xs text-gray-500">Following</p></div>
+                  </div>
+                  <button class="w-full rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700">View Profile</button>
+                </div>
+              </div>
+              for this task.
+            </div>
+          </div>
+        </section>
+
+
+        <!-- SECTION 5: Confirmation Popover -->
+        <section id="confirm" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">Confirmation Popover</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Inline confirmation before a destructive action.</p></div>
+              <button onclick="openSourceDrawer('confirm','Confirmation Popover')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div class="py-4">
+              <div class="relative inline-block">
+                <button onclick="togglePopover('confirm-pop')" class="rounded-xl bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700">Delete</button>
+                <div id="confirm-pop" class="hidden absolute z-20 top-full mt-2 left-0 w-60 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-4">
+                  <p class="text-sm font-semibold text-gray-900 dark:text-white mb-1">Are you sure?</p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">This action cannot be undone. The item will be permanently removed.</p>
+                  <div class="flex items-center gap-2">
+                    <button onclick="confirmDelete()" class="flex-1 rounded-lg bg-red-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-red-700">Yes, delete</button>
+                    <button onclick="togglePopover('confirm-pop')" class="flex-1 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">Cancel</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 6: Info Popover -->
+        <section id="info" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">Info Popover</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">A small ⓘ icon that reveals a contextual explanation.</p></div>
+              <button onclick="openSourceDrawer('info','Info Popover')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div class="py-4 flex items-center gap-2">
+              <span class="text-sm text-gray-700 dark:text-gray-300">Conversion Rate</span>
+              <div class="relative inline-block">
+                <button onclick="togglePopover('info-pop')" class="h-5 w-5 rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 flex items-center justify-center text-gray-500 dark:text-gray-400 text-xs font-bold hover:bg-gray-50 dark:hover:bg-gray-700">i</button>
+                <div id="info-pop" class="hidden absolute z-20 top-full mt-2 left-0 w-56 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-3">
+                  <p class="text-xs font-semibold text-gray-900 dark:text-white mb-1">How this works</p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Conversion rate is calculated as the number of completed goals divided by total sessions.</p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed mt-1">Values above 3% indicate healthy engagement for this campaign type.</p>
+                </div>
+              </div>
+              <span class="text-sm font-bold text-green-600">4.7%</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 7: Color Picker Popover -->
+        <section id="color-picker" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">Color Picker Popover</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Click a swatch to select a color; the button indicator updates.</p></div>
+              <button onclick="openSourceDrawer('color-picker','Color Picker Popover')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div class="py-4">
+              <div class="relative inline-block">
+                <button onclick="togglePopover('color-pop')" class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                  <span id="color-indicator" class="h-4 w-4 rounded-full bg-blue-500 border border-gray-200 flex-shrink-0"></span>
+                  Pick Color
+                </button>
+                <div id="color-pop" class="hidden absolute z-20 top-full mt-2 left-0 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-3" style="width:220px">
+                  <p class="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">Select a color</p>
+                  <div class="grid grid-cols-4 gap-2" id="color-swatches">
+                    <button onclick="pickColor(this,'bg-slate-500','#64748b')"  class="swatch h-8 w-8 rounded-lg bg-slate-500"></button>
+                    <button onclick="pickColor(this,'bg-red-500','#ef4444')"    class="swatch h-8 w-8 rounded-lg bg-red-500"></button>
+                    <button onclick="pickColor(this,'bg-orange-500','#f97316')" class="swatch h-8 w-8 rounded-lg bg-orange-500"></button>
+                    <button onclick="pickColor(this,'bg-amber-500','#f59e0b')"  class="swatch h-8 w-8 rounded-lg bg-amber-500"></button>
+                    <button onclick="pickColor(this,'bg-yellow-400','#facc15')" class="swatch h-8 w-8 rounded-lg bg-yellow-400"></button>
+                    <button onclick="pickColor(this,'bg-lime-500','#84cc16')"   class="swatch h-8 w-8 rounded-lg bg-lime-500"></button>
+                    <button onclick="pickColor(this,'bg-emerald-500','#10b981')" class="swatch h-8 w-8 rounded-lg bg-emerald-500"></button>
+                    <button onclick="pickColor(this,'bg-teal-500','#14b8a6')"   class="swatch h-8 w-8 rounded-lg bg-teal-500"></button>
+                    <button onclick="pickColor(this,'bg-blue-500','#3b82f6')" id="swatch-blue" class="swatch h-8 w-8 rounded-lg bg-blue-500 ring-2 ring-offset-1 ring-blue-500"></button>
+                    <button onclick="pickColor(this,'bg-indigo-500','#6366f1')" class="swatch h-8 w-8 rounded-lg bg-indigo-500"></button>
+                    <button onclick="pickColor(this,'bg-violet-500','#8b5cf6')" class="swatch h-8 w-8 rounded-lg bg-violet-500"></button>
+                    <button onclick="pickColor(this,'bg-pink-500','#ec4899')"   class="swatch h-8 w-8 rounded-lg bg-pink-500"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- SECTION 8: Rich Content Popover -->
+        <section id="rich" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">Rich Content Popover</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Preview with thumbnail, title, description, and CTA.</p></div>
+              <button onclick="openSourceDrawer('rich','Rich Content Popover')" class="flex-shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800">View Source</button>
+            </div>
+            <div class="py-4">
+              <div class="relative inline-block">
+                <button onclick="togglePopover('rich-pop')" class="rounded-xl bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">Preview</button>
+                <div id="rich-pop" class="hidden absolute z-20 top-full mt-2 left-0 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden" style="width:280px">
+                  <div class="h-28 bg-gradient-to-br from-indigo-400 to-purple-600 flex items-center justify-center">
+                    <svg class="h-10 w-10 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                  </div>
+                  <div class="p-4">
+                    <p class="text-sm font-semibold text-gray-900 dark:text-white mb-1">Design System v2.0</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed mb-3">A comprehensive design system with 200+ components, tokens, and guidelines for building consistent UIs.</p>
+                    <button class="w-full rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-indigo-700">View Details</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 9: Nested Popover -->
+        <section id="nested" class="mb-6">
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div><h2 class="text-lg font-semibold text-gray-900 dark:text-white">Nested Popover</h2><p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">A popover that contains a nested sub-menu popover.</p></div>
+            </div>
+            <div class="py-4">
+              <div class="relative inline-block">
+                <button onclick="togglePopover('nested-pop')" class="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">Options</button>
+                <div id="nested-pop" class="hidden absolute z-20 top-full mt-2 left-0 w-52 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-3">
+                  <p class="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2 uppercase tracking-wide">Actions</p>
+                  <ul class="space-y-1 text-sm text-gray-700 dark:text-gray-300 mb-3">
+                    <li><button class="w-full text-left rounded-lg px-2 py-1.5 hover:bg-gray-50 dark:hover:bg-gray-700">Edit</button></li>
+                    <li><button class="w-full text-left rounded-lg px-2 py-1.5 hover:bg-gray-50 dark:hover:bg-gray-700">Duplicate</button></li>
+                  </ul>
+                  <div class="relative border-t border-gray-100 dark:border-gray-700 pt-2">
+                    <button onclick="togglePopover('nested-sub');event.stopPropagation();" class="w-full flex items-center justify-between rounded-lg px-2 py-1.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
+                      Sub-menu
+                      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+                    <div id="nested-sub" class="hidden absolute z-30 left-full top-0 ml-2 w-44 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-3">
+                      <p class="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2 uppercase tracking-wide">More Options</p>
+                      <ul class="space-y-1 text-sm text-gray-700 dark:text-gray-300">
+                        <li><button class="w-full text-left rounded-lg px-2 py-1.5 hover:bg-gray-50 dark:hover:bg-gray-700">Archive</button></li>
+                        <li><button class="w-full text-left rounded-lg px-2 py-1.5 hover:bg-gray-50 dark:hover:bg-gray-700">Export</button></li>
+                        <li><button class="w-full text-left rounded-lg px-2 py-1.5 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">Remove</button></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div><!-- /max-w -->
     </main>
   </div>
 </div>
-<script src="common-loader.js"></script>
+
+
+<!-- SOURCE DRAWER -->
+<div id="source-drawer" class="fixed inset-x-0 bottom-0 z-50 hidden">
+  <div class="fixed inset-0 bg-black/30" onclick="closeSourceDrawer()"></div>
+  <div class="relative bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 rounded-t-2xl shadow-2xl max-h-[65vh] flex flex-col mx-auto" style="max-width:720px;border-left:1px solid #e5e7eb;border-right:1px solid #e5e7eb;">
+    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-gray-800 flex-shrink-0">
+      <span id="drawer-title" class="text-sm font-semibold text-gray-900 dark:text-white">Source</span>
+      <div class="flex gap-2">
+        <button onclick="copyDrawerCode()" class="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700">Copy</button>
+        <button onclick="closeSourceDrawer()" class="rounded-lg border border-gray-200 dark:border-gray-700 p-1.5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+    </div>
+    <div class="overflow-auto flex-1 p-5"><pre id="drawer-code" class="text-xs leading-relaxed text-gray-800 dark:text-gray-200 whitespace-pre-wrap font-mono"></pre></div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-2 pointer-events-none"></div>
+
 <script src="common-sidebar.js"></script>
 <script src="common-header.js"></script>
 <script src="app-shell.js"></script>
+<script>
+/* ============================================================
+   SOURCE SNIPPETS
+   ============================================================ */
+const SOURCE_SNIPPETS = {
+  basic: `<div class="relative inline-block">
+  <button onclick="togglePopover('basic-pop')"
+    class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white">
+    More Info
+  </button>
+  <div id="basic-pop"
+    class="hidden absolute z-20 top-full mt-2 left-0 w-64 bg-white
+           rounded-xl shadow-xl border border-gray-200 p-4">
+    <div class="flex items-start justify-between gap-2 mb-2">
+      <h3 class="text-sm font-semibold">About this feature</h3>
+      <button onclick="togglePopover('basic-pop')">&times;</button>
+    </div>
+    <p class="text-xs text-gray-500">This feature helps you manage your workflow efficiently.</p>
+    <p class="text-xs text-gray-500 mt-1">Enable it from settings to get started.</p>
+  </div>
+</div>`,
+  positions: `<!-- Top -->
+<div class="relative inline-block">
+  <button onclick="togglePopover('pos-top')">Top</button>
+  <div id="pos-top" class="hidden absolute z-20 bottom-full mb-2 left-1/2 -translate-x-1/2 w-44
+       bg-white rounded-xl shadow-xl border border-gray-200 p-3">
+    <p class="text-xs font-semibold mb-1">Top Popover</p>
+    <p class="text-xs text-gray-500">Appears above the trigger button.</p>
+  </div>
+</div>
+<!-- Right -->
+<div class="relative inline-block">
+  <button onclick="togglePopover('pos-right')">Right</button>
+  <div id="pos-right" class="hidden absolute z-20 left-full ml-2 top-1/2 -translate-y-1/2 w-44
+       bg-white rounded-xl shadow-xl border border-gray-200 p-3">
+    <p class="text-xs font-semibold mb-1">Right Popover</p>
+  </div>
+</div>`,
+  filter: `<div class="relative inline-block">
+  <button onclick="togglePopover('filter-pop')" class="inline-flex items-center gap-2 ...">
+    <svg><!-- funnel icon --></svg> Filter
+  </button>
+  <div id="filter-pop" class="hidden absolute z-20 top-full mt-2 left-0 w-56
+       bg-white rounded-xl shadow-xl border border-gray-200 p-4">
+    <p class="text-xs font-semibold mb-3 uppercase tracking-wide">Filter by Status</p>
+    <label class="flex items-center gap-2 text-sm cursor-pointer">
+      <input type="checkbox" checked> Active
+    </label>
+    <label class="flex items-center gap-2 text-sm cursor-pointer">
+      <input type="checkbox"> Inactive
+    </label>
+    <label class="flex items-center gap-2 text-sm cursor-pointer">
+      <input type="checkbox"> Pending
+    </label>
+    <div class="flex items-center gap-2 mt-4">
+      <button onclick="applyFilters()" class="flex-1 rounded-lg bg-blue-600 text-xs text-white py-1.5">Apply</button>
+      <button onclick="resetFilters()" class="text-xs text-gray-500">Reset</button>
+    </div>
+  </div>
+</div>`,
+  confirm: `<div class="relative inline-block">
+  <button onclick="togglePopover('confirm-pop')"
+    class="rounded-xl bg-red-600 px-4 py-2 text-sm font-medium text-white">Delete</button>
+  <div id="confirm-pop"
+    class="hidden absolute z-20 top-full mt-2 left-0 w-60 bg-white rounded-xl shadow-xl border border-gray-200 p-4">
+    <p class="text-sm font-semibold mb-1">Are you sure?</p>
+    <p class="text-xs text-gray-500 mb-3">This action cannot be undone.</p>
+    <div class="flex items-center gap-2">
+      <button onclick="confirmDelete()" class="flex-1 rounded-lg bg-red-600 text-xs text-white py-1.5">Yes, delete</button>
+      <button onclick="togglePopover('confirm-pop')" class="flex-1 rounded-lg border text-xs py-1.5">Cancel</button>
+    </div>
+  </div>
+</div>`,
+  'user-card': `<div class="relative inline-block">
+  <span onmouseenter="showPopover('user-pop')" onmouseleave="scheduleHidePopover('user-pop')"
+    onclick="togglePopover('user-pop')"
+    class="cursor-pointer font-semibold text-blue-600 hover:underline">Sarah Mitchell</span>
+  <div id="user-pop"
+    class="hidden absolute z-20 top-full mt-2 left-0 w-64 bg-white rounded-xl shadow-xl border border-gray-200 p-4">
+    <div class="flex items-center gap-3 mb-3">
+      <div class="h-10 w-10 rounded-full bg-violet-600 flex items-center justify-center text-white text-sm font-bold">SM</div>
+      <div>
+        <p class="text-sm font-semibold">Sarah Mitchell</p>
+        <p class="text-xs text-gray-500">Senior Designer</p>
+      </div>
+    </div>
+    <div class="grid grid-cols-3 gap-2 mb-3 text-center">
+      <div><p class="text-sm font-bold">42</p><p class="text-xs text-gray-500">Posts</p></div>
+      <div><p class="text-sm font-bold">1.2k</p><p class="text-xs text-gray-500">Followers</p></div>
+      <div><p class="text-sm font-bold">89</p><p class="text-xs text-gray-500">Following</p></div>
+    </div>
+    <button class="w-full rounded-lg bg-blue-600 text-xs text-white py-1.5">View Profile</button>
+  </div>
+</div>`,
+  info: `<div class="relative inline-block">
+  <button onclick="togglePopover('info-pop')"
+    class="h-5 w-5 rounded-full border border-gray-300 bg-white flex items-center justify-center text-xs font-bold text-gray-500">i</button>
+  <div id="info-pop"
+    class="hidden absolute z-20 top-full mt-2 left-0 w-56 bg-white rounded-xl shadow-xl border border-gray-200 p-3">
+    <p class="text-xs font-semibold mb-1">How this works</p>
+    <p class="text-xs text-gray-500">Conversion rate = completed goals / total sessions.</p>
+    <p class="text-xs text-gray-500 mt-1">Values above 3% indicate healthy engagement.</p>
+  </div>
+</div>`,
+  'color-picker': `<div class="relative inline-block">
+  <button onclick="togglePopover('color-pop')" class="inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm">
+    <span id="color-indicator" class="h-4 w-4 rounded-full bg-blue-500"></span> Pick Color
+  </button>
+  <div id="color-pop" class="hidden absolute z-20 top-full mt-2 left-0 bg-white rounded-xl shadow-xl border border-gray-200 p-3" style="width:220px">
+    <div class="grid grid-cols-4 gap-2">
+      <button onclick="pickColor(this,'bg-red-500','#ef4444')" class="swatch h-8 w-8 rounded-lg bg-red-500"></button>
+      <!-- ... more swatches ... -->
+    </div>
+  </div>
+</div>`,
+  rich: `<div class="relative inline-block">
+  <button onclick="togglePopover('rich-pop')" class="rounded-xl bg-indigo-600 px-4 py-2 text-sm text-white">Preview</button>
+  <div id="rich-pop" class="hidden absolute z-20 top-full mt-2 left-0 bg-white rounded-xl shadow-xl border border-gray-200 overflow-hidden" style="width:280px">
+    <div class="h-28 bg-gradient-to-br from-indigo-400 to-purple-600"></div>
+    <div class="p-4">
+      <p class="text-sm font-semibold mb-1">Design System v2.0</p>
+      <p class="text-xs text-gray-500 mb-3">A comprehensive design system with 200+ components.</p>
+      <button class="w-full rounded-lg bg-indigo-600 text-xs text-white py-1.5">View Details</button>
+    </div>
+  </div>
+</div>`
+};
+
+
+/* ============================================================
+   POPOVER UTILITIES
+   ============================================================ */
+function togglePopover(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const isHidden = el.classList.contains('hidden');
+  closeAllPopovers();
+  if (isHidden) el.classList.remove('hidden');
+}
+
+function closeAllPopovers() {
+  document.querySelectorAll('[id$="-pop"]').forEach(el => el.classList.add('hidden'));
+  document.querySelectorAll('[id="nested-sub"]').forEach(el => el.classList.add('hidden'));
+}
+
+/* Close on outside click */
+document.addEventListener('click', function(e) {
+  const isInsidePopover = e.target.closest('[id$="-pop"]') || e.target.closest('[id="nested-sub"]');
+  const isTrigger = e.target.closest('[onclick]');
+  if (!isInsidePopover && !isTrigger) closeAllPopovers();
+});
+
+/* Close on Escape */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeAllPopovers();
+    closeSourceDrawer();
+  }
+});
+
+/* ---- Hover support for user-card ---- */
+const _hideTimers = {};
+function showPopover(id) {
+  clearTimeout(_hideTimers[id]);
+  document.getElementById(id) && document.getElementById(id).classList.remove('hidden');
+}
+function scheduleHidePopover(id) {
+  _hideTimers[id] = setTimeout(() => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('hidden');
+  }, 200);
+}
+function cancelHidePopover(id) { clearTimeout(_hideTimers[id]); }
+
+/* ---- Filter actions ---- */
+function applyFilters() { closeAllPopovers(); showToast('Filters applied'); }
+function resetFilters() {
+  document.querySelectorAll('#filter-pop input[type=checkbox]').forEach(cb => cb.checked = false);
+  showToast('Filters reset');
+}
+
+/* ---- Confirm delete ---- */
+function confirmDelete() { closeAllPopovers(); showToast('Deleted!'); }
+
+/* ---- Color picker ---- */
+function pickColor(btn, cls, hex) {
+  document.querySelectorAll('.swatch').forEach(s => s.classList.remove('ring-2','ring-offset-1','ring-blue-500'));
+  btn.classList.add('ring-2','ring-offset-1','ring-blue-500');
+  const ind = document.getElementById('color-indicator');
+  if (ind) { ind.style.cssText = ''; ind.style.backgroundColor = hex; }
+  setTimeout(() => closeAllPopovers(), 250);
+}
+
+/* ============================================================
+   SOURCE DRAWER
+   ============================================================ */
+function openSourceDrawer(id, title) {
+  document.getElementById('drawer-title').textContent = title + ' — Source';
+  document.getElementById('drawer-code').textContent = SOURCE_SNIPPETS[id] || '';
+  document.getElementById('source-drawer').classList.remove('hidden');
+  document.getElementById('source-drawer').dataset.currentId = id;
+  document.body.style.overflow = 'hidden';
+}
+function closeSourceDrawer() {
+  document.getElementById('source-drawer').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+function copyDrawerCode() {
+  const key = document.getElementById('source-drawer').dataset.currentId;
+  navigator.clipboard.writeText(SOURCE_SNIPPETS[key] || '').then(() => showToast('Copied!'));
+}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+function showToast(msg) {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = 'pointer-events-auto flex items-center gap-2 rounded-xl border border-green-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 shadow-lg dark:border-green-800 dark:bg-gray-900 dark:text-white';
+  t.style.animation = 'toastIn .2s ease';
+  t.innerHTML = '<span class="h-2 w-2 rounded-full bg-green-500 flex-shrink-0"></span>' + msg;
+  c.appendChild(t);
+  setTimeout(() => { t.style.opacity='0'; t.style.transform='translateX(12px)'; t.style.transition='all .2s'; setTimeout(() => t.remove(), 200); }, 2500);
+}
+</script>
 </body>
 </html>

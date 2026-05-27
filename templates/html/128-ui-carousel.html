@@ -3,20 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#465fff" />
-  <meta name="description" content="Carousel cards for onboarding, products, and announcements." />
-  <title>Carousel - mtverse</title>
+  <meta name="description" content="Carousel and slider components — mtverse UI" />
+  <title>Carousels &amp; Sliders — mtverse</title>
   <style>
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-    .animate-slideDown { animation: slideDown 0.2s ease-out; }
+    .no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+    @keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
   </style>
   <link rel="stylesheet" href="tailwind-production.css">
   <link rel="stylesheet" href="pro-styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
 <div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
@@ -26,63 +20,737 @@
     <div id="header-container"></div>
     <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
       <div class="mx-auto w-full max-w-screen-2xl">
-        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <div class="mb-2 flex items-center gap-2 text-sm text-gray-500">
-              <span>mtverse</span><span>/</span><span>ui-elements</span><span>/</span>
-              <span class="font-medium text-gray-800 dark:text-white/90">Carousel</span>
+
+        <!-- PAGE HEADER -->
+        <div class="mb-8">
+          <nav class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-3">
+            <a href="#" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">mtverse</a>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <a href="#" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">UI Elements</a>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <span class="text-gray-800 dark:text-white font-medium">Carousels &amp; Sliders</span>
+          </nav>
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-white tracking-tight mb-2">Carousels &amp; Sliders</h1>
+          <p class="text-gray-500 dark:text-gray-400 text-base max-w-2xl">Interactive carousel and slider components with auto-play, fade, card, testimonial, hero, thumbnail, and gallery variants.</p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
+            <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4 flex flex-col gap-1">
+              <span class="text-2xl font-bold text-gray-900 dark:text-white">8</span>
+              <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Variants</span>
             </div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white/90">Carousel</h1>
-            <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Carousel cards for onboarding, products, and announcements.</p>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <button type="button" class="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:bg-white/[0.03] dark:text-gray-300">Preview</button>
-            <button type="button" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">Use Component</button>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Components</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">24</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">States</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">96</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Responsive</p><p class="mt-2 text-3xl font-bold text-green-600">Ready</p>
+            <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4 flex flex-col gap-1">
+              <span class="text-2xl font-bold text-emerald-500">✓</span>
+              <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Animated</span>
+            </div>
+            <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4 flex flex-col gap-1">
+              <span class="text-2xl font-bold text-emerald-500">✓</span>
+              <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Touch</span>
+            </div>
+            <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4 flex flex-col gap-1">
+              <span class="text-2xl font-bold text-emerald-500">✓</span>
+              <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Accessible</span>
+            </div>
           </div>
         </div>
-        <div class="mt-5 grid grid-cols-1 gap-5 xl:grid-cols-2">
 
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Carousel preview</h2>
-            <div class="mt-5"><div class="grid gap-4 md:grid-cols-3"><article class="rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 p-5 text-white"><p class="text-sm opacity-80">Slide 1</p><h3 class="mt-8 text-xl font-bold">Launch campaign</h3><p class="mt-2 text-sm opacity-80">Production carousel card with readable content.</p></article><article class="rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 p-5 text-white"><p class="text-sm opacity-80">Slide 2</p><h3 class="mt-8 text-xl font-bold">Team activity</h3><p class="mt-2 text-sm opacity-80">Production carousel card with readable content.</p></article><article class="rounded-xl bg-gradient-to-br from-slate-800 to-blue-900 p-5 text-white"><p class="text-sm opacity-80">Slide 3</p><h3 class="mt-8 text-xl font-bold">Revenue insight</h3><p class="mt-2 text-sm opacity-80">Production carousel card with readable content.</p></article></div></div>
-          </section>
 
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] xl:col-span-2">
-            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-              <div>
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Carousel production states</h2>
-                <p class="mt-1 text-sm text-gray-500">Real dashboard states with actions, accessibility, responsive layout, and clean spacing.</p>
+
+        <!-- SECTION 1: BASIC CAROUSEL -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4 gap-4">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Basic Carousel</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Simple slide-based carousel with prev/next arrows and dot indicators.</p>
+            </div>
+            <button onclick="openSourceDrawer('basic','Basic Carousel')" class="flex-shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="relative max-w-xl mx-auto select-none">
+            <div class="overflow-hidden rounded-xl">
+              <div id="basic-track" class="flex transition-transform duration-300 ease-in-out" style="transform:translateX(0%)">
+                <div class="w-full flex-shrink-0 h-48 rounded-xl bg-blue-500 flex items-center justify-center text-white text-xl font-bold">Slide 1 — Blue</div>
+                <div class="w-full flex-shrink-0 h-48 rounded-xl bg-violet-500 flex items-center justify-center text-white text-xl font-bold">Slide 2 — Violet</div>
+                <div class="w-full flex-shrink-0 h-48 rounded-xl bg-emerald-500 flex items-center justify-center text-white text-xl font-bold">Slide 3 — Emerald</div>
               </div>
-              <div class="inline-flex rounded-xl bg-gray-100 p-1 dark:bg-white/[0.04]">
-                <button class="rounded-lg bg-white px-4 py-2 text-sm font-bold text-blue-600 shadow-sm dark:bg-gray-900">Preview</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">Code</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">States</button>
+            </div>
+            <button onclick="basicGoTo(basicCur-1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 dark:bg-gray-800/90 shadow-md flex items-center justify-center hover:bg-white dark:hover:bg-gray-700 transition-colors border border-gray-200 dark:border-gray-600">
+              <svg class="w-4 h-4 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button onclick="basicGoTo(basicCur+1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 dark:bg-gray-800/90 shadow-md flex items-center justify-center hover:bg-white dark:hover:bg-gray-700 transition-colors border border-gray-200 dark:border-gray-600">
+              <svg class="w-4 h-4 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+            <div id="basic-dots" class="flex justify-center gap-2 mt-3">
+              <button onclick="basicGoTo(0)" class="w-2.5 h-2.5 rounded-full bg-blue-500 transition-all"></button>
+              <button onclick="basicGoTo(1)" class="w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-gray-600 transition-all"></button>
+              <button onclick="basicGoTo(2)" class="w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-gray-600 transition-all"></button>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- SECTION 2: AUTO-PLAY CAROUSEL -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4 gap-4">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Auto-play Carousel</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Auto-advances every 3 seconds. Pauses on hover automatically.</p>
+            </div>
+            <button onclick="openSourceDrawer('autoplay','Auto-play Carousel')" class="flex-shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="relative max-w-xl mx-auto select-none"
+               onmouseover="autoPause()" onmouseleave="autoResume()">
+            <span class="absolute top-3 left-3 z-10 bg-black/50 text-white text-xs font-semibold px-2.5 py-1 rounded-full">Auto-playing...</span>
+            <div class="overflow-hidden rounded-xl">
+              <div id="auto-track" class="flex transition-transform duration-300 ease-in-out" style="transform:translateX(0%)">
+                <div class="w-full flex-shrink-0 h-48 rounded-xl bg-rose-500 flex items-center justify-center text-white text-xl font-bold">Slide 1 — Rose</div>
+                <div class="w-full flex-shrink-0 h-48 rounded-xl bg-amber-500 flex items-center justify-center text-white text-xl font-bold">Slide 2 — Amber</div>
+                <div class="w-full flex-shrink-0 h-48 rounded-xl bg-cyan-500 flex items-center justify-center text-white text-xl font-bold">Slide 3 — Cyan</div>
               </div>
             </div>
-            <div class="mt-5 grid gap-4 md:grid-cols-3">
-              <div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Default</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Hover / active</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Loading / empty</p><span class="h-2.5 w-2.5 rounded-full bg-yellow-400"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div>
+            <button onclick="autoGoTo(autoCur-1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 dark:bg-gray-800/90 shadow-md flex items-center justify-center hover:bg-white dark:hover:bg-gray-700 transition-colors border border-gray-200 dark:border-gray-600">
+              <svg class="w-4 h-4 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button onclick="autoGoTo(autoCur+1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 dark:bg-gray-800/90 shadow-md flex items-center justify-center hover:bg-white dark:hover:bg-gray-700 transition-colors border border-gray-200 dark:border-gray-600">
+              <svg class="w-4 h-4 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+            <div id="auto-dots" class="flex justify-center gap-2 mt-3">
+              <button onclick="autoGoTo(0)" class="w-2.5 h-2.5 rounded-full bg-rose-500 transition-all"></button>
+              <button onclick="autoGoTo(1)" class="w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-gray-600 transition-all"></button>
+              <button onclick="autoGoTo(2)" class="w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-gray-600 transition-all"></button>
             </div>
-          </section>
+          </div>
         </div>
+
+
+
+        <!-- SECTION 3: FADE CAROUSEL -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4 gap-4">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Fade Carousel</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Cross-fade transition between slides using CSS opacity transitions.</p>
+            </div>
+            <button onclick="openSourceDrawer('fade','Fade Carousel')" class="flex-shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="relative max-w-xl mx-auto select-none">
+            <div class="relative h-48 rounded-xl overflow-hidden">
+              <div id="fade-slide-0" class="absolute inset-0 h-48 rounded-xl bg-indigo-500 flex items-center justify-center text-white text-xl font-bold transition-opacity duration-500" style="opacity:1">Slide 1 — Indigo</div>
+              <div id="fade-slide-1" class="absolute inset-0 h-48 rounded-xl bg-teal-500 flex items-center justify-center text-white text-xl font-bold transition-opacity duration-500" style="opacity:0">Slide 2 — Teal</div>
+              <div id="fade-slide-2" class="absolute inset-0 h-48 rounded-xl bg-orange-500 flex items-center justify-center text-white text-xl font-bold transition-opacity duration-500" style="opacity:0">Slide 3 — Orange</div>
+            </div>
+            <button onclick="fadeGoTo(fadeCur-1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 dark:bg-gray-800/90 shadow-md flex items-center justify-center hover:bg-white dark:hover:bg-gray-700 transition-colors border border-gray-200 dark:border-gray-600">
+              <svg class="w-4 h-4 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button onclick="fadeGoTo(fadeCur+1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 dark:bg-gray-800/90 shadow-md flex items-center justify-center hover:bg-white dark:hover:bg-gray-700 transition-colors border border-gray-200 dark:border-gray-600">
+              <svg class="w-4 h-4 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+            <div id="fade-dots" class="flex justify-center gap-2 mt-3">
+              <button onclick="fadeGoTo(0)" class="w-2.5 h-2.5 rounded-full bg-indigo-500 transition-all"></button>
+              <button onclick="fadeGoTo(1)" class="w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-gray-600 transition-all"></button>
+              <button onclick="fadeGoTo(2)" class="w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-gray-600 transition-all"></button>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- SECTION 4: CARD CAROUSEL -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4 gap-4">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Card Carousel</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Shows multiple cards at once with prev/next navigation scrolling one card at a time.</p>
+            </div>
+            <button onclick="openSourceDrawer('card','Card Carousel')" class="flex-shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="relative">
+            <div class="overflow-hidden">
+              <div id="card-track" class="flex gap-4 transition-transform duration-300 ease-in-out" style="transform:translateX(0px)">
+                <div class="w-64 flex-shrink-0 rounded-xl border border-gray-200 dark:border-gray-700 p-4 bg-gray-50 dark:bg-gray-800/50">
+                  <div class="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center mb-3">
+                    <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                  </div>
+                  <h3 class="font-semibold text-gray-900 dark:text-white text-sm mb-1">Dashboard Analytics</h3>
+                  <p class="text-xs text-gray-500 dark:text-gray-400">Real-time metrics and KPI tracking for your business.</p>
+                </div>
+                <div class="w-64 flex-shrink-0 rounded-xl border border-gray-200 dark:border-gray-700 p-4 bg-gray-50 dark:bg-gray-800/50">
+                  <div class="w-10 h-10 rounded-lg bg-violet-100 dark:bg-violet-900/40 flex items-center justify-center mb-3">
+                    <svg class="w-5 h-5 text-violet-600 dark:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                  </div>
+                  <h3 class="font-semibold text-gray-900 dark:text-white text-sm mb-1">User Management</h3>
+                  <p class="text-xs text-gray-500 dark:text-gray-400">Manage roles, permissions, and team access controls.</p>
+                </div>
+                <div class="w-64 flex-shrink-0 rounded-xl border border-gray-200 dark:border-gray-700 p-4 bg-gray-50 dark:bg-gray-800/50">
+                  <div class="w-10 h-10 rounded-lg bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center mb-3">
+                    <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                  </div>
+                  <h3 class="font-semibold text-gray-900 dark:text-white text-sm mb-1">API Integration</h3>
+                  <p class="text-xs text-gray-500 dark:text-gray-400">Connect to external services via REST and GraphQL APIs.</p>
+                </div>
+                <div class="w-64 flex-shrink-0 rounded-xl border border-gray-200 dark:border-gray-700 p-4 bg-gray-50 dark:bg-gray-800/50">
+                  <div class="w-10 h-10 rounded-lg bg-amber-100 dark:bg-amber-900/40 flex items-center justify-center mb-3">
+                    <svg class="w-5 h-5 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                  </div>
+                  <h3 class="font-semibold text-gray-900 dark:text-white text-sm mb-1">Reports</h3>
+                  <p class="text-xs text-gray-500 dark:text-gray-400">Generate detailed reports and export data in multiple formats.</p>
+                </div>
+                <div class="w-64 flex-shrink-0 rounded-xl border border-gray-200 dark:border-gray-700 p-4 bg-gray-50 dark:bg-gray-800/50">
+                  <div class="w-10 h-10 rounded-lg bg-rose-100 dark:bg-rose-900/40 flex items-center justify-center mb-3">
+                    <svg class="w-5 h-5 text-rose-600 dark:text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                  </div>
+                  <h3 class="font-semibold text-gray-900 dark:text-white text-sm mb-1">Settings</h3>
+                  <p class="text-xs text-gray-500 dark:text-gray-400">Configure app preferences, notifications, and security options.</p>
+                </div>
+              </div>
+            </div>
+            <button onclick="cardGoTo(cardCur-1)" class="absolute -left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white dark:bg-gray-800 shadow-md flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors border border-gray-200 dark:border-gray-600">
+              <svg class="w-4 h-4 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button onclick="cardGoTo(cardCur+1)" class="absolute -right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white dark:bg-gray-800 shadow-md flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors border border-gray-200 dark:border-gray-600">
+              <svg class="w-4 h-4 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+
+
+
+        <!-- SECTION 5: TESTIMONIAL CAROUSEL -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4 gap-4">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Testimonial Carousel</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Large quote cards with author details and slide transitions.</p>
+            </div>
+            <button onclick="openSourceDrawer('testimonial','Testimonial Carousel')" class="flex-shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="relative max-w-2xl mx-auto">
+            <div class="relative overflow-hidden rounded-xl">
+              <div id="testi-track" class="flex transition-transform duration-400 ease-in-out" style="transform:translateX(0%)">
+                <div class="w-full flex-shrink-0 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl p-8">
+                  <span class="text-6xl text-blue-200 dark:text-blue-800 font-serif leading-none block mb-2">"</span>
+                  <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-6">mtverse has completely transformed how our team builds UI components. The quality and attention to detail is unmatched in the ecosystem.</p>
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-sm">AJ</div>
+                    <div><p class="font-semibold text-gray-900 dark:text-white text-sm">Alex Johnson</p><p class="text-xs text-gray-500 dark:text-gray-400">CTO, TechCorp Inc.</p></div>
+                  </div>
+                </div>
+                <div class="w-full flex-shrink-0 bg-gradient-to-br from-violet-50 to-purple-50 dark:from-violet-900/20 dark:to-purple-900/20 rounded-xl p-8">
+                  <span class="text-6xl text-violet-200 dark:text-violet-800 font-serif leading-none block mb-2">"</span>
+                  <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-6">We shipped our entire design system in half the time using mtverse. The components are production-ready and incredibly easy to customise.</p>
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-violet-500 flex items-center justify-center text-white font-bold text-sm">SM</div>
+                    <div><p class="font-semibold text-gray-900 dark:text-white text-sm">Sarah Mitchell</p><p class="text-xs text-gray-500 dark:text-gray-400">Lead Designer, StartupXYZ</p></div>
+                  </div>
+                </div>
+                <div class="w-full flex-shrink-0 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 rounded-xl p-8">
+                  <span class="text-6xl text-emerald-200 dark:text-emerald-800 font-serif leading-none block mb-2">"</span>
+                  <p class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-6">The dark mode support and accessibility features built into every component saved us weeks of work. Absolutely love this library.</p>
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold text-sm">RC</div>
+                    <div><p class="font-semibold text-gray-900 dark:text-white text-sm">Ryan Chen</p><p class="text-xs text-gray-500 dark:text-gray-400">Frontend Engineer, DevAgency</p></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between mt-4">
+              <button onclick="testiGoTo(testiCur-1)" class="w-9 h-9 rounded-full bg-white dark:bg-gray-800 shadow border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <svg class="w-4 h-4 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+              </button>
+              <div id="testi-dots" class="flex gap-2">
+                <button onclick="testiGoTo(0)" class="w-2.5 h-2.5 rounded-full bg-blue-500 transition-all"></button>
+                <button onclick="testiGoTo(1)" class="w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-gray-600 transition-all"></button>
+                <button onclick="testiGoTo(2)" class="w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-gray-600 transition-all"></button>
+              </div>
+              <button onclick="testiGoTo(testiCur+1)" class="w-9 h-9 rounded-full bg-white dark:bg-gray-800 shadow border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <svg class="w-4 h-4 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- SECTION 6: HERO CAROUSEL -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4 gap-4">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Full Hero Carousel</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Full-width hero slides with text overlay, arrows on sides and dots at bottom.</p>
+            </div>
+            <button onclick="openSourceDrawer('hero','Full Hero Carousel')" class="flex-shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="relative rounded-xl overflow-hidden select-none">
+            <div class="overflow-hidden">
+              <div id="hero-track" class="flex transition-transform duration-500 ease-in-out" style="transform:translateX(0%)">
+                <div class="w-full flex-shrink-0 h-64 bg-gradient-to-r from-blue-600 to-blue-700 flex flex-col items-center justify-center text-center px-8">
+                  <h2 class="text-3xl font-extrabold text-white mb-2 tracking-tight">Build Faster</h2>
+                  <p class="text-blue-100 text-base max-w-md">Accelerate your development workflow with ready-made premium components.</p>
+                  <button class="mt-4 px-5 py-2 rounded-lg bg-white text-blue-700 text-sm font-semibold hover:bg-blue-50 transition-colors">Get Started</button>
+                </div>
+                <div class="w-full flex-shrink-0 h-64 bg-gradient-to-r from-violet-600 to-violet-700 flex flex-col items-center justify-center text-center px-8">
+                  <h2 class="text-3xl font-extrabold text-white mb-2 tracking-tight">Ship Smarter</h2>
+                  <p class="text-violet-100 text-base max-w-md">Deploy with confidence using battle-tested, accessible UI patterns.</p>
+                  <button class="mt-4 px-5 py-2 rounded-lg bg-white text-violet-700 text-sm font-semibold hover:bg-violet-50 transition-colors">Learn More</button>
+                </div>
+                <div class="w-full flex-shrink-0 h-64 bg-gradient-to-r from-emerald-600 to-emerald-700 flex flex-col items-center justify-center text-center px-8">
+                  <h2 class="text-3xl font-extrabold text-white mb-2 tracking-tight">Scale Easily</h2>
+                  <p class="text-emerald-100 text-base max-w-md">Designed to grow with your application from prototype to production.</p>
+                  <button class="mt-4 px-5 py-2 rounded-lg bg-white text-emerald-700 text-sm font-semibold hover:bg-emerald-50 transition-colors">Explore</button>
+                </div>
+              </div>
+            </div>
+            <button onclick="heroGoTo(heroCur-1)" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-white/30 transition-colors border border-white/30">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button onclick="heroGoTo(heroCur+1)" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-white/30 transition-colors border border-white/30">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+            <div id="hero-dots" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+              <button onclick="heroGoTo(0)" class="w-2.5 h-2.5 rounded-full bg-white transition-all"></button>
+              <button onclick="heroGoTo(1)" class="w-2.5 h-2.5 rounded-full bg-white/40 transition-all"></button>
+              <button onclick="heroGoTo(2)" class="w-2.5 h-2.5 rounded-full bg-white/40 transition-all"></button>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- SECTION 7: THUMBNAIL CAROUSEL -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4 gap-4">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Thumbnail Carousel</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Main display area with clickable thumbnail strips below to navigate.</p>
+            </div>
+            <button onclick="openSourceDrawer('thumbnail','Thumbnail Carousel')" class="flex-shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="max-w-xl mx-auto">
+            <div id="thumb-main" class="h-48 rounded-xl bg-blue-500 flex items-center justify-center text-white text-xl font-bold mb-3 transition-all duration-300">Slide 1 — Blue</div>
+            <div class="flex gap-2 justify-center">
+              <button onclick="thumbGoTo(0)" id="thumb-0" class="w-16 h-12 rounded-lg bg-blue-500 flex-shrink-0 ring-2 ring-blue-500 ring-offset-2 transition-all hover:opacity-90 text-white text-xs font-semibold">1</button>
+              <button onclick="thumbGoTo(1)" id="thumb-1" class="w-16 h-12 rounded-lg bg-violet-500 flex-shrink-0 transition-all hover:opacity-90 text-white text-xs font-semibold">2</button>
+              <button onclick="thumbGoTo(2)" id="thumb-2" class="w-16 h-12 rounded-lg bg-emerald-500 flex-shrink-0 transition-all hover:opacity-90 text-white text-xs font-semibold">3</button>
+              <button onclick="thumbGoTo(3)" id="thumb-3" class="w-16 h-12 rounded-lg bg-amber-500 flex-shrink-0 transition-all hover:opacity-90 text-white text-xs font-semibold">4</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 8: IMAGE GALLERY -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4 gap-4">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Image Gallery</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Grid of image placeholders with hover expand icon and lightbox viewer.</p>
+            </div>
+            <button onclick="openSourceDrawer('gallery','Image Gallery')" class="flex-shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <div onclick="openLightbox(0)" class="relative h-32 rounded-xl bg-blue-400 cursor-pointer group overflow-hidden">
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center">
+                <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+              </div>
+            </div>
+            <div onclick="openLightbox(1)" class="relative h-32 rounded-xl bg-violet-400 cursor-pointer group overflow-hidden">
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center">
+                <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+              </div>
+            </div>
+            <div onclick="openLightbox(2)" class="relative h-32 rounded-xl bg-emerald-400 cursor-pointer group overflow-hidden">
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center">
+                <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+              </div>
+            </div>
+            <div onclick="openLightbox(3)" class="relative h-32 rounded-xl bg-rose-400 cursor-pointer group overflow-hidden">
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center">
+                <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+              </div>
+            </div>
+            <div onclick="openLightbox(4)" class="relative h-32 rounded-xl bg-amber-400 cursor-pointer group overflow-hidden">
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center">
+                <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+              </div>
+            </div>
+            <div onclick="openLightbox(5)" class="relative h-32 rounded-xl bg-cyan-400 cursor-pointer group overflow-hidden">
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center">
+                <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LIGHTBOX -->
+        <div id="carousel-lightbox" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center">
+          <button onclick="closeLightbox()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+          <div id="lightbox-content" class="w-80 h-56 rounded-2xl flex items-center justify-center text-white font-bold text-xl shadow-2xl"></div>
+        </div>
+
+
+
       </div>
     </main>
   </div>
 </div>
-<script src="common-loader.js"></script>
+
+<!-- Source Drawer -->
+<div id="source-drawer" class="fixed inset-x-0 bottom-0 z-50 hidden">
+  <div class="fixed inset-0 bg-black/30" onclick="closeSourceDrawer()"></div>
+  <div class="relative bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 rounded-t-2xl shadow-2xl max-h-[65vh] flex flex-col mx-auto" style="max-width:720px;border-left:1px solid #e5e7eb;border-right:1px solid #e5e7eb;">
+    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-gray-800 flex-shrink-0">
+      <div class="flex items-center gap-2">
+        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+        <span id="drawer-title" class="text-sm font-semibold text-gray-900 dark:text-white">Source Code</span>
+      </div>
+      <div class="flex gap-2">
+        <button onclick="copyDrawerCode()" class="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700 transition-colors">Copy</button>
+        <button onclick="closeSourceDrawer()" class="rounded-lg border border-gray-200 dark:border-gray-700 p-1.5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+    </div>
+    <div class="overflow-auto flex-1 p-5"><pre id="drawer-code" class="text-xs leading-relaxed text-gray-800 dark:text-gray-200 whitespace-pre-wrap font-mono"></pre></div>
+  </div>
+</div>
+<div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-2 pointer-events-none"></div>
 <script src="common-sidebar.js"></script>
 <script src="common-header.js"></script>
 <script src="app-shell.js"></script>
+<script>
+// ─── SOURCE SNIPPETS ──────────────────────────────────────────────────────────
+const SOURCE_SNIPPETS = {
+  basic: `<div class="relative max-w-xl mx-auto select-none">
+  <div class="overflow-hidden rounded-xl">
+    <div id="basic-track" class="flex transition-transform duration-300 ease-in-out" style="transform:translateX(0%)">
+      <div class="w-full flex-shrink-0 h-48 rounded-xl bg-blue-500 flex items-center justify-center text-white text-xl font-bold">Slide 1 — Blue</div>
+      <div class="w-full flex-shrink-0 h-48 rounded-xl bg-violet-500 flex items-center justify-center text-white text-xl font-bold">Slide 2 — Violet</div>
+      <div class="w-full flex-shrink-0 h-48 rounded-xl bg-emerald-500 flex items-center justify-center text-white text-xl font-bold">Slide 3 — Emerald</div>
+    </div>
+  </div>
+  <button onclick="basicGoTo(basicCur-1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 shadow-md ...">←</button>
+  <button onclick="basicGoTo(basicCur+1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 shadow-md ...">→</button>
+  <div id="basic-dots" class="flex justify-center gap-2 mt-3">
+    <button onclick="basicGoTo(0)" class="w-2.5 h-2.5 rounded-full bg-blue-500"></button>
+    <button onclick="basicGoTo(1)" class="w-2.5 h-2.5 rounded-full bg-gray-300"></button>
+    <button onclick="basicGoTo(2)" class="w-2.5 h-2.5 rounded-full bg-gray-300"></button>
+  </div>
+</div>
+<script>
+let basicCur = 0;
+function basicGoTo(n) {
+  const total = 3;
+  basicCur = ((n % total) + total) % total;
+  document.getElementById('basic-track').style.transform = 'translateX(-' + (basicCur * 100) + '%)';
+  document.querySelectorAll('#basic-dots button').forEach((d, i) => {
+    d.className = i === basicCur
+      ? 'w-2.5 h-2.5 rounded-full bg-blue-500 transition-all'
+      : 'w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-gray-600 transition-all';
+  });
+}
+<\/script>`,
+
+  autoplay: `<div class="relative max-w-xl mx-auto select-none"
+     onmouseover="autoPause()" onmouseleave="autoResume()">
+  <span class="absolute top-3 left-3 z-10 bg-black/50 text-white text-xs font-semibold px-2.5 py-1 rounded-full">Auto-playing...</span>
+  <div class="overflow-hidden rounded-xl">
+    <div id="auto-track" class="flex transition-transform duration-300 ease-in-out" style="transform:translateX(0%)">
+      <div class="w-full flex-shrink-0 h-48 rounded-xl bg-rose-500 ...">Slide 1</div>
+      <div class="w-full flex-shrink-0 h-48 rounded-xl bg-amber-500 ...">Slide 2</div>
+      <div class="w-full flex-shrink-0 h-48 rounded-xl bg-cyan-500 ...">Slide 3</div>
+    </div>
+  </div>
+  <!-- prev/next arrows + dots -->
+</div>
+<script>
+let autoCur = 0, autoTimer;
+function autoGoTo(n) {
+  const total = 3;
+  autoCur = ((n % total) + total) % total;
+  document.getElementById('auto-track').style.transform = 'translateX(-' + (autoCur * 100) + '%)';
+  document.querySelectorAll('#auto-dots button').forEach((d, i) => {
+    d.className = i === autoCur ? 'w-2.5 h-2.5 rounded-full bg-rose-500 transition-all' : 'w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-gray-600 transition-all';
+  });
+}
+function autoPause() { clearInterval(autoTimer); }
+function autoResume() { autoTimer = setInterval(() => autoGoTo(autoCur + 1), 3000); }
+autoResume();
+<\/script>`,
+
+  fade: `<div class="relative h-48 rounded-xl overflow-hidden">
+  <div id="fade-slide-0" class="absolute inset-0 bg-indigo-500 transition-opacity duration-500" style="opacity:1">Slide 1</div>
+  <div id="fade-slide-1" class="absolute inset-0 bg-teal-500 transition-opacity duration-500" style="opacity:0">Slide 2</div>
+  <div id="fade-slide-2" class="absolute inset-0 bg-orange-500 transition-opacity duration-500" style="opacity:0">Slide 3</div>
+</div>
+<script>
+let fadeCur = 0;
+function fadeGoTo(n) {
+  const total = 3;
+  const prev = fadeCur;
+  fadeCur = ((n % total) + total) % total;
+  document.getElementById('fade-slide-' + prev).style.opacity = '0';
+  document.getElementById('fade-slide-' + fadeCur).style.opacity = '1';
+  document.querySelectorAll('#fade-dots button').forEach((d, i) => {
+    d.className = i === fadeCur ? 'w-2.5 h-2.5 rounded-full bg-indigo-500 transition-all' : 'w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-gray-600 transition-all';
+  });
+}
+<\/script>`,
+
+  card: `<div class="overflow-hidden">
+  <div id="card-track" class="flex gap-4 transition-transform duration-300 ease-in-out">
+    <div class="w-64 flex-shrink-0 rounded-xl border p-4">Dashboard Analytics</div>
+    <div class="w-64 flex-shrink-0 rounded-xl border p-4">User Management</div>
+    <div class="w-64 flex-shrink-0 rounded-xl border p-4">API Integration</div>
+    <div class="w-64 flex-shrink-0 rounded-xl border p-4">Reports</div>
+    <div class="w-64 flex-shrink-0 rounded-xl border p-4">Settings</div>
+  </div>
+</div>
+<script>
+let cardCur = 0;
+function cardGoTo(n) {
+  const maxOffset = 2;
+  cardCur = Math.max(0, Math.min(n, maxOffset));
+  const offset = cardCur * (256 + 16);
+  document.getElementById('card-track').style.transform = 'translateX(-' + offset + 'px)';
+}
+<\/script>`,
+
+  testimonial: `<div class="relative max-w-2xl mx-auto">
+  <div class="overflow-hidden rounded-xl">
+    <div id="testi-track" class="flex transition-transform duration-300">
+      <div class="w-full flex-shrink-0 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-8">
+        <span class="text-6xl text-blue-200 font-serif">"</span>
+        <p>mtverse has completely transformed how our team builds UI components.</p>
+        <div class="flex items-center gap-3 mt-4">
+          <div class="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold">AJ</div>
+          <div><p class="font-semibold">Alex Johnson</p><p class="text-xs text-gray-500">CTO, TechCorp Inc.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- prev/next buttons + dots -->
+</div>`,
+
+  hero: `<div class="relative rounded-xl overflow-hidden select-none">
+  <div class="overflow-hidden">
+    <div id="hero-track" class="flex transition-transform duration-500">
+      <div class="w-full flex-shrink-0 h-64 bg-gradient-to-r from-blue-600 to-blue-700 flex flex-col items-center justify-center text-center px-8">
+        <h2 class="text-3xl font-extrabold text-white mb-2">Build Faster</h2>
+        <p class="text-blue-100">Accelerate your development workflow with ready-made premium components.</p>
+        <button class="mt-4 px-5 py-2 rounded-lg bg-white text-blue-700 text-sm font-semibold">Get Started</button>
+      </div>
+      <div class="w-full flex-shrink-0 h-64 bg-gradient-to-r from-violet-600 to-violet-700 ...">Ship Smarter</div>
+      <div class="w-full flex-shrink-0 h-64 bg-gradient-to-r from-emerald-600 to-emerald-700 ...">Scale Easily</div>
+    </div>
+  </div>
+  <button onclick="heroGoTo(heroCur-1)" class="absolute left-4 top-1/2 -translate-y-1/2 ...">←</button>
+  <button onclick="heroGoTo(heroCur+1)" class="absolute right-4 top-1/2 -translate-y-1/2 ...">→</button>
+  <div id="hero-dots" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">...</div>
+</div>`,
+
+  gallery: `<div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+  <div onclick="openLightbox(0)" class="relative h-32 rounded-xl bg-blue-400 cursor-pointer group overflow-hidden">
+    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center">
+      <!-- expand icon, opacity-0 group-hover:opacity-100 -->
+    </div>
+  </div>
+  <!-- ...5 more colored blocks -->
+</div>
+<!-- Lightbox -->
+<div id="carousel-lightbox" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center">
+  <button onclick="closeLightbox()" class="absolute top-4 right-4 ...">✕</button>
+  <div id="lightbox-content" class="w-80 h-56 rounded-2xl ..."></div>
+</div>
+<script>
+const galleryColors = ['bg-blue-400','bg-violet-400','bg-emerald-400','bg-rose-400','bg-amber-400','bg-cyan-400'];
+function openLightbox(i) {
+  const lb = document.getElementById('carousel-lightbox');
+  document.getElementById('lightbox-content').className = 'w-80 h-56 rounded-2xl flex items-center justify-center text-white font-bold text-xl shadow-2xl ' + galleryColors[i];
+  document.getElementById('lightbox-content').textContent = 'Image ' + (i+1);
+  lb.classList.remove('hidden');
+  lb.classList.add('flex');
+}
+function closeLightbox() {
+  const lb = document.getElementById('carousel-lightbox');
+  lb.classList.add('hidden');
+  lb.classList.remove('flex');
+}
+<\/script>`
+};
+
+// ─── DRAWER FUNCTIONS ─────────────────────────────────────────────────────────
+function openSourceDrawer(id, title) {
+  document.getElementById('drawer-title').textContent = title + ' — Source';
+  document.getElementById('drawer-code').textContent = SOURCE_SNIPPETS[id] || '<!-- No source available -->';
+  document.getElementById('source-drawer').classList.remove('hidden');
+  document.getElementById('source-drawer').dataset.currentId = id;
+  document.body.style.overflow = 'hidden';
+}
+function closeSourceDrawer() {
+  document.getElementById('source-drawer').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+function copyDrawerCode() {
+  navigator.clipboard.writeText(SOURCE_SNIPPETS[document.getElementById('source-drawer').dataset.currentId] || '').then(() => showToast('Copied to clipboard!'));
+}
+function showToast(msg) {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = 'pointer-events-auto flex items-center gap-2 rounded-xl border border-green-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 shadow-lg dark:border-green-800 dark:bg-gray-900 dark:text-white';
+  t.style.animation = 'toastIn .2s ease';
+  t.innerHTML = '<span class="h-2 w-2 rounded-full bg-green-500 flex-shrink-0"></span>' + msg;
+  c.appendChild(t);
+  setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateX(12px)'; t.style.transition = 'all .2s'; setTimeout(() => t.remove(), 200); }, 2500);
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSourceDrawer(); });
+
+
+
+// ─── BASIC CAROUSEL ───────────────────────────────────────────────────────────
+let basicCur = 0;
+function basicGoTo(n) {
+  const total = 3;
+  basicCur = ((n % total) + total) % total;
+  document.getElementById('basic-track').style.transform = 'translateX(-' + (basicCur * 100) + '%)';
+  document.querySelectorAll('#basic-dots button').forEach((d, i) => {
+    d.className = i === basicCur
+      ? 'w-2.5 h-2.5 rounded-full bg-blue-500 transition-all'
+      : 'w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-gray-600 transition-all';
+  });
+}
+
+// ─── AUTO-PLAY CAROUSEL ───────────────────────────────────────────────────────
+let autoCur = 0, autoTimer = null;
+function autoGoTo(n) {
+  const total = 3;
+  autoCur = ((n % total) + total) % total;
+  document.getElementById('auto-track').style.transform = 'translateX(-' + (autoCur * 100) + '%)';
+  document.querySelectorAll('#auto-dots button').forEach((d, i) => {
+    d.className = i === autoCur
+      ? 'w-2.5 h-2.5 rounded-full bg-rose-500 transition-all'
+      : 'w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-gray-600 transition-all';
+  });
+}
+function autoPause() { clearInterval(autoTimer); autoTimer = null; }
+function autoResume() {
+  if (!autoTimer) autoTimer = setInterval(() => autoGoTo(autoCur + 1), 3000);
+}
+autoResume();
+
+// ─── FADE CAROUSEL ────────────────────────────────────────────────────────────
+let fadeCur = 0;
+function fadeGoTo(n) {
+  const total = 3;
+  const prev = fadeCur;
+  fadeCur = ((n % total) + total) % total;
+  document.getElementById('fade-slide-' + prev).style.opacity = '0';
+  document.getElementById('fade-slide-' + fadeCur).style.opacity = '1';
+  document.querySelectorAll('#fade-dots button').forEach((d, i) => {
+    d.className = i === fadeCur
+      ? 'w-2.5 h-2.5 rounded-full bg-indigo-500 transition-all'
+      : 'w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-gray-600 transition-all';
+  });
+}
+
+// ─── CARD CAROUSEL ────────────────────────────────────────────────────────────
+let cardCur = 0;
+function cardGoTo(n) {
+  const maxOffset = 2;
+  cardCur = Math.max(0, Math.min(n, maxOffset));
+  const offset = cardCur * (256 + 16);
+  document.getElementById('card-track').style.transform = 'translateX(-' + offset + 'px)';
+}
+
+// ─── TESTIMONIAL CAROUSEL ─────────────────────────────────────────────────────
+let testiCur = 0;
+function testiGoTo(n) {
+  const total = 3;
+  testiCur = ((n % total) + total) % total;
+  document.getElementById('testi-track').style.transform = 'translateX(-' + (testiCur * 100) + '%)';
+  document.querySelectorAll('#testi-dots button').forEach((d, i) => {
+    d.className = i === testiCur
+      ? 'w-2.5 h-2.5 rounded-full bg-blue-500 transition-all'
+      : 'w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-gray-600 transition-all';
+  });
+}
+
+// ─── HERO CAROUSEL ────────────────────────────────────────────────────────────
+let heroCur = 0;
+function heroGoTo(n) {
+  const total = 3;
+  heroCur = ((n % total) + total) % total;
+  document.getElementById('hero-track').style.transform = 'translateX(-' + (heroCur * 100) + '%)';
+  document.querySelectorAll('#hero-dots button').forEach((d, i) => {
+    d.className = i === heroCur
+      ? 'w-2.5 h-2.5 rounded-full bg-white transition-all'
+      : 'w-2.5 h-2.5 rounded-full bg-white/40 transition-all';
+  });
+}
+
+// ─── THUMBNAIL CAROUSEL ───────────────────────────────────────────────────────
+const thumbData = [
+  { bg: 'bg-blue-500', label: 'Slide 1 — Blue' },
+  { bg: 'bg-violet-500', label: 'Slide 2 — Violet' },
+  { bg: 'bg-emerald-500', label: 'Slide 3 — Emerald' },
+  { bg: 'bg-amber-500', label: 'Slide 4 — Amber' }
+];
+let thumbCur = 0;
+function thumbGoTo(n) {
+  thumbCur = n;
+  const main = document.getElementById('thumb-main');
+  main.className = 'h-48 rounded-xl flex items-center justify-center text-white text-xl font-bold mb-3 transition-all duration-300 ' + thumbData[n].bg;
+  main.textContent = thumbData[n].label;
+  thumbData.forEach((_, i) => {
+    const el = document.getElementById('thumb-' + i);
+    if (i === n) {
+      el.className = 'w-16 h-12 rounded-lg flex-shrink-0 ring-2 ring-blue-500 ring-offset-2 transition-all hover:opacity-90 text-white text-xs font-semibold ' + thumbData[i].bg;
+    } else {
+      el.className = 'w-16 h-12 rounded-lg flex-shrink-0 transition-all hover:opacity-90 text-white text-xs font-semibold ' + thumbData[i].bg;
+    }
+  });
+}
+
+// ─── GALLERY LIGHTBOX ─────────────────────────────────────────────────────────
+const galleryColors = ['bg-blue-400','bg-violet-400','bg-emerald-400','bg-rose-400','bg-amber-400','bg-cyan-400'];
+const galleryNames = ['Blue Sky','Violet Dreams','Emerald Forest','Rose Garden','Amber Dusk','Cyan Ocean'];
+function openLightbox(i) {
+  const lb = document.getElementById('carousel-lightbox');
+  const content = document.getElementById('lightbox-content');
+  content.className = 'w-80 h-56 rounded-2xl flex items-center justify-center text-white font-bold text-xl shadow-2xl ' + galleryColors[i];
+  content.textContent = galleryNames[i];
+  lb.classList.remove('hidden');
+  lb.classList.add('flex');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  const lb = document.getElementById('carousel-lightbox');
+  lb.classList.add('hidden');
+  lb.classList.remove('flex');
+  document.body.style.overflow = '';
+}
+document.getElementById('carousel-lightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeLightbox();
+});
+</script>
 </body>
 </html>

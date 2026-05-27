@@ -3,86 +3,1118 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#465fff" />
-  <meta name="description" content="Advanced list rows with avatars, metadata, checkboxes, and row actions." />
-  <title>List - mtverse</title>
+  <meta name="description" content="List and list group components — mtverse UI" />
+  <title>Lists &amp; List Groups — mtverse</title>
+  <link rel="stylesheet" href="tailwind-production.css" />
+  <link rel="stylesheet" href="pro-styles.css" />
   <style>
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-    .animate-slideDown { animation: slideDown 0.2s ease-out; }
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateY(1rem) scale(0.95); }
+      to   { opacity: 1; transform: translateY(0)    scale(1); }
+    }
+    @keyframes shimmer {
+      0%   { background-position: -200% 0; }
+      100% { background-position:  200% 0; }
+    }
+    .toast-animate { animation: toastIn 0.28s ease forwards; }
+    .shimmer-bg {
+      background: linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+    }
+    /* Source drawer */
+    #source-drawer { transition: transform 0.3s ease; }
+    #source-drawer.open { transform: translateX(0) !important; }
   </style>
-  <link rel="stylesheet" href="tailwind-production.css">
-  <link rel="stylesheet" href="pro-styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
-<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<!-- Sidebar Overlay -->
+<div id="sidebar-overlay"
+     class="fixed inset-0 z-20 bg-black/40 backdrop-blur-sm hidden lg:hidden"
+     onclick="closeSidebar()"></div>
+
+<!-- App Shell Wrapper -->
 <div class="flex h-screen overflow-hidden">
-  <div id="sidebar-container"></div>
-  <div class="flex-1 flex flex-col overflow-hidden">
+
+  <!-- Sidebar -->
+  <div id="sidebar-container" class="flex-shrink-0"></div>
+
+  <!-- Right Column -->
+  <div class="flex flex-col flex-1 min-w-0 overflow-hidden">
+
+    <!-- Header -->
     <div id="header-container"></div>
-    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
-      <div class="mx-auto w-full max-w-screen-2xl">
-        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <div class="mb-2 flex items-center gap-2 text-sm text-gray-500">
-              <span>mtverse</span><span>/</span><span>ui-elements</span><span>/</span>
-              <span class="font-medium text-gray-800 dark:text-white/90">List</span>
-            </div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white/90">List</h1>
-            <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Advanced list rows with avatars, metadata, checkboxes, and row actions.</p>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <button type="button" class="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:bg-white/[0.03] dark:text-gray-300">Preview</button>
-            <button type="button" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">Use Component</button>
-          </div>
-        </div>
 
-        <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Components</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">24</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">States</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">96</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Responsive</p><p class="mt-2 text-3xl font-bold text-green-600">Ready</p>
-          </div>
-        </div>
-        <div class="mt-5 grid grid-cols-1 gap-5 xl:grid-cols-2">
+    <!-- Main scrollable area -->
+    <main class="flex-1 overflow-y-auto no-scrollbar px-4 py-6 md:px-6 lg:px-8">
 
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Operational list</h2>
-            <div class="mt-5"><div class="divide-y divide-gray-200 dark:divide-gray-800"><div class="flex items-center gap-4 py-4"><input type="checkbox" checked class="h-4 w-4 rounded"><img src="assets/avatars/admin-profile-man.png" class="h-9 w-9 rounded-full" alt="Owner"><div class="flex-1"><p class="font-semibold">Finish onboarding</p><p class="text-sm text-gray-500">Assigned to product team</p></div><span class="rounded-full bg-blue-50 px-2.5 py-1 text-xs font-bold text-blue-600">Task</span></div><div class="flex items-center gap-4 py-4"><input type="checkbox"  class="h-4 w-4 rounded"><img src="assets/avatars/admin-profile-man.png" class="h-9 w-9 rounded-full" alt="Owner"><div class="flex-1"><p class="font-semibold">Review billing update</p><p class="text-sm text-gray-500">Assigned to product team</p></div><span class="rounded-full bg-blue-50 px-2.5 py-1 text-xs font-bold text-blue-600">Task</span></div><div class="flex items-center gap-4 py-4"><input type="checkbox"  class="h-4 w-4 rounded"><img src="assets/avatars/admin-profile-man.png" class="h-9 w-9 rounded-full" alt="Owner"><div class="flex-1"><p class="font-semibold">Ship campaign</p><p class="text-sm text-gray-500">Assigned to product team</p></div><span class="rounded-full bg-blue-50 px-2.5 py-1 text-xs font-bold text-blue-600">Task</span></div><div class="flex items-center gap-4 py-4"><input type="checkbox"  class="h-4 w-4 rounded"><img src="assets/avatars/admin-profile-man.png" class="h-9 w-9 rounded-full" alt="Owner"><div class="flex-1"><p class="font-semibold">QA mobile sidebar</p><p class="text-sm text-gray-500">Assigned to product team</p></div><span class="rounded-full bg-blue-50 px-2.5 py-1 text-xs font-bold text-blue-600">Task</span></div></div></div>
-          </section>
-
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] xl:col-span-2">
-            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-              <div>
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">List production states</h2>
-                <p class="mt-1 text-sm text-gray-500">Real dashboard states with actions, accessibility, responsive layout, and clean spacing.</p>
-              </div>
-              <div class="inline-flex rounded-xl bg-gray-100 p-1 dark:bg-white/[0.04]">
-                <button class="rounded-lg bg-white px-4 py-2 text-sm font-bold text-blue-600 shadow-sm dark:bg-gray-900">Preview</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">Code</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">States</button>
-              </div>
-            </div>
-            <div class="mt-5 grid gap-4 md:grid-cols-3">
-              <div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Default</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Hover / active</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Loading / empty</p><span class="h-2.5 w-2.5 rounded-full bg-yellow-400"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div>
-            </div>
-          </section>
+      <!-- Page Hero -->
+      <div class="mb-8">
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Lists &amp; List Groups</h1>
+        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">15+ list patterns from simple to complex</p>
+        <!-- Stat Cards -->
+        <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div class="rounded-xl border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-white/[0.03]">
+            <p class="text-xs text-gray-500 dark:text-gray-400">Variants</p>
+            <p class="mt-0.5 text-xl font-bold text-gray-900 dark:text-white">16</p>
+          </div>
+          <div class="rounded-xl border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-white/[0.03]">
+            <p class="text-xs text-gray-500 dark:text-gray-400">Patterns</p>
+            <p class="mt-0.5 text-xl font-bold text-gray-900 dark:text-white">8</p>
+          </div>
+          <div class="rounded-xl border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-white/[0.03]">
+            <p class="text-xs text-gray-500 dark:text-gray-400">Interactive</p>
+            <p class="mt-0.5 text-xl font-bold text-green-500">✓</p>
+          </div>
+          <div class="rounded-xl border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-white/[0.03]">
+            <p class="text-xs text-gray-500 dark:text-gray-400">Responsive</p>
+            <p class="mt-0.5 text-xl font-bold text-green-500">✓</p>
+          </div>
         </div>
       </div>
-    </main>
+
+      <!-- ═══════════════════════════════════════════════════════
+           SECTION 1 — Simple Unordered List
+      ══════════════════════════════════════════════════════════ -->
+      <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-semibold text-gray-900 dark:text-white">Simple Unordered List</h2>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Clean bullet list with custom dot markers</p>
+          </div>
+          <button onclick="openSourceDrawer('simple')"
+                  class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+            </svg>
+            View Source
+          </button>
+        </div>
+        <ul class="space-y-2">
+          <li class="flex items-start gap-3 text-gray-700 dark:text-gray-300">
+            <span class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></span>
+            <span>Design systems help teams build consistent, scalable products</span>
+          </li>
+          <li class="flex items-start gap-3 text-gray-700 dark:text-gray-300">
+            <span class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></span>
+            <span>Component libraries reduce duplicated effort across projects</span>
+          </li>
+          <li class="flex items-start gap-3 text-gray-700 dark:text-gray-300">
+            <span class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></span>
+            <span>Tailwind CSS enables rapid UI development with utility classes</span>
+          </li>
+          <li class="flex items-start gap-3 text-gray-700 dark:text-gray-300">
+            <span class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></span>
+            <span>Accessibility should be considered from the start of every project</span>
+          </li>
+          <li class="flex items-start gap-3 text-gray-700 dark:text-gray-300">
+            <span class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></span>
+            <span>Dark mode support improves user experience in low-light environments</span>
+          </li>
+        </ul>
+      </section>
+
+
+      <!-- ═══════════════════════════════════════════════════════
+           SECTION 2 — Ordered List
+      ══════════════════════════════════════════════════════════ -->
+      <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-semibold text-gray-900 dark:text-white">Ordered List</h2>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Numbered steps with styled indicator circles</p>
+          </div>
+          <button onclick="openSourceDrawer('ordered')"
+                  class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+            </svg>
+            View Source
+          </button>
+        </div>
+        <ol class="space-y-2">
+          <li class="flex items-start gap-3 text-gray-700 dark:text-gray-300">
+            <span class="w-6 h-6 rounded-full bg-gray-100 dark:bg-gray-800 text-xs font-bold flex items-center justify-center text-gray-700 dark:text-gray-300 flex-shrink-0">1</span>
+            <span class="pt-0.5">Install dependencies using your preferred package manager</span>
+          </li>
+          <li class="flex items-start gap-3 text-gray-700 dark:text-gray-300">
+            <span class="w-6 h-6 rounded-full bg-gray-100 dark:bg-gray-800 text-xs font-bold flex items-center justify-center text-gray-700 dark:text-gray-300 flex-shrink-0">2</span>
+            <span class="pt-0.5">Configure your Tailwind CSS configuration file</span>
+          </li>
+          <li class="flex items-start gap-3 text-gray-700 dark:text-gray-300">
+            <span class="w-6 h-6 rounded-full bg-gray-100 dark:bg-gray-800 text-xs font-bold flex items-center justify-center text-gray-700 dark:text-gray-300 flex-shrink-0">3</span>
+            <span class="pt-0.5">Import the base styles into your main CSS entry point</span>
+          </li>
+          <li class="flex items-start gap-3 text-gray-700 dark:text-gray-300">
+            <span class="w-6 h-6 rounded-full bg-gray-100 dark:bg-gray-800 text-xs font-bold flex items-center justify-center text-gray-700 dark:text-gray-300 flex-shrink-0">4</span>
+            <span class="pt-0.5">Start the development server and open your browser</span>
+          </li>
+          <li class="flex items-start gap-3 text-gray-700 dark:text-gray-300">
+            <span class="w-6 h-6 rounded-full bg-gray-100 dark:bg-gray-800 text-xs font-bold flex items-center justify-center text-gray-700 dark:text-gray-300 flex-shrink-0">5</span>
+            <span class="pt-0.5">Build and deploy your production-ready application</span>
+          </li>
+        </ol>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════
+           SECTION 3 — Checklist
+      ══════════════════════════════════════════════════════════ -->
+      <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-semibold text-gray-900 dark:text-white">Checklist</h2>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Interactive checkboxes — click to toggle completion</p>
+          </div>
+          <button onclick="openSourceDrawer('checklist')"
+                  class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+            </svg>
+            View Source
+          </button>
+        </div>
+        <ul class="space-y-3">
+          <li class="flex items-center gap-3">
+            <input type="checkbox" id="chk1" onchange="toggleCheck(this)"
+                   class="w-4 h-4 rounded accent-blue-600 cursor-pointer flex-shrink-0" />
+            <label for="chk1" class="text-sm text-gray-700 dark:text-gray-300 cursor-pointer select-none transition-colors">Set up project repository and initial structure</label>
+          </li>
+          <li class="flex items-center gap-3">
+            <input type="checkbox" id="chk2" onchange="toggleCheck(this)" checked
+                   class="w-4 h-4 rounded accent-blue-600 cursor-pointer flex-shrink-0" />
+            <label for="chk2" class="text-sm text-gray-700 dark:text-gray-300 cursor-pointer select-none transition-colors line-through text-gray-400">Install and configure Tailwind CSS</label>
+          </li>
+          <li class="flex items-center gap-3">
+            <input type="checkbox" id="chk3" onchange="toggleCheck(this)"
+                   class="w-4 h-4 rounded accent-blue-600 cursor-pointer flex-shrink-0" />
+            <label for="chk3" class="text-sm text-gray-700 dark:text-gray-300 cursor-pointer select-none transition-colors">Design the component library architecture</label>
+          </li>
+          <li class="flex items-center gap-3">
+            <input type="checkbox" id="chk4" onchange="toggleCheck(this)" checked
+                   class="w-4 h-4 rounded accent-blue-600 cursor-pointer flex-shrink-0" />
+            <label for="chk4" class="text-sm text-gray-700 dark:text-gray-300 cursor-pointer select-none transition-colors line-through text-gray-400">Write unit tests for core components</label>
+          </li>
+          <li class="flex items-center gap-3">
+            <input type="checkbox" id="chk5" onchange="toggleCheck(this)"
+                   class="w-4 h-4 rounded accent-blue-600 cursor-pointer flex-shrink-0" />
+            <label for="chk5" class="text-sm text-gray-700 dark:text-gray-300 cursor-pointer select-none transition-colors">Review and publish documentation</label>
+          </li>
+        </ul>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════
+           SECTION 4 — List with Icons
+      ══════════════════════════════════════════════════════════ -->
+      <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-semibold text-gray-900 dark:text-white">List with Icons</h2>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Colored icon indicators for each item</p>
+          </div>
+          <button onclick="openSourceDrawer('icons')"
+                  class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+            </svg>
+            View Source
+          </button>
+        </div>
+        <ul class="divide-y divide-gray-100 dark:divide-gray-800">
+          <li class="flex items-center gap-3 py-2">
+            <span class="w-7 h-7 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center flex-shrink-0">
+              <svg class="w-3.5 h-3.5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+              </svg>
+            </span>
+            <span class="text-sm text-gray-700 dark:text-gray-300">All accessibility audits passed</span>
+          </li>
+          <li class="flex items-center gap-3 py-2">
+            <span class="w-7 h-7 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center flex-shrink-0">
+              <svg class="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            </span>
+            <span class="text-sm text-gray-700 dark:text-gray-300">Featured in top design resources</span>
+          </li>
+          <li class="flex items-center gap-3 py-2">
+            <span class="w-7 h-7 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0">
+              <svg class="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+              </svg>
+            </span>
+            <span class="text-sm text-gray-700 dark:text-gray-300">Deploy to production automatically</span>
+          </li>
+          <li class="flex items-center gap-3 py-2">
+            <span class="w-7 h-7 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center flex-shrink-0">
+              <svg class="w-3.5 h-3.5 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </span>
+            <span class="text-sm text-gray-700 dark:text-gray-300">3 tests failed — review required</span>
+          </li>
+          <li class="flex items-center gap-3 py-2">
+            <span class="w-7 h-7 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center flex-shrink-0">
+              <svg class="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" fill="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="5"/>
+              </svg>
+            </span>
+            <span class="text-sm text-gray-700 dark:text-gray-300">New feature flagged for beta users</span>
+          </li>
+        </ul>
+      </section>
+
+
+      <!-- ═══════════════════════════════════════════════════════
+           SECTION 5 — List with Badges
+      ══════════════════════════════════════════════════════════ -->
+      <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-semibold text-gray-900 dark:text-white">List with Badges</h2>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Items with count or label badges on the right</p>
+          </div>
+          <button onclick="openSourceDrawer('badges')"
+                  class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+            </svg>
+            View Source
+          </button>
+        </div>
+        <ul>
+          <li class="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-800">
+            <span class="text-sm text-gray-700 dark:text-gray-300">Inbox</span>
+            <span class="rounded-full bg-blue-600 px-2 py-0.5 text-xs font-semibold text-white">24</span>
+          </li>
+          <li class="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-800">
+            <span class="text-sm text-gray-700 dark:text-gray-300">Drafts</span>
+            <span class="rounded-full bg-gray-100 dark:bg-gray-700 px-2 py-0.5 text-xs font-semibold text-gray-700 dark:text-gray-300">6</span>
+          </li>
+          <li class="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-800">
+            <span class="text-sm text-gray-700 dark:text-gray-300">Sent</span>
+            <span class="rounded-full bg-gray-100 dark:bg-gray-700 px-2 py-0.5 text-xs font-semibold text-gray-700 dark:text-gray-300">143</span>
+          </li>
+          <li class="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-800">
+            <span class="text-sm text-gray-700 dark:text-gray-300">Spam</span>
+            <span class="rounded-full bg-red-100 dark:bg-red-900/30 px-2 py-0.5 text-xs font-semibold text-red-600 dark:text-red-400">8</span>
+          </li>
+          <li class="flex items-center justify-between py-2">
+            <span class="text-sm text-gray-700 dark:text-gray-300">Archived</span>
+            <span class="rounded-full bg-gray-100 dark:bg-gray-700 px-2 py-0.5 text-xs font-semibold text-gray-700 dark:text-gray-300">512</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════
+           SECTION 6 — List with Actions
+      ══════════════════════════════════════════════════════════ -->
+      <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-semibold text-gray-900 dark:text-white">List with Actions</h2>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Hover to reveal edit and delete controls</p>
+          </div>
+          <button onclick="openSourceDrawer('actions')"
+                  class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+            </svg>
+            View Source
+          </button>
+        </div>
+        <ul class="divide-y divide-gray-100 dark:divide-gray-800">
+          <li class="group flex items-center justify-between py-3 rounded-lg px-2 hover:bg-gray-50 dark:hover:bg-white/[0.03] transition-colors">
+            <span class="text-sm text-gray-700 dark:text-gray-300">Homepage redesign proposal</span>
+            <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              <button class="p-1.5 rounded-md hover:bg-blue-100 dark:hover:bg-blue-900/30 text-blue-600 dark:text-blue-400 transition-colors" title="Edit">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                </svg>
+              </button>
+              <button class="p-1.5 rounded-md hover:bg-red-100 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 transition-colors" title="Delete">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                </svg>
+              </button>
+            </div>
+          </li>
+          <li class="group flex items-center justify-between py-3 rounded-lg px-2 hover:bg-gray-50 dark:hover:bg-white/[0.03] transition-colors">
+            <span class="text-sm text-gray-700 dark:text-gray-300">Q3 marketing campaign brief</span>
+            <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              <button class="p-1.5 rounded-md hover:bg-blue-100 dark:hover:bg-blue-900/30 text-blue-600 dark:text-blue-400 transition-colors" title="Edit">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                </svg>
+              </button>
+              <button class="p-1.5 rounded-md hover:bg-red-100 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 transition-colors" title="Delete">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                </svg>
+              </button>
+            </div>
+          </li>
+          <li class="group flex items-center justify-between py-3 rounded-lg px-2 hover:bg-gray-50 dark:hover:bg-white/[0.03] transition-colors">
+            <span class="text-sm text-gray-700 dark:text-gray-300">API documentation update</span>
+            <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              <button class="p-1.5 rounded-md hover:bg-blue-100 dark:hover:bg-blue-900/30 text-blue-600 dark:text-blue-400 transition-colors" title="Edit">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                </svg>
+              </button>
+              <button class="p-1.5 rounded-md hover:bg-red-100 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 transition-colors" title="Delete">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                </svg>
+              </button>
+            </div>
+          </li>
+          <li class="group flex items-center justify-between py-3 rounded-lg px-2 hover:bg-gray-50 dark:hover:bg-white/[0.03] transition-colors">
+            <span class="text-sm text-gray-700 dark:text-gray-300">Mobile app onboarding flow</span>
+            <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              <button class="p-1.5 rounded-md hover:bg-blue-100 dark:hover:bg-blue-900/30 text-blue-600 dark:text-blue-400 transition-colors" title="Edit">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                </svg>
+              </button>
+              <button class="p-1.5 rounded-md hover:bg-red-100 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 transition-colors" title="Delete">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                </svg>
+              </button>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════
+           SECTION 7 — Description List
+      ══════════════════════════════════════════════════════════ -->
+      <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-semibold text-gray-900 dark:text-white">Description List</h2>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Key–value pairs for structured metadata</p>
+          </div>
+          <button onclick="openSourceDrawer('description')"
+                  class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+            </svg>
+            View Source
+          </button>
+        </div>
+        <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <div class="border-b border-gray-100 dark:border-gray-800 pb-3">
+            <dt class="text-xs font-semibold text-gray-500 dark:text-gray-500 uppercase tracking-wide">Full Name</dt>
+            <dd class="text-sm text-gray-900 dark:text-white mt-0.5 font-medium">Alexandra Johnson</dd>
+          </div>
+          <div class="border-b border-gray-100 dark:border-gray-800 pb-3">
+            <dt class="text-xs font-semibold text-gray-500 dark:text-gray-500 uppercase tracking-wide">Department</dt>
+            <dd class="text-sm text-gray-900 dark:text-white mt-0.5 font-medium">Product Design</dd>
+          </div>
+          <div class="border-b border-gray-100 dark:border-gray-800 pb-3">
+            <dt class="text-xs font-semibold text-gray-500 dark:text-gray-500 uppercase tracking-wide">Email Address</dt>
+            <dd class="text-sm text-gray-900 dark:text-white mt-0.5 font-medium">a.johnson@company.io</dd>
+          </div>
+          <div class="border-b border-gray-100 dark:border-gray-800 pb-3">
+            <dt class="text-xs font-semibold text-gray-500 dark:text-gray-500 uppercase tracking-wide">Member Since</dt>
+            <dd class="text-sm text-gray-900 dark:text-white mt-0.5 font-medium">March 14, 2021</dd>
+          </div>
+          <div class="sm:col-span-2">
+            <dt class="text-xs font-semibold text-gray-500 dark:text-gray-500 uppercase tracking-wide">Bio</dt>
+            <dd class="text-sm text-gray-900 dark:text-white mt-0.5">Senior product designer with a focus on user experience, accessibility, and design systems at scale.</dd>
+          </div>
+        </dl>
+      </section>
+
+
+      <!-- ═══════════════════════════════════════════════════════
+           SECTION 8 — Card List Group
+      ══════════════════════════════════════════════════════════ -->
+      <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-semibold text-gray-900 dark:text-white">Card List Group</h2>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Each item rendered as a standalone card</p>
+          </div>
+          <button onclick="openSourceDrawer('card-group')"
+                  class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+            </svg>
+            View Source
+          </button>
+        </div>
+        <ul class="space-y-3">
+          <li class="rounded-xl border border-gray-200 dark:border-gray-700 p-4 flex items-center justify-between hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">MK</div>
+              <div>
+                <p class="text-sm font-medium text-gray-900 dark:text-white">Marcus Kim</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Engineering Lead</p>
+              </div>
+            </div>
+            <span class="rounded-full bg-green-100 dark:bg-green-900/30 px-2.5 py-0.5 text-xs font-semibold text-green-700 dark:text-green-400">Active</span>
+          </li>
+          <li class="rounded-xl border border-gray-200 dark:border-gray-700 p-4 flex items-center justify-between hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full bg-violet-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">SR</div>
+              <div>
+                <p class="text-sm font-medium text-gray-900 dark:text-white">Sofia Reyes</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Product Manager</p>
+              </div>
+            </div>
+            <span class="rounded-full bg-amber-100 dark:bg-amber-900/30 px-2.5 py-0.5 text-xs font-semibold text-amber-700 dark:text-amber-400">On Leave</span>
+          </li>
+          <li class="rounded-xl border border-gray-200 dark:border-gray-700 p-4 flex items-center justify-between hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full bg-emerald-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">TC</div>
+              <div>
+                <p class="text-sm font-medium text-gray-900 dark:text-white">Tyler Chen</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Senior Designer</p>
+              </div>
+            </div>
+            <span class="rounded-full bg-green-100 dark:bg-green-900/30 px-2.5 py-0.5 text-xs font-semibold text-green-700 dark:text-green-400">Active</span>
+          </li>
+          <li class="rounded-xl border border-gray-200 dark:border-gray-700 p-4 flex items-center justify-between hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full bg-rose-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">NP</div>
+              <div>
+                <p class="text-sm font-medium text-gray-900 dark:text-white">Nina Patel</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Data Analyst</p>
+              </div>
+            </div>
+            <span class="rounded-full bg-gray-100 dark:bg-gray-700 px-2.5 py-0.5 text-xs font-semibold text-gray-600 dark:text-gray-400">Inactive</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════
+           SECTION 9 — Flush List
+      ══════════════════════════════════════════════════════════ -->
+      <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-semibold text-gray-900 dark:text-white">Flush List</h2>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">No outer border, items divided by subtle lines</p>
+          </div>
+          <button onclick="openSourceDrawer('flush')"
+                  class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+            </svg>
+            View Source
+          </button>
+        </div>
+        <ul>
+          <li class="py-3 border-b border-gray-100 dark:border-gray-800 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors cursor-default">Dashboard overview metrics</li>
+          <li class="py-3 border-b border-gray-100 dark:border-gray-800 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors cursor-default">User management and roles</li>
+          <li class="py-3 border-b border-gray-100 dark:border-gray-800 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors cursor-default">Billing and subscription settings</li>
+          <li class="py-3 border-b border-gray-100 dark:border-gray-800 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors cursor-default">API keys and integrations</li>
+          <li class="py-3 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors cursor-default">Security and authentication logs</li>
+        </ul>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════
+           SECTION 10 — User List
+      ══════════════════════════════════════════════════════════ -->
+      <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-semibold text-gray-900 dark:text-white">User List</h2>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Team members with avatars and presence status</p>
+          </div>
+          <button onclick="openSourceDrawer('user-list')"
+                  class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+            </svg>
+            View Source
+          </button>
+        </div>
+        <ul class="divide-y divide-gray-100 dark:divide-gray-800">
+          <li class="flex items-center justify-between py-3">
+            <div class="flex items-center gap-3">
+              <div class="relative flex-shrink-0">
+                <div class="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold">JD</div>
+                <span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-green-500 border-2 border-white dark:border-gray-900"></span>
+              </div>
+              <div>
+                <p class="text-sm font-medium text-gray-900 dark:text-white">James Donovan</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Frontend Engineer</p>
+              </div>
+            </div>
+            <span class="rounded-full bg-green-100 dark:bg-green-900/30 px-2 py-0.5 text-xs font-semibold text-green-700 dark:text-green-400">Active</span>
+          </li>
+          <li class="flex items-center justify-between py-3">
+            <div class="flex items-center gap-3">
+              <div class="relative flex-shrink-0">
+                <div class="w-9 h-9 rounded-full bg-violet-600 flex items-center justify-center text-white text-xs font-bold">AL</div>
+                <span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-amber-400 border-2 border-white dark:border-gray-900"></span>
+              </div>
+              <div>
+                <p class="text-sm font-medium text-gray-900 dark:text-white">Amara Levi</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">UX Researcher</p>
+              </div>
+            </div>
+            <span class="rounded-full bg-amber-100 dark:bg-amber-900/30 px-2 py-0.5 text-xs font-semibold text-amber-700 dark:text-amber-400">Away</span>
+          </li>
+          <li class="flex items-center justify-between py-3">
+            <div class="flex items-center gap-3">
+              <div class="relative flex-shrink-0">
+                <div class="w-9 h-9 rounded-full bg-emerald-600 flex items-center justify-center text-white text-xs font-bold">RN</div>
+                <span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-gray-400 border-2 border-white dark:border-gray-900"></span>
+              </div>
+              <div>
+                <p class="text-sm font-medium text-gray-900 dark:text-white">Rafael Nunes</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Backend Engineer</p>
+              </div>
+            </div>
+            <span class="rounded-full bg-gray-100 dark:bg-gray-700 px-2 py-0.5 text-xs font-semibold text-gray-600 dark:text-gray-400">Offline</span>
+          </li>
+          <li class="flex items-center justify-between py-3">
+            <div class="flex items-center gap-3">
+              <div class="relative flex-shrink-0">
+                <div class="w-9 h-9 rounded-full bg-rose-600 flex items-center justify-center text-white text-xs font-bold">PM</div>
+                <span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-red-500 border-2 border-white dark:border-gray-900"></span>
+              </div>
+              <div>
+                <p class="text-sm font-medium text-gray-900 dark:text-white">Priya Mehta</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">DevOps Specialist</p>
+              </div>
+            </div>
+            <span class="rounded-full bg-red-100 dark:bg-red-900/30 px-2 py-0.5 text-xs font-semibold text-red-700 dark:text-red-400">Busy</span>
+          </li>
+        </ul>
+      </section>
+
+
+      <!-- ═══════════════════════════════════════════════════════
+           SECTION 11 — Timeline
+      ══════════════════════════════════════════════════════════ -->
+      <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-semibold text-gray-900 dark:text-white">Timeline</h2>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Vertical event history with status indicators</p>
+          </div>
+          <button onclick="openSourceDrawer('timeline')"
+                  class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+            </svg>
+            View Source
+          </button>
+        </div>
+        <ol class="relative pl-8 before:absolute before:left-3 before:top-2 before:bottom-2 before:w-px before:bg-gray-200 dark:before:bg-gray-700 space-y-6">
+          <li class="relative">
+            <span class="absolute -left-5 w-4 h-4 rounded-full bg-blue-600 border-2 border-white dark:border-gray-900 flex-shrink-0"></span>
+            <div class="flex flex-col sm:flex-row sm:items-start sm:gap-4">
+              <span class="text-xs text-gray-400 dark:text-gray-500 sm:w-20 flex-shrink-0 mt-0.5">2 hrs ago</span>
+              <div>
+                <p class="text-sm font-semibold text-gray-900 dark:text-white">Deployment completed</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">v2.4.1 successfully deployed to production environment</p>
+              </div>
+            </div>
+          </li>
+          <li class="relative">
+            <span class="absolute -left-5 w-4 h-4 rounded-full bg-green-500 border-2 border-white dark:border-gray-900 flex-shrink-0"></span>
+            <div class="flex flex-col sm:flex-row sm:items-start sm:gap-4">
+              <span class="text-xs text-gray-400 dark:text-gray-500 sm:w-20 flex-shrink-0 mt-0.5">5 hrs ago</span>
+              <div>
+                <p class="text-sm font-semibold text-gray-900 dark:text-white">Tests passed</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">All 312 unit and integration tests passed with 94% coverage</p>
+              </div>
+            </div>
+          </li>
+          <li class="relative">
+            <span class="absolute -left-5 w-4 h-4 rounded-full bg-amber-400 border-2 border-white dark:border-gray-900 flex-shrink-0"></span>
+            <div class="flex flex-col sm:flex-row sm:items-start sm:gap-4">
+              <span class="text-xs text-gray-400 dark:text-gray-500 sm:w-20 flex-shrink-0 mt-0.5">8 hrs ago</span>
+              <div>
+                <p class="text-sm font-semibold text-gray-900 dark:text-white">Code review in progress</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">PR #482 awaiting final approval from team lead</p>
+              </div>
+            </div>
+          </li>
+          <li class="relative">
+            <span class="absolute -left-5 w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-600 border-2 border-white dark:border-gray-900 flex-shrink-0"></span>
+            <div class="flex flex-col sm:flex-row sm:items-start sm:gap-4">
+              <span class="text-xs text-gray-400 dark:text-gray-500 sm:w-20 flex-shrink-0 mt-0.5">Tomorrow</span>
+              <div>
+                <p class="text-sm font-semibold text-gray-500 dark:text-gray-400">Staging validation</p>
+                <p class="text-xs text-gray-500 dark:text-gray-500 mt-0.5">QA team to validate release candidate on staging</p>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════
+           SECTION 12 — Draggable Preview
+      ══════════════════════════════════════════════════════════ -->
+      <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-semibold text-gray-900 dark:text-white">Draggable Preview</h2>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Reorderable list with grip handles — visual UI only</p>
+          </div>
+          <button onclick="openSourceDrawer('draggable')"
+                  class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+            </svg>
+            View Source
+          </button>
+        </div>
+        <ul class="space-y-2">
+          <li class="flex items-center gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-white/[0.02] px-4 py-3 hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
+            <span class="cursor-grab text-gray-400 dark:text-gray-600 flex-shrink-0 active:cursor-grabbing" title="Drag to reorder">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/>
+                <circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/>
+                <circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/>
+              </svg>
+            </span>
+            <div class="w-2 h-2 rounded-full bg-blue-500 flex-shrink-0"></div>
+            <span class="text-sm text-gray-700 dark:text-gray-300 flex-1">Navigation menu structure</span>
+            <span class="text-xs text-gray-400 dark:text-gray-500">Priority 1</span>
+          </li>
+          <li class="flex items-center gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-white/[0.02] px-4 py-3 hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
+            <span class="cursor-grab text-gray-400 dark:text-gray-600 flex-shrink-0 active:cursor-grabbing" title="Drag to reorder">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/>
+                <circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/>
+                <circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/>
+              </svg>
+            </span>
+            <div class="w-2 h-2 rounded-full bg-violet-500 flex-shrink-0"></div>
+            <span class="text-sm text-gray-700 dark:text-gray-300 flex-1">Hero section copy and visuals</span>
+            <span class="text-xs text-gray-400 dark:text-gray-500">Priority 2</span>
+          </li>
+          <li class="flex items-center gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-white/[0.02] px-4 py-3 hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
+            <span class="cursor-grab text-gray-400 dark:text-gray-600 flex-shrink-0 active:cursor-grabbing" title="Drag to reorder">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/>
+                <circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/>
+                <circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/>
+              </svg>
+            </span>
+            <div class="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0"></div>
+            <span class="text-sm text-gray-700 dark:text-gray-300 flex-1">Feature grid component layout</span>
+            <span class="text-xs text-gray-400 dark:text-gray-500">Priority 3</span>
+          </li>
+          <li class="flex items-center gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-white/[0.02] px-4 py-3 hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
+            <span class="cursor-grab text-gray-400 dark:text-gray-600 flex-shrink-0 active:cursor-grabbing" title="Drag to reorder">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/>
+                <circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/>
+                <circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/>
+              </svg>
+            </span>
+            <div class="w-2 h-2 rounded-full bg-rose-500 flex-shrink-0"></div>
+            <span class="text-sm text-gray-700 dark:text-gray-300 flex-1">Footer links and social icons</span>
+            <span class="text-xs text-gray-400 dark:text-gray-500">Priority 4</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════
+           SECTION 13 — Nested List
+      ══════════════════════════════════════════════════════════ -->
+      <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-semibold text-gray-900 dark:text-white">Nested List</h2>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Hierarchical list with indented child items</p>
+          </div>
+          <button onclick="openSourceDrawer('nested')"
+                  class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+            </svg>
+            View Source
+          </button>
+        </div>
+        <ul class="space-y-1">
+          <li>
+            <div class="flex items-center gap-2 py-2 text-sm text-gray-700 dark:text-gray-300">
+              <span class="w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></span>
+              <span class="font-medium">Frontend</span>
+            </div>
+          </li>
+          <li>
+            <div class="flex items-center gap-2 py-2 text-sm text-gray-700 dark:text-gray-300">
+              <span class="w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></span>
+              <span class="font-medium">Backend</span>
+            </div>
+            <!-- Expanded sub-items -->
+            <ul class="ml-6 pl-4 border-l-2 border-gray-200 dark:border-gray-700 mt-1 space-y-1">
+              <li class="flex items-center gap-2 py-1.5 text-sm text-gray-600 dark:text-gray-400">
+                <span class="w-1 h-1 rounded-full bg-gray-400 flex-shrink-0"></span>
+                <span>REST API endpoints</span>
+              </li>
+              <li class="flex items-center gap-2 py-1.5 text-sm text-gray-600 dark:text-gray-400">
+                <span class="w-1 h-1 rounded-full bg-gray-400 flex-shrink-0"></span>
+                <span>Database schema migrations</span>
+              </li>
+              <li class="flex items-center gap-2 py-1.5 text-sm text-gray-600 dark:text-gray-400">
+                <span class="w-1 h-1 rounded-full bg-gray-400 flex-shrink-0"></span>
+                <span>Authentication middleware</span>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div class="flex items-center gap-2 py-2 text-sm text-gray-700 dark:text-gray-300">
+              <span class="w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></span>
+              <span class="font-medium">Infrastructure</span>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════
+           SECTION 14 — Status List
+      ══════════════════════════════════════════════════════════ -->
+      <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-semibold text-gray-900 dark:text-white">Status List</h2>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Service or user status indicators with timestamps</p>
+          </div>
+          <button onclick="openSourceDrawer('status')"
+                  class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+            </svg>
+            View Source
+          </button>
+        </div>
+        <ul class="divide-y divide-gray-100 dark:divide-gray-800">
+          <li class="flex items-center justify-between py-3">
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-green-500 flex-shrink-0"></span>
+              <span class="text-sm font-medium text-gray-700 dark:text-gray-300">API Gateway</span>
+              <span class="text-xs text-gray-400 dark:text-gray-500 bg-green-50 dark:bg-green-900/20 px-1.5 py-0.5 rounded text-green-600 dark:text-green-400">Online</span>
+            </div>
+            <span class="text-xs text-gray-400 dark:text-gray-500">Just now</span>
+          </li>
+          <li class="flex items-center justify-between py-3">
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-400 flex-shrink-0"></span>
+              <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Cache Service</span>
+              <span class="text-xs bg-amber-50 dark:bg-amber-900/20 px-1.5 py-0.5 rounded text-amber-600 dark:text-amber-400">Away</span>
+            </div>
+            <span class="text-xs text-gray-400 dark:text-gray-500">3 min ago</span>
+          </li>
+          <li class="flex items-center justify-between py-3">
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-red-500 flex-shrink-0"></span>
+              <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Email Worker</span>
+              <span class="text-xs bg-red-50 dark:bg-red-900/20 px-1.5 py-0.5 rounded text-red-600 dark:text-red-400">Error</span>
+            </div>
+            <span class="text-xs text-gray-400 dark:text-gray-500">12 min ago</span>
+          </li>
+          <li class="flex items-center justify-between py-3">
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-blue-500 flex-shrink-0"></span>
+              <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Data Pipeline</span>
+              <span class="text-xs bg-blue-50 dark:bg-blue-900/20 px-1.5 py-0.5 rounded text-blue-600 dark:text-blue-400">Processing</span>
+            </div>
+            <span class="text-xs text-gray-400 dark:text-gray-500">1 hr ago</span>
+          </li>
+          <li class="flex items-center justify-between py-3">
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-gray-400 flex-shrink-0"></span>
+              <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Backup Task</span>
+              <span class="text-xs bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-gray-600 dark:text-gray-400">Idle</span>
+            </div>
+            <span class="text-xs text-gray-400 dark:text-gray-500">2 hrs ago</span>
+          </li>
+        </ul>
+      </section>
+
+    </main><!-- /main -->
+  </div><!-- /right column -->
+</div><!-- /app shell wrapper -->
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     SOURCE DRAWER
+════════════════════════════════════════════════════════════ -->
+<div id="source-drawer"
+     class="fixed inset-y-0 right-0 z-50 w-full max-w-lg bg-white dark:bg-gray-900 shadow-2xl border-l border-gray-200 dark:border-gray-700 flex flex-col"
+     style="transform: translateX(100%);">
+  <!-- Drawer Header -->
+  <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
+    <div>
+      <h3 id="drawer-title" class="text-sm font-semibold text-gray-900 dark:text-white">Source Code</h3>
+      <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Copy and paste into your project</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <button onclick="copyDrawerCode()"
+              class="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 px-3 py-1.5 text-xs font-medium text-white transition-colors">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+        </svg>
+        Copy
+      </button>
+      <button onclick="closeSourceDrawer()"
+              class="rounded-lg p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <!-- Drawer Code Body -->
+  <div class="flex-1 overflow-y-auto no-scrollbar p-5">
+    <pre id="drawer-code"
+         class="text-xs text-gray-800 dark:text-gray-200 bg-gray-50 dark:bg-gray-800/60 rounded-xl p-4 whitespace-pre-wrap break-words leading-relaxed font-mono"></pre>
   </div>
 </div>
-<script src="common-loader.js"></script>
+
+<!-- Drawer Backdrop -->
+<div id="drawer-backdrop"
+     class="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm hidden"
+     onclick="closeSourceDrawer()"></div>
+
+<!-- Toast Container -->
+<div id="toast-container" class="fixed bottom-5 right-5 z-[9999] flex flex-col gap-2 pointer-events-none"></div>
+
+<!-- Scripts -->
 <script src="common-sidebar.js"></script>
 <script src="common-header.js"></script>
 <script src="app-shell.js"></script>
+
+<script>
+  /* ─── Checklist Toggle ──────────────────────────────────────────── */
+  function toggleCheck(cb) {
+    const label = cb.nextElementSibling;
+    label.classList.toggle('line-through', cb.checked);
+    label.classList.toggle('text-gray-400', cb.checked);
+  }
+
+  /* ─── Source Snippets ───────────────────────────────────────────── */
+  const SOURCE_SNIPPETS = {
+    simple: `<ul class="space-y-2">
+  <li class="flex items-start gap-3 text-gray-700 dark:text-gray-300">
+    <span class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></span>
+    <span>Design systems help teams build consistent products</span>
+  </li>
+  <li class="flex items-start gap-3 text-gray-700 dark:text-gray-300">
+    <span class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></span>
+    <span>Component libraries reduce duplicated effort</span>
+  </li>
+  <li class="flex items-start gap-3 text-gray-700 dark:text-gray-300">
+    <span class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></span>
+    <span>Tailwind CSS enables rapid UI development</span>
+  </li>
+</ul>`,
+
+    checklist: `<ul class="space-y-3">
+  <li class="flex items-center gap-3">
+    <input type="checkbox" id="chk1" onchange="toggleCheck(this)"
+           class="w-4 h-4 rounded accent-blue-600 cursor-pointer flex-shrink-0" />
+    <label for="chk1"
+           class="text-sm text-gray-700 dark:text-gray-300 cursor-pointer select-none transition-colors">
+      Set up project repository and initial structure
+    </label>
+  </li>
+  <li class="flex items-center gap-3">
+    <input type="checkbox" id="chk2" onchange="toggleCheck(this)" checked
+           class="w-4 h-4 rounded accent-blue-600 cursor-pointer flex-shrink-0" />
+    <label for="chk2"
+           class="text-sm line-through text-gray-400 cursor-pointer select-none transition-colors">
+      Install and configure Tailwind CSS
+    </label>
+  </li>
+</ul>
+
+<script>
+function toggleCheck(cb) {
+  const label = cb.nextElementSibling;
+  label.classList.toggle('line-through', cb.checked);
+  label.classList.toggle('text-gray-400', cb.checked);
+}
+<\/script>`,
+
+    'user-list': `<ul class="divide-y divide-gray-100 dark:divide-gray-800">
+  <li class="flex items-center justify-between py-3">
+    <div class="flex items-center gap-3">
+      <div class="relative flex-shrink-0">
+        <div class="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold">JD</div>
+        <span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-green-500 border-2 border-white dark:border-gray-900"></span>
+      </div>
+      <div>
+        <p class="text-sm font-medium text-gray-900 dark:text-white">James Donovan</p>
+        <p class="text-xs text-gray-500 dark:text-gray-400">Frontend Engineer</p>
+      </div>
+    </div>
+    <span class="rounded-full bg-green-100 dark:bg-green-900/30 px-2 py-0.5 text-xs font-semibold text-green-700 dark:text-green-400">Active</span>
+  </li>
+</ul>`,
+
+    timeline: `<ol class="relative pl-8 before:absolute before:left-3 before:top-2 before:bottom-2 before:w-px before:bg-gray-200 dark:before:bg-gray-700 space-y-6">
+  <li class="relative">
+    <span class="absolute -left-5 w-4 h-4 rounded-full bg-blue-600 border-2 border-white dark:border-gray-900"></span>
+    <div class="flex flex-col sm:flex-row sm:items-start sm:gap-4">
+      <span class="text-xs text-gray-400 sm:w-20 flex-shrink-0 mt-0.5">2 hrs ago</span>
+      <div>
+        <p class="text-sm font-semibold text-gray-900 dark:text-white">Deployment completed</p>
+        <p class="text-xs text-gray-500 mt-0.5">v2.4.1 deployed to production</p>
+      </div>
+    </div>
+  </li>
+  <li class="relative">
+    <span class="absolute -left-5 w-4 h-4 rounded-full bg-green-500 border-2 border-white dark:border-gray-900"></span>
+    <div class="flex flex-col sm:flex-row sm:items-start sm:gap-4">
+      <span class="text-xs text-gray-400 sm:w-20 flex-shrink-0 mt-0.5">5 hrs ago</span>
+      <div>
+        <p class="text-sm font-semibold text-gray-900 dark:text-white">Tests passed</p>
+        <p class="text-xs text-gray-500 mt-0.5">312 tests passed with 94% coverage</p>
+      </div>
+    </div>
+  </li>
+</ol>`,
+
+    actions: `<ul class="divide-y divide-gray-100 dark:divide-gray-800">
+  <li class="group flex items-center justify-between py-3 rounded-lg px-2 hover:bg-gray-50 dark:hover:bg-white/[0.03] transition-colors">
+    <span class="text-sm text-gray-700 dark:text-gray-300">Homepage redesign proposal</span>
+    <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+      <button class="p-1.5 rounded-md hover:bg-blue-100 dark:hover:bg-blue-900/30 text-blue-600 dark:text-blue-400">
+        <!-- Pencil SVG -->
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+        </svg>
+      </button>
+      <button class="p-1.5 rounded-md hover:bg-red-100 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400">
+        <!-- Trash SVG -->
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+        </svg>
+      </button>
+    </div>
+  </li>
+</ul>`,
+
+    badges: `<ul>
+  <li class="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-800">
+    <span class="text-sm text-gray-700 dark:text-gray-300">Inbox</span>
+    <span class="rounded-full bg-blue-600 px-2 py-0.5 text-xs font-semibold text-white">24</span>
+  </li>
+  <li class="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-800">
+    <span class="text-sm text-gray-700 dark:text-gray-300">Drafts</span>
+    <span class="rounded-full bg-gray-100 dark:bg-gray-700 px-2 py-0.5 text-xs font-semibold text-gray-700 dark:text-gray-300">6</span>
+  </li>
+  <li class="flex items-center justify-between py-2">
+    <span class="text-sm text-gray-700 dark:text-gray-300">Spam</span>
+    <span class="rounded-full bg-red-100 dark:bg-red-900/30 px-2 py-0.5 text-xs font-semibold text-red-600 dark:text-red-400">8</span>
+  </li>
+</ul>`,
+
+    'card-group': `<ul class="space-y-3">
+  <li class="rounded-xl border border-gray-200 dark:border-gray-700 p-4 flex items-center justify-between hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">MK</div>
+      <div>
+        <p class="text-sm font-medium text-gray-900 dark:text-white">Marcus Kim</p>
+        <p class="text-xs text-gray-500 dark:text-gray-400">Engineering Lead</p>
+      </div>
+    </div>
+    <span class="rounded-full bg-green-100 dark:bg-green-900/30 px-2.5 py-0.5 text-xs font-semibold text-green-700 dark:text-green-400">Active</span>
+  </li>
+</ul>`,
+
+    status: `<ul class="divide-y divide-gray-100 dark:divide-gray-800">
+  <li class="flex items-center justify-between py-3">
+    <div class="flex items-center gap-3">
+      <span class="w-2.5 h-2.5 rounded-full bg-green-500 flex-shrink-0"></span>
+      <span class="text-sm font-medium text-gray-700 dark:text-gray-300">API Gateway</span>
+      <span class="text-xs bg-green-50 dark:bg-green-900/20 px-1.5 py-0.5 rounded text-green-600 dark:text-green-400">Online</span>
+    </div>
+    <span class="text-xs text-gray-400 dark:text-gray-500">Just now</span>
+  </li>
+  <li class="flex items-center justify-between py-3">
+    <div class="flex items-center gap-3">
+      <span class="w-2.5 h-2.5 rounded-full bg-red-500 flex-shrink-0"></span>
+      <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Email Worker</span>
+      <span class="text-xs bg-red-50 dark:bg-red-900/20 px-1.5 py-0.5 rounded text-red-600 dark:text-red-400">Error</span>
+    </div>
+    <span class="text-xs text-gray-400 dark:text-gray-500">12 min ago</span>
+  </li>
+</ul>`
+  };
+
+  /* ─── Drawer API ────────────────────────────────────────────────── */
+  function openSourceDrawer(key) {
+    const titles = {
+      simple: 'Simple Unordered List',
+      ordered: 'Ordered List',
+      checklist: 'Checklist',
+      icons: 'List with Icons',
+      badges: 'List with Badges',
+      actions: 'List with Actions',
+      description: 'Description List',
+      'card-group': 'Card List Group',
+      flush: 'Flush List',
+      'user-list': 'User List',
+      timeline: 'Timeline',
+      draggable: 'Draggable Preview',
+      nested: 'Nested List',
+      status: 'Status List'
+    };
+    const code = SOURCE_SNIPPETS[key] || '<!-- Source not available for this component -->';
+    document.getElementById('drawer-title').textContent = titles[key] || 'Source Code';
+    document.getElementById('drawer-code').textContent = code;
+    document.getElementById('source-drawer').classList.add('open');
+    document.getElementById('drawer-backdrop').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSourceDrawer() {
+    document.getElementById('source-drawer').classList.remove('open');
+    document.getElementById('drawer-backdrop').classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  function copyDrawerCode() {
+    const code = document.getElementById('drawer-code').textContent;
+    navigator.clipboard.writeText(code).then(() => showToast('Code copied to clipboard!', 'success'))
+      .catch(() => showToast('Copy failed — please try again', 'error'));
+  }
+
+  /* ─── Toast ─────────────────────────────────────────────────────── */
+  function showToast(message, type = 'success') {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    const colors = {
+      success: 'bg-gray-900 dark:bg-gray-700 text-white',
+      error: 'bg-red-600 text-white',
+      info: 'bg-blue-600 text-white'
+    };
+    toast.className = `toast-animate pointer-events-auto flex items-center gap-2.5 rounded-xl px-4 py-3 shadow-xl text-sm font-medium ${colors[type] || colors.success}`;
+    toast.innerHTML = `
+      <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+      </svg>
+      <span>${message}</span>`;
+    container.appendChild(toast);
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(0.5rem) scale(0.95)';
+      toast.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+      setTimeout(() => toast.remove(), 200);
+    }, 2800);
+  }
+
+  /* ─── Escape key closes drawer ──────────────────────────────────── */
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeSourceDrawer();
+  });
+</script>
 </body>
 </html>
