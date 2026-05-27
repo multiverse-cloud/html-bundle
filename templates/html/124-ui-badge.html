@@ -4,13 +4,45 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#465fff" />
-  <meta name="description" content="Badge variants for status, category, count, and priority labels." />
-  <title>Badge - mtverse</title>
+  <meta name="description" content="50+ badge and label variants for status, counts, tags, and notifications — production-ready Tailwind CSS badge components." />
+  <title>Badges — mtverse</title>
   <style>
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-    .animate-slideDown { animation: slideDown 0.2s ease-out; }
+    @keyframes toastIn { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes fadeScaleOut { to { opacity: 0; transform: scale(0.8); } }
+    .badge-section-card {
+      border: 1px solid #e5e7eb;
+      background: #fff;
+      transition: border-color .18s ease;
+    }
+    .dark .badge-section-card {
+      border-color: #1f2937;
+      background: rgba(255,255,255,.03);
+    }
+    .shimmer-border {
+      position: relative;
+    }
+    .shimmer-border::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #a78bfa, #818cf8, #c4b5fd, #a78bfa);
+      background-size: 200% 100%;
+      animation: shimmerMove 2.4s linear infinite;
+      z-index: -1;
+    }
+    @keyframes shimmerMove { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+    .product-card {
+      border: 1px solid #e5e7eb;
+      background: #fff;
+      border-radius: 1rem;
+      overflow: hidden;
+      transition: box-shadow .18s ease;
+    }
+    .product-card:hover { box-shadow: 0 8px 24px rgba(15,23,42,.09); }
+    .dark .product-card { border-color: #1f2937; background: rgba(255,255,255,.03); }
   </style>
   <link rel="stylesheet" href="tailwind-production.css">
   <link rel="stylesheet" href="pro-styles.css">
@@ -26,14 +58,17 @@
     <div id="header-container"></div>
     <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
       <div class="mx-auto w-full max-w-screen-2xl">
+
+
+        <!-- PAGE HEADER -->
         <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <div class="mb-2 flex items-center gap-2 text-sm text-gray-500">
-              <span>mtverse</span><span>/</span><span>ui-elements</span><span>/</span>
-              <span class="font-medium text-gray-800 dark:text-white/90">Badge</span>
+              <span>mtverse</span><span>/</span><span>UI Elements</span><span>/</span>
+              <span class="font-medium text-gray-800 dark:text-white/90">Badges</span>
             </div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white/90">Badge</h1>
-            <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Badge variants for status, category, count, and priority labels.</p>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white/90">Badges &amp; Labels</h1>
+            <p class="mt-1 max-w-3xl text-sm text-gray-500 dark:text-gray-400">50+ badge and label variants for status, counts, tags, and notifications</p>
           </div>
           <div class="flex flex-wrap gap-2">
             <button type="button" class="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:bg-white/[0.03] dark:text-gray-300">Preview</button>
@@ -41,48 +76,747 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <!-- STAT CARDS -->
+        <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
           <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Components</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">24</p>
+            <p class="text-sm text-gray-500">Variants</p>
+            <p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">58</p>
           </div>
           <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">States</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">96</p>
+            <p class="text-sm text-gray-500">Colors</p>
+            <p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">12</p>
           </div>
           <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Responsive</p><p class="mt-2 text-3xl font-bold text-green-600">Ready</p>
+            <p class="text-sm text-gray-500">Types</p>
+            <p class="mt-2 text-3xl font-bold text-blue-600">8</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
+            <p class="text-sm text-gray-500">Responsive</p>
+            <p class="mt-2 text-3xl font-bold text-green-600">✓</p>
           </div>
         </div>
-        <div class="mt-5 grid grid-cols-1 gap-5 xl:grid-cols-2">
 
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Badge system</h2>
-            <div class="mt-5"><div class="flex flex-wrap gap-3"><span class="rounded-full bg-blue-50 text-blue-600 px-3 py-1 text-xs font-bold">Primary</span><span class="rounded-full bg-green-50 text-green-600 px-3 py-1 text-xs font-bold">Success</span><span class="rounded-full bg-yellow-50 text-yellow-700 px-3 py-1 text-xs font-bold">Warning</span><span class="rounded-full bg-red-50 text-red-600 px-3 py-1 text-xs font-bold">Error</span><span class="rounded-full bg-blue-50 text-blue-600 px-3 py-1 text-xs font-bold">Neutral</span><span class="rounded-full bg-green-50 text-green-600 px-3 py-1 text-xs font-bold">Beta</span><span class="rounded-full bg-yellow-50 text-yellow-700 px-3 py-1 text-xs font-bold">New</span><span class="rounded-full bg-red-50 text-red-600 px-3 py-1 text-xs font-bold">Pro</span><span class="rounded-full bg-blue-50 text-blue-600 px-3 py-1 text-xs font-bold">Draft</span><span class="rounded-full bg-green-50 text-green-600 px-3 py-1 text-xs font-bold">Live</span></div></div>
-          </section>
 
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] xl:col-span-2">
-            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-              <div>
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Badge production states</h2>
-                <p class="mt-1 text-sm text-gray-500">Real dashboard states with actions, accessibility, responsive layout, and clean spacing.</p>
-              </div>
-              <div class="inline-flex rounded-xl bg-gray-100 p-1 dark:bg-white/[0.04]">
-                <button class="rounded-lg bg-white px-4 py-2 text-sm font-bold text-blue-600 shadow-sm dark:bg-gray-900">Preview</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">Code</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">States</button>
+        <!-- SECTION 1: STATUS BADGES -->
+        <section id="status" class="mt-5 badge-section-card rounded-2xl p-5">
+          <div class="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Status Badges</h2>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Filled solid badges to convey account, system, or item status at a glance.</p>
+            </div>
+            <button onclick="openSourceDrawer('status','Status Badges')" class="shrink-0 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">View Source</button>
+          </div>
+          <div class="mt-5 flex flex-wrap items-center gap-3">
+            <span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-500/15 dark:text-green-300">Active</span>
+            <span class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-600 dark:bg-white/10 dark:text-gray-400">Inactive</span>
+            <span class="inline-flex items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-700 dark:bg-amber-500/15 dark:text-amber-300">Pending</span>
+            <span class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-700 dark:bg-red-500/15 dark:text-red-300">Suspended</span>
+            <span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-700 dark:bg-blue-500/15 dark:text-blue-300">Trial</span>
+            <span class="inline-flex items-center rounded-full border border-red-300 bg-transparent px-2.5 py-0.5 text-xs font-medium text-red-600 dark:border-red-500/50 dark:text-red-400">Cancelled</span>
+            <span class="inline-flex items-center rounded-full bg-teal-100 px-2.5 py-0.5 text-xs font-medium text-teal-700 dark:bg-teal-500/15 dark:text-teal-300">Verified</span>
+            <span class="inline-flex items-center rounded-full bg-indigo-100 px-2.5 py-0.5 text-xs font-medium text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-300">Beta</span>
+          </div>
+        </section>
+
+
+        <!-- SECTION 2: COLOR PALETTE -->
+        <section id="colors" class="mt-5 badge-section-card rounded-2xl p-5">
+          <div class="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Color Palette</h2>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">All 12+ colors in the soft/muted style — light background with matching text, ideal for tagging and categorization.</p>
+            </div>
+            <button onclick="openSourceDrawer('colors','Color Palette')" class="shrink-0 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">View Source</button>
+          </div>
+          <div class="mt-5 flex flex-wrap items-center gap-3">
+            <span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-1 text-xs font-medium text-blue-700 dark:bg-blue-500/15 dark:text-blue-300">Blue</span>
+            <span class="inline-flex items-center rounded-full bg-indigo-100 px-2.5 py-1 text-xs font-medium text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-300">Indigo</span>
+            <span class="inline-flex items-center rounded-full bg-violet-100 px-2.5 py-1 text-xs font-medium text-violet-700 dark:bg-violet-500/15 dark:text-violet-300">Violet</span>
+            <span class="inline-flex items-center rounded-full bg-purple-100 px-2.5 py-1 text-xs font-medium text-purple-700 dark:bg-purple-500/15 dark:text-purple-300">Purple</span>
+            <span class="inline-flex items-center rounded-full bg-pink-100 px-2.5 py-1 text-xs font-medium text-pink-700 dark:bg-pink-500/15 dark:text-pink-300">Pink</span>
+            <span class="inline-flex items-center rounded-full bg-rose-100 px-2.5 py-1 text-xs font-medium text-rose-700 dark:bg-rose-500/15 dark:text-rose-300">Rose</span>
+            <span class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-1 text-xs font-medium text-red-700 dark:bg-red-500/15 dark:text-red-300">Red</span>
+            <span class="inline-flex items-center rounded-full bg-orange-100 px-2.5 py-1 text-xs font-medium text-orange-700 dark:bg-orange-500/15 dark:text-orange-300">Orange</span>
+            <span class="inline-flex items-center rounded-full bg-amber-100 px-2.5 py-1 text-xs font-medium text-amber-700 dark:bg-amber-500/15 dark:text-amber-300">Amber</span>
+            <span class="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-1 text-xs font-medium text-yellow-700 dark:bg-yellow-500/15 dark:text-yellow-300">Yellow</span>
+            <span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-1 text-xs font-medium text-green-700 dark:bg-green-500/15 dark:text-green-300">Green</span>
+            <span class="inline-flex items-center rounded-full bg-teal-100 px-2.5 py-1 text-xs font-medium text-teal-700 dark:bg-teal-500/15 dark:text-teal-300">Teal</span>
+            <span class="inline-flex items-center rounded-full bg-cyan-100 px-2.5 py-1 text-xs font-medium text-cyan-700 dark:bg-cyan-500/15 dark:text-cyan-300">Cyan</span>
+            <span class="inline-flex items-center rounded-full bg-sky-100 px-2.5 py-1 text-xs font-medium text-sky-700 dark:bg-sky-500/15 dark:text-sky-300">Sky</span>
+            <span class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-600 dark:bg-white/10 dark:text-gray-400">Gray</span>
+          </div>
+        </section>
+
+
+        <!-- SECTION 3: SIZE VARIANTS -->
+        <section id="sizes" class="mt-5 badge-section-card rounded-2xl p-5">
+          <div class="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Size Variants</h2>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">From XS micro labels to XL prominent tags — all using consistent padding and rounded-full shapes.</p>
+            </div>
+            <button onclick="openSourceDrawer('sizes','Size Variants')" class="shrink-0 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">View Source</button>
+          </div>
+          <div class="mt-5 flex flex-wrap items-end gap-4">
+            <div class="flex flex-col items-center gap-1.5">
+              <span class="inline-flex items-center rounded-full bg-blue-100 px-1.5 py-0.5 font-medium text-blue-700 dark:bg-blue-500/15 dark:text-blue-300" style="font-size:10px">XS Badge</span>
+              <span class="text-[10px] text-gray-400">XS</span>
+            </div>
+            <div class="flex flex-col items-center gap-1.5">
+              <span class="inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700 dark:bg-blue-500/15 dark:text-blue-300">SM Badge</span>
+              <span class="text-[10px] text-gray-400">SM</span>
+            </div>
+            <div class="flex flex-col items-center gap-1.5">
+              <span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-1 text-xs font-medium text-blue-700 dark:bg-blue-500/15 dark:text-blue-300">MD Badge</span>
+              <span class="text-[10px] text-gray-400">MD</span>
+            </div>
+            <div class="flex flex-col items-center gap-1.5">
+              <span class="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-700 dark:bg-blue-500/15 dark:text-blue-300">LG Badge</span>
+              <span class="text-[10px] text-gray-400">LG</span>
+            </div>
+            <div class="flex flex-col items-center gap-1.5">
+              <span class="inline-flex items-center rounded-full bg-blue-100 px-4 py-1.5 text-sm font-medium text-blue-700 dark:bg-blue-500/15 dark:text-blue-300">XL Badge</span>
+              <span class="text-[10px] text-gray-400">XL</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 4: OUTLINE BADGES -->
+        <section id="outline" class="mt-5 badge-section-card rounded-2xl p-5">
+          <div class="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Outline Badges</h2>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Transparent background with colored border — great for secondary labels or less visually dominant tags.</p>
+            </div>
+            <button onclick="openSourceDrawer('outline','Outline Badges')" class="shrink-0 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">View Source</button>
+          </div>
+          <div class="mt-5 flex flex-wrap items-center gap-3">
+            <span class="inline-flex items-center rounded-full border border-blue-400 bg-transparent px-2.5 py-0.5 text-xs font-medium text-blue-600 dark:border-blue-400/60 dark:text-blue-400">Blue Outline</span>
+            <span class="inline-flex items-center rounded-full border border-green-400 bg-transparent px-2.5 py-0.5 text-xs font-medium text-green-600 dark:border-green-400/60 dark:text-green-400">Green Outline</span>
+            <span class="inline-flex items-center rounded-full border border-red-400 bg-transparent px-2.5 py-0.5 text-xs font-medium text-red-600 dark:border-red-400/60 dark:text-red-400">Red Outline</span>
+            <span class="inline-flex items-center rounded-full border border-amber-400 bg-transparent px-2.5 py-0.5 text-xs font-medium text-amber-600 dark:border-amber-400/60 dark:text-amber-400">Amber Outline</span>
+            <span class="inline-flex items-center rounded-full border border-purple-400 bg-transparent px-2.5 py-0.5 text-xs font-medium text-purple-600 dark:border-purple-400/60 dark:text-purple-400">Purple Outline</span>
+            <span class="inline-flex items-center rounded-full border border-gray-400 bg-transparent px-2.5 py-0.5 text-xs font-medium text-gray-500 dark:border-gray-500 dark:text-gray-400">Gray Outline</span>
+          </div>
+        </section>
+
+
+        <!-- SECTION 5: DOT BADGES -->
+        <section id="dot" class="mt-5 badge-section-card rounded-2xl p-5">
+          <div class="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Dot Badges</h2>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Badges with a colored presence dot on the left — perfect for user status or live state indicators.</p>
+            </div>
+            <button onclick="openSourceDrawer('dot','Dot Badges')" class="shrink-0 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">View Source</button>
+          </div>
+          <div class="mt-5 flex flex-wrap items-center gap-3">
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-3 py-1 text-xs font-medium text-green-700 dark:bg-green-500/10 dark:text-green-300">
+              <span class="h-1.5 w-1.5 rounded-full bg-green-500 flex-shrink-0"></span>Online
+            </span>
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600 dark:bg-white/10 dark:text-gray-400">
+              <span class="h-1.5 w-1.5 rounded-full bg-gray-400 flex-shrink-0"></span>Offline
+            </span>
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3 py-1 text-xs font-medium text-amber-700 dark:bg-amber-500/10 dark:text-amber-300">
+              <span class="h-1.5 w-1.5 rounded-full bg-amber-500 flex-shrink-0"></span>Away
+            </span>
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-red-50 px-3 py-1 text-xs font-medium text-red-700 dark:bg-red-500/10 dark:text-red-300">
+              <span class="h-1.5 w-1.5 rounded-full bg-red-500 flex-shrink-0"></span>Busy
+            </span>
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-purple-50 px-3 py-1 text-xs font-medium text-purple-700 dark:bg-purple-500/10 dark:text-purple-300">
+              <span class="h-1.5 w-1.5 rounded-full bg-purple-500 flex-shrink-0"></span>Focus
+            </span>
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700 dark:bg-blue-500/10 dark:text-blue-300">
+              <span class="h-1.5 w-1.5 rounded-full bg-blue-500 flex-shrink-0"></span>In Meeting
+            </span>
+          </div>
+        </section>
+
+
+        <!-- SECTION 6: COUNT / NOTIFICATION BADGES -->
+        <section id="count" class="mt-5 badge-section-card rounded-2xl p-5">
+          <div class="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Count &amp; Notification Badges</h2>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Number badges for notification counts — standalone, overlaid on icons, inline with nav items, and in buttons.</p>
+            </div>
+            <button onclick="openSourceDrawer('count','Count Badges')" class="shrink-0 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">View Source</button>
+          </div>
+          <div class="mt-5 flex flex-wrap items-start gap-8">
+            <!-- Standalone circles -->
+            <div class="flex flex-col items-center gap-2">
+              <p class="text-xs font-medium text-gray-500">Standalone</p>
+              <div class="flex items-center gap-2">
+                <span class="inline-flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">3</span>
+                <span class="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">12</span>
+                <span class="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-red-500 px-1.5 text-[10px] font-bold text-white">99+</span>
               </div>
             </div>
-            <div class="mt-5 grid gap-4 md:grid-cols-3">
-              <div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Default</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Hover / active</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Loading / empty</p><span class="h-2.5 w-2.5 rounded-full bg-yellow-400"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div>
+            <!-- Icon overlay -->
+            <div class="flex flex-col items-center gap-2">
+              <p class="text-xs font-medium text-gray-500">Icon overlay</p>
+              <div class="relative inline-flex items-center justify-center h-10 w-10 rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-white/[0.04]">
+                <svg class="h-5 w-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 00-9.33-4.998A6 6 0 006 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+                <span class="absolute -top-1 -right-1 inline-flex h-4 min-w-[16px] items-center justify-center rounded-full bg-red-500 px-0.5 text-[9px] font-bold text-white">5</span>
+              </div>
             </div>
-          </section>
-        </div>
-      </div>
+            <!-- Inline nav item -->
+            <div class="flex flex-col items-center gap-2">
+              <p class="text-xs font-medium text-gray-500">Nav inline</p>
+              <a href="#" class="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-200">
+                Messages
+                <span class="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-blue-600 px-1 text-[10px] font-bold text-white">4</span>
+              </a>
+            </div>
+            <!-- In button -->
+            <div class="flex flex-col items-center gap-2">
+              <p class="text-xs font-medium text-gray-500">Button</p>
+              <button class="inline-flex items-center gap-2 rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 dark:bg-white/[0.08] dark:hover:bg-white/[0.12]">
+                Inbox
+                <span class="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-white/20 px-1.5 text-[10px] font-bold text-white">3</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- SECTION 7: ICON + LABEL BADGES -->
+        <section id="icon-badge" class="mt-5 badge-section-card rounded-2xl p-5">
+          <div class="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Icon + Label Badges</h2>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Badges that include a small inline SVG icon for quick visual recognition and stronger hierarchy.</p>
+            </div>
+            <button onclick="openSourceDrawer('icon-badge','Icon + Label Badges')" class="shrink-0 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">View Source</button>
+          </div>
+          <div class="mt-5 flex flex-wrap items-center gap-3">
+            <!-- Verified -->
+            <span class="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-1 text-xs font-medium text-green-700 dark:bg-green-500/15 dark:text-green-300">
+              <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+              Verified
+            </span>
+            <!-- New -->
+            <span class="inline-flex items-center gap-1 rounded-full bg-blue-100 px-2.5 py-1 text-xs font-medium text-blue-700 dark:bg-blue-500/15 dark:text-blue-300">
+              <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              New
+            </span>
+            <!-- Secured -->
+            <span class="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-600 dark:bg-white/10 dark:text-gray-300">
+              <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+              Secured
+            </span>
+            <!-- Featured -->
+            <span class="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-1 text-xs font-medium text-amber-700 dark:bg-amber-500/15 dark:text-amber-300">
+              <svg class="h-3 w-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              Featured
+            </span>
+            <!-- Hot -->
+            <span class="inline-flex items-center gap-1 rounded-full bg-orange-100 px-2.5 py-1 text-xs font-medium text-orange-700 dark:bg-orange-500/15 dark:text-orange-300">
+              <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"/></svg>
+              Hot
+            </span>
+            <!-- AI-Powered -->
+            <span class="inline-flex items-center gap-1 rounded-full bg-violet-100 px-2.5 py-1 text-xs font-medium text-violet-700 dark:bg-violet-500/15 dark:text-violet-300">
+              <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16 2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+              AI-Powered
+            </span>
+          </div>
+        </section>
+
+
+        <!-- SECTION 8: REMOVABLE / TAG BADGES -->
+        <section id="tags" class="mt-5 badge-section-card rounded-2xl p-5">
+          <div class="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Removable Tag Badges</h2>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Tags with a functional × remove button — clicking fades out and removes the badge from the DOM.</p>
+            </div>
+            <button onclick="openSourceDrawer('tags','Tag Badges')" class="shrink-0 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">View Source</button>
+          </div>
+          <div id="tags-container" class="mt-5 flex flex-wrap items-center gap-2">
+            <span data-badge class="inline-flex items-center gap-1 rounded-full bg-blue-100 px-2.5 py-1 text-xs font-medium text-blue-700 dark:bg-blue-500/15 dark:text-blue-300">
+              JavaScript
+              <button data-remove-tag aria-label="Remove JavaScript" class="ml-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full hover:bg-blue-200 dark:hover:bg-blue-400/30 transition-colors">
+                <svg class="h-2.5 w-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </span>
+            <span data-badge class="inline-flex items-center gap-1 rounded-full bg-blue-100 px-2.5 py-1 text-xs font-medium text-blue-700 dark:bg-blue-500/15 dark:text-blue-300">
+              TypeScript
+              <button data-remove-tag aria-label="Remove TypeScript" class="ml-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full hover:bg-blue-200 dark:hover:bg-blue-400/30 transition-colors">
+                <svg class="h-2.5 w-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </span>
+            <span data-badge class="inline-flex items-center gap-1 rounded-full bg-cyan-100 px-2.5 py-1 text-xs font-medium text-cyan-700 dark:bg-cyan-500/15 dark:text-cyan-300">
+              React
+              <button data-remove-tag aria-label="Remove React" class="ml-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full hover:bg-cyan-200 dark:hover:bg-cyan-400/30 transition-colors">
+                <svg class="h-2.5 w-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </span>
+            <span data-badge class="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-1 text-xs font-medium text-green-700 dark:bg-green-500/15 dark:text-green-300">
+              Node.js
+              <button data-remove-tag aria-label="Remove Node.js" class="ml-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full hover:bg-green-200 dark:hover:bg-green-400/30 transition-colors">
+                <svg class="h-2.5 w-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </span>
+            <span data-badge class="inline-flex items-center gap-1 rounded-full bg-yellow-100 px-2.5 py-1 text-xs font-medium text-yellow-700 dark:bg-yellow-500/15 dark:text-yellow-300">
+              Python
+              <button data-remove-tag aria-label="Remove Python" class="ml-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full hover:bg-yellow-200 dark:hover:bg-yellow-400/30 transition-colors">
+                <svg class="h-2.5 w-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </span>
+            <span data-badge class="inline-flex items-center gap-1 rounded-full bg-teal-100 px-2.5 py-1 text-xs font-medium text-teal-700 dark:bg-teal-500/15 dark:text-teal-300">
+              Go
+              <button data-remove-tag aria-label="Remove Go" class="ml-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full hover:bg-teal-200 dark:hover:bg-teal-400/30 transition-colors">
+                <svg class="h-2.5 w-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </span>
+            <span data-badge class="inline-flex items-center gap-1 rounded-full bg-orange-100 px-2.5 py-1 text-xs font-medium text-orange-700 dark:bg-orange-500/15 dark:text-orange-300">
+              Rust
+              <button data-remove-tag aria-label="Remove Rust" class="ml-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full hover:bg-orange-200 dark:hover:bg-orange-400/30 transition-colors">
+                <svg class="h-2.5 w-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </span>
+            <span data-badge class="inline-flex items-center gap-1 rounded-full bg-indigo-100 px-2.5 py-1 text-xs font-medium text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-300">
+              Docker
+              <button data-remove-tag aria-label="Remove Docker" class="ml-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full hover:bg-indigo-200 dark:hover:bg-indigo-400/30 transition-colors">
+                <svg class="h-2.5 w-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </span>
+          </div>
+          <p class="mt-3 text-xs text-gray-400">Click × to remove a tag</p>
+        </section>
+
+
+        <!-- SECTION 9: ROLE & PERMISSION BADGES -->
+        <section id="roles" class="mt-5 badge-section-card rounded-2xl p-5">
+          <div class="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Role &amp; Permission Badges</h2>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Slightly larger badges with bolder font weight — designed for user role display in tables, profiles, and member lists.</p>
+            </div>
+            <button onclick="openSourceDrawer('roles','Role Badges')" class="shrink-0 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">View Source</button>
+          </div>
+          <div class="mt-5 flex flex-wrap items-center gap-3">
+            <span class="inline-flex items-center rounded-full bg-gray-900 px-3 py-1 text-xs font-semibold text-white dark:bg-white dark:text-gray-900">Admin</span>
+            <span class="inline-flex items-center rounded-full bg-blue-600 px-3 py-1 text-xs font-semibold text-white">Owner</span>
+            <span class="inline-flex items-center rounded-full bg-indigo-100 px-3 py-1 text-xs font-semibold text-indigo-800 dark:bg-indigo-500/15 dark:text-indigo-300">Editor</span>
+            <span class="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-600 dark:bg-white/10 dark:text-gray-300">Viewer</span>
+            <span class="inline-flex items-center rounded-full border border-gray-300 bg-transparent px-3 py-1 text-xs font-semibold text-gray-500 dark:border-gray-600 dark:text-gray-400">Guest</span>
+            <span class="inline-flex items-center rounded-full bg-teal-100 px-3 py-1 text-xs font-semibold text-teal-800 dark:bg-teal-500/15 dark:text-teal-300">Developer</span>
+            <span class="inline-flex items-center rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800 dark:bg-amber-500/15 dark:text-amber-300">Manager</span>
+          </div>
+        </section>
+
+        <!-- SECTION 10: PRODUCT / PRICING BADGES -->
+        <section id="product" class="mt-5 badge-section-card rounded-2xl p-5">
+          <div class="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Product &amp; Pricing Badges</h2>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">E-commerce and product card labels displayed in context on mock product cards.</p>
+            </div>
+            <button onclick="openSourceDrawer('product','Product Badges')" class="shrink-0 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">View Source</button>
+          </div>
+          <div class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-4">
+            <!-- NEW -->
+            <div class="product-card">
+              <div class="relative bg-gray-100 dark:bg-white/[0.06]" style="padding-top:60%">
+                <span class="absolute top-2 left-2 inline-flex items-center rounded-md bg-green-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">New</span>
+              </div>
+              <div class="p-3"><p class="text-xs font-semibold text-gray-800 dark:text-white">UI Kit Pro</p><p class="text-xs text-gray-400">$49</p></div>
+            </div>
+            <!-- SALE -->
+            <div class="product-card">
+              <div class="relative bg-gray-100 dark:bg-white/[0.06]" style="padding-top:60%">
+                <span class="absolute top-2 left-2 inline-flex items-center rounded-md bg-red-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">Sale</span>
+              </div>
+              <div class="p-3"><p class="text-xs font-semibold text-gray-800 dark:text-white">Dashboard Pack</p><p class="text-xs text-gray-400 line-through">$99</p><p class="text-xs font-bold text-red-600">$59</p></div>
+            </div>
+            <!-- POPULAR -->
+            <div class="product-card">
+              <div class="relative bg-gray-100 dark:bg-white/[0.06]" style="padding-top:60%">
+                <span class="absolute top-2 left-2 inline-flex items-center rounded-md bg-amber-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">Popular</span>
+              </div>
+              <div class="p-3"><p class="text-xs font-semibold text-gray-800 dark:text-white">Template Bundle</p><p class="text-xs text-gray-400">$79</p></div>
+            </div>
+            <!-- BEST VALUE -->
+            <div class="product-card">
+              <div class="relative bg-gray-100 dark:bg-white/[0.06]" style="padding-top:60%">
+                <span class="absolute top-2 left-2 inline-flex items-center rounded-md bg-blue-600 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">Best Value</span>
+              </div>
+              <div class="p-3"><p class="text-xs font-semibold text-gray-800 dark:text-white">All-Access Pass</p><p class="text-xs text-gray-400">$149</p></div>
+            </div>
+            <!-- LIMITED -->
+            <div class="product-card">
+              <div class="relative bg-gray-100 dark:bg-white/[0.06]" style="padding-top:60%">
+                <span class="absolute top-2 left-2 inline-flex items-center rounded-md bg-orange-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">Limited</span>
+              </div>
+              <div class="p-3"><p class="text-xs font-semibold text-gray-800 dark:text-white">Agency Seat</p><p class="text-xs text-gray-400">$299</p></div>
+            </div>
+            <!-- COMING SOON -->
+            <div class="product-card">
+              <div class="relative bg-gray-100 dark:bg-white/[0.06]" style="padding-top:60%">
+                <span class="absolute top-2 left-2 inline-flex items-center rounded-md bg-gray-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">Coming Soon</span>
+              </div>
+              <div class="p-3"><p class="text-xs font-semibold text-gray-800 dark:text-white">Mobile Kit</p><p class="text-xs text-gray-400">—</p></div>
+            </div>
+            <!-- PRO shimmer -->
+            <div class="product-card">
+              <div class="relative bg-gray-100 dark:bg-white/[0.06]" style="padding-top:60%">
+                <span class="shimmer-border absolute top-2 left-2 inline-flex items-center rounded-md bg-purple-600 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">Pro</span>
+              </div>
+              <div class="p-3"><p class="text-xs font-semibold text-gray-800 dark:text-white">Design System</p><p class="text-xs text-gray-400">$199/yr</p></div>
+            </div>
+            <!-- FREE outline -->
+            <div class="product-card">
+              <div class="relative bg-gray-100 dark:bg-white/[0.06]" style="padding-top:60%">
+                <span class="absolute top-2 left-2 inline-flex items-center rounded-md border border-green-500 bg-transparent px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-green-700 dark:text-green-400">Free</span>
+              </div>
+              <div class="p-3"><p class="text-xs font-semibold text-gray-800 dark:text-white">Starter Kit</p><p class="text-xs font-bold text-green-600">Free</p></div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- SECTION 11: PRIORITY BADGES -->
+        <section id="priority" class="mt-5 badge-section-card rounded-2xl p-5">
+          <div class="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Priority Badges</h2>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Used in task and issue trackers to communicate urgency — shown in a task-list context.</p>
+            </div>
+            <button onclick="openSourceDrawer('priority','Priority Badges')" class="shrink-0 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">View Source</button>
+          </div>
+          <div class="mt-5 space-y-2">
+            <div class="flex items-center gap-3 rounded-xl border border-gray-100 bg-gray-50 px-4 py-3 dark:border-gray-800 dark:bg-white/[0.02]">
+              <span class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-700 dark:bg-red-500/15 dark:text-red-300">Urgent</span>
+              <p class="text-sm text-gray-700 dark:text-gray-300">Production database is down — all regions affected</p>
+            </div>
+            <div class="flex items-center gap-3 rounded-xl border border-gray-100 bg-gray-50 px-4 py-3 dark:border-gray-800 dark:bg-white/[0.02]">
+              <span class="inline-flex items-center rounded-full bg-orange-100 px-2.5 py-0.5 text-xs font-semibold text-orange-700 dark:bg-orange-500/15 dark:text-orange-300">High</span>
+              <p class="text-sm text-gray-700 dark:text-gray-300">API rate limiting is affecting 3 enterprise customers</p>
+            </div>
+            <div class="flex items-center gap-3 rounded-xl border border-gray-100 bg-gray-50 px-4 py-3 dark:border-gray-800 dark:bg-white/[0.02]">
+              <span class="inline-flex items-center rounded-full border border-amber-400 bg-transparent px-2.5 py-0.5 text-xs font-semibold text-amber-600 dark:border-amber-400/60 dark:text-amber-400">Medium</span>
+              <p class="text-sm text-gray-700 dark:text-gray-300">Refactor authentication middleware to support OAuth 2.1</p>
+            </div>
+            <div class="flex items-center gap-3 rounded-xl border border-gray-100 bg-gray-50 px-4 py-3 dark:border-gray-800 dark:bg-white/[0.02]">
+              <span class="inline-flex items-center rounded-full border border-green-400 bg-transparent px-2.5 py-0.5 text-xs font-semibold text-green-600 dark:border-green-400/60 dark:text-green-400">Low</span>
+              <p class="text-sm text-gray-700 dark:text-gray-300">Update README with new environment variable documentation</p>
+            </div>
+            <div class="flex items-center gap-3 rounded-xl border border-gray-100 bg-gray-50 px-4 py-3 dark:border-gray-800 dark:bg-white/[0.02]">
+              <span class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-semibold text-gray-500 dark:bg-white/10 dark:text-gray-400">None</span>
+              <p class="text-sm text-gray-500 dark:text-gray-400">Explore dark mode palette options for next quarter</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 12: VERSION & RELEASE BADGES -->
+        <section id="version" class="mt-5 badge-section-card rounded-2xl p-5">
+          <div class="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Version &amp; Release Badges</h2>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Software versioning and release-channel labels for changelogs, docs, and release notes.</p>
+            </div>
+            <button onclick="openSourceDrawer('version','Version Badges')" class="shrink-0 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-white/[0.04] dark:text-gray-300 dark:hover:bg-white/[0.08]">View Source</button>
+          </div>
+          <div class="mt-5 flex flex-wrap items-center gap-3">
+            <span class="inline-flex items-center rounded-md bg-gray-100 px-2.5 py-1 font-mono text-xs font-semibold text-gray-700 dark:bg-white/10 dark:text-gray-300">v2.4.1</span>
+            <span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-1 text-xs font-semibold text-green-800 dark:bg-green-500/15 dark:text-green-300">STABLE</span>
+            <span class="inline-flex items-center rounded-full bg-amber-100 px-2.5 py-1 text-xs font-semibold text-amber-800 dark:bg-amber-500/15 dark:text-amber-300">BETA</span>
+            <span class="inline-flex items-center rounded-full bg-orange-100 px-2.5 py-1 text-xs font-semibold text-orange-800 dark:bg-orange-500/15 dark:text-orange-300">ALPHA</span>
+            <span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-1 text-xs font-semibold text-blue-800 dark:bg-blue-500/15 dark:text-blue-300">RC</span>
+            <span class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-1 text-xs font-semibold text-red-700 line-through dark:bg-red-500/15 dark:text-red-400">DEPRECATED</span>
+            <span class="inline-flex items-center rounded-full bg-teal-100 px-2.5 py-1 text-xs font-semibold text-teal-800 dark:bg-teal-500/15 dark:text-teal-300">LTS</span>
+          </div>
+        </section>
+
+      </div><!-- /max-w-screen-2xl -->
     </main>
   </div>
+</div><!-- /flex h-screen -->
+
+
+<!-- SOURCE DRAWER -->
+<div id="source-drawer" class="fixed inset-x-0 bottom-0 z-50 hidden">
+  <div id="source-overlay" class="fixed inset-0 bg-black/30" onclick="closeSourceDrawer()"></div>
+  <div class="relative bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 rounded-t-2xl shadow-2xl max-h-[65vh] flex flex-col mx-auto" style="max-width:720px;border-left:1px solid #e5e7eb;border-right:1px solid #e5e7eb;">
+    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-gray-800 flex-shrink-0">
+      <span id="drawer-title" class="text-sm font-semibold text-gray-900 dark:text-white">Source Code</span>
+      <div class="flex gap-2">
+        <button onclick="copyDrawerCode()" class="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700">Copy</button>
+        <button onclick="closeSourceDrawer()" class="rounded-lg border border-gray-200 dark:border-gray-700 p-1.5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="overflow-auto flex-1 p-5">
+      <pre id="drawer-code" class="text-xs leading-relaxed text-gray-800 dark:text-gray-200 whitespace-pre-wrap font-mono"></pre>
+    </div>
+  </div>
 </div>
-<script src="common-loader.js"></script>
+
+<!-- TOAST CONTAINER -->
+<div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-2 pointer-events-none"></div>
+
 <script src="common-sidebar.js"></script>
 <script src="common-header.js"></script>
 <script src="app-shell.js"></script>
+<script>
+/* ─── Source Snippets ─────────────────────────────────────────────────────── */
+const SOURCE_SNIPPETS = {
+  'status': `<!-- Status Badges -->
+<span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">Active</span>
+<span class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-600">Inactive</span>
+<span class="inline-flex items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-700">Pending</span>
+<span class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-700">Suspended</span>
+<span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-700">Trial</span>
+<span class="inline-flex items-center rounded-full border border-red-300 bg-transparent px-2.5 py-0.5 text-xs font-medium text-red-600">Cancelled</span>
+<span class="inline-flex items-center rounded-full bg-teal-100 px-2.5 py-0.5 text-xs font-medium text-teal-700">Verified</span>
+<span class="inline-flex items-center rounded-full bg-indigo-100 px-2.5 py-0.5 text-xs font-medium text-indigo-700">Beta</span>`,
+
+  'colors': `<!-- Color Palette Badges -->
+<span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-1 text-xs font-medium text-blue-700">Blue</span>
+<span class="inline-flex items-center rounded-full bg-indigo-100 px-2.5 py-1 text-xs font-medium text-indigo-700">Indigo</span>
+<span class="inline-flex items-center rounded-full bg-violet-100 px-2.5 py-1 text-xs font-medium text-violet-700">Violet</span>
+<span class="inline-flex items-center rounded-full bg-purple-100 px-2.5 py-1 text-xs font-medium text-purple-700">Purple</span>
+<span class="inline-flex items-center rounded-full bg-pink-100 px-2.5 py-1 text-xs font-medium text-pink-700">Pink</span>
+<span class="inline-flex items-center rounded-full bg-rose-100 px-2.5 py-1 text-xs font-medium text-rose-700">Rose</span>
+<span class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-1 text-xs font-medium text-red-700">Red</span>
+<span class="inline-flex items-center rounded-full bg-orange-100 px-2.5 py-1 text-xs font-medium text-orange-700">Orange</span>
+<span class="inline-flex items-center rounded-full bg-amber-100 px-2.5 py-1 text-xs font-medium text-amber-700">Amber</span>
+<span class="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-1 text-xs font-medium text-yellow-700">Yellow</span>
+<span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-1 text-xs font-medium text-green-700">Green</span>
+<span class="inline-flex items-center rounded-full bg-teal-100 px-2.5 py-1 text-xs font-medium text-teal-700">Teal</span>
+<span class="inline-flex items-center rounded-full bg-cyan-100 px-2.5 py-1 text-xs font-medium text-cyan-700">Cyan</span>
+<span class="inline-flex items-center rounded-full bg-sky-100 px-2.5 py-1 text-xs font-medium text-sky-700">Sky</span>
+<span class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-600">Gray</span>`,
+
+  'sizes': `<!-- Size Variants -->
+<!-- XS -->
+<span class="inline-flex items-center rounded-full bg-blue-100 px-1.5 py-0.5 font-medium text-blue-700" style="font-size:10px">XS Badge</span>
+<!-- SM -->
+<span class="inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">SM Badge</span>
+<!-- MD -->
+<span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-1 text-xs font-medium text-blue-700">MD Badge</span>
+<!-- LG -->
+<span class="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-700">LG Badge</span>
+<!-- XL -->
+<span class="inline-flex items-center rounded-full bg-blue-100 px-4 py-1.5 text-sm font-medium text-blue-700">XL Badge</span>`,
+
+  'outline': `<!-- Outline Badges -->
+<span class="inline-flex items-center rounded-full border border-blue-400 bg-transparent px-2.5 py-0.5 text-xs font-medium text-blue-600">Blue Outline</span>
+<span class="inline-flex items-center rounded-full border border-green-400 bg-transparent px-2.5 py-0.5 text-xs font-medium text-green-600">Green Outline</span>
+<span class="inline-flex items-center rounded-full border border-red-400 bg-transparent px-2.5 py-0.5 text-xs font-medium text-red-600">Red Outline</span>
+<span class="inline-flex items-center rounded-full border border-amber-400 bg-transparent px-2.5 py-0.5 text-xs font-medium text-amber-600">Amber Outline</span>
+<span class="inline-flex items-center rounded-full border border-purple-400 bg-transparent px-2.5 py-0.5 text-xs font-medium text-purple-600">Purple Outline</span>
+<span class="inline-flex items-center rounded-full border border-gray-400 bg-transparent px-2.5 py-0.5 text-xs font-medium text-gray-500">Gray Outline</span>`,
+
+  'dot': `<!-- Dot Badges -->
+<span class="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-3 py-1 text-xs font-medium text-green-700">
+  <span class="h-1.5 w-1.5 rounded-full bg-green-500 flex-shrink-0"></span>Online
+</span>
+<span class="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600">
+  <span class="h-1.5 w-1.5 rounded-full bg-gray-400 flex-shrink-0"></span>Offline
+</span>
+<span class="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3 py-1 text-xs font-medium text-amber-700">
+  <span class="h-1.5 w-1.5 rounded-full bg-amber-500 flex-shrink-0"></span>Away
+</span>
+<span class="inline-flex items-center gap-1.5 rounded-full bg-red-50 px-3 py-1 text-xs font-medium text-red-700">
+  <span class="h-1.5 w-1.5 rounded-full bg-red-500 flex-shrink-0"></span>Busy
+</span>
+<span class="inline-flex items-center gap-1.5 rounded-full bg-purple-50 px-3 py-1 text-xs font-medium text-purple-700">
+  <span class="h-1.5 w-1.5 rounded-full bg-purple-500 flex-shrink-0"></span>Focus
+</span>
+<span class="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">
+  <span class="h-1.5 w-1.5 rounded-full bg-blue-500 flex-shrink-0"></span>In Meeting
+</span>`,
+
+  'count': `<!-- Count / Notification Badges -->
+<!-- Standalone circles -->
+<span class="inline-flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">3</span>
+<span class="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">12</span>
+<span class="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-red-500 px-1.5 text-[10px] font-bold text-white">99+</span>
+
+<!-- Icon overlay -->
+<div class="relative inline-flex items-center justify-center h-10 w-10 rounded-xl border border-gray-200 bg-white">
+  <!-- bell icon here -->
+  <span class="absolute -top-1 -right-1 inline-flex h-4 min-w-[16px] items-center justify-center rounded-full bg-red-500 px-0.5 text-[9px] font-bold text-white">5</span>
+</div>
+
+<!-- Inline nav item -->
+<a href="#" class="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700">
+  Messages
+  <span class="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-blue-600 px-1 text-[10px] font-bold text-white">4</span>
+</a>
+
+<!-- In button -->
+<button class="inline-flex items-center gap-2 rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white">
+  Inbox
+  <span class="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-white/20 px-1.5 text-[10px] font-bold text-white">3</span>
+</button>`,
+
+  'icon-badge': `<!-- Icon + Label Badges -->
+<!-- Verified -->
+<span class="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-1 text-xs font-medium text-green-700">
+  <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+  Verified
+</span>
+<!-- New -->
+<span class="inline-flex items-center gap-1 rounded-full bg-blue-100 px-2.5 py-1 text-xs font-medium text-blue-700">
+  <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+  New
+</span>
+<!-- Secured -->
+<span class="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-600">
+  <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+  Secured
+</span>
+<!-- Featured -->
+<span class="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-1 text-xs font-medium text-amber-700">
+  <svg class="h-3 w-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  Featured
+</span>
+<!-- Hot -->
+<span class="inline-flex items-center gap-1 rounded-full bg-orange-100 px-2.5 py-1 text-xs font-medium text-orange-700">
+  <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/></svg>
+  Hot
+</span>
+<!-- AI-Powered -->
+<span class="inline-flex items-center gap-1 rounded-full bg-violet-100 px-2.5 py-1 text-xs font-medium text-violet-700">
+  <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16 2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+  AI-Powered
+</span>`,
+
+  'tags': `<!-- Removable Tag Badges -->
+<span data-badge class="inline-flex items-center gap-1 rounded-full bg-blue-100 px-2.5 py-1 text-xs font-medium text-blue-700">
+  JavaScript
+  <button data-remove-tag class="ml-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full hover:bg-blue-200 transition-colors">
+    <svg class="h-2.5 w-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>
+  </button>
+</span>
+<!-- Repeat pattern for each tag... -->`,
+
+  'roles': `<!-- Role & Permission Badges -->
+<span class="inline-flex items-center rounded-full bg-gray-900 px-3 py-1 text-xs font-semibold text-white">Admin</span>
+<span class="inline-flex items-center rounded-full bg-blue-600 px-3 py-1 text-xs font-semibold text-white">Owner</span>
+<span class="inline-flex items-center rounded-full bg-indigo-100 px-3 py-1 text-xs font-semibold text-indigo-800">Editor</span>
+<span class="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-600">Viewer</span>
+<span class="inline-flex items-center rounded-full border border-gray-300 bg-transparent px-3 py-1 text-xs font-semibold text-gray-500">Guest</span>
+<span class="inline-flex items-center rounded-full bg-teal-100 px-3 py-1 text-xs font-semibold text-teal-800">Developer</span>
+<span class="inline-flex items-center rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800">Manager</span>`,
+
+  'product': `<!-- Product / Pricing Badges -->
+<span class="inline-flex items-center rounded-md bg-green-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">New</span>
+<span class="inline-flex items-center rounded-md bg-red-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">Sale</span>
+<span class="inline-flex items-center rounded-md bg-amber-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">Popular</span>
+<span class="inline-flex items-center rounded-md bg-blue-600 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">Best Value</span>
+<span class="inline-flex items-center rounded-md bg-orange-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">Limited</span>
+<span class="inline-flex items-center rounded-md bg-gray-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">Coming Soon</span>
+<span class="inline-flex items-center rounded-md bg-purple-600 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">Pro</span>
+<span class="inline-flex items-center rounded-md border border-green-500 bg-transparent px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-green-700">Free</span>`,
+
+  'priority': `<!-- Priority Badges in task context -->
+<div class="flex items-center gap-3 rounded-xl border border-gray-100 bg-gray-50 px-4 py-3">
+  <span class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-700">Urgent</span>
+  <p class="text-sm text-gray-700">Task title goes here</p>
+</div>
+<div class="flex items-center gap-3 rounded-xl border border-gray-100 bg-gray-50 px-4 py-3">
+  <span class="inline-flex items-center rounded-full bg-orange-100 px-2.5 py-0.5 text-xs font-semibold text-orange-700">High</span>
+  <p class="text-sm text-gray-700">Task title goes here</p>
+</div>
+<div class="flex items-center gap-3 rounded-xl border border-gray-100 bg-gray-50 px-4 py-3">
+  <span class="inline-flex items-center rounded-full border border-amber-400 bg-transparent px-2.5 py-0.5 text-xs font-semibold text-amber-600">Medium</span>
+  <p class="text-sm text-gray-700">Task title goes here</p>
+</div>
+<div class="flex items-center gap-3 rounded-xl border border-gray-100 bg-gray-50 px-4 py-3">
+  <span class="inline-flex items-center rounded-full border border-green-400 bg-transparent px-2.5 py-0.5 text-xs font-semibold text-green-600">Low</span>
+  <p class="text-sm text-gray-700">Task title goes here</p>
+</div>
+<div class="flex items-center gap-3 rounded-xl border border-gray-100 bg-gray-50 px-4 py-3">
+  <span class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-semibold text-gray-500">None</span>
+  <p class="text-sm text-gray-700">Task title goes here</p>
+</div>`,
+
+  'version': `<!-- Version & Release Badges -->
+<span class="inline-flex items-center rounded-md bg-gray-100 px-2.5 py-1 font-mono text-xs font-semibold text-gray-700">v2.4.1</span>
+<span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-1 text-xs font-semibold text-green-800">STABLE</span>
+<span class="inline-flex items-center rounded-full bg-amber-100 px-2.5 py-1 text-xs font-semibold text-amber-800">BETA</span>
+<span class="inline-flex items-center rounded-full bg-orange-100 px-2.5 py-1 text-xs font-semibold text-orange-800">ALPHA</span>
+<span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-1 text-xs font-semibold text-blue-800">RC</span>
+<span class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-1 text-xs font-semibold text-red-700 line-through">DEPRECATED</span>
+<span class="inline-flex items-center rounded-full bg-teal-100 px-2.5 py-1 text-xs font-semibold text-teal-800">LTS</span>`
+};
+
+
+/* ─── Drawer functions ───────────────────────────────────────────────────── */
+function openSourceDrawer(sectionId, title) {
+  document.getElementById('drawer-title').textContent = title + ' — Source';
+  document.getElementById('drawer-code').textContent = SOURCE_SNIPPETS[sectionId] || '<!-- No source available -->';
+  const drawer = document.getElementById('source-drawer');
+  drawer.classList.remove('hidden');
+  drawer.dataset.currentId = sectionId;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSourceDrawer() {
+  document.getElementById('source-drawer').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+function copyDrawerCode() {
+  const id = document.getElementById('source-drawer').dataset.currentId;
+  const text = SOURCE_SNIPPETS[id] || '';
+  navigator.clipboard.writeText(text).then(function() {
+    showToast('Copied to clipboard!');
+  }).catch(function() {
+    showToast('Copy failed — try selecting manually.');
+  });
+}
+
+/* ─── Toast ──────────────────────────────────────────────────────────────── */
+function showToast(msg) {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = 'pointer-events-auto flex items-center gap-2 rounded-xl bg-white border border-gray-200 px-4 py-3 text-sm font-medium text-gray-800 shadow-lg dark:bg-gray-900 dark:border-gray-700 dark:text-white';
+  t.style.animation = 'toastIn .2s ease';
+  t.innerHTML = '<span class="h-2 w-2 rounded-full bg-green-500 flex-shrink-0"></span>' + msg;
+  c.appendChild(t);
+  setTimeout(function() {
+    t.style.opacity = '0';
+    t.style.transform = 'translateX(12px)';
+    t.style.transition = 'all .2s ease';
+    setTimeout(function() { t.remove(); }, 200);
+  }, 2500);
+}
+
+/* ─── Removable Tags ─────────────────────────────────────────────────────── */
+function initRemovableTags() {
+  document.querySelectorAll('[data-remove-tag]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var badge = this.closest('[data-badge]');
+      if (badge) {
+        badge.style.transition = 'all .15s ease';
+        badge.style.opacity = '0';
+        badge.style.transform = 'scale(0.8)';
+        setTimeout(function() { badge.remove(); }, 150);
+      }
+    });
+  });
+}
+
+/* ─── Keyboard: close drawer on Escape ──────────────────────────────────── */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    var drawer = document.getElementById('source-drawer');
+    if (!drawer.classList.contains('hidden')) {
+      closeSourceDrawer();
+    }
+  }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  initRemovableTags();
+});
+</script>
 </body>
 </html>
