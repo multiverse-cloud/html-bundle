@@ -274,6 +274,11 @@ layer(base);
   body {
     @apply font-outfit relative z-1 bg-gray-50 text-base font-normal;
   }
+
+  /* Alpine.js cloak — hide elements before Alpine initializes */
+  [x-cloak] {
+    display: none !important;
+  }
 }
 
 @layer utilities {
