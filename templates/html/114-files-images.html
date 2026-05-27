@@ -1,87 +1,896 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#465fff" />
-  <meta name="description" content="Production-ready Image Gallery HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
-  <title>Image Gallery — mtverse</title>
-  <style>
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    .animate-slideDown {
-      animation: slideDown 0.2s ease-out;
-    }
-    .sidebar-text {
-      transition: opacity 0.2s ease-in-out;
-    }
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Image Library — organize and manage your images" />
+  <title>Image Library — mtverse</title>
+  <style>.no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+  @keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .masonry-grid{columns:3;column-gap:1rem}
+  .masonry-item{break-inside:avoid;margin-bottom:1rem}
+  @media(max-width:768px){.masonry-grid{columns:2}}
+  @media(max-width:480px){.masonry-grid{columns:1}}
+  @keyframes progressAnim{from{width:0%}to{width:var(--target-width)}}
+  .progress-bar{animation:progressAnim 1.2s ease-out forwards}
+  .img-card:hover .img-overlay{opacity:1}
+  .img-overlay{opacity:0;transition:opacity .2s ease}
   </style>
-  <link rel="stylesheet" href="tailwind-production.css">
-  <link rel="stylesheet" href="pro-styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tailwind-production.css"><link rel="stylesheet" href="pro-styles.css">
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
-
-<!-- Mobile overlay -->
 <div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
-
 <div class="flex h-screen overflow-hidden">
-  <!-- Sidebar Container -->
   <div id="sidebar-container"></div>
-
-  <!-- Main content -->
   <div class="flex-1 flex flex-col overflow-hidden">
-    <!-- Header Container -->
     <div id="header-container"></div>
-
-    <!-- Page content -->
     <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
       <div class="mx-auto w-full max-w-screen-2xl">
-<div class="mb-6 flex items-center justify-between"><div><h1 class="text-2xl font-bold text-gray-900">Image Gallery</h1><p class="text-sm text-gray-500 mt-1">Browse and manage uploaded images</p></div><button type="button" class="bg-blue-600 text-white text-sm px-4 py-2 rounded-lg hover:bg-blue-700 transition">+ Upload Images</button></div>
-      <div class="flex gap-2 mb-5 flex-wrap">
-        <button type="button" class="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-full">All</button>
-        <button class="text-xs bg-white border border-gray-200 text-gray-600 px-3 py-1.5 rounded-full hover:bg-gray-50">Marketing</button>
-        <button class="text-xs bg-white border border-gray-200 text-gray-600 px-3 py-1.5 rounded-full hover:bg-gray-50">Products</button>
-        <button class="text-xs bg-white border border-gray-200 text-gray-600 px-3 py-1.5 rounded-full hover:bg-gray-50">Team</button>
-        <button class="text-xs bg-white border border-gray-200 text-gray-600 px-3 py-1.5 rounded-full hover:bg-gray-50">Branding</button>
-      </div>
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-        <div class="group relative bg-gray-200 rounded-xl overflow-hidden aspect-square cursor-pointer"><div class="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-600"></div><div class="absolute bottom-0 left-0 right-0 p-2 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition"><p class="text-white text-xs truncate">hero-banner.jpg</p><p class="text-gray-300 text-xs">1.2 MB</p></div></div>
-        <div class="group relative bg-gray-200 rounded-xl overflow-hidden aspect-square cursor-pointer"><div class="absolute inset-0 bg-gradient-to-br from-purple-400 to-pink-500"></div><div class="absolute bottom-0 left-0 right-0 p-2 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition"><p class="text-white text-xs truncate">product-shot.png</p><p class="text-gray-300 text-xs">840 KB</p></div></div>
-        <div class="group relative bg-gray-200 rounded-xl overflow-hidden aspect-square cursor-pointer"><div class="absolute inset-0 bg-gradient-to-br from-green-400 to-teal-500"></div><div class="absolute bottom-0 left-0 right-0 p-2 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition"><p class="text-white text-xs truncate">team-photo.jpg</p><p class="text-gray-300 text-xs">2.4 MB</p></div></div>
-        <div class="group relative bg-gray-200 rounded-xl overflow-hidden aspect-square cursor-pointer"><div class="absolute inset-0 bg-gradient-to-br from-orange-400 to-red-500"></div><div class="absolute bottom-0 left-0 right-0 p-2 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition"><p class="text-white text-xs truncate">logo-white.svg</p><p class="text-gray-300 text-xs">24 KB</p></div></div>
-        <div class="group relative bg-gray-200 rounded-xl overflow-hidden aspect-square cursor-pointer"><div class="absolute inset-0 bg-gradient-to-br from-yellow-300 to-orange-400"></div><div class="absolute bottom-0 left-0 right-0 p-2 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition"><p class="text-white text-xs truncate">icon-set.png</p><p class="text-gray-300 text-xs">380 KB</p></div></div>
-        <div class="group relative bg-gray-200 rounded-xl overflow-hidden aspect-square cursor-pointer"><div class="absolute inset-0 bg-gradient-to-br from-indigo-400 to-blue-600"></div><div class="absolute bottom-0 left-0 right-0 p-2 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition"><p class="text-white text-xs truncate">dashboard-preview.png</p><p class="text-gray-300 text-xs">1.8 MB</p></div></div>
-        <div class="group relative bg-gray-200 rounded-xl overflow-hidden aspect-square cursor-pointer"><div class="absolute inset-0 bg-gradient-to-br from-pink-400 to-red-400"></div><div class="absolute bottom-0 left-0 right-0 p-2 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition"><p class="text-white text-xs truncate">social-cover.jpg</p><p class="text-gray-300 text-xs">960 KB</p></div></div>
-        <div class="group relative bg-gray-200 rounded-xl overflow-hidden aspect-square cursor-pointer border-2 border-dashed border-gray-300 flex items-center justify-center hover:border-blue-400 transition"><div class="text-center"><svg class="w-8 h-8 text-gray-300 mx-auto mb-1" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg><p class="text-xs text-gray-400">Upload</p></div></div>
-      </div>
-      </div>
+
+        <!-- PAGE HEADER -->
+        <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Image Library</h1>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Organize, manage and share your image assets</p>
+          </div>
+          <button onclick="showToast('Upload dialog opened')" class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow hover:bg-blue-700 transition-colors">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+            Upload Images
+          </button>
+        </div>
+
+        <!-- SEARCH + FILTER TABS -->
+        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div class="relative flex-1 max-w-md">
+            <svg class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg>
+            <input type="text" placeholder="Search images…" oninput="filterBySearch(this.value)" class="w-full rounded-xl border border-gray-200 bg-white py-2.5 pl-9 pr-4 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400" />
+          </div>
+          <div class="flex items-center gap-1 rounded-xl border border-gray-200 bg-white p-1 dark:border-gray-700 dark:bg-gray-800">
+            <button data-filter="all"   onclick="setFilter('all',this)"   class="filter-tab rounded-lg px-3 py-1.5 text-xs font-medium bg-blue-600 text-white transition-colors">All</button>
+            <button data-filter="png"   onclick="setFilter('png',this)"   class="filter-tab rounded-lg px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 transition-colors">PNG</button>
+            <button data-filter="jpg"   onclick="setFilter('jpg',this)"   class="filter-tab rounded-lg px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 transition-colors">JPG</button>
+            <button data-filter="svg"   onclick="setFilter('svg',this)"   class="filter-tab rounded-lg px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 transition-colors">SVG</button>
+            <button data-filter="webp"  onclick="setFilter('webp',this)"  class="filter-tab rounded-lg px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 transition-colors">WebP</button>
+          </div>
+        </div>
+
+
+        <!-- STAT CARDS -->
+        <div class="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <div class="rounded-2xl bg-white border border-gray-100 p-4 shadow-sm dark:bg-gray-800 dark:border-gray-700">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Total Images</span>
+              <span class="rounded-lg bg-blue-50 p-1.5 dark:bg-blue-900/30"><svg class="h-4 w-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span>
+            </div>
+            <p class="text-2xl font-bold text-gray-900 dark:text-white">48</p>
+            <p class="mt-0.5 text-xs text-green-600 dark:text-green-400">↑ 6 this week</p>
+          </div>
+          <div class="rounded-2xl bg-white border border-gray-100 p-4 shadow-sm dark:bg-gray-800 dark:border-gray-700">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Storage Used</span>
+              <span class="rounded-lg bg-purple-50 p-1.5 dark:bg-purple-900/30"><svg class="h-4 w-4 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12H3l9-9 9 9h-2M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/></svg></span>
+            </div>
+            <p class="text-2xl font-bold text-gray-900 dark:text-white">2.4 <span class="text-lg font-medium text-gray-400">GB</span></p>
+            <p class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">of 10 GB limit</p>
+          </div>
+          <div class="rounded-2xl bg-white border border-gray-100 p-4 shadow-sm dark:bg-gray-800 dark:border-gray-700">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">This Month</span>
+              <span class="rounded-lg bg-green-50 p-1.5 dark:bg-green-900/30"><svg class="h-4 w-4 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg></span>
+            </div>
+            <p class="text-2xl font-bold text-gray-900 dark:text-white">12</p>
+            <p class="mt-0.5 text-xs text-green-600 dark:text-green-400">↑ 4 vs last month</p>
+          </div>
+          <div class="rounded-2xl bg-white border border-gray-100 p-4 shadow-sm dark:bg-gray-800 dark:border-gray-700">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Shared</span>
+              <span class="rounded-lg bg-amber-50 p-1.5 dark:bg-amber-900/30"><svg class="h-4 w-4 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></span>
+            </div>
+            <p class="text-2xl font-bold text-gray-900 dark:text-white">8</p>
+            <p class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">across 3 projects</p>
+          </div>
+        </div>
+
+        <!-- SECTION 1: MASONRY GRID -->
+        <div class="mb-8 rounded-2xl bg-white border border-gray-100 shadow-sm dark:bg-gray-800 dark:border-gray-700">
+          <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-700 px-6 py-4">
+            <h2 class="text-base font-semibold text-gray-900 dark:text-white">Image Grid</h2>
+            <div class="flex items-center gap-2">
+              <button id="btn-grid" onclick="setView('grid')" title="Grid view" class="view-btn rounded-lg bg-blue-600 p-2 text-white transition-colors">
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+              </button>
+              <button id="btn-list" onclick="setView('list')" title="List view" class="view-btn rounded-lg bg-gray-100 p-2 text-gray-500 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-600 transition-colors">
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="p-6">
+            <div id="masonry-grid" class="masonry-grid">
+
+
+              <!-- Card 1: hero-banner.jpg -->
+              <div class="masonry-item img-card group relative rounded-xl overflow-hidden border border-gray-100 dark:border-gray-700 cursor-pointer" data-type="jpg" data-name="hero-banner.jpg" onclick="openLightbox(0)">
+                <div class="h-48 bg-gradient-to-br from-blue-400 to-blue-700 w-full"></div>
+                <div class="img-overlay absolute inset-0 bg-black/60 flex flex-col justify-between p-3">
+                  <div class="flex justify-end"><input type="checkbox" class="img-checkbox h-4 w-4 rounded accent-blue-500" onclick="event.stopPropagation();handleSelect(this)" /></div>
+                  <div>
+                    <p class="text-xs font-medium text-white mb-1">hero-banner.jpg</p>
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs text-gray-300">1920×1080 · 2.4 MB</span>
+                      <button onclick="event.stopPropagation();showToast('Downloading hero-banner.jpg')" class="rounded-lg bg-white/20 hover:bg-white/30 px-2 py-1 text-xs text-white transition-colors">↓ Download</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 px-3 py-2 flex items-center justify-between border-t border-gray-100 dark:border-gray-700">
+                  <span class="text-xs font-medium text-gray-700 dark:text-gray-200 truncate">hero-banner.jpg</span>
+                  <span class="ml-2 flex-shrink-0 rounded-full bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">JPG</span>
+                </div>
+              </div>
+
+              <!-- Card 2: logo-dark.svg -->
+              <div class="masonry-item img-card group relative rounded-xl overflow-hidden border border-gray-100 dark:border-gray-700 cursor-pointer" data-type="svg" data-name="logo-dark.svg" onclick="openLightbox(1)">
+                <div class="h-32 bg-gradient-to-br from-gray-400 to-gray-700 w-full"></div>
+                <div class="img-overlay absolute inset-0 bg-black/60 flex flex-col justify-between p-3">
+                  <div class="flex justify-end"><input type="checkbox" class="img-checkbox h-4 w-4 rounded accent-blue-500" onclick="event.stopPropagation();handleSelect(this)" /></div>
+                  <div>
+                    <p class="text-xs font-medium text-white mb-1">logo-dark.svg</p>
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs text-gray-300">400×120 · 45 KB</span>
+                      <button onclick="event.stopPropagation();showToast('Downloading logo-dark.svg')" class="rounded-lg bg-white/20 hover:bg-white/30 px-2 py-1 text-xs text-white transition-colors">↓ Download</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 px-3 py-2 flex items-center justify-between border-t border-gray-100 dark:border-gray-700">
+                  <span class="text-xs font-medium text-gray-700 dark:text-gray-200 truncate">logo-dark.svg</span>
+                  <span class="ml-2 flex-shrink-0 rounded-full bg-gray-100 px-2 py-0.5 text-xs font-semibold text-gray-600 dark:bg-gray-700 dark:text-gray-300">SVG</span>
+                </div>
+              </div>
+
+              <!-- Card 3: team-photo.jpg -->
+              <div class="masonry-item img-card group relative rounded-xl overflow-hidden border border-gray-100 dark:border-gray-700 cursor-pointer" data-type="jpg" data-name="team-photo.jpg" onclick="openLightbox(2)">
+                <div class="h-64 bg-gradient-to-br from-green-400 to-green-700 w-full"></div>
+                <div class="img-overlay absolute inset-0 bg-black/60 flex flex-col justify-between p-3">
+                  <div class="flex justify-end"><input type="checkbox" class="img-checkbox h-4 w-4 rounded accent-blue-500" onclick="event.stopPropagation();handleSelect(this)" /></div>
+                  <div>
+                    <p class="text-xs font-medium text-white mb-1">team-photo.jpg</p>
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs text-gray-300">3840×2160 · 8.1 MB</span>
+                      <button onclick="event.stopPropagation();showToast('Downloading team-photo.jpg')" class="rounded-lg bg-white/20 hover:bg-white/30 px-2 py-1 text-xs text-white transition-colors">↓ Download</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 px-3 py-2 flex items-center justify-between border-t border-gray-100 dark:border-gray-700">
+                  <span class="text-xs font-medium text-gray-700 dark:text-gray-200 truncate">team-photo.jpg</span>
+                  <span class="ml-2 flex-shrink-0 rounded-full bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">JPG</span>
+                </div>
+              </div>
+
+              <!-- Card 4: product-screenshot.png -->
+              <div class="masonry-item img-card group relative rounded-xl overflow-hidden border border-gray-100 dark:border-gray-700 cursor-pointer" data-type="png" data-name="product-screenshot.png" onclick="openLightbox(3)">
+                <div class="h-40 bg-gradient-to-br from-purple-400 to-purple-700 w-full"></div>
+                <div class="img-overlay absolute inset-0 bg-black/60 flex flex-col justify-between p-3">
+                  <div class="flex justify-end"><input type="checkbox" class="img-checkbox h-4 w-4 rounded accent-blue-500" onclick="event.stopPropagation();handleSelect(this)" /></div>
+                  <div>
+                    <p class="text-xs font-medium text-white mb-1">product-screenshot.png</p>
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs text-gray-300">1440×900 · 3.2 MB</span>
+                      <button onclick="event.stopPropagation();showToast('Downloading product-screenshot.png')" class="rounded-lg bg-white/20 hover:bg-white/30 px-2 py-1 text-xs text-white transition-colors">↓ Download</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 px-3 py-2 flex items-center justify-between border-t border-gray-100 dark:border-gray-700">
+                  <span class="text-xs font-medium text-gray-700 dark:text-gray-200 truncate">product-screenshot.png</span>
+                  <span class="ml-2 flex-shrink-0 rounded-full bg-green-100 px-2 py-0.5 text-xs font-semibold text-green-700 dark:bg-green-900/40 dark:text-green-300">PNG</span>
+                </div>
+              </div>
+
+
+              <!-- Card 5: dashboard-preview.png -->
+              <div class="masonry-item img-card group relative rounded-xl overflow-hidden border border-gray-100 dark:border-gray-700 cursor-pointer" data-type="png" data-name="dashboard-preview.png" onclick="openLightbox(4)">
+                <div class="h-56 bg-gradient-to-br from-indigo-400 to-indigo-700 w-full"></div>
+                <div class="img-overlay absolute inset-0 bg-black/60 flex flex-col justify-between p-3">
+                  <div class="flex justify-end"><input type="checkbox" class="img-checkbox h-4 w-4 rounded accent-blue-500" onclick="event.stopPropagation();handleSelect(this)" /></div>
+                  <div>
+                    <p class="text-xs font-medium text-white mb-1">dashboard-preview.png</p>
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs text-gray-300">2560×1440 · 5.7 MB</span>
+                      <button onclick="event.stopPropagation();showToast('Downloading dashboard-preview.png')" class="rounded-lg bg-white/20 hover:bg-white/30 px-2 py-1 text-xs text-white transition-colors">↓ Download</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 px-3 py-2 flex items-center justify-between border-t border-gray-100 dark:border-gray-700">
+                  <span class="text-xs font-medium text-gray-700 dark:text-gray-200 truncate">dashboard-preview.png</span>
+                  <span class="ml-2 flex-shrink-0 rounded-full bg-green-100 px-2 py-0.5 text-xs font-semibold text-green-700 dark:bg-green-900/40 dark:text-green-300">PNG</span>
+                </div>
+              </div>
+
+              <!-- Card 6: icon-set.svg -->
+              <div class="masonry-item img-card group relative rounded-xl overflow-hidden border border-gray-100 dark:border-gray-700 cursor-pointer" data-type="svg" data-name="icon-set.svg" onclick="openLightbox(5)">
+                <div class="h-36 bg-gradient-to-br from-orange-400 to-orange-600 w-full"></div>
+                <div class="img-overlay absolute inset-0 bg-black/60 flex flex-col justify-between p-3">
+                  <div class="flex justify-end"><input type="checkbox" class="img-checkbox h-4 w-4 rounded accent-blue-500" onclick="event.stopPropagation();handleSelect(this)" /></div>
+                  <div>
+                    <p class="text-xs font-medium text-white mb-1">icon-set.svg</p>
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs text-gray-300">512×512 · 128 KB</span>
+                      <button onclick="event.stopPropagation();showToast('Downloading icon-set.svg')" class="rounded-lg bg-white/20 hover:bg-white/30 px-2 py-1 text-xs text-white transition-colors">↓ Download</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 px-3 py-2 flex items-center justify-between border-t border-gray-100 dark:border-gray-700">
+                  <span class="text-xs font-medium text-gray-700 dark:text-gray-200 truncate">icon-set.svg</span>
+                  <span class="ml-2 flex-shrink-0 rounded-full bg-gray-100 px-2 py-0.5 text-xs font-semibold text-gray-600 dark:bg-gray-700 dark:text-gray-300">SVG</span>
+                </div>
+              </div>
+
+              <!-- Card 7: background-pattern.png -->
+              <div class="masonry-item img-card group relative rounded-xl overflow-hidden border border-gray-100 dark:border-gray-700 cursor-pointer" data-type="png" data-name="background-pattern.png" onclick="openLightbox(6)">
+                <div class="h-44 bg-gradient-to-br from-teal-400 to-teal-700 w-full"></div>
+                <div class="img-overlay absolute inset-0 bg-black/60 flex flex-col justify-between p-3">
+                  <div class="flex justify-end"><input type="checkbox" class="img-checkbox h-4 w-4 rounded accent-blue-500" onclick="event.stopPropagation();handleSelect(this)" /></div>
+                  <div>
+                    <p class="text-xs font-medium text-white mb-1">background-pattern.png</p>
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs text-gray-300">1000×1000 · 890 KB</span>
+                      <button onclick="event.stopPropagation();showToast('Downloading background-pattern.png')" class="rounded-lg bg-white/20 hover:bg-white/30 px-2 py-1 text-xs text-white transition-colors">↓ Download</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 px-3 py-2 flex items-center justify-between border-t border-gray-100 dark:border-gray-700">
+                  <span class="text-xs font-medium text-gray-700 dark:text-gray-200 truncate">background-pattern.png</span>
+                  <span class="ml-2 flex-shrink-0 rounded-full bg-green-100 px-2 py-0.5 text-xs font-semibold text-green-700 dark:bg-green-900/40 dark:text-green-300">PNG</span>
+                </div>
+              </div>
+
+              <!-- Card 8: marketing-banner.jpg -->
+              <div class="masonry-item img-card group relative rounded-xl overflow-hidden border border-gray-100 dark:border-gray-700 cursor-pointer" data-type="jpg" data-name="marketing-banner.jpg" onclick="openLightbox(7)">
+                <div class="h-32 bg-gradient-to-br from-pink-400 to-pink-700 w-full"></div>
+                <div class="img-overlay absolute inset-0 bg-black/60 flex flex-col justify-between p-3">
+                  <div class="flex justify-end"><input type="checkbox" class="img-checkbox h-4 w-4 rounded accent-blue-500" onclick="event.stopPropagation();handleSelect(this)" /></div>
+                  <div>
+                    <p class="text-xs font-medium text-white mb-1">marketing-banner.jpg</p>
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs text-gray-300">1200×630 · 1.8 MB</span>
+                      <button onclick="event.stopPropagation();showToast('Downloading marketing-banner.jpg')" class="rounded-lg bg-white/20 hover:bg-white/30 px-2 py-1 text-xs text-white transition-colors">↓ Download</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 px-3 py-2 flex items-center justify-between border-t border-gray-100 dark:border-gray-700">
+                  <span class="text-xs font-medium text-gray-700 dark:text-gray-200 truncate">marketing-banner.jpg</span>
+                  <span class="ml-2 flex-shrink-0 rounded-full bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">JPG</span>
+                </div>
+              </div>
+
+
+              <!-- Card 9: profile-placeholder.png -->
+              <div class="masonry-item img-card group relative rounded-xl overflow-hidden border border-gray-100 dark:border-gray-700 cursor-pointer" data-type="png" data-name="profile-placeholder.png" onclick="openLightbox(8)">
+                <div class="h-40 bg-gradient-to-br from-amber-400 to-amber-600 w-full"></div>
+                <div class="img-overlay absolute inset-0 bg-black/60 flex flex-col justify-between p-3">
+                  <div class="flex justify-end"><input type="checkbox" class="img-checkbox h-4 w-4 rounded accent-blue-500" onclick="event.stopPropagation();handleSelect(this)" /></div>
+                  <div>
+                    <p class="text-xs font-medium text-white mb-1">profile-placeholder.png</p>
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs text-gray-300">400×400 · 234 KB</span>
+                      <button onclick="event.stopPropagation();showToast('Downloading profile-placeholder.png')" class="rounded-lg bg-white/20 hover:bg-white/30 px-2 py-1 text-xs text-white transition-colors">↓ Download</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 px-3 py-2 flex items-center justify-between border-t border-gray-100 dark:border-gray-700">
+                  <span class="text-xs font-medium text-gray-700 dark:text-gray-200 truncate">profile-placeholder.png</span>
+                  <span class="ml-2 flex-shrink-0 rounded-full bg-green-100 px-2 py-0.5 text-xs font-semibold text-green-700 dark:bg-green-900/40 dark:text-green-300">PNG</span>
+                </div>
+              </div>
+
+              <!-- Card 10: chart-export.png -->
+              <div class="masonry-item img-card group relative rounded-xl overflow-hidden border border-gray-100 dark:border-gray-700 cursor-pointer" data-type="png" data-name="chart-export.png" onclick="openLightbox(9)">
+                <div class="h-52 bg-gradient-to-br from-cyan-400 to-cyan-700 w-full"></div>
+                <div class="img-overlay absolute inset-0 bg-black/60 flex flex-col justify-between p-3">
+                  <div class="flex justify-end"><input type="checkbox" class="img-checkbox h-4 w-4 rounded accent-blue-500" onclick="event.stopPropagation();handleSelect(this)" /></div>
+                  <div>
+                    <p class="text-xs font-medium text-white mb-1">chart-export.png</p>
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs text-gray-300">800×600 · 567 KB</span>
+                      <button onclick="event.stopPropagation();showToast('Downloading chart-export.png')" class="rounded-lg bg-white/20 hover:bg-white/30 px-2 py-1 text-xs text-white transition-colors">↓ Download</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 px-3 py-2 flex items-center justify-between border-t border-gray-100 dark:border-gray-700">
+                  <span class="text-xs font-medium text-gray-700 dark:text-gray-200 truncate">chart-export.png</span>
+                  <span class="ml-2 flex-shrink-0 rounded-full bg-green-100 px-2 py-0.5 text-xs font-semibold text-green-700 dark:bg-green-900/40 dark:text-green-300">PNG</span>
+                </div>
+              </div>
+
+              <!-- Card 11: favicon.png -->
+              <div class="masonry-item img-card group relative rounded-xl overflow-hidden border border-gray-100 dark:border-gray-700 cursor-pointer" data-type="png" data-name="favicon.png" onclick="openLightbox(10)">
+                <div class="h-32 bg-gradient-to-br from-red-400 to-red-700 w-full flex items-center justify-center">
+                  <span class="text-4xl font-bold text-white/30">32×32</span>
+                </div>
+                <div class="img-overlay absolute inset-0 bg-black/60 flex flex-col justify-between p-3">
+                  <div class="flex justify-end"><input type="checkbox" class="img-checkbox h-4 w-4 rounded accent-blue-500" onclick="event.stopPropagation();handleSelect(this)" /></div>
+                  <div>
+                    <p class="text-xs font-medium text-white mb-1">favicon.png</p>
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs text-gray-300">32×32 · 2 KB</span>
+                      <button onclick="event.stopPropagation();showToast('Downloading favicon.png')" class="rounded-lg bg-white/20 hover:bg-white/30 px-2 py-1 text-xs text-white transition-colors">↓ Download</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 px-3 py-2 flex items-center justify-between border-t border-gray-100 dark:border-gray-700">
+                  <span class="text-xs font-medium text-gray-700 dark:text-gray-200 truncate">favicon.png</span>
+                  <span class="ml-2 flex-shrink-0 rounded-full bg-green-100 px-2 py-0.5 text-xs font-semibold text-green-700 dark:bg-green-900/40 dark:text-green-300">PNG</span>
+                </div>
+              </div>
+
+              <!-- Card 12: cover-art.jpg -->
+              <div class="masonry-item img-card group relative rounded-xl overflow-hidden border border-gray-100 dark:border-gray-700 cursor-pointer" data-type="jpg" data-name="cover-art.jpg" onclick="openLightbox(11)">
+                <div class="h-60 bg-gradient-to-br from-violet-400 to-violet-700 w-full"></div>
+                <div class="img-overlay absolute inset-0 bg-black/60 flex flex-col justify-between p-3">
+                  <div class="flex justify-end"><input type="checkbox" class="img-checkbox h-4 w-4 rounded accent-blue-500" onclick="event.stopPropagation();handleSelect(this)" /></div>
+                  <div>
+                    <p class="text-xs font-medium text-white mb-1">cover-art.jpg</p>
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs text-gray-300">2000×2000 · 4.5 MB</span>
+                      <button onclick="event.stopPropagation();showToast('Downloading cover-art.jpg')" class="rounded-lg bg-white/20 hover:bg-white/30 px-2 py-1 text-xs text-white transition-colors">↓ Download</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 px-3 py-2 flex items-center justify-between border-t border-gray-100 dark:border-gray-700">
+                  <span class="text-xs font-medium text-gray-700 dark:text-gray-200 truncate">cover-art.jpg</span>
+                  <span class="ml-2 flex-shrink-0 rounded-full bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">JPG</span>
+                </div>
+              </div>
+
+            </div><!-- /masonry-grid -->
+          </div>
+        </div><!-- /Section 1 -->
+
+
+        <!-- SECTION 2: IMAGE LIST VIEW -->
+        <div id="list-view-section" class="mb-8 rounded-2xl bg-white border border-gray-100 shadow-sm dark:bg-gray-800 dark:border-gray-700 hidden">
+          <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-700 px-6 py-4">
+            <h2 class="text-base font-semibold text-gray-900 dark:text-white">Image List</h2>
+            <span class="text-sm text-gray-500 dark:text-gray-400">12 files</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/40">
+                  <th class="px-4 py-3 text-left"><input type="checkbox" id="selectAll" onchange="toggleSelectAll(this)" class="h-4 w-4 rounded accent-blue-500" /></th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Preview</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Name</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Type</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Size</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Dimensions</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Uploaded</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Owner</th>
+                  <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors">
+                  <td class="px-4 py-3"><input type="checkbox" class="list-checkbox h-4 w-4 rounded accent-blue-500" onchange="handleListSelect()" /></td>
+                  <td class="px-4 py-3"><div class="h-10 w-14 rounded-lg bg-gradient-to-br from-blue-400 to-blue-700 flex-shrink-0"></div></td>
+                  <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">hero-banner.jpg</td>
+                  <td class="px-4 py-3"><span class="rounded-full bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">JPG</span></td>
+                  <td class="px-4 py-3 text-gray-600 dark:text-gray-400">2.4 MB</td>
+                  <td class="px-4 py-3 text-gray-600 dark:text-gray-400">1920×1080</td>
+                  <td class="px-4 py-3 text-gray-600 dark:text-gray-400">Jan 15, 2025</td>
+                  <td class="px-4 py-3"><span class="flex items-center gap-1.5"><span class="h-6 w-6 rounded-full bg-blue-500 flex items-center justify-center text-xs font-bold text-white">A</span><span class="text-gray-700 dark:text-gray-300">Alex</span></span></td>
+                  <td class="px-4 py-3 text-right">
+                    <div class="flex items-center justify-end gap-1">
+                      <button onclick="showToast('Downloading hero-banner.jpg')" class="rounded-lg p-1.5 text-gray-400 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-900/20 transition-colors" title="Download"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg></button>
+                      <button onclick="showToast('hero-banner.jpg deleted','error')" class="rounded-lg p-1.5 text-gray-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 transition-colors" title="Delete"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6m5 0V4h4v2"/></svg></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors">
+                  <td class="px-4 py-3"><input type="checkbox" class="list-checkbox h-4 w-4 rounded accent-blue-500" onchange="handleListSelect()" /></td>
+                  <td class="px-4 py-3"><div class="h-10 w-14 rounded-lg bg-gradient-to-br from-gray-400 to-gray-700 flex-shrink-0"></div></td>
+                  <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">logo-dark.svg</td>
+                  <td class="px-4 py-3"><span class="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-semibold text-gray-600 dark:bg-gray-700 dark:text-gray-300">SVG</span></td>
+                  <td class="px-4 py-3 text-gray-600 dark:text-gray-400">45 KB</td>
+                  <td class="px-4 py-3 text-gray-600 dark:text-gray-400">400×120</td>
+                  <td class="px-4 py-3 text-gray-600 dark:text-gray-400">Jan 10, 2025</td>
+                  <td class="px-4 py-3"><span class="flex items-center gap-1.5"><span class="h-6 w-6 rounded-full bg-green-500 flex items-center justify-center text-xs font-bold text-white">S</span><span class="text-gray-700 dark:text-gray-300">Sarah</span></span></td>
+                  <td class="px-4 py-3 text-right">
+                    <div class="flex items-center justify-end gap-1">
+                      <button onclick="showToast('Downloading logo-dark.svg')" class="rounded-lg p-1.5 text-gray-400 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-900/20 transition-colors" title="Download"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg></button>
+                      <button onclick="showToast('logo-dark.svg deleted','error')" class="rounded-lg p-1.5 text-gray-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 transition-colors" title="Delete"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6m5 0V4h4v2"/></svg></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors">
+                  <td class="px-4 py-3"><input type="checkbox" class="list-checkbox h-4 w-4 rounded accent-blue-500" onchange="handleListSelect()" /></td>
+                  <td class="px-4 py-3"><div class="h-10 w-14 rounded-lg bg-gradient-to-br from-green-400 to-green-700 flex-shrink-0"></div></td>
+                  <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">team-photo.jpg</td>
+                  <td class="px-4 py-3"><span class="rounded-full bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">JPG</span></td>
+                  <td class="px-4 py-3 text-gray-600 dark:text-gray-400">8.1 MB</td>
+                  <td class="px-4 py-3 text-gray-600 dark:text-gray-400">3840×2160</td>
+                  <td class="px-4 py-3 text-gray-600 dark:text-gray-400">Feb 02, 2025</td>
+                  <td class="px-4 py-3"><span class="flex items-center gap-1.5"><span class="h-6 w-6 rounded-full bg-purple-500 flex items-center justify-center text-xs font-bold text-white">M</span><span class="text-gray-700 dark:text-gray-300">Mike</span></span></td>
+                  <td class="px-4 py-3 text-right">
+                    <div class="flex items-center justify-end gap-1">
+                      <button onclick="showToast('Downloading team-photo.jpg')" class="rounded-lg p-1.5 text-gray-400 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-900/20 transition-colors" title="Download"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg></button>
+                      <button onclick="showToast('team-photo.jpg deleted','error')" class="rounded-lg p-1.5 text-gray-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 transition-colors" title="Delete"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6m5 0V4h4v2"/></svg></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors">
+                  <td class="px-4 py-3"><input type="checkbox" class="list-checkbox h-4 w-4 rounded accent-blue-500" onchange="handleListSelect()" /></td>
+                  <td class="px-4 py-3"><div class="h-10 w-14 rounded-lg bg-gradient-to-br from-purple-400 to-purple-700 flex-shrink-0"></div></td>
+                  <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">product-screenshot.png</td>
+                  <td class="px-4 py-3"><span class="rounded-full bg-green-100 px-2 py-0.5 text-xs font-semibold text-green-700 dark:bg-green-900/40 dark:text-green-300">PNG</span></td>
+                  <td class="px-4 py-3 text-gray-600 dark:text-gray-400">3.2 MB</td>
+                  <td class="px-4 py-3 text-gray-600 dark:text-gray-400">1440×900</td>
+                  <td class="px-4 py-3 text-gray-600 dark:text-gray-400">Feb 18, 2025</td>
+                  <td class="px-4 py-3"><span class="flex items-center gap-1.5"><span class="h-6 w-6 rounded-full bg-blue-500 flex items-center justify-center text-xs font-bold text-white">A</span><span class="text-gray-700 dark:text-gray-300">Alex</span></span></td>
+                  <td class="px-4 py-3 text-right">
+                    <div class="flex items-center justify-end gap-1">
+                      <button onclick="showToast('Downloading product-screenshot.png')" class="rounded-lg p-1.5 text-gray-400 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-900/20 transition-colors" title="Download"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg></button>
+                      <button onclick="showToast('product-screenshot.png deleted','error')" class="rounded-lg p-1.5 text-gray-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 transition-colors" title="Delete"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6m5 0V4h4v2"/></svg></button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div><!-- /Section 2 -->
+
+
+        <!-- SECTION 3: IMAGE DETAIL PANEL -->
+        <div class="mb-8 rounded-2xl bg-white border border-gray-100 shadow-sm dark:bg-gray-800 dark:border-gray-700">
+          <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-700 px-6 py-4">
+            <h2 class="text-base font-semibold text-gray-900 dark:text-white">Image Detail — <span class="text-blue-600 dark:text-blue-400">hero-banner.jpg</span></h2>
+            <span class="rounded-full bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-600 dark:bg-blue-900/30 dark:text-blue-300">Selected</span>
+          </div>
+          <div class="p-6">
+            <div class="flex flex-col gap-6 lg:flex-row">
+              <!-- Preview -->
+              <div class="flex-1">
+                <div class="h-64 w-full rounded-xl bg-gradient-to-br from-blue-400 to-blue-700 flex items-end p-4">
+                  <div class="w-full text-center">
+                    <span class="text-white/60 text-sm font-medium">1920 × 1080</span>
+                  </div>
+                </div>
+                <!-- Editing Toolbar -->
+                <div class="mt-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/40 p-4">
+                  <p class="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Image Editing</p>
+                  <div class="flex flex-wrap gap-2 mb-4">
+                    <button onclick="showToast('Crop tool activated')" class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-1.5 text-xs font-medium text-gray-700 dark:text-gray-300 hover:border-blue-400 hover:text-blue-600 transition-colors">
+                      <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="6 2 6 8 2 8"/><polyline points="18 22 18 16 22 16"/><line x1="6" y1="8" x2="22" y2="8"/><line x1="2" y1="16" x2="18" y2="16"/></svg>Crop
+                    </button>
+                    <button onclick="showToast('Image rotated 90°')" class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-1.5 text-xs font-medium text-gray-700 dark:text-gray-300 hover:border-blue-400 hover:text-blue-600 transition-colors">
+                      <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4"/></svg>Rotate
+                    </button>
+                    <button onclick="showToast('Image flipped horizontally')" class="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-1.5 text-xs font-medium text-gray-700 dark:text-gray-300 hover:border-blue-400 hover:text-blue-600 transition-colors">
+                      <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><polyline points="7 23 3 19 7 15"/><path d="M21 5H3m18 14H3"/></svg>Flip
+                    </button>
+                  </div>
+                  <div class="space-y-3">
+                    <div>
+                      <div class="mb-1.5 flex items-center justify-between">
+                        <label class="text-xs font-medium text-gray-600 dark:text-gray-400">Brightness</label>
+                        <span id="brightness-val" class="text-xs font-semibold text-blue-600">60%</span>
+                      </div>
+                      <input type="range" min="0" max="100" value="60" oninput="document.getElementById('brightness-val').textContent=this.value+'%'" class="w-full h-1.5 rounded-full bg-gray-200 dark:bg-gray-700 accent-blue-500 cursor-pointer" />
+                    </div>
+                    <div>
+                      <div class="mb-1.5 flex items-center justify-between">
+                        <label class="text-xs font-medium text-gray-600 dark:text-gray-400">Contrast</label>
+                        <span id="contrast-val" class="text-xs font-semibold text-blue-600">50%</span>
+                      </div>
+                      <input type="range" min="0" max="100" value="50" oninput="document.getElementById('contrast-val').textContent=this.value+'%'" class="w-full h-1.5 rounded-full bg-gray-200 dark:bg-gray-700 accent-blue-500 cursor-pointer" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Metadata -->
+              <div class="w-full lg:w-72 flex-shrink-0 space-y-5">
+                <div class="rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/40 p-4">
+                  <h3 class="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">File Information</h3>
+                  <dl class="space-y-2">
+                    <div class="flex justify-between"><dt class="text-xs text-gray-500 dark:text-gray-400">Filename</dt><dd class="text-xs font-medium text-gray-900 dark:text-white">hero-banner.jpg</dd></div>
+                    <div class="flex justify-between"><dt class="text-xs text-gray-500 dark:text-gray-400">Dimensions</dt><dd class="text-xs font-medium text-gray-900 dark:text-white">1920 × 1080 px</dd></div>
+                    <div class="flex justify-between"><dt class="text-xs text-gray-500 dark:text-gray-400">File size</dt><dd class="text-xs font-medium text-gray-900 dark:text-white">2.4 MB</dd></div>
+                    <div class="flex justify-between"><dt class="text-xs text-gray-500 dark:text-gray-400">Type</dt><dd class="text-xs font-medium text-gray-900 dark:text-white">JPEG Image</dd></div>
+                    <div class="flex justify-between"><dt class="text-xs text-gray-500 dark:text-gray-400">Uploaded</dt><dd class="text-xs font-medium text-gray-900 dark:text-white">Jan 15, 2025</dd></div>
+                    <div class="flex justify-between"><dt class="text-xs text-gray-500 dark:text-gray-400">Uploaded by</dt><dd class="text-xs font-medium text-gray-900 dark:text-white">Alex Johnson</dd></div>
+                  </dl>
+                </div>
+                <div>
+                  <h3 class="mb-2.5 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Tags</h3>
+                  <div class="flex flex-wrap gap-2">
+                    <span class="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700 dark:bg-blue-900/40 dark:text-blue-300"># hero</span>
+                    <span class="rounded-full bg-purple-100 px-3 py-1 text-xs font-medium text-purple-700 dark:bg-purple-900/40 dark:text-purple-300"># marketing</span>
+                    <span class="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700 dark:bg-green-900/40 dark:text-green-300"># 2024</span>
+                    <button onclick="showToast('Add tag dialog opened')" class="rounded-full border border-dashed border-gray-300 dark:border-gray-600 px-3 py-1 text-xs font-medium text-gray-400 hover:border-blue-400 hover:text-blue-500 transition-colors">+ Add tag</button>
+                  </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <button onclick="showToast('Downloading hero-banner.jpg')" class="rounded-xl bg-blue-600 py-2 text-xs font-semibold text-white hover:bg-blue-700 transition-colors">↓ Download</button>
+                  <button onclick="showToast('Share link copied!')" class="rounded-xl bg-gray-100 dark:bg-gray-700 py-2 text-xs font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">⬆ Share</button>
+                  <button onclick="showToast('Edit mode activated')" class="rounded-xl bg-gray-100 dark:bg-gray-700 py-2 text-xs font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">✏ Edit</button>
+                  <button onclick="showToast('Image deleted')" class="rounded-xl bg-red-50 dark:bg-red-900/20 py-2 text-xs font-semibold text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors">🗑 Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /Section 3 -->
+
+
+        <!-- SECTION 4: UPLOAD AREA -->
+        <div class="mb-8 rounded-2xl bg-white border border-gray-100 shadow-sm dark:bg-gray-800 dark:border-gray-700">
+          <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-700 px-6 py-4">
+            <h2 class="text-base font-semibold text-gray-900 dark:text-white">Upload Images</h2>
+            <span class="rounded-full bg-amber-50 px-2.5 py-1 text-xs font-medium text-amber-600 dark:bg-amber-900/30 dark:text-amber-400">2 In Progress</span>
+          </div>
+          <div class="p-6">
+            <!-- Drop Zone -->
+            <div id="drop-zone" onclick="showToast('File picker opened')" ondragover="event.preventDefault();this.classList.add('border-blue-500','bg-blue-50')" ondragleave="this.classList.remove('border-blue-500','bg-blue-50')" ondrop="event.preventDefault();this.classList.remove('border-blue-500','bg-blue-50');showToast('Files dropped — uploading...')" class="mb-6 flex cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-900/40 py-14 transition-all hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/10">
+              <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-100 dark:bg-blue-900/30">
+                <svg class="h-7 w-7 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+              </div>
+              <div class="text-center">
+                <p class="text-sm font-semibold text-gray-900 dark:text-white">Drop images here or <span class="text-blue-600 dark:text-blue-400">browse</span></p>
+                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Supports JPG, PNG, SVG, WebP, GIF · Max 50 MB per file</p>
+              </div>
+              <div class="flex gap-2">
+                <span class="rounded-lg bg-gray-100 dark:bg-gray-700 px-2.5 py-1 text-xs text-gray-500 dark:text-gray-400">JPG</span>
+                <span class="rounded-lg bg-gray-100 dark:bg-gray-700 px-2.5 py-1 text-xs text-gray-500 dark:text-gray-400">PNG</span>
+                <span class="rounded-lg bg-gray-100 dark:bg-gray-700 px-2.5 py-1 text-xs text-gray-500 dark:text-gray-400">SVG</span>
+                <span class="rounded-lg bg-gray-100 dark:bg-gray-700 px-2.5 py-1 text-xs text-gray-500 dark:text-gray-400">WebP</span>
+                <span class="rounded-lg bg-gray-100 dark:bg-gray-700 px-2.5 py-1 text-xs text-gray-500 dark:text-gray-400">GIF</span>
+              </div>
+            </div>
+            <!-- In-progress uploads -->
+            <div class="space-y-3">
+              <div class="rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/40 p-4">
+                <div class="mb-2 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <div class="h-10 w-10 rounded-lg bg-gradient-to-br from-blue-400 to-blue-700 flex-shrink-0 flex items-center justify-center">
+                      <svg class="h-4 w-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-900 dark:text-white">hero-banner-v2.jpg</p>
+                      <p class="text-xs text-gray-500 dark:text-gray-400">2.4 MB · Uploading…</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <span class="text-sm font-semibold text-blue-600 dark:text-blue-400">78%</span>
+                    <button onclick="this.closest('.rounded-xl').remove();showToast('Upload cancelled')" class="rounded-lg p-1.5 text-gray-400 hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/20 transition-colors" title="Cancel">
+                      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                  </div>
+                </div>
+                <div class="h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
+                  <div class="h-full rounded-full bg-blue-500 progress-bar" style="--target-width:78%;width:0%"></div>
+                </div>
+              </div>
+              <div class="rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/40 p-4">
+                <div class="mb-2 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <div class="h-10 w-10 rounded-lg bg-gradient-to-br from-green-400 to-green-700 flex-shrink-0 flex items-center justify-center">
+                      <svg class="h-4 w-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-900 dark:text-white">team-photo-new.jpg</p>
+                      <p class="text-xs text-gray-500 dark:text-gray-400">8.1 MB · Uploading…</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <span class="text-sm font-semibold text-amber-600 dark:text-amber-400">34%</span>
+                    <button onclick="this.closest('.rounded-xl').remove();showToast('Upload cancelled')" class="rounded-lg p-1.5 text-gray-400 hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/20 transition-colors" title="Cancel">
+                      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                  </div>
+                </div>
+                <div class="h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
+                  <div class="h-full rounded-full bg-amber-500 progress-bar" style="--target-width:34%;width:0%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /Section 4 -->
+
+
+        <!-- SECTION 5: AI IMAGE TAGS -->
+        <div class="mb-8 rounded-2xl bg-white border border-gray-100 shadow-sm dark:bg-gray-800 dark:border-gray-700">
+          <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-700 px-6 py-4">
+            <div class="flex items-center gap-2">
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white">AI Auto-Tagging</h2>
+              <span class="rounded-full bg-violet-100 px-2.5 py-0.5 text-xs font-semibold text-violet-700 dark:bg-violet-900/40 dark:text-violet-300">✦ AI Powered</span>
+            </div>
+            <button onclick="showToast('Re-running AI analysis on all images…')" class="inline-flex items-center gap-1.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:border-violet-400 hover:text-violet-600 dark:hover:border-violet-500 transition-colors">
+              <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4"/></svg>Re-analyze All
+            </button>
+          </div>
+          <div class="p-6">
+            <p class="mb-5 text-sm text-gray-500 dark:text-gray-400">AI has automatically detected and tagged your images based on their visual content.</p>
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+
+              <!-- AI Card 1 -->
+              <div class="rounded-xl border border-gray-100 dark:border-gray-700 overflow-hidden hover:border-violet-200 dark:hover:border-violet-700 transition-colors">
+                <div class="h-32 bg-gradient-to-br from-blue-400 to-blue-700 relative">
+                  <span class="absolute top-2 right-2 rounded-full bg-black/40 px-2 py-0.5 text-xs text-white font-medium">hero-banner.jpg</span>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-3">
+                  <p class="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">Detected tags:</p>
+                  <div class="flex flex-wrap gap-1.5">
+                    <span class="rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">banner</span>
+                    <span class="rounded-full bg-indigo-100 px-2 py-0.5 text-xs font-medium text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300">wide-format</span>
+                    <span class="rounded-full bg-purple-100 px-2 py-0.5 text-xs font-medium text-purple-700 dark:bg-purple-900/40 dark:text-purple-300">marketing</span>
+                    <span class="rounded-full bg-pink-100 px-2 py-0.5 text-xs font-medium text-pink-700 dark:bg-pink-900/40 dark:text-pink-300">hero</span>
+                    <span class="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 dark:bg-gray-700 dark:text-gray-300">landscape</span>
+                  </div>
+                  <div class="mt-2.5 flex items-center justify-between">
+                    <span class="text-xs text-gray-400 dark:text-gray-500">Confidence: 97%</span>
+                    <button onclick="showToast('Tags applied to hero-banner.jpg')" class="text-xs text-violet-600 dark:text-violet-400 hover:underline">Apply</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- AI Card 2 -->
+              <div class="rounded-xl border border-gray-100 dark:border-gray-700 overflow-hidden hover:border-violet-200 dark:hover:border-violet-700 transition-colors">
+                <div class="h-32 bg-gradient-to-br from-green-400 to-green-700 relative">
+                  <span class="absolute top-2 right-2 rounded-full bg-black/40 px-2 py-0.5 text-xs text-white font-medium">team-photo.jpg</span>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-3">
+                  <p class="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">Detected tags:</p>
+                  <div class="flex flex-wrap gap-1.5">
+                    <span class="rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700 dark:bg-green-900/40 dark:text-green-300">people</span>
+                    <span class="rounded-full bg-teal-100 px-2 py-0.5 text-xs font-medium text-teal-700 dark:bg-teal-900/40 dark:text-teal-300">group</span>
+                    <span class="rounded-full bg-cyan-100 px-2 py-0.5 text-xs font-medium text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-300">team</span>
+                    <span class="rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">office</span>
+                    <span class="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 dark:bg-gray-700 dark:text-gray-300">indoor</span>
+                  </div>
+                  <div class="mt-2.5 flex items-center justify-between">
+                    <span class="text-xs text-gray-400 dark:text-gray-500">Confidence: 92%</span>
+                    <button onclick="showToast('Tags applied to team-photo.jpg')" class="text-xs text-violet-600 dark:text-violet-400 hover:underline">Apply</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- AI Card 3 -->
+              <div class="rounded-xl border border-gray-100 dark:border-gray-700 overflow-hidden hover:border-violet-200 dark:hover:border-violet-700 transition-colors">
+                <div class="h-32 bg-gradient-to-br from-indigo-400 to-indigo-700 relative">
+                  <span class="absolute top-2 right-2 rounded-full bg-black/40 px-2 py-0.5 text-xs text-white font-medium">dashboard-preview.png</span>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-3">
+                  <p class="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">Detected tags:</p>
+                  <div class="flex flex-wrap gap-1.5">
+                    <span class="rounded-full bg-indigo-100 px-2 py-0.5 text-xs font-medium text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300">screenshot</span>
+                    <span class="rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">UI</span>
+                    <span class="rounded-full bg-violet-100 px-2 py-0.5 text-xs font-medium text-violet-700 dark:bg-violet-900/40 dark:text-violet-300">dashboard</span>
+                    <span class="rounded-full bg-purple-100 px-2 py-0.5 text-xs font-medium text-purple-700 dark:bg-purple-900/40 dark:text-purple-300">charts</span>
+                    <span class="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 dark:bg-gray-700 dark:text-gray-300">analytics</span>
+                  </div>
+                  <div class="mt-2.5 flex items-center justify-between">
+                    <span class="text-xs text-gray-400 dark:text-gray-500">Confidence: 89%</span>
+                    <button onclick="showToast('Tags applied to dashboard-preview.png')" class="text-xs text-violet-600 dark:text-violet-400 hover:underline">Apply</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- AI Card 4 -->
+              <div class="rounded-xl border border-gray-100 dark:border-gray-700 overflow-hidden hover:border-violet-200 dark:hover:border-violet-700 transition-colors">
+                <div class="h-32 bg-gradient-to-br from-violet-400 to-violet-700 relative">
+                  <span class="absolute top-2 right-2 rounded-full bg-black/40 px-2 py-0.5 text-xs text-white font-medium">cover-art.jpg</span>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-3">
+                  <p class="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">Detected tags:</p>
+                  <div class="flex flex-wrap gap-1.5">
+                    <span class="rounded-full bg-violet-100 px-2 py-0.5 text-xs font-medium text-violet-700 dark:bg-violet-900/40 dark:text-violet-300">artwork</span>
+                    <span class="rounded-full bg-pink-100 px-2 py-0.5 text-xs font-medium text-pink-700 dark:bg-pink-900/40 dark:text-pink-300">cover</span>
+                    <span class="rounded-full bg-purple-100 px-2 py-0.5 text-xs font-medium text-purple-700 dark:bg-purple-900/40 dark:text-purple-300">square</span>
+                    <span class="rounded-full bg-fuchsia-100 px-2 py-0.5 text-xs font-medium text-fuchsia-700 dark:bg-fuchsia-900/40 dark:text-fuchsia-300">creative</span>
+                    <span class="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 dark:bg-gray-700 dark:text-gray-300">branding</span>
+                  </div>
+                  <div class="mt-2.5 flex items-center justify-between">
+                    <span class="text-xs text-gray-400 dark:text-gray-500">Confidence: 95%</span>
+                    <button onclick="showToast('Tags applied to cover-art.jpg')" class="text-xs text-violet-600 dark:text-violet-400 hover:underline">Apply</button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div><!-- /Section 5 -->
+
+      </div><!-- /max-w-screen-2xl -->
     </main>
+  </div>
+</div><!-- /flex h-screen -->
+
+
+<!-- BULK ACTION BAR -->
+<div id="bulk-bar" class="fixed bottom-0 left-0 right-0 z-50 hidden">
+  <div class="mx-auto max-w-screen-2xl px-4 md:px-6 2xl:px-10 pb-4">
+    <div class="flex items-center justify-between rounded-2xl bg-gray-900 dark:bg-gray-700 px-5 py-3.5 shadow-2xl">
+      <div class="flex items-center gap-3">
+        <span class="h-2 w-2 rounded-full bg-blue-400 animate-pulse"></span>
+        <span id="bulk-count" class="text-sm font-semibold text-white">0 images selected</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="showToast('Downloading selected images')" class="inline-flex items-center gap-1.5 rounded-xl bg-white/10 hover:bg-white/20 px-3 py-2 text-xs font-medium text-white transition-colors">
+          <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>Download
+        </button>
+        <button onclick="showToast('Selected images shared')" class="inline-flex items-center gap-1.5 rounded-xl bg-white/10 hover:bg-white/20 px-3 py-2 text-xs font-medium text-white transition-colors">
+          <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share
+        </button>
+        <button onclick="showToast('Selected images deleted')" class="inline-flex items-center gap-1.5 rounded-xl bg-red-500 hover:bg-red-600 px-3 py-2 text-xs font-medium text-white transition-colors">
+          <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6m5 0V4h4v2"/></svg>Delete
+        </button>
+        <button onclick="clearSelection()" class="rounded-xl bg-white/10 hover:bg-white/20 px-3 py-2 text-xs font-medium text-white transition-colors">✕ Deselect All</button>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- Common Components -->
-<script src="common-loader.js"></script>
-<script src="common-sidebar.js"></script>
-<script src="common-header.js"></script>
-<script src="app-shell.js"></script>
+<!-- LIGHTBOX OVERLAY -->
+<div id="lightbox" class="fixed inset-0 z-[200] hidden bg-black/90 flex items-center justify-center p-4" onclick="closeLightbox()">
+  <div class="relative w-full max-w-3xl" onclick="event.stopPropagation()">
+    <button onclick="closeLightbox()" class="absolute -top-10 right-0 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors">
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="flex items-center justify-between mb-2">
+      <button onclick="prevImage()" class="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <span id="lb-counter" class="text-xs text-gray-400">1 / 12</span>
+      <button onclick="nextImage()" class="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+    <div id="lb-preview" class="h-80 w-full rounded-2xl overflow-hidden"></div>
+    <div class="mt-3 flex items-center justify-between">
+      <div>
+        <p id="lb-name" class="text-sm font-semibold text-white">hero-banner.jpg</p>
+        <p id="lb-meta" class="text-xs text-gray-400 mt-0.5">1920×1080 · 2.4 MB · JPG</p>
+      </div>
+      <button onclick="showToast('Downloading ' + lightboxImages[currentLbIndex].name)" class="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 px-4 py-2 text-sm font-semibold text-white transition-colors">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>Download
+      </button>
+    </div>
+  </div>
+</div>
 
+<script src="common-sidebar.js"></script><script src="common-header.js"></script><script src="app-shell.js"></script>
+<script>
+function showToast(msg,type='success'){const t=document.createElement('div');t.className='fixed bottom-6 right-6 z-[100] flex items-center gap-2 rounded-xl border border-green-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 shadow-lg dark:border-green-800 dark:bg-gray-900 dark:text-white';t.style.animation='toastIn .2s ease';t.innerHTML='<span class="h-2 w-2 rounded-full bg-green-500 flex-shrink-0"></span>'+msg;document.body.appendChild(t);setTimeout(()=>t.remove(),3000);}
+
+// FILTER TABS
+function setFilter(type, btn) {
+  document.querySelectorAll('.filter-tab').forEach(b => {
+    b.classList.remove('bg-blue-600','text-white');
+    b.classList.add('text-gray-600','hover:bg-gray-100','dark:text-gray-300','dark:hover:bg-gray-700');
+  });
+  btn.classList.add('bg-blue-600','text-white');
+  btn.classList.remove('text-gray-600','hover:bg-gray-100','dark:text-gray-300','dark:hover:bg-gray-700');
+  document.querySelectorAll('.masonry-item').forEach(card => {
+    if (type === 'all' || card.dataset.type === type) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+// SEARCH FILTER
+function filterBySearch(val) {
+  const q = val.toLowerCase().trim();
+  document.querySelectorAll('.masonry-item').forEach(card => {
+    const name = (card.dataset.name || '').toLowerCase();
+    card.style.display = (!q || name.includes(q)) ? '' : 'none';
+  });
+}
+
+// GRID / LIST TOGGLE
+function setView(view) {
+  const gridSection = document.getElementById('masonry-grid').closest('.rounded-2xl');
+  const listSection = document.getElementById('list-view-section');
+  const btnGrid = document.getElementById('btn-grid');
+  const btnList = document.getElementById('btn-list');
+  if (view === 'grid') {
+    gridSection.classList.remove('hidden');
+    listSection.classList.add('hidden');
+    btnGrid.classList.add('bg-blue-600','text-white');
+    btnGrid.classList.remove('bg-gray-100','text-gray-500','dark:bg-gray-700','dark:text-gray-400');
+    btnList.classList.remove('bg-blue-600','text-white');
+    btnList.classList.add('bg-gray-100','text-gray-500','dark:bg-gray-700','dark:text-gray-400');
+  } else {
+    gridSection.classList.add('hidden');
+    listSection.classList.remove('hidden');
+    btnList.classList.add('bg-blue-600','text-white');
+    btnList.classList.remove('bg-gray-100','text-gray-500','dark:bg-gray-700','dark:text-gray-400');
+    btnGrid.classList.remove('bg-blue-600','text-white');
+    btnGrid.classList.add('bg-gray-100','text-gray-500','dark:bg-gray-700','dark:text-gray-400');
+  }
+}
+</script>
+
+
+<script>
+// SELECT CHECKBOXES + BULK BAR
+function updateBulkBar() {
+  const checked = document.querySelectorAll('.img-checkbox:checked, .list-checkbox:checked');
+  const bar = document.getElementById('bulk-bar');
+  const count = document.getElementById('bulk-count');
+  if (checked.length > 0) {
+    bar.classList.remove('hidden');
+    count.textContent = checked.length + ' image' + (checked.length > 1 ? 's' : '') + ' selected';
+  } else {
+    bar.classList.add('hidden');
+  }
+}
+function handleSelect(cb) { updateBulkBar(); }
+function handleListSelect() { updateBulkBar(); }
+function clearSelection() {
+  document.querySelectorAll('.img-checkbox, .list-checkbox').forEach(cb => cb.checked = false);
+  document.getElementById('selectAll').checked = false;
+  updateBulkBar();
+}
+function toggleSelectAll(cb) {
+  document.querySelectorAll('.list-checkbox').forEach(lc => lc.checked = cb.checked);
+  updateBulkBar();
+}
+
+// LIGHTBOX
+const lightboxImages = [
+  { name:'hero-banner.jpg',    meta:'1920×1080 · 2.4 MB · JPG',   bg:'bg-gradient-to-br from-blue-400 to-blue-700' },
+  { name:'logo-dark.svg',      meta:'400×120 · 45 KB · SVG',       bg:'bg-gradient-to-br from-gray-400 to-gray-700' },
+  { name:'team-photo.jpg',     meta:'3840×2160 · 8.1 MB · JPG',    bg:'bg-gradient-to-br from-green-400 to-green-700' },
+  { name:'product-screenshot.png', meta:'1440×900 · 3.2 MB · PNG', bg:'bg-gradient-to-br from-purple-400 to-purple-700' },
+  { name:'dashboard-preview.png',  meta:'2560×1440 · 5.7 MB · PNG',bg:'bg-gradient-to-br from-indigo-400 to-indigo-700' },
+  { name:'icon-set.svg',       meta:'512×512 · 128 KB · SVG',      bg:'bg-gradient-to-br from-orange-400 to-orange-600' },
+  { name:'background-pattern.png', meta:'1000×1000 · 890 KB · PNG',bg:'bg-gradient-to-br from-teal-400 to-teal-700' },
+  { name:'marketing-banner.jpg',   meta:'1200×630 · 1.8 MB · JPG', bg:'bg-gradient-to-br from-pink-400 to-pink-700' },
+  { name:'profile-placeholder.png',meta:'400×400 · 234 KB · PNG',  bg:'bg-gradient-to-br from-amber-400 to-amber-600' },
+  { name:'chart-export.png',   meta:'800×600 · 567 KB · PNG',      bg:'bg-gradient-to-br from-cyan-400 to-cyan-700' },
+  { name:'favicon.png',        meta:'32×32 · 2 KB · PNG',          bg:'bg-gradient-to-br from-red-400 to-red-700' },
+  { name:'cover-art.jpg',      meta:'2000×2000 · 4.5 MB · JPG',   bg:'bg-gradient-to-br from-violet-400 to-violet-700' },
+];
+let currentLbIndex = 0;
+
+function openLightbox(idx) {
+  currentLbIndex = idx;
+  renderLightbox();
+  const lb = document.getElementById('lightbox');
+  lb.classList.remove('hidden');
+  lb.classList.add('flex');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  const lb = document.getElementById('lightbox');
+  lb.classList.add('hidden');
+  lb.classList.remove('flex');
+  document.body.style.overflow = '';
+}
+function prevImage() {
+  currentLbIndex = (currentLbIndex - 1 + lightboxImages.length) % lightboxImages.length;
+  renderLightbox();
+}
+function nextImage() {
+  currentLbIndex = (currentLbIndex + 1) % lightboxImages.length;
+  renderLightbox();
+}
+function renderLightbox() {
+  const img = lightboxImages[currentLbIndex];
+  const preview = document.getElementById('lb-preview');
+  preview.className = 'h-80 w-full rounded-2xl overflow-hidden flex items-center justify-center ' + img.bg;
+  preview.innerHTML = '<span class="text-white/30 text-xl font-bold">' + img.name + '</span>';
+  document.getElementById('lb-name').textContent = img.name;
+  document.getElementById('lb-meta').textContent = img.meta;
+  document.getElementById('lb-counter').textContent = (currentLbIndex + 1) + ' / ' + lightboxImages.length;
+}
+
+// Keyboard navigation for lightbox
+document.addEventListener('keydown', function(e) {
+  const lb = document.getElementById('lightbox');
+  if (!lb.classList.contains('hidden')) {
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') prevImage();
+    if (e.key === 'ArrowRight') nextImage();
+  }
+});
+</script>
 </body>
 </html>
