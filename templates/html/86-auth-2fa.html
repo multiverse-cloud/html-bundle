@@ -4,247 +4,632 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Two-Factor Authentication — mtverse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tailwind-production.css" />
+  <link rel="stylesheet" href="pro-styles.css" />
   <style>
-    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-    .auth-card{animation:fadeIn .3s ease}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    .animate-spin{animation:spin 1s linear infinite}
-    @keyframes shake{0%,100%{transform:translateX(0)}15%,45%,75%{transform:translateX(-4px)}30%,60%,90%{transform:translateX(4px)}}
-    .shake{animation:shake .4s ease}
-    @media(prefers-reduced-motion:reduce){.auth-card,.animate-spin,.shake{animation:none!important}}
-    .otp-input{
-      width:48px;height:56px;text-align:center;font-size:1.5rem;font-weight:700;
-      border:2px solid #e5e7eb;border-radius:.5rem;outline:none;
-      background:white;color:#111827;transition:border-color .15s,box-shadow .15s;
-      -moz-appearance:textfield;
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: 'Outfit', system-ui, sans-serif; }
+
+    /* ── Entrance animation ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
-    .otp-input::-webkit-outer-spin-button,.otp-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
-    .otp-input:focus{border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.2)}
-    .otp-input.filled{border-color:#3b82f6;background:#eff6ff}
-    .otp-input.error-state{border-color:#ef4444!important;background:#fef2f2!important;box-shadow:0 0 0 3px rgba(239,68,68,.15)!important}
-    .dark .otp-input{background:#1f2937;border-color:#374151;color:#f9fafb}
-    .dark .otp-input:focus{border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.25)}
-    .dark .otp-input.filled{border-color:#3b82f6;background:#1e3a5f}
-    .dark .otp-input.error-state{border-color:#ef4444!important;background:#3b0d0c!important}
+    .anim-in { animation: fadeUp .45s cubic-bezier(.22,1,.36,1) both; }
+    .anim-in-d1 { animation-delay: .08s; }
+    .anim-in-d2 { animation-delay: .16s; }
+
+    /* ── Shake ── */
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      15%,45%,75% { transform: translateX(-5px); }
+      30%,60%,90% { transform: translateX(5px); }
+    }
+    .shake { animation: shake .45s ease; }
+
+    /* ── Spinner ── */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spin { animation: spin .7s linear infinite; }
+
+    /* ── OTP inputs ── */
+    .otp-box {
+      width: 48px; height: 56px;
+      text-align: center; font-size: 1.5rem; font-weight: 700;
+      border: 2px solid #d1d5db; border-radius: .625rem; outline: none;
+      background: #fff; color: #111827;
+      transition: border-color .15s, box-shadow .15s, background .15s;
+      -moz-appearance: textfield; appearance: textfield;
+    }
+    .otp-box::-webkit-inner-spin-button,
+    .otp-box::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    .otp-box:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,.18);
+    }
+    .otp-box.filled {
+      border-color: #3b82f6;
+      background: #eff6ff;
+    }
+    .otp-box.err {
+      border-color: #ef4444 !important;
+      background: #fef2f2 !important;
+      box-shadow: 0 0 0 3px rgba(239,68,68,.14) !important;
+    }
+    .dark .otp-box {
+      background: #1e293b; border-color: #334155; color: #f1f5f9;
+    }
+    .dark .otp-box:focus {
+      border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,.25);
+    }
+    .dark .otp-box.filled {
+      border-color: #3b82f6; background: #1e3a5f;
+    }
+    .dark .otp-box.err {
+      border-color: #ef4444 !important;
+      background: #3b0d0c !important;
+    }
+
+    /* ── Phone mockup ── */
+    .phone-outer {
+      width: 220px; height: 430px;
+      background: #1e293b;
+      border-radius: 40px;
+      border: 4px solid #334155;
+      box-shadow:
+        0 32px 64px rgba(0,0,0,.35),
+        inset 0 1px 0 rgba(255,255,255,.06);
+      position: relative;
+      flex-shrink: 0;
+    }
+    .phone-notch {
+      position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+      width: 60px; height: 6px;
+      background: #334155; border-radius: 9999px;
+      z-index: 10;
+    }
+    .phone-screen {
+      position: absolute; inset: 8px;
+      background: #0f172a; border-radius: 32px;
+      overflow: hidden; display: flex; flex-direction: column;
+    }
+    /* Status bar */
+    .phone-status {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 6px 14px 0;
+      font-size: 8px; color: #94a3b8; font-weight: 600;
+      flex-shrink: 0;
+    }
+    /* Auth app header */
+    .app-header {
+      background: #1d4ed8;
+      padding: 8px 12px;
+      display: flex; align-items: center; gap-8px;
+      flex-shrink: 0;
+    }
+    .app-header-inner {
+      display: flex; align-items: center; gap: 6px;
+    }
+    .app-header svg { flex-shrink: 0; }
+    .app-header-title {
+      font-size: 10px; font-weight: 700; color: #fff;
+      letter-spacing: .3px;
+    }
+    /* App body */
+    .app-body { flex: 1; padding: 8px; overflow: hidden; }
+
+    /* Account row */
+    .acct-row {
+      background: #1e293b; border-radius: 10px; padding: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .acct-icon {
+      width: 32px; height: 32px; border-radius: 9999px;
+      background: #2563eb;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800; color: #fff; flex-shrink: 0;
+    }
+    .acct-info { flex: 1; min-width: 0; }
+    .acct-name { font-size: 9px; font-weight: 700; color: #f1f5f9; }
+    .acct-code { font-size: 13px; font-weight: 800; color: #60a5fa; letter-spacing: 2px; margin-top: 2px; filter: blur(2.5px); }
+
+    /* Timer circle */
+    .timer-wrap {
+      flex-shrink: 0; position: relative; width: 28px; height: 28px;
+    }
+    .timer-wrap svg { transform: rotate(-90deg); }
+    .timer-bg { fill: none; stroke: #334155; stroke-width: 3; }
+    .timer-arc {
+      fill: none; stroke: #3b82f6; stroke-width: 3;
+      stroke-linecap: round;
+      stroke-dasharray: 63; stroke-dashoffset: 0;
+      animation: timerCountdown 30s linear infinite;
+    }
+    @keyframes timerCountdown {
+      from { stroke-dashoffset: 0; }
+      to   { stroke-dashoffset: 63; }
+    }
+    .timer-label {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 7px; font-weight: 700; color: #94a3b8;
+    }
+
+    /* ── Separator divider ── */
+    .divider { display: flex; align-items: center; gap: .75rem; margin: 1rem 0; }
+    .divider::before, .divider::after {
+      content: ''; flex: 1; height: 1px; background: #e5e7eb;
+    }
+    .dark .divider::before, .dark .divider::after { background: #1e293b; }
+    .divider span { font-size: .75rem; color: #9ca3af; font-weight: 500; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .anim-in, .shake, .spin, .timer-arc { animation: none !important; }
+    }
   </style>
-  <link rel="stylesheet" href="tailwind-production.css">
-  <link rel="stylesheet" href="pro-styles.css">
 </head>
-<body class="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center px-4 py-12 font-sans">
+<body class="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center px-4 py-12">
 
   <!-- Dark mode toggle -->
   <button id="darkToggle" aria-label="Toggle dark mode"
-    class="fixed top-4 right-4 z-50 rounded-full p-2 bg-white dark:bg-gray-800 shadow border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+    class="fixed top-4 right-4 z-50 rounded-full p-2.5 bg-white dark:bg-gray-800 shadow-md border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
     <svg class="w-5 h-5 text-gray-600 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
       <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/>
     </svg>
     <svg class="w-5 h-5 text-yellow-400 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-      <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+      <circle cx="12" cy="12" r="5"/>
+      <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
       <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
       <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
     </svg>
   </button>
 
-  <div class="auth-card w-full max-w-sm">
-    <!-- Logo -->
-    <div class="flex items-center justify-center gap-2 mb-8">
-      <div class="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center">
-        <span class="text-white font-bold text-base leading-none">M</span>
+
+  <!-- ══════════════════════════════════════════════════
+       DESKTOP GRID: left ~55% form  |  right ~45% phone
+       ══════════════════════════════════════════════════ -->
+  <div class="w-full max-w-4xl mx-auto anim-in
+              grid grid-cols-1 lg:grid-cols-[1fr_auto]
+              gap-10 lg:gap-16 items-center">
+
+    <!-- ─────────────── LEFT — form card ─────────────── -->
+    <div class="flex flex-col items-center lg:items-start">
+
+      <!-- Logo -->
+      <div class="flex items-center gap-2.5 mb-8 anim-in">
+        <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-600/30">
+          <span class="text-white font-black text-base leading-none">M</span>
+        </div>
+        <span class="text-gray-900 dark:text-white font-bold text-xl tracking-tight">mtverse</span>
       </div>
-      <span class="text-gray-900 dark:text-white font-bold text-xl tracking-tight">mtverse</span>
-    </div>
 
-    <!-- Card -->
-    <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl px-8 py-10 border border-gray-100 dark:border-gray-800">
+      <!-- Card -->
+      <div class="w-full max-w-md bg-white dark:bg-gray-900 rounded-2xl shadow-xl
+                  border border-gray-100 dark:border-gray-800 px-8 py-10 anim-in anim-in-d1">
 
-      <!-- === OTP ENTRY STATE === -->
-      <div id="otpState">
-        <!-- Shield icon -->
-        <div class="flex justify-center mb-6">
-          <div class="w-16 h-16 bg-blue-50 dark:bg-blue-900/20 rounded-2xl flex items-center justify-center">
-            <svg class="w-8 h-8 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-            </svg>
+        <!-- === OTP ENTRY STATE === -->
+        <div id="otpState">
+
+          <!-- Shield icon -->
+          <div class="flex justify-center mb-5">
+            <div class="w-14 h-14 rounded-2xl bg-blue-50 dark:bg-blue-900/20
+                        flex items-center justify-center">
+              <svg class="w-8 h-8 text-blue-600 dark:text-blue-400" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955
+                     11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824
+                     10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133
+                     -2.052-.382-3.016z"/>
+              </svg>
+            </div>
           </div>
-        </div>
-        <div class="text-center mb-8">
-          <h2 class="text-xl font-bold text-gray-900 dark:text-white">Two-factor authentication</h2>
-          <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Enter the 6-digit code from your authenticator app</p>
-        </div>
 
-        <!-- OTP input row -->
-        <div id="otpRow" class="flex items-center justify-center gap-2 mb-3" role="group" aria-label="One-time password">
-          <input class="otp-input" type="number" inputmode="numeric" maxlength="1" min="0" max="9" autocomplete="one-time-code" aria-label="Digit 1" />
-          <input class="otp-input" type="number" inputmode="numeric" maxlength="1" min="0" max="9" aria-label="Digit 2" />
-          <input class="otp-input" type="number" inputmode="numeric" maxlength="1" min="0" max="9" aria-label="Digit 3" />
-          <span class="text-gray-300 dark:text-gray-600 text-xl font-light select-none mx-0.5">—</span>
-          <input class="otp-input" type="number" inputmode="numeric" maxlength="1" min="0" max="9" aria-label="Digit 4" />
-          <input class="otp-input" type="number" inputmode="numeric" maxlength="1" min="0" max="9" aria-label="Digit 5" />
-          <input class="otp-input" type="number" inputmode="numeric" maxlength="1" min="0" max="9" aria-label="Digit 6" />
-        </div>
+          <!-- Heading -->
+          <div class="text-center mb-7">
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+              Two-factor authentication
+            </h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1.5 leading-relaxed">
+              Enter the 6-digit code from your<br class="hidden sm:block" /> authenticator app
+            </p>
+          </div>
 
-        <!-- Error message -->
-        <p id="otpError" class="hidden text-center text-xs text-red-600 dark:text-red-400 mb-4">Invalid code. Please try again.</p>
+          <!-- OTP row -->
+          <div id="otpRow"
+               class="flex items-center justify-center gap-2 mb-2"
+               role="group" aria-label="One-time password">
+            <input class="otp-box" type="tel" inputmode="numeric"
+                   maxlength="1" pattern="[0-9]" autocomplete="one-time-code"
+                   aria-label="Digit 1" />
+            <input class="otp-box" type="tel" inputmode="numeric"
+                   maxlength="1" pattern="[0-9]" aria-label="Digit 2" />
+            <input class="otp-box" type="tel" inputmode="numeric"
+                   maxlength="1" pattern="[0-9]" aria-label="Digit 3" />
+            <span class="text-gray-300 dark:text-gray-600 text-xl select-none px-0.5">—</span>
+            <input class="otp-box" type="tel" inputmode="numeric"
+                   maxlength="1" pattern="[0-9]" aria-label="Digit 4" />
+            <input class="otp-box" type="tel" inputmode="numeric"
+                   maxlength="1" pattern="[0-9]" aria-label="Digit 5" />
+            <input class="otp-box" type="tel" inputmode="numeric"
+                   maxlength="1" pattern="[0-9]" aria-label="Digit 6" />
+          </div>
 
-        <!-- Verify button -->
-        <button type="button" id="verifyBtn" disabled
-          class="w-full mt-4 rounded-lg bg-blue-600 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2">
-          <svg id="verifySpinner" class="w-4 h-4 animate-spin hidden" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
-          </svg>
-          <span id="verifyTxt">Verify code</span>
-        </button>
-
-        <!-- Resend -->
-        <div class="mt-5 text-center">
-          <p class="text-sm text-gray-500 dark:text-gray-400">
-            Didn't receive a code?
-            <button id="resendBtn" disabled
-              class="text-blue-600 dark:text-blue-400 font-medium hover:underline disabled:opacity-50 disabled:cursor-not-allowed ml-1">
-              Resend in <span id="countdown">30</span>s
-            </button>
+          <!-- Error message -->
+          <p id="otpError"
+             class="hidden text-center text-xs text-red-600 dark:text-red-400 mt-2 mb-1">
+            Invalid code. Please try again.
           </p>
-        </div>
 
-        <!-- Links -->
-        <div class="mt-4 space-y-2 text-center">
-          <div>
-            <a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+          <!-- Verify button -->
+          <button type="button" id="verifyBtn" disabled
+            class="mt-5 w-full h-11 rounded-xl bg-blue-600 text-sm font-semibold text-white
+                   shadow-lg shadow-blue-600/25 hover:bg-blue-700 active:scale-[.98]
+                   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
+                   dark:focus:ring-offset-gray-900 transition
+                   disabled:opacity-40 disabled:cursor-not-allowed
+                   flex items-center justify-center gap-2">
+            <svg id="verifySpinner" class="w-4 h-4 spin hidden shrink-0" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10"
+                      stroke="currentColor" stroke-width="4"/>
+              <path class="opacity-75" fill="currentColor"
+                    d="M4 12a8 8 0 018-8v8H4z"/>
+            </svg>
+            <span id="verifyTxt">Verify</span>
+          </button>
+
+          <!-- Resend row -->
+          <div class="mt-5 text-center">
+            <p class="text-sm text-gray-500 dark:text-gray-400">
+              Didn't receive it?
+              <button id="resendBtn" disabled
+                class="ml-1 text-blue-600 dark:text-blue-400 font-medium
+                       hover:underline disabled:opacity-50 disabled:cursor-not-allowed">
+                Resend in <span id="countdown">30</span>s
+              </button>
+            </p>
+          </div>
+
+          <!-- Backup code link -->
+          <div class="mt-3 text-center">
+            <a href="#" class="text-sm text-gray-400 dark:text-gray-500 underline
+                               hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
               Use backup code instead
             </a>
           </div>
-          <div>
-            <a href="81-auth-login.html" class="inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+
+          <!-- Back link -->
+          <div class="mt-2 text-center">
+            <a href="81-auth-login.html"
+               class="inline-flex items-center gap-1.5 text-sm text-gray-400
+                      dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300
+                      transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24"
+                   stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
               </svg>
               Back to sign in
             </a>
           </div>
         </div>
-      </div>
 
-      <!-- === SUCCESS STATE === -->
-      <div id="successState" class="hidden text-center py-4">
-        <div class="w-16 h-16 bg-green-50 dark:bg-green-900/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-          <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-          </svg>
+        <!-- === SUCCESS STATE === -->
+        <div id="successState" class="hidden text-center py-4">
+          <div class="w-14 h-14 rounded-2xl bg-green-50 dark:bg-green-900/20
+                      flex items-center justify-center mx-auto mb-5">
+            <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none"
+                 viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+            </svg>
+          </div>
+          <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Verified!</h2>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">
+            Identity confirmed. Signing you in…
+          </p>
+          <div class="flex items-center justify-center gap-2 text-sm text-gray-400">
+            <svg class="w-4 h-4 spin text-blue-600" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10"
+                      stroke="currentColor" stroke-width="4"/>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
+            </svg>
+            Redirecting…
+          </div>
         </div>
-        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Verified!</h2>
-        <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Identity confirmed. Signing you in…</p>
-        <div class="flex items-center justify-center gap-2 text-sm text-gray-400">
-          <svg class="w-4 h-4 animate-spin text-blue-600" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
-          </svg>
-          Redirecting…
-        </div>
-      </div>
 
-    </div>
-  </div>
+      </div><!-- /card -->
+    </div><!-- /left -->
+
+
+    <!-- ─────────────── RIGHT — phone mockup (hidden on mobile) ─────────────── -->
+    <div class="hidden lg:flex flex-col items-center gap-5 anim-in anim-in-d2">
+
+      <!-- Phone frame -->
+      <div class="phone-outer">
+        <!-- notch -->
+        <div class="phone-notch"></div>
+
+        <!-- screen -->
+        <div class="phone-screen">
+
+          <!-- Status bar -->
+          <div class="phone-status">
+            <span>9:41</span>
+            <div style="display:flex;align-items:center;gap:4px;">
+              <!-- signal bars -->
+              <svg width="14" height="10" viewBox="0 0 14 10" fill="#94a3b8">
+                <rect x="0" y="6" width="2" height="4" rx="1"/>
+                <rect x="3" y="4" width="2" height="6" rx="1"/>
+                <rect x="6" y="2" width="2" height="8" rx="1"/>
+                <rect x="9" y="0" width="2" height="10" rx="1"/>
+              </svg>
+              <!-- wifi -->
+              <svg width="12" height="10" viewBox="0 0 12 10" fill="none" stroke="#94a3b8" stroke-width="1.2">
+                <path d="M1 3.5C3 1.5 9 1.5 11 3.5" stroke-linecap="round"/>
+                <path d="M2.5 5.5C4 4 8 4 9.5 5.5" stroke-linecap="round"/>
+                <circle cx="6" cy="8" r="1" fill="#94a3b8" stroke="none"/>
+              </svg>
+              <!-- battery -->
+              <svg width="18" height="10" viewBox="0 0 18 10" fill="none">
+                <rect x=".5" y=".5" width="14" height="9" rx="2" stroke="#94a3b8"/>
+                <rect x="15" y="3" width="2" height="4" rx="1" fill="#94a3b8"/>
+                <rect x="2" y="2" width="9" height="6" rx="1" fill="#94a3b8"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- App header bar -->
+          <div class="app-header" style="background:#1d4ed8;padding:9px 12px;display:flex;align-items:center;gap:6px;flex-shrink:0;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <span style="font-size:11px;font-weight:700;color:#fff;letter-spacing:.2px;">Authenticator</span>
+          </div>
+
+          <!-- Search bar -->
+          <div style="padding:6px 8px;flex-shrink:0;">
+            <div style="background:#1e293b;border-radius:8px;padding:4px 8px;display:flex;align-items:center;gap:5px;">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2.5">
+                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+              <span style="font-size:8px;color:#475569;">Search accounts…</span>
+            </div>
+          </div>
+
+          <!-- Accounts list -->
+          <div class="app-body">
+
+            <!-- mtverse account row -->
+            <div class="acct-row">
+              <div class="acct-icon">M</div>
+              <div class="acct-info">
+                <div class="acct-name">mtverse</div>
+                <div class="acct-code">428 619</div>
+              </div>
+              <!-- TOTP timer circle -->
+              <div class="timer-wrap">
+                <svg width="28" height="28" viewBox="0 0 24 24">
+                  <circle class="timer-bg" cx="12" cy="12" r="10"/>
+                  <circle class="timer-arc" cx="12" cy="12" r="10"/>
+                </svg>
+                <div class="timer-label" id="timerSec">30</div>
+              </div>
+            </div>
+
+            <!-- Divider inside app -->
+            <div style="height:1px;background:#1e293b;margin:6px 0;"></div>
+
+            <!-- Second account (faded) -->
+            <div style="background:#1e293b;border-radius:10px;padding:10px;
+                        display:flex;align-items:center;gap:8px;opacity:.45;">
+              <div style="width:32px;height:32px;border-radius:9999px;background:#7c3aed;
+                          display:flex;align-items:center;justify-content:center;
+                          font-size:11px;font-weight:800;color:#fff;flex-shrink:0;">G</div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:9px;font-weight:700;color:#f1f5f9;">github.com</div>
+                <div style="font-size:13px;font-weight:800;color:#a78bfa;letter-spacing:2px;
+                            margin-top:2px;filter:blur(2.5px);">715 032</div>
+              </div>
+              <div style="width:28px;height:28px;position:relative;">
+                <svg width="28" height="28" viewBox="0 0 24 24" style="transform:rotate(-90deg)">
+                  <circle cx="12" cy="12" r="10" fill="none" stroke="#334155" stroke-width="3"/>
+                  <circle cx="12" cy="12" r="10" fill="none" stroke="#7c3aed" stroke-width="3"
+                          stroke-dasharray="63" stroke-dashoffset="30"/>
+                </svg>
+              </div>
+            </div>
+
+          </div><!-- /app-body -->
+
+          <!-- Bottom nav strip -->
+          <div style="background:#0f172a;border-top:1px solid #1e293b;
+                      padding:8px 0;display:flex;justify-content:space-around;
+                      align-items:center;flex-shrink:0;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                 stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                 stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="10"/>
+            </svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                 stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/>
+            </svg>
+          </div>
+
+        </div><!-- /phone-screen -->
+      </div><!-- /phone-outer -->
+
+      <!-- Caption below phone -->
+      <p class="text-sm text-gray-400 dark:text-gray-500 text-center">
+        Use your authenticator app
+      </p>
+    </div><!-- /right -->
+
+  </div><!-- /grid -->
+
 
 <script>
-(function(){if(localStorage.getItem('darkMode')==='true')document.documentElement.classList.add('dark');})();
-document.getElementById('darkToggle').addEventListener('click',function(){
-  localStorage.setItem('darkMode',document.documentElement.classList.toggle('dark'));
-});
-
-const inputs=Array.from(document.querySelectorAll('.otp-input'));
-const verifyBtn=document.getElementById('verifyBtn');
-
-function getCode(){return inputs.map(i=>i.value).join('');}
-function allFilled(){return inputs.every(i=>i.value.length===1);}
-
-function checkAllFilled(){
-  const filled=allFilled();
-  verifyBtn.disabled=!filled;
-  inputs.forEach(i=>{
-    if(i.value) i.classList.add('filled');
-    else i.classList.remove('filled');
+(function () {
+  /* ── Dark mode init ── */
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const stored = localStorage.getItem('darkMode');
+  if (stored === 'true' || (stored === null && prefersDark)) {
+    document.documentElement.classList.add('dark');
+  }
+  document.getElementById('darkToggle').addEventListener('click', function () {
+    const isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('darkMode', isDark);
   });
-  if(filled) autoSubmit();
-}
 
-/* Auto-advance */
-inputs.forEach(function(input,i){
-  input.addEventListener('input',function(e){
-    /* Only keep last digit typed */
-    const val=e.target.value.replace(/\D/g,'');
-    e.target.value=val?val[val.length-1]:'';
-    if(e.target.value && i<inputs.length-1) inputs[i+1].focus();
-    checkAllFilled();
+  /* ── OTP logic ── */
+  const inputs = Array.from(document.querySelectorAll('.otp-box'));
+  const verifyBtn  = document.getElementById('verifyBtn');
+  const verifyTxt  = document.getElementById('verifyTxt');
+  const verifySpin = document.getElementById('verifySpinner');
+  const errorMsg   = document.getElementById('otpError');
+  const otpRow     = document.getElementById('otpRow');
+
+  function getCode() { return inputs.map(i => i.value).join(''); }
+  function allFilled() { return inputs.every(i => i.value.length === 1); }
+
+  function syncState() {
+    inputs.forEach(i => {
+      i.classList.toggle('filled', i.value.length === 1);
+    });
+    verifyBtn.disabled = !allFilled();
+  }
+
+  /* Auto-advance on input */
+  inputs.forEach(function (inp, idx) {
+    inp.addEventListener('input', function () {
+      const v = inp.value.replace(/\D/g, '');
+      inp.value = v ? v[v.length - 1] : '';
+      clearErrors();
+      syncState();
+      if (inp.value && idx < inputs.length - 1) inputs[idx + 1].focus();
+      if (allFilled()) scheduleVerify();
+    });
+
+    inp.addEventListener('keydown', function (e) {
+      if (e.key === 'Backspace') {
+        e.preventDefault();
+        clearErrors();
+        if (inp.value) { inp.value = ''; }
+        else if (idx > 0) { inputs[idx - 1].value = ''; inputs[idx - 1].focus(); }
+        syncState();
+      }
+      if (e.key === 'ArrowLeft'  && idx > 0)               inputs[idx - 1].focus();
+      if (e.key === 'ArrowRight' && idx < inputs.length -1) inputs[idx + 1].focus();
+    });
   });
-  input.addEventListener('keydown',function(e){
-    if(e.key==='Backspace'){
-      if(!e.target.value&&i>0){inputs[i-1].value='';inputs[i-1].focus();}
-      else{e.target.value='';}
-      e.preventDefault();
-      checkAllFilled();
-    }
-    if(e.key==='ArrowLeft'&&i>0) inputs[i-1].focus();
-    if(e.key==='ArrowRight'&&i<inputs.length-1) inputs[i+1].focus();
+
+  /* Paste — fill all boxes */
+  inputs[0].addEventListener('paste', function (e) {
+    e.preventDefault();
+    const text = (e.clipboardData || window.clipboardData)
+      .getData('text').replace(/\D/g, '').slice(0, 6);
+    inputs.forEach((inp, i) => { inp.value = text[i] || ''; });
+    clearErrors();
+    syncState();
+    const next = Math.min(text.length, inputs.length - 1);
+    inputs[next].focus();
+    if (allFilled()) scheduleVerify();
   });
-});
 
-/* Paste handler */
-inputs[0].addEventListener('paste',function(e){
-  const text=e.clipboardData.getData('text').replace(/\D/g,'').slice(0,6);
-  inputs.forEach(function(inp,i){inp.value=text[i]||'';});
-  const next=Math.min(text.length,5);
-  inputs[next].focus();
-  checkAllFilled();
-  e.preventDefault();
-});
+  /* Shake + error */
+  function showError() {
+    errorMsg.classList.remove('hidden');
+    inputs.forEach(i => i.classList.add('err'));
+    otpRow.classList.remove('shake');
+    void otpRow.offsetWidth; // reflow to restart
+    otpRow.classList.add('shake');
+    otpRow.addEventListener('animationend', () => otpRow.classList.remove('shake'), { once: true });
+  }
 
-/* Auto-submit */
-let autoSubmitTimer;
-function autoSubmit(){
-  clearTimeout(autoSubmitTimer);
-  autoSubmitTimer=setTimeout(doVerify,400);
-}
+  function clearErrors() {
+    errorMsg.classList.add('hidden');
+    inputs.forEach(i => i.classList.remove('err'));
+  }
 
-function doVerify(){
-  clearTimeout(autoSubmitTimer);
-  verifyBtn.disabled=true;
-  document.getElementById('verifySpinner').classList.remove('hidden');
-  document.getElementById('verifyTxt').textContent='Verifying…';
-  document.getElementById('otpError').classList.add('hidden');
+  /* Auto-submit after short delay when all filled */
+  let submitTimer;
+  function scheduleVerify() {
+    clearTimeout(submitTimer);
+    submitTimer = setTimeout(doVerify, 500);
+  }
 
-  setTimeout(function(){
-    document.getElementById('otpState').classList.add('hidden');
-    document.getElementById('successState').classList.remove('hidden');
-  },1500);
-}
+  /* Verify */
+  function doVerify() {
+    clearTimeout(submitTimer);
+    if (!allFilled()) return;
+    verifyBtn.disabled = true;
+    verifySpin.classList.remove('hidden');
+    verifyTxt.textContent = 'Verifying…';
 
-verifyBtn.addEventListener('click',doVerify);
+    setTimeout(function () {
+      const code = getCode();
+      /* Demo: treat "000000" as wrong, anything else succeeds */
+      if (code === '000000') {
+        verifySpin.classList.add('hidden');
+        verifyTxt.textContent = 'Verify';
+        verifyBtn.disabled = false;
+        showError();
+        inputs[0].focus();
+      } else {
+        document.getElementById('otpState').classList.add('hidden');
+        document.getElementById('successState').classList.remove('hidden');
+      }
+    }, 1400);
+  }
 
-/* Resend countdown */
-(function startCountdown(){
-  let secs=30;
-  const cdEl=document.getElementById('countdown');
-  const resendBtn=document.getElementById('resendBtn');
-  const timer=setInterval(function(){
-    secs--;
-    if(cdEl) cdEl.textContent=secs;
-    if(secs<=0){
-      clearInterval(timer);
-      resendBtn.disabled=false;
-      resendBtn.textContent='Resend code';
-    }
-  },1000);
+  verifyBtn.addEventListener('click', doVerify);
 
-  resendBtn.addEventListener('click',function(){
-    if(this.disabled)return;
-    this.disabled=true;
-    this.innerHTML='Resend in <span id="countdown">30</span>s';
-    inputs.forEach(i=>{i.value='';i.classList.remove('filled','error-state');});
-    verifyBtn.disabled=true;
-    inputs[0].focus();
-    startCountdown();
-  });
+  /* ── Resend countdown ── */
+  (function startCountdown() {
+    let secs = 30;
+    const cdEl     = document.getElementById('countdown');
+    const resendBtn = document.getElementById('resendBtn');
+    resendBtn.disabled = true;
+
+    const timer = setInterval(function () {
+      secs--;
+      if (cdEl) cdEl.textContent = secs;
+      if (secs <= 0) {
+        clearInterval(timer);
+        resendBtn.disabled = false;
+        resendBtn.textContent = 'Resend code';
+      }
+    }, 1000);
+
+    resendBtn.addEventListener('click', function () {
+      if (resendBtn.disabled) return;
+      /* Reset */
+      inputs.forEach(i => { i.value = ''; i.classList.remove('filled', 'err'); });
+      clearErrors();
+      verifyBtn.disabled = true;
+      inputs[0].focus();
+      resendBtn.innerHTML = 'Resend in <span id="countdown">30</span>s';
+      startCountdown();
+    }, { once: true });
+  })();
+
+  /* ── TOTP timer label countdown ── */
+  (function timerLabel() {
+    let t = 30;
+    const el = document.getElementById('timerSec');
+    setInterval(function () {
+      t--;
+      if (t <= 0) t = 30;
+      if (el) el.textContent = t;
+    }, 1000);
+  })();
 })();
 </script>
 </body>

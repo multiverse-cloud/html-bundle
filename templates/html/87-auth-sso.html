@@ -1,181 +1,437 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#2563eb" />
-  <meta name="description" content="Sign in with your company SSO provider — mtverse" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sign in with SSO — mtverse</title>
-  <link rel="stylesheet" href="tailwind-production.css">
-  <link rel="stylesheet" href="pro-styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tailwind-production.css" />
+  <link rel="stylesheet" href="pro-styles.css" />
   <style>
+    *, *::before, *::after { box-sizing: border-box; }
     body { font-family: 'Outfit', system-ui, sans-serif; }
-    @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    .anim-in { animation: fadeSlideUp .35s ease-out both; }
+
+    /* ── Entrance ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .anim-in { animation: fadeUp .4s cubic-bezier(.22,1,.36,1) both; }
+
+    /* ── Company card slide-down ── */
+    @keyframes slideDown {
+      from { max-height: 0; opacity: 0; transform: translateY(-6px); }
+      to   { max-height: 200px; opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideUp {
+      from { max-height: 200px; opacity: 1; }
+      to   { max-height: 0; opacity: 0; }
+    }
+    .company-card-enter {
+      animation: slideDown .3s cubic-bezier(.22,1,.36,1) both;
+      overflow: hidden;
+    }
+    .company-card-exit {
+      animation: slideUp .2s ease both;
+      overflow: hidden;
+    }
+
+    /* ── Spinner ── */
     @keyframes spin { to { transform: rotate(360deg); } }
     .spin { animation: spin .7s linear infinite; }
+
+    /* ── Input ── */
+    .field-input {
+      display: block; width: 100%; height: 44px;
+      padding: 0 14px; border-radius: .75rem;
+      border: 1.5px solid #e2e8f0; background: #fff;
+      font-size: .875rem; color: #111827; outline: none;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .field-input::placeholder { color: #9ca3af; }
+    .field-input:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,.15);
+    }
+    .dark .field-input {
+      background: #1e293b; border-color: #334155; color: #f1f5f9;
+    }
+    .dark .field-input::placeholder { color: #64748b; }
+    .dark .field-input:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,.2);
+    }
+
+    /* ── Provider button ── */
+    .provider-btn {
+      width: 100%; height: 42px;
+      display: flex; align-items: center; justify-content: center; gap: 9px;
+      border-radius: .75rem;
+      border: 1.5px solid #e2e8f0; background: #fff;
+      font-size: .8125rem; font-weight: 600; color: #374151;
+      cursor: pointer; transition: background .15s, border-color .15s, transform .1s;
+    }
+    .provider-btn:hover { background: #f9fafb; border-color: #d1d5db; }
+    .provider-btn:active { transform: scale(.98); }
+    .dark .provider-btn {
+      background: #1e293b; border-color: #334155; color: #e2e8f0;
+    }
+    .dark .provider-btn:hover { background: #273344; border-color: #475569; }
+
+    /* ── Primary button ── */
+    .btn-primary {
+      width: 100%; height: 44px;
+      display: flex; align-items: center; justify-content: center; gap: 7px;
+      border-radius: .75rem;
+      background: #2563eb; color: #fff;
+      font-size: .875rem; font-weight: 700;
+      box-shadow: 0 4px 12px rgba(37,99,235,.3);
+      border: none; cursor: pointer;
+      transition: background .15s, transform .1s, box-shadow .15s;
+    }
+    .btn-primary:hover { background: #1d4ed8; box-shadow: 0 4px 16px rgba(37,99,235,.4); }
+    .btn-primary:active { transform: scale(.98); }
+    .btn-primary:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+    /* ── Divider ── */
+    .divider {
+      display: flex; align-items: center; gap: .625rem; margin: 1rem 0;
+    }
+    .divider::before, .divider::after {
+      content: ''; flex: 1; height: 1px; background: #e2e8f0;
+    }
+    .dark .divider::before, .dark .divider::after { background: #1e293b; }
+    .divider span { font-size: .75rem; color: #9ca3af; font-weight: 500; }
+
+    /* ── Loading overlay inside card ── */
+    #state-loading { display: none; flex-direction: column; align-items: center;
+                     justify-content: center; padding: 3rem 1rem; gap: 1rem; }
+    #state-loading.active { display: flex; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .anim-in, .company-card-enter, .company-card-exit, .spin { animation: none !important; }
+    }
   </style>
 </head>
-<body class="bg-gray-50 dark:bg-gray-950 text-gray-800 dark:text-gray-100 min-h-screen flex items-center justify-center px-4">
+<body class="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center px-4 py-12">
 
   <!-- Dark mode toggle -->
-  <button onclick="toggleDark()" title="Toggle dark mode"
-    class="fixed top-4 right-4 z-50 inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-gray-600 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 transition">
-    <span id="darkIcon">🌙</span><span id="darkLabel">Dark</span>
+  <button id="darkToggle" aria-label="Toggle dark mode"
+    class="fixed top-4 right-4 z-50 rounded-full p-2.5
+           bg-white dark:bg-gray-800 shadow-md
+           border border-gray-200 dark:border-gray-700
+           hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+    <svg class="w-5 h-5 text-gray-600 dark:hidden" fill="none" viewBox="0 0 24 24"
+         stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round"
+            d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/>
+    </svg>
+    <svg class="w-5 h-5 text-yellow-400 hidden dark:block" fill="none"
+         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="5"/>
+      <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+      <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+    </svg>
   </button>
 
-  <div class="w-full max-w-[440px] anim-in">
-    <!-- Logo / Brand -->
-    <div class="mb-8 flex flex-col items-center gap-3">
-      <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 shadow-lg shadow-blue-600/30 text-white font-black text-2xl select-none">M</div>
-      <span class="text-sm font-semibold text-gray-500 dark:text-gray-400 tracking-wide">mtverse</span>
+
+  <!-- ══ MAIN CARD ══ -->
+  <div class="w-full max-w-sm anim-in">
+
+    <!-- Logo -->
+    <div class="flex flex-col items-center gap-2 mb-7">
+      <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700
+                  flex items-center justify-center shadow-lg shadow-blue-600/30
+                  text-white font-black text-xl select-none">M</div>
+      <span class="text-sm font-semibold text-gray-400 dark:text-gray-500 tracking-wide">
+        mtverse
+      </span>
     </div>
 
     <!-- Card -->
-    <div class="rounded-3xl border border-gray-200 bg-white p-8 shadow-xl shadow-gray-200/60 dark:border-gray-800 dark:bg-gray-900 dark:shadow-black/30">
+    <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-xl
+                border border-gray-100 dark:border-gray-800 px-7 py-8">
 
-      <!-- Default state -->
+      <!-- ════ DEFAULT / DOMAIN-DETECTION STATE ════ -->
       <div id="state-default">
-        <div class="mb-7 text-center">
+        <div class="text-center mb-6">
           <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Sign in with SSO</h1>
-          <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Enter your company email to get started</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-1.5">
+            Enter your work email to continue
+          </p>
         </div>
 
-        <form onsubmit="handleSSOSubmit(event)" class="grid gap-4">
-          <div class="grid gap-1.5">
-            <label class="text-sm font-medium text-gray-700 dark:text-gray-300" for="ssoEmail">Work email</label>
-            <input
-              id="ssoEmail"
-              type="email"
-              placeholder="you@yourcompany.com"
-              autocomplete="email"
-              oninput="detectDomain(this.value)"
-              class="h-11 w-full rounded-xl border border-gray-200 bg-white px-4 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-blue-500"
-            />
-          </div>
+        <!-- Email field -->
+        <div class="mb-3">
+          <label for="ssoEmail"
+                 class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+            Work email
+          </label>
+          <input id="ssoEmail" type="email" autocomplete="email"
+                 placeholder="work@company.com"
+                 class="field-input"
+                 oninput="handleEmailInput(this.value)" />
+        </div>
 
-          <!-- Domain detection hint -->
-          <div id="domainHint" class="hidden rounded-lg bg-blue-50 px-3.5 py-2.5 text-sm text-blue-700 dark:bg-blue-500/10 dark:text-blue-300">
-            <span id="domainHintText"></span>
+        <!-- ── ANIMATED COMPANY CARD (STATE 2) ── -->
+        <div id="companyCardWrap" class="hidden mb-3">
+          <div id="companyCard"
+               class="rounded-xl border border-blue-100 dark:border-blue-900/50
+                      bg-blue-50 dark:bg-blue-900/20 p-4
+                      flex items-center gap-3">
+            <!-- Avatar -->
+            <div id="companyAvatar"
+                 class="w-10 h-10 rounded-full flex items-center justify-center
+                        text-white font-black text-base shrink-0">
+            </div>
+            <!-- Info -->
+            <div class="flex-1 min-w-0">
+              <p id="companyName"
+                 class="text-sm font-bold text-gray-900 dark:text-white truncate"></p>
+              <p id="companyProvider"
+                 class="text-xs text-gray-500 dark:text-gray-400 mt-0.5"></p>
+            </div>
+            <!-- Continue arrow button -->
+            <button type="button" id="companyContinueBtn"
+              class="shrink-0 inline-flex items-center gap-1 rounded-lg
+                     bg-blue-600 hover:bg-blue-700 text-white
+                     text-xs font-semibold px-3 py-1.5 transition-colors">
+              Continue
+              <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24"
+                   stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+              </svg>
+            </button>
           </div>
+        </div>
 
-          <button type="submit" id="ssoBtn"
-            class="mt-1 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-blue-600 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition hover:bg-blue-700 active:scale-[.98] disabled:opacity-60 disabled:cursor-not-allowed">
-            <span id="ssoBtnText">Continue with SSO</span>
-          </button>
-        </form>
+        <!-- SSO Continue button -->
+        <button type="button" id="ssoBtn" class="btn-primary" onclick="handleSSOContinue()">
+          <span id="ssoBtnText">Continue with SSO</span>
+        </button>
 
         <!-- Divider -->
-        <div class="my-5 flex items-center gap-3">
-          <div class="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
-          <span class="text-xs font-medium text-gray-400">or</span>
-          <div class="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
+        <div class="divider my-5">
+          <span>or choose a provider</span>
         </div>
 
+        <!-- Provider buttons -->
         <div class="grid gap-2.5">
-          <p class="text-center text-xs text-gray-400 dark:text-gray-500">Sign in with a provider</p>
-          <button type="button" onclick="ssoProvider('google')"
-            class="inline-flex h-10 items-center justify-center gap-2.5 rounded-xl border border-gray-200 bg-white px-4 text-sm font-medium text-gray-700 hover:bg-gray-50 transition dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700">
-            <svg class="h-4 w-4" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-            Continue with Google Workspace
+          <!-- Google Workspace -->
+          <button type="button" class="provider-btn" onclick="doProviderSSO('Google Workspace')">
+            <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+            Google Workspace
           </button>
-          <button type="button" onclick="ssoProvider('microsoft')"
-            class="inline-flex h-10 items-center justify-center gap-2.5 rounded-xl border border-gray-200 bg-white px-4 text-sm font-medium text-gray-700 hover:bg-gray-50 transition dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700">
-            <svg class="h-4 w-4" viewBox="0 0 23 23"><path fill="#f3f3f3" d="M0 0h23v23H0z"/><path fill="#f35325" d="M1 1h10v10H1z"/><path fill="#81bc06" d="M12 1h10v10H12z"/><path fill="#05a6f0" d="M1 12h10v10H1z"/><path fill="#ffba08" d="M12 12h10v10H12z"/></svg>
-            Continue with Microsoft Entra
+
+          <!-- Microsoft Entra -->
+          <button type="button" class="provider-btn" onclick="doProviderSSO('Microsoft Entra')">
+            <svg class="w-4 h-4 shrink-0" viewBox="0 0 23 23">
+              <path fill="#f3f3f3" d="M0 0h23v23H0z"/>
+              <path fill="#f35325" d="M1 1h10v10H1z"/>
+              <path fill="#81bc06" d="M12 1h10v10H12z"/>
+              <path fill="#05a6f0" d="M1 12h10v10H1z"/>
+              <path fill="#ffba08" d="M12 12h10v10H12z"/>
+            </svg>
+            Microsoft Entra
           </button>
-          <button type="button" onclick="ssoProvider('okta')"
-            class="inline-flex h-10 items-center justify-center gap-2.5 rounded-xl border border-gray-200 bg-white px-4 text-sm font-medium text-gray-700 hover:bg-gray-50 transition dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700">
-            <svg class="h-4 w-4 text-blue-600 fill-current" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="5" fill="white"/></svg>
-            Continue with Okta
+
+          <!-- Okta -->
+          <button type="button" class="provider-btn" onclick="doProviderSSO('Okta')">
+            <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="11" fill="#007dc1"/>
+              <circle cx="12" cy="12" r="5.5" fill="#fff"/>
+            </svg>
+            Okta
           </button>
         </div>
       </div>
+      <!-- /state-default -->
 
-      <!-- Loading state -->
-      <div id="state-loading" class="hidden flex-col items-center py-8 gap-4">
-        <svg class="spin h-8 w-8 text-blue-600" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" stroke-dasharray="31.4" stroke-dashoffset="10"/></svg>
+      <!-- ════ LOADING STATE ════ -->
+      <div id="state-loading">
+        <svg class="spin w-9 h-9 text-blue-600 shrink-0" fill="none" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10" stroke="currentColor"
+                  stroke-width="3.5" stroke-dasharray="40" stroke-dashoffset="10"
+                  class="opacity-25"/>
+          <path d="M4 12a8 8 0 018-8" stroke="currentColor" stroke-width="3.5"
+                stroke-linecap="round" class="opacity-90"/>
+        </svg>
         <div class="text-center">
-          <p class="font-semibold text-gray-900 dark:text-white" id="loadingMsg">Redirecting to SSO provider…</p>
-          <p class="mt-1 text-sm text-gray-500 dark:text-gray-400" id="loadingDomain">Connecting securely</p>
+          <p id="loadingTitle"
+             class="font-semibold text-gray-900 dark:text-white text-base"></p>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+            Connecting securely via SAML 2.0…
+          </p>
+          <button type="button" onclick="cancelSSO()"
+            class="mt-5 text-sm text-gray-400 hover:text-gray-600
+                   dark:hover:text-gray-300 underline transition-colors">
+            Cancel
+          </button>
         </div>
       </div>
 
-      <!-- Links -->
-      <div id="state-links" class="mt-6 grid gap-2 text-center">
-        <a href="81-auth-login.html" class="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition">← Back to regular sign in</a>
-        <p class="text-sm text-gray-500 dark:text-gray-400">
-          Don't have an account?
-          <a href="82-auth-register.html" class="font-semibold text-blue-600 hover:underline dark:text-blue-400">Sign up</a>
-        </p>
-      </div>
+    </div><!-- /card -->
+
+    <!-- Footer links -->
+    <div id="footerLinks" class="mt-5 text-center grid gap-2">
+      <a href="81-auth-login.html"
+         class="text-sm text-gray-500 dark:text-gray-400
+                hover:text-gray-700 dark:hover:text-gray-200 transition-colors">
+        Not using SSO? Sign in with password
+      </a>
+      <p class="text-sm text-gray-500 dark:text-gray-400">
+        Don't have an account?
+        <a href="82-auth-register.html"
+           class="font-semibold text-blue-600 dark:text-blue-400 hover:underline">
+          Create one
+        </a>
+      </p>
     </div>
 
-    <p class="mt-5 text-center text-xs text-gray-400 dark:text-gray-600">© 2025 mtverse. All rights reserved.</p>
-  </div>
+  </div><!-- /max-w-sm -->
 
-  <script>
-    // Dark mode
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    let dark = localStorage.getItem('dark') === '1' || (localStorage.getItem('dark') === null && prefersDark);
-    function applyDark() {
-      document.documentElement.classList.toggle('dark', dark);
-      const icon = document.getElementById('darkIcon');
-      const label = document.getElementById('darkLabel');
-      icon.textContent = dark ? '☀️' : '🌙';
-      label.textContent = dark ? 'Light' : 'Dark';
+
+<script>
+(function () {
+  /* ── Dark mode ── */
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const stored = localStorage.getItem('darkMode');
+  if (stored === 'true' || (stored === null && prefersDark)) {
+    document.documentElement.classList.add('dark');
+  }
+  document.getElementById('darkToggle').addEventListener('click', function () {
+    const isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('darkMode', isDark);
+  });
+
+  /* ── Known domains ── */
+  const DOMAINS = {
+    'acme.com':         { name: 'Acme Corp',       provider: 'Google Workspace', color: '#4285f4', initial: 'A' },
+    'techflow.io':      { name: 'TechFlow',         provider: 'Microsoft Entra',  color: '#0078d4', initial: 'T' },
+    'startup.co':       { name: 'Startup Co',       provider: 'Okta',             color: '#007dc1', initial: 'S' },
+    'enterprise.net':   { name: 'Enterprise Inc',   provider: 'Google Workspace', color: '#34a853', initial: 'E' }
+  };
+
+  /* State tracking */
+  let currentDomainData = null;
+  let companyCardVisible = false;
+
+  /* Elements */
+  const emailInput       = document.getElementById('ssoEmail');
+  const companyCardWrap  = document.getElementById('companyCardWrap');
+  const companyCard      = document.getElementById('companyCard');
+  const companyAvatar    = document.getElementById('companyAvatar');
+  const companyNameEl    = document.getElementById('companyName');
+  const companyProviderEl= document.getElementById('companyProvider');
+  const companyContinueBtn = document.getElementById('companyContinueBtn');
+  const ssoBtnText       = document.getElementById('ssoBtnText');
+  const footerLinks      = document.getElementById('footerLinks');
+  const stateDefault     = document.getElementById('state-default');
+  const stateLoading     = document.getElementById('state-loading');
+  const loadingTitle     = document.getElementById('loadingTitle');
+
+  /* ── Domain detection ── */
+  window.handleEmailInput = function (value) {
+    const atIdx = value.indexOf('@');
+    if (atIdx === -1) {
+      hideCompanyCard();
+      ssoBtnText.textContent = 'Continue with SSO';
+      return;
     }
-    applyDark();
-    function toggleDark() { dark = !dark; localStorage.setItem('dark', dark ? '1' : '0'); applyDark(); }
+    const domain = value.slice(atIdx + 1).toLowerCase().trim();
+    const match  = DOMAINS[domain];
 
-    // Domain detection
-    const knownDomains = {
-      'acmecorp.com': 'Acme Corp',
-      'techglobal.io': 'TechGlobal',
-      'startup.co': 'Startup Co',
-      'enterprise.net': 'Enterprise Inc',
-    };
-    function detectDomain(email) {
-      const domain = email.split('@')[1] || '';
-      const hint = document.getElementById('domainHint');
-      const hintText = document.getElementById('domainHintText');
-      if (domain && domain.includes('.')) {
-        const name = knownDomains[domain] || domain;
-        hintText.textContent = `Signing you in via ${name} SSO →`;
-        hint.classList.remove('hidden');
-      } else {
-        hint.classList.add('hidden');
-      }
+    if (match) {
+      currentDomainData = { ...match, domain };
+      showCompanyCard(match);
+      ssoBtnText.textContent = `Continue with ${match.name}`;
+    } else {
+      currentDomainData = null;
+      hideCompanyCard();
+      ssoBtnText.textContent = 'Continue with SSO';
     }
+  };
 
-    function handleSSOSubmit(e) {
-      e.preventDefault();
-      const email = document.getElementById('ssoEmail').value.trim();
-      if (!email || !email.includes('@')) return;
-      const domain = email.split('@')[1] || email;
-      showLoading(domain);
+  function showCompanyCard(data) {
+    companyAvatar.textContent     = data.initial;
+    companyAvatar.style.background = data.color;
+    companyNameEl.textContent     = data.name;
+    companyProviderEl.textContent = `Uses ${data.provider} SSO`;
+
+    if (!companyCardVisible) {
+      companyCardWrap.classList.remove('hidden');
+      companyCard.classList.remove('company-card-exit');
+      companyCard.classList.add('company-card-enter');
+      companyCardVisible = true;
     }
+  }
 
-    function ssoProvider(name) {
-      const labels = { google: 'Google Workspace', microsoft: 'Microsoft Entra', okta: 'Okta' };
-      showLoading(labels[name] || name);
+  function hideCompanyCard() {
+    if (!companyCardVisible) return;
+    companyCard.classList.remove('company-card-enter');
+    companyCard.classList.add('company-card-exit');
+    companyCard.addEventListener('animationend', function () {
+      companyCardWrap.classList.add('hidden');
+      companyCard.classList.remove('company-card-exit');
+      companyCardVisible = false;
+    }, { once: true });
+  }
+
+  /* Company card "Continue" button */
+  companyContinueBtn.addEventListener('click', function () {
+    if (currentDomainData) {
+      showLoading(currentDomainData.name);
     }
+  });
 
-    function showLoading(provider) {
-      document.getElementById('state-default').classList.add('hidden');
-      document.getElementById('state-links').classList.add('hidden');
-      const loadingEl = document.getElementById('state-loading');
-      loadingEl.classList.remove('hidden');
-      loadingEl.classList.add('flex');
-      document.getElementById('loadingMsg').textContent = `Redirecting to ${provider}…`;
-      document.getElementById('loadingDomain').textContent = 'Connecting securely via SAML 2.0';
-      // Simulate redirect
+  /* ── SSO main button ── */
+  window.handleSSOContinue = function () {
+    const email = emailInput.value.trim();
+    if (!email.includes('@')) {
+      emailInput.focus();
+      emailInput.style.borderColor = '#ef4444';
+      emailInput.style.boxShadow   = '0 0 0 3px rgba(239,68,68,.15)';
       setTimeout(() => {
-        loadingEl.querySelector('p:last-child') && (document.getElementById('loadingDomain').textContent = 'You would be redirected to your SSO provider.');
-      }, 2000);
+        emailInput.style.borderColor = '';
+        emailInput.style.boxShadow   = '';
+      }, 1800);
+      return;
     }
-  </script>
+    const provider = currentDomainData ? currentDomainData.name : email.split('@')[1];
+    showLoading(provider);
+  };
+
+  /* ── Provider direct buttons ── */
+  window.doProviderSSO = function (providerName) {
+    showLoading(providerName);
+  };
+
+  /* ── Show loading state ── */
+  function showLoading(providerName) {
+    loadingTitle.textContent = `Redirecting to ${providerName}…`;
+    stateDefault.classList.add('hidden');
+    footerLinks.classList.add('hidden');
+    stateLoading.classList.add('active');
+  }
+
+  /* ── Cancel ── */
+  window.cancelSSO = function () {
+    stateLoading.classList.remove('active');
+    stateDefault.classList.remove('hidden');
+    footerLinks.classList.remove('hidden');
+  };
+})();
+</script>
 </body>
 </html>
