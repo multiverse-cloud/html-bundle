@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>mtverse HTML Templates</title>
+    <meta
+      name="description"
+      content="Preview the mtverse static HTML dashboard template bundle."
+    />
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f6f8fb;
+        --panel: #ffffff;
+        --text: #101828;
+        --muted: #667085;
+        --line: #e4e7ec;
+        --brand: #465fff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .shell {
+        min-height: 100vh;
+        padding: 32px;
+      }
+
+      .topbar,
+      .panel {
+        border: 1px solid var(--line);
+        background: var(--panel);
+        border-radius: 18px;
+        box-shadow: 0 16px 50px rgba(16, 24, 40, 0.06);
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 18px 20px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+      }
+
+      .mark {
+        display: grid;
+        width: 42px;
+        height: 42px;
+        place-items: center;
+        border-radius: 12px;
+        background: var(--brand);
+        color: #fff;
+        font-weight: 900;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 0 14px;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .button.primary {
+        border-color: var(--brand);
+        background: var(--brand);
+        color: #fff;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(280px, 0.45fr);
+        gap: 22px;
+        margin-top: 24px;
+      }
+
+      .panel {
+        padding: 28px;
+      }
+
+      h1 {
+        margin: 0;
+        max-width: 760px;
+        font-size: clamp(36px, 5vw, 72px);
+        line-height: 0.96;
+        letter-spacing: -0.065em;
+      }
+
+      p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .lead {
+        max-width: 680px;
+        margin-top: 20px;
+        font-size: 17px;
+      }
+
+      .stats {
+        display: grid;
+        gap: 12px;
+      }
+
+      .stat {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 16px;
+      }
+
+      .stat strong {
+        display: block;
+        font-size: 30px;
+        letter-spacing: -0.04em;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 24px;
+      }
+
+      .card {
+        min-height: 140px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: #fff;
+        padding: 18px;
+        transition:
+          transform 160ms ease,
+          border-color 160ms ease,
+          box-shadow 160ms ease;
+      }
+
+      .card:hover {
+        transform: translateY(-2px);
+        border-color: #c7d7fe;
+        box-shadow: 0 18px 40px rgba(16, 24, 40, 0.08);
+      }
+
+      .card span {
+        display: inline-flex;
+        border-radius: 999px;
+        background: #eef4ff;
+        padding: 5px 9px;
+        color: #344054;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .card strong {
+        display: block;
+        margin-top: 22px;
+        font-size: 18px;
+        letter-spacing: -0.03em;
+      }
+
+      .card small {
+        display: block;
+        margin-top: 8px;
+        color: var(--muted);
+      }
+
+      @media (max-width: 980px) {
+        .shell {
+          padding: 18px;
+        }
+
+        .topbar,
+        .hero {
+          grid-template-columns: 1fr;
+        }
+
+        .topbar {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 560px) {
+        .panel {
+          padding: 20px;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <nav class="topbar" aria-label="Template bundle navigation">
+        <a class="brand" href="/">
+          <span class="mark">M</span>
+          <span>mtverse HTML Bundle</span>
+        </a>
+        <div class="actions">
+          <a class="button primary" href="/html/01-main-dashboard.html">Open Dashboard</a>
+          <a class="button" href="/html/21-api-keys.html">API Keys</a>
+          <a class="button" href="/html/117-tailadmin-components.html">Components</a>
+        </div>
+      </nav>
+
+      <section class="hero">
+        <div class="panel">
+          <h1>Static admin templates ready for Vercel.</h1>
+          <p class="lead">
+            Deploy this repository with Vercel Root Directory set to
+            <strong>templates</strong>. The HTML files are available under
+            <strong>/html</strong> and need no build command.
+          </p>
+        </div>
+        <aside class="panel stats" aria-label="Bundle stats">
+          <div class="stat">
+            <strong>146</strong>
+            <p>HTML dashboard pages</p>
+          </div>
+          <div class="stat">
+            <strong>0</strong>
+            <p>Build steps required</p>
+          </div>
+          <div class="stat">
+            <strong>Vercel</strong>
+            <p>Root directory: templates</p>
+          </div>
+        </aside>
+      </section>
+
+      <section class="grid" aria-label="Featured template pages">
+        <a class="card" href="/html/01-main-dashboard.html">
+          <span>Dashboard</span>
+          <strong>Main Dashboard</strong>
+          <small>KPI cards, charts, orders, and operating overview.</small>
+        </a>
+        <a class="card" href="/html/05-prompt-cms-dashboard.html">
+          <span>Prompt CMS</span>
+          <strong>Prompt CMS Dashboard</strong>
+          <small>Admin workflow for prompt publishing and review.</small>
+        </a>
+        <a class="card" href="/html/21-api-keys.html">
+          <span>API</span>
+          <strong>API Keys</strong>
+          <small>Key table, status chips, copy actions, and toggles.</small>
+        </a>
+        <a class="card" href="/html/24-cards-overview.html">
+          <span>Cards</span>
+          <strong>Card Variants</strong>
+          <small>Image cards, stat cards, user cards, and links.</small>
+        </a>
+        <a class="card" href="/html/63-email-inbox.html">
+          <span>Email</span>
+          <strong>Email Inbox</strong>
+          <small>Inbox list, message preview, and actions.</small>
+        </a>
+        <a class="card" href="/html/81-auth-login.html">
+          <span>Auth</span>
+          <strong>Login Page</strong>
+          <small>Clean authentication screen for SaaS apps.</small>
+        </a>
+        <a class="card" href="/html/88-error-404.html">
+          <span>Error</span>
+          <strong>404 Page</strong>
+          <small>Production-ready not found page.</small>
+        </a>
+        <a class="card" href="/html/117-tailadmin-components.html">
+          <span>Library</span>
+          <strong>Components</strong>
+          <small>UI element preview page for the bundle.</small>
+        </a>
+      </section>
+    </main>
+  </body>
+</html>
