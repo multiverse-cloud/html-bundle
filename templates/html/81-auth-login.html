@@ -4,33 +4,53 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sign In — mtverse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tailwind-production.css" />
+  <link rel="stylesheet" href="pro-styles.css" />
   <style>
-    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-    .auth-card{animation:fadeIn .3s ease}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    .animate-spin{animation:spin 1s linear infinite}
-    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-    .animate-pulse{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite}
-    .field-error input,.field-error select{border-color:#ef4444!important;box-shadow:0 0 0 3px rgba(239,68,68,.12)!important}
-    .field-error .error-msg{display:flex!important}
-    @media(prefers-reduced-motion:reduce){
-      .auth-card,.animate-spin,.animate-pulse{animation:none!important}
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: 'Outfit', sans-serif; }
+
+    /* Entrance animation */
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
-    /* dot grid pattern */
-    .dot-pattern{
-      background-image:radial-gradient(circle,rgba(255,255,255,.18) 1px,transparent 1px);
-      background-size:24px 24px;
+    .form-enter { animation: slideUp 0.5s cubic-bezier(0.16,1,0.3,1) both; }
+
+    /* Spinner */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spin { animation: spin 0.8s linear infinite; }
+
+    /* Testimonial fade */
+    @keyframes tFadeIn  { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes tFadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-10px); } }
+    .t-in  { animation: tFadeIn  0.5s ease forwards; }
+    .t-out { animation: tFadeOut 0.4s ease forwards; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .form-enter, .spin, .t-in, .t-out { animation: none !important; }
     }
+
+    /* Field error state */
+    .field-error input {
+      border-color: #ef4444 !important;
+      box-shadow: 0 0 0 3px rgba(239,68,68,.15) !important;
+    }
+
+    /* Dark mode base */
+    .dark body { background-color: #030712; }
   </style>
-  <link rel="stylesheet" href="tailwind-production.css">
-  <link rel="stylesheet" href="pro-styles.css">
 </head>
-<body class="min-h-screen bg-gray-50 dark:bg-gray-950 font-sans">
+<body class="min-h-screen bg-gray-50 dark:bg-gray-950">
+
 
   <!-- Dark mode toggle -->
   <button id="darkToggle" aria-label="Toggle dark mode"
-    class="fixed top-4 right-4 z-50 rounded-full p-2 bg-white dark:bg-gray-800 shadow border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-    <svg id="iconMoon" class="w-5 h-5 text-gray-600 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    class="fixed top-4 right-4 z-50 w-10 h-10 rounded-full bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+    <svg id="iconMoon" class="w-5 h-5 text-gray-500 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
       <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/>
     </svg>
     <svg id="iconSun" class="w-5 h-5 text-yellow-400 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -41,95 +61,97 @@
     </svg>
   </button>
 
-  <div class="min-h-screen flex">
+  <!-- Main grid: 60 left form / 40 right dark panel -->
+  <div class="min-h-screen grid grid-cols-1 lg:grid-cols-[3fr_2fr]">
 
-    <!-- Left branding panel (hidden on mobile) -->
-    <div class="hidden lg:flex lg:w-1/2 bg-blue-600 flex-col justify-between px-12 py-16 relative overflow-hidden dot-pattern">
-      <!-- Abstract geometric shapes -->
-      <div class="absolute -top-20 -left-20 w-80 h-80 bg-white opacity-5 rounded-full"></div>
-      <div class="absolute bottom-0 right-0 w-96 h-96 bg-white opacity-5 rounded-full translate-x-1/3 translate-y-1/3"></div>
-      <div class="absolute top-1/2 left-1/2 w-48 h-48 bg-white opacity-5 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+    <!-- ═══════════════════════════════════════════
+         LEFT PANEL — White form area (60%)
+    ════════════════════════════════════════════ -->
+    <div class="flex items-center justify-center px-6 py-16 bg-white dark:bg-gray-950 order-2 lg:order-1">
+      <div class="form-enter w-full max-w-md">
 
-      <div class="relative z-10">
         <!-- Logo -->
-        <div class="flex items-center gap-3 mb-16">
-          <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg">
-            <span class="text-blue-600 font-bold text-lg leading-none">M</span>
-          </div>
-          <span class="text-white font-bold text-xl tracking-tight">mtverse</span>
-        </div>
-
-        <!-- Heading -->
-        <h1 class="text-4xl font-bold text-white mb-4 leading-tight">Welcome back</h1>
-        <p class="text-blue-100 text-lg mb-12">Sign in to continue building amazing things.</p>
-
-        <!-- Benefit bullets -->
-        <ul class="space-y-5">
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-6 h-6 bg-white/20 rounded-full flex items-center justify-center mt-0.5">
-              <svg class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-              </svg>
-            </span>
-            <span class="text-blue-50 text-sm leading-relaxed">AI-powered tools that accelerate your development workflow</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-6 h-6 bg-white/20 rounded-full flex items-center justify-center mt-0.5">
-              <svg class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-              </svg>
-            </span>
-            <span class="text-blue-50 text-sm leading-relaxed">Real-time collaboration with your entire team in one place</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-6 h-6 bg-white/20 rounded-full flex items-center justify-center mt-0.5">
-              <svg class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-              </svg>
-            </span>
-            <span class="text-blue-50 text-sm leading-relaxed">Advanced analytics and insights to drive smarter decisions</span>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Social proof footer -->
-      <div class="relative z-10 flex items-center gap-3 pt-8 border-t border-white/20">
-        <!-- Avatars -->
-        <div class="flex -space-x-2">
-          <div class="w-8 h-8 rounded-full bg-white/30 border-2 border-blue-600 flex items-center justify-center text-white text-xs font-semibold">A</div>
-          <div class="w-8 h-8 rounded-full bg-white/25 border-2 border-blue-600 flex items-center justify-center text-white text-xs font-semibold">B</div>
-          <div class="w-8 h-8 rounded-full bg-white/20 border-2 border-blue-600 flex items-center justify-center text-white text-xs font-semibold">C</div>
-          <div class="w-8 h-8 rounded-full bg-white/15 border-2 border-blue-600 flex items-center justify-center text-white text-xs font-semibold">+</div>
-        </div>
-        <p class="text-blue-100 text-xs">Join <strong class="text-white">12,000+</strong> teams building with mtverse</p>
-      </div>
-    </div>
-
-    <!-- Right form panel -->
-    <div class="flex-1 flex items-center justify-center px-4 py-12 bg-gray-50 dark:bg-gray-950">
-      <div class="auth-card w-full max-w-md">
-
-        <!-- Mobile logo -->
-        <div class="lg:hidden flex items-center justify-center gap-2 mb-8">
-          <div class="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center">
-            <span class="text-white font-bold text-base leading-none">M</span>
+        <div class="flex items-center gap-2.5 mb-8">
+          <div class="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center shadow-md">
+            <span class="text-white font-bold text-base leading-none select-none">M</span>
           </div>
           <span class="text-gray-900 dark:text-white font-bold text-xl tracking-tight">mtverse</span>
         </div>
 
-        <!-- Card -->
-        <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl px-8 py-10 border border-gray-100 dark:border-gray-800">
+        <!-- Heading -->
+        <div class="mb-8">
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-1">Welcome back</h1>
+          <p class="text-sm text-gray-500 dark:text-gray-400">Sign in to continue to mtverse</p>
+        </div>
 
-          <!-- Title -->
-          <div class="mb-8">
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Sign in to your account</h2>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Enter your credentials to continue</p>
+        <!-- Form card -->
+        <div class="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-xl px-8 py-8">
+          <form id="loginForm" novalidate>
+
+            <!-- Email -->
+            <div id="fEmail" class="mb-5">
+              <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Email address</label>
+              <input id="email" type="email" autocomplete="email" placeholder="you@company.com"
+                class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3.5 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
+              <p id="emailErr" class="hidden mt-1.5 text-xs text-red-500 flex items-center gap-1">
+                <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                <span id="emailErrTxt">Please enter a valid email</span>
+              </p>
+            </div>
+
+
+            <!-- Password -->
+            <div id="fPassword" class="mb-5">
+              <div class="flex items-center justify-between mb-1.5">
+                <label for="password" class="text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
+                <a href="83-auth-forgot-password.html" class="text-xs text-blue-600 dark:text-blue-400 hover:underline font-medium">Forgot password?</a>
+              </div>
+              <div class="relative">
+                <input id="password" type="password" autocomplete="current-password" placeholder="••••••••"
+                  class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3.5 py-2.5 pr-10 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
+                <button type="button" id="eyeToggle" aria-label="Show or hide password"
+                  class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                  <svg id="eyeShow" class="w-4.5 h-4.5" style="width:18px;height:18px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                  </svg>
+                  <svg id="eyeHide" class="w-4.5 h-4.5 hidden" style="width:18px;height:18px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>
+                  </svg>
+                </button>
+              </div>
+              <p id="passErr" class="hidden mt-1.5 text-xs text-red-500 flex items-center gap-1">
+                <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                <span>Password is required</span>
+              </p>
+            </div>
+
+            <!-- Remember me -->
+            <div class="flex items-center mb-6">
+              <input id="remember" type="checkbox" class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
+              <label for="remember" class="ml-2 text-sm text-gray-600 dark:text-gray-400 cursor-pointer select-none">Remember me</label>
+            </div>
+
+            <!-- Submit -->
+            <button id="submitBtn" type="submit"
+              class="w-full flex items-center justify-center gap-2 rounded-lg bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-sm font-semibold py-2.5 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 disabled:opacity-60 disabled:cursor-not-allowed">
+              <svg id="btnSpinner" class="spin hidden" style="width:16px;height:16px" fill="none" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" class="opacity-25"/>
+                <path fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" class="opacity-75"/>
+              </svg>
+              <span id="btnTxt">Sign in</span>
+            </button>
+          </form>
+
+          <!-- Divider -->
+          <div class="relative my-6">
+            <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-100 dark:border-gray-800"></div></div>
+            <div class="relative flex justify-center"><span class="px-3 bg-white dark:bg-gray-900 text-xs text-gray-400">or continue with</span></div>
           </div>
 
           <!-- Social buttons -->
-          <div class="grid grid-cols-2 gap-3 mb-6">
-            <button type="button"
-              class="flex items-center justify-center gap-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <div class="grid grid-cols-2 gap-3">
+            <button type="button" class="flex items-center justify-center gap-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300">
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                 <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -138,192 +160,217 @@
               </svg>
               Google
             </button>
-            <button type="button"
-              class="flex items-center justify-center gap-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500">
-              <svg class="w-4 h-4 text-gray-800 dark:text-white" viewBox="0 0 24 24" fill="currentColor">
+            <button type="button" class="flex items-center justify-center gap-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
               </svg>
               GitHub
             </button>
           </div>
 
-          <!-- Divider -->
-          <div class="relative mb-6">
-            <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-200 dark:border-gray-700"></div></div>
-            <div class="relative flex justify-center text-xs">
-              <span class="bg-white dark:bg-gray-900 px-3 text-gray-500 dark:text-gray-400">or continue with email</span>
-            </div>
-          </div>
-
-          <!-- Form -->
-          <form id="loginForm" novalidate class="space-y-5">
-
-            <!-- Email field -->
-            <div id="emailField" class="space-y-1.5">
-              <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email address</label>
-              <div class="relative">
-                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                  <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                  </svg>
-                </div>
-                <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com"
-                  class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 pl-10 pr-3.5 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow" />
-              </div>
-              <p class="error-msg hidden items-center gap-1 text-xs text-red-600 dark:text-red-400">
-                <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
-                <span id="emailError">Email is required</span>
-              </p>
-            </div>
-
-            <!-- Password field -->
-            <div id="passwordField" class="space-y-1.5">
-              <div class="flex items-center justify-between">
-                <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
-                <a href="83-auth-forgot-password.html" class="text-xs text-blue-600 dark:text-blue-400 hover:underline font-medium">Forgot password?</a>
-              </div>
-              <div class="relative">
-                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                  <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-                  </svg>
-                </div>
-                <input id="password" name="password" type="password" autocomplete="current-password" placeholder="••••••••"
-                  class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 pl-10 pr-10 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow" />
-                <button type="button" id="togglePassword" aria-label="Toggle password visibility"
-                  class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
-                  <!-- Eye open -->
-                  <svg id="eyeOpen" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                  </svg>
-                  <!-- Eye off -->
-                  <svg id="eyeOff" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>
-                  </svg>
-                </button>
-              </div>
-              <p class="error-msg hidden items-center gap-1 text-xs text-red-600 dark:text-red-400">
-                <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
-                <span>Password is required</span>
-              </p>
-            </div>
-
-            <!-- Submit button -->
-            <button type="submit" id="submitBtn"
-              class="w-full rounded-lg bg-blue-600 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2">
-              <svg id="btnSpinner" class="w-4 h-4 animate-spin hidden" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
-              </svg>
-              <span id="btnText">Sign in</span>
-            </button>
-          </form>
-
-          <!-- Success state (hidden initially) -->
-          <div id="successState" class="hidden text-center py-4">
-            <div class="w-14 h-14 bg-green-50 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg class="w-7 h-7 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-              </svg>
-            </div>
-            <p class="font-semibold text-gray-900 dark:text-white mb-1">Signed in successfully!</p>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Redirecting you to your dashboard…</p>
-          </div>
-
-          <!-- Footer link -->
+          <!-- Sign up link -->
           <p class="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
-            Don't have an account?
-            <a href="82-auth-register.html" class="text-blue-600 dark:text-blue-400 font-medium hover:underline">Sign up</a>
+            New to mtverse?
+            <a href="82-auth-register.html" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Create account</a>
           </p>
+        </div><!-- /card -->
+      </div>
+    </div><!-- /left panel -->
 
+
+    <!-- ═══════════════════════════════════════════
+         RIGHT PANEL — Dark slate-900 (40%)
+         On mobile: collapses to a top banner
+    ════════════════════════════════════════════ -->
+    <div class="relative bg-slate-900 flex flex-col justify-between overflow-hidden order-1 lg:order-2
+                lg:min-h-screen
+                max-lg:py-10 max-lg:px-6">
+
+      <!-- Subtle dot-grid overlay -->
+      <div class="absolute inset-0 pointer-events-none"
+           style="background-image:radial-gradient(circle,rgba(255,255,255,.06) 1px,transparent 1px);background-size:28px 28px;"></div>
+
+      <!-- Glow blobs -->
+      <div class="absolute -top-32 -left-32 w-80 h-80 rounded-full bg-blue-600 opacity-10 blur-3xl pointer-events-none"></div>
+      <div class="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-indigo-500 opacity-10 blur-3xl pointer-events-none"></div>
+
+      <!-- Content wrapper -->
+      <div class="relative z-10 flex flex-col h-full justify-between py-12 px-10 max-lg:py-0 max-lg:px-0">
+
+        <!-- Top: Logo mark -->
+        <div class="mb-10 max-lg:hidden">
+          <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-2xl">
+            <span class="text-slate-900 font-extrabold text-2xl select-none leading-none">M</span>
+          </div>
+        </div>
+
+        <!-- Middle: Headline + testimonials -->
+        <div class="flex-1 flex flex-col justify-center max-lg:items-center max-lg:text-center">
+          <h2 class="text-white text-3xl lg:text-4xl font-bold leading-tight mb-10 max-lg:text-xl max-lg:mb-6">
+            Trusted by<br class="max-lg:hidden" /> 12,000+ teams
+          </h2>
+
+          <!-- Testimonial carousel -->
+          <div id="testimonialWrap" class="relative min-h-[140px] max-lg:min-h-[80px] max-lg:max-w-sm w-full">
+            <!-- Card 0 -->
+            <div class="testimonial-card t-in absolute inset-0 bg-white/5 border border-white/10 rounded-2xl p-6 max-lg:p-4 max-lg:static max-lg:rounded-xl" data-idx="0">
+              <p class="text-white/90 text-sm leading-relaxed mb-4 italic max-lg:text-xs max-lg:mb-2">"mtverse cut our analytics setup time by 80%"</p>
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">SC</div>
+                <div>
+                  <p class="text-white text-xs font-semibold">Sarah Chen</p>
+                  <p class="text-white/50 text-xs">CTO @ TechCorp</p>
+                </div>
+              </div>
+            </div>
+            <!-- Card 1 -->
+            <div class="testimonial-card absolute inset-0 bg-white/5 border border-white/10 rounded-2xl p-6 max-lg:p-4 max-lg:static max-lg:rounded-xl opacity-0 pointer-events-none" data-idx="1">
+              <p class="text-white/90 text-sm leading-relaxed mb-4 italic max-lg:text-xs max-lg:mb-2">"The best dashboard template we've ever used."</p>
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full bg-violet-500 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">JL</div>
+                <div>
+                  <p class="text-white text-xs font-semibold">Jordan Lee</p>
+                  <p class="text-white/50 text-xs">Founder @ Startup.io</p>
+                </div>
+              </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="testimonial-card absolute inset-0 bg-white/5 border border-white/10 rounded-2xl p-6 max-lg:p-4 max-lg:static max-lg:rounded-xl opacity-0 pointer-events-none" data-idx="2">
+              <p class="text-white/90 text-sm leading-relaxed mb-4 italic max-lg:text-xs max-lg:mb-2">"Dark mode, responsive, and actually works. Love it."</p>
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">MR</div>
+                <div>
+                  <p class="text-white text-xs font-semibold">Marcus Roy</p>
+                  <p class="text-white/50 text-xs">Dev Lead</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dots indicator -->
+          <div class="flex gap-2 mt-6 max-lg:mt-3 max-lg:justify-center" id="tDots">
+            <button class="t-dot w-2 h-2 rounded-full bg-white transition-all" data-i="0" aria-label="Testimonial 1"></button>
+            <button class="t-dot w-2 h-2 rounded-full bg-white/30 transition-all" data-i="1" aria-label="Testimonial 2"></button>
+            <button class="t-dot w-2 h-2 rounded-full bg-white/30 transition-all" data-i="2" aria-label="Testimonial 3"></button>
+          </div>
+        </div>
+
+        <!-- Bottom: stat pills -->
+        <div class="flex flex-wrap gap-2 mt-10 max-lg:mt-6 max-lg:justify-center">
+          <span class="inline-flex items-center gap-1.5 rounded-full bg-white/10 border border-white/15 px-4 py-1.5 text-xs font-medium text-white/80">
+            <span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>12K+ Teams
+          </span>
+          <span class="inline-flex items-center gap-1.5 rounded-full bg-white/10 border border-white/15 px-4 py-1.5 text-xs font-medium text-white/80">
+            <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>99.9% Uptime
+          </span>
+          <span class="inline-flex items-center gap-1.5 rounded-full bg-white/10 border border-white/15 px-4 py-1.5 text-xs font-medium text-white/80">
+            <span class="w-1.5 h-1.5 rounded-full bg-violet-400"></span>50+ Templates
+          </span>
         </div>
       </div>
-    </div>
-  </div>
+    </div><!-- /right panel -->
+
+  </div><!-- /main grid -->
+
 
 <script>
-/* ── Dark mode ── */
-(function(){
-  if(localStorage.getItem('darkMode')==='true') document.documentElement.classList.add('dark');
+/* ── Dark mode persistence ── */
+(function () {
+  if (localStorage.getItem('dm') === '1') document.documentElement.classList.add('dark');
 })();
-document.getElementById('darkToggle').addEventListener('click',function(){
-  const isDark = document.documentElement.classList.toggle('dark');
-  localStorage.setItem('darkMode', isDark);
+document.getElementById('darkToggle').addEventListener('click', function () {
+  var on = document.documentElement.classList.toggle('dark');
+  localStorage.setItem('dm', on ? '1' : '0');
 });
 
-/* ── Password toggle ── */
-const passInput = document.getElementById('password');
-const eyeOpen   = document.getElementById('eyeOpen');
-const eyeOff    = document.getElementById('eyeOff');
-document.getElementById('togglePassword').addEventListener('click',function(){
-  const isText = passInput.type === 'text';
-  passInput.type = isText ? 'password' : 'text';
-  eyeOpen.classList.toggle('hidden', !isText);
-  eyeOff.classList.toggle('hidden', isText);
+/* ── Eye toggle ── */
+var pwdInput = document.getElementById('password');
+document.getElementById('eyeToggle').addEventListener('click', function () {
+  var show = pwdInput.type === 'password';
+  pwdInput.type = show ? 'text' : 'password';
+  document.getElementById('eyeShow').classList.toggle('hidden', show);
+  document.getElementById('eyeHide').classList.toggle('hidden', !show);
 });
 
-/* ── Validation helpers ── */
-function setError(fieldId, msg){
-  const wrap = document.getElementById(fieldId);
-  wrap.classList.add('field-error');
-  const errSpan = wrap.querySelector('[id$="Error"], .error-msg span');
-  if(errSpan) errSpan.textContent = msg;
-  const errEl = wrap.querySelector('.error-msg');
-  if(errEl) errEl.classList.remove('hidden');
-  if(errEl) errEl.style.display='flex';
+/* ── Validation ── */
+var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+function showErr(errEl, show) {
+  errEl.style.display = show ? 'flex' : 'none';
+  errEl.classList.toggle('hidden', !show);
 }
-function clearError(fieldId){
-  const wrap = document.getElementById(fieldId);
-  wrap.classList.remove('field-error');
-  const errEl = wrap.querySelector('.error-msg');
-  if(errEl){ errEl.classList.add('hidden'); errEl.style.display='';}
+function validateEmail() {
+  var v = document.getElementById('email').value.trim();
+  var err = document.getElementById('emailErr');
+  var txt = document.getElementById('emailErrTxt');
+  if (!v) { txt.textContent = 'Email is required'; showErr(err, true); return false; }
+  if (!emailRe.test(v)) { txt.textContent = 'Please enter a valid email address'; showErr(err, true); return false; }
+  showErr(err, false); return true;
 }
-
-/* ── Real-time email validation ── */
-const emailInput = document.getElementById('email');
-emailInput.addEventListener('blur',function(){
-  const v = emailInput.value.trim();
-  if(!v) setError('emailField','Email is required');
-  else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) setError('emailField','Please enter a valid email');
-  else clearError('emailField');
+function validatePass() {
+  var v = document.getElementById('password').value;
+  var err = document.getElementById('passErr');
+  if (!v) { showErr(err, true); return false; }
+  showErr(err, false); return true;
+}
+document.getElementById('email').addEventListener('blur', validateEmail);
+document.getElementById('email').addEventListener('input', function () {
+  if (this.value) showErr(document.getElementById('emailErr'), false);
 });
-emailInput.addEventListener('input',function(){
-  if(emailInput.value.trim()) clearError('emailField');
-});
+document.getElementById('password').addEventListener('blur', validatePass);
 
 /* ── Form submit ── */
-document.getElementById('loginForm').addEventListener('submit',function(e){
+document.getElementById('loginForm').addEventListener('submit', function (e) {
   e.preventDefault();
-  let valid = true;
-  const email = emailInput.value.trim();
-  const pass  = passInput.value;
-
-  if(!email){
-    setError('emailField','Email is required'); valid=false;
-  } else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-    setError('emailField','Please enter a valid email'); valid=false;
-  } else { clearError('emailField'); }
-
-  if(!pass){
-    setError('passwordField','Password is required'); valid=false;
-  } else { clearError('passwordField'); }
-
-  if(!valid) return;
-
-  /* Loading state */
-  const btn    = document.getElementById('submitBtn');
-  const spinner= document.getElementById('btnSpinner');
-  const btnTxt = document.getElementById('btnText');
+  var ok = validateEmail() & validatePass();
+  if (!ok) return;
+  var btn = document.getElementById('submitBtn');
+  var sp  = document.getElementById('btnSpinner');
+  var tx  = document.getElementById('btnTxt');
   btn.disabled = true;
-  spinner.classList.remove('hidden');
-  btnTxt.textContent = 'Signing in…';
-
-  setTimeout(function(){
-    document.getElementById('loginForm').classList.add('hidden');
-    document.getElementById('successState').classList.remove('hidden');
-  }, 1500);
+  sp.classList.remove('hidden');
+  tx.textContent = 'Signing in…';
+  setTimeout(function () { tx.textContent = 'Success! Redirecting…'; }, 1500);
 });
+
+/* ── Testimonial auto-rotate ── */
+var cards = document.querySelectorAll('.testimonial-card');
+var dots  = document.querySelectorAll('.t-dot');
+var cur   = 0;
+var pref  = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function goTo(next) {
+  var prev = cur;
+  cur = next;
+  // Only animate on desktop (cards are absolute-positioned)
+  var isDesktop = window.innerWidth >= 1024;
+  if (isDesktop && !pref) {
+    cards[prev].classList.add('t-out');
+    cards[prev].addEventListener('animationend', function handler() {
+      cards[prev].removeEventListener('animationend', handler);
+      cards[prev].classList.remove('t-out', 't-in');
+      cards[prev].style.opacity = '0';
+      cards[prev].style.pointerEvents = 'none';
+    });
+    cards[cur].style.opacity = '1';
+    cards[cur].style.pointerEvents = '';
+    cards[cur].classList.add('t-in');
+  } else {
+    cards[prev].style.opacity = '0';
+    cards[prev].style.pointerEvents = 'none';
+    cards[cur].style.opacity = '1';
+    cards[cur].style.pointerEvents = '';
+  }
+  dots.forEach(function (d, i) {
+    d.classList.toggle('bg-white', i === cur);
+    d.classList.toggle('bg-white/30', i !== cur);
+  });
+}
+
+dots.forEach(function (d) {
+  d.addEventListener('click', function () { clearInterval(timer); goTo(parseInt(d.dataset.i)); timer = setInterval(rotate, 4000); });
+});
+function rotate() { goTo((cur + 1) % cards.length); }
+var timer = setInterval(rotate, 4000);
 </script>
 </body>
 </html>
