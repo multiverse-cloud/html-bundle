@@ -1,219 +1,332 @@
-﻿<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-    />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Sign Up | TailAdmin - Tailwind CSS Admin Dashboard Template</title>
-    <link rel="stylesheet" href="tailwind-production.css" />
-    <link rel="stylesheet" href="pro-styles.css" />
-  </head>
-  <body class="bg-white text-slate-900 dark:bg-slate-950 dark:text-white overflow-hidden">
-    <div class="relative p-6 bg-white z-10 dark:bg-slate-950 sm:p-0">
-      <div class="relative flex flex-col justify-center w-full h-screen dark:bg-slate-950 sm:p-0">
-        <!-- Form -->
-        <div class="flex flex-col flex-1 w-full">
-          <div class="w-full max-w-md pt-10 mx-auto">
-            <a
-              href="01-main-dashboard.html"
-              class="inline-flex items-center text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-            >
-              <svg
-                class="stroke-current"
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-              >
-                <path
-                  d="M12.7083 5L7.5 10.2083L12.7083 15.4167"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-              Back to dashboard
-            </a>
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Account — mtverse</title>
+  <style>
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .auth-card{animation:fadeIn .3s ease}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .animate-spin{animation:spin 1s linear infinite}
+    .field-error input,.field-error select{border-color:#ef4444!important;box-shadow:0 0 0 3px rgba(239,68,68,.12)!important}
+    .field-error .error-msg{display:flex!important}
+    @media(prefers-reduced-motion:reduce){.auth-card,.animate-spin{animation:none!important}}
+    .dot-pattern{background-image:radial-gradient(circle,rgba(255,255,255,.18) 1px,transparent 1px);background-size:24px 24px}
+    .strength-bar{height:4px;border-radius:2px;transition:background .3s,width .3s}
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+</head>
+<body class="min-h-screen bg-gray-50 dark:bg-gray-950 font-sans">
+  <!-- Dark mode toggle -->
+  <button id="darkToggle" aria-label="Toggle dark mode"
+    class="fixed top-4 right-4 z-50 rounded-full p-2 bg-white dark:bg-gray-800 shadow border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+    <svg class="w-5 h-5 text-gray-600 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/>
+    </svg>
+    <svg class="w-5 h-5 text-yellow-400 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+      <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+    </svg>
+  </button>
+
+  <div class="min-h-screen flex">
+    <!-- Left form panel -->
+    <div class="flex-1 flex items-center justify-center px-4 py-12 bg-gray-50 dark:bg-gray-950 order-2 lg:order-1">
+      <div class="auth-card w-full max-w-md">
+        <!-- Mobile logo -->
+        <div class="lg:hidden flex items-center justify-center gap-2 mb-8">
+          <div class="w-9 h-9 bg-indigo-700 rounded-xl flex items-center justify-center">
+            <span class="text-white font-bold text-base leading-none">M</span>
           </div>
-          <div class="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
-            <div>
-              <div class="mb-5 sm:mb-8">
-                <h1 class="mb-2 font-semibold text-gray-800 text-3xl sm:text-4xl dark:text-white/90">
-                  Sign Up
-                </h1>
-                <p class="text-sm text-gray-500 dark:text-gray-400">
-                  Enter your email and password to sign up!
-                </p>
+          <span class="text-gray-900 dark:text-white font-bold text-xl tracking-tight">mtverse</span>
+        </div>
+        <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl px-8 py-10 border border-gray-100 dark:border-gray-800">
+          <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Create your account</h2>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Start your 14-day free trial, no credit card required</p>
+          </div>
+          <form id="registerForm" novalidate class="space-y-5">
+
+            <!-- Full name -->
+            <div id="nameField" class="space-y-1.5">
+              <label for="fullName" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Full name</label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                  <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                  </svg>
+                </div>
+                <input id="fullName" name="fullName" type="text" autocomplete="name" placeholder="Alice Johnson"
+                  class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 pl-10 pr-3.5 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow" />
               </div>
-              <div>
-                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5">
-                  <button
-                    type="button"
-                    class="inline-flex items-center justify-center gap-3 py-3 text-sm font-normal text-gray-700 transition-colors bg-gray-100 rounded-lg px-7 hover:bg-gray-200 hover:text-gray-800 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10"
-                  >
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M18.7511 10.1944C18.7511 9.47495 18.6915 8.94995 18.5626 8.40552H10.1797V11.6527H15.1003C15.0011 12.4597 14.4654 13.675 13.2749 14.4916L13.2582 14.6003L15.9087 16.6126L16.0924 16.6305C17.7788 15.1041 18.7511 12.8583 18.7511 10.1944Z"
-                        fill="#4285F4"
-                      />
-                      <path
-                        d="M10.1788 18.75C12.5895 18.75 14.6133 17.9722 16.0915 16.6305L13.274 14.4916C12.5201 15.0068 11.5081 15.3666 10.1788 15.3666C7.81773 15.3666 5.81379 13.8402 5.09944 11.7305L4.99473 11.7392L2.23868 13.8295L2.20264 13.9277C3.67087 16.786 6.68674 18.75 10.1788 18.75Z"
-                        fill="#34A853"
-                      />
-                      <path
-                        d="M5.10014 11.7305C4.91165 11.186 4.80257 10.6027 4.80257 9.99992C4.80257 9.3971 4.91165 8.81379 5.09022 8.26935L5.08523 8.1534L2.29464 6.02954L2.20333 6.0721C1.5982 7.25823 1.25098 8.5902 1.25098 9.99992C1.25098 11.4096 1.5982 12.7415 2.20333 13.9277L5.10014 11.7305Z"
-                        fill="#FBBC05"
-                      />
-                      <path
-                        d="M10.1789 4.63331C11.8554 4.63331 12.9864 5.34303 13.6312 5.93612L16.1511 3.525C14.6035 2.11528 12.5895 1.25 10.1789 1.25C6.68676 1.25 3.67088 3.21387 2.20264 6.07218L5.08953 8.26943C5.81381 6.15972 7.81776 4.63331 10.1789 4.63331Z"
-                        fill="#EB4335"
-                      />
-                    </svg>
-                    Sign up with Google
-                  </button>
-                  <button
-                    type="button"
-                    class="inline-flex items-center justify-center gap-3 py-3 text-sm font-normal text-gray-700 transition-colors bg-gray-100 rounded-lg px-7 hover:bg-gray-200 hover:text-gray-800 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10"
-                  >
-                    <svg
-                      width="21"
-                      class="fill-current"
-                      height="20"
-                      viewBox="0 0 21 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M15.6705 1.875H18.4272L12.4047 8.75833L19.4897 18.125H13.9422L9.59717 12.4442L4.62554 18.125H1.86721L8.30887 10.7625L1.51221 1.875H7.20054L11.128 7.0675L15.6705 1.875ZM14.703 16.475H16.2305L6.37054 3.43833H4.73137L14.703 16.475Z"
-                      />
-                    </svg>
-                    Sign up with X
-                  </button>
-                </div>
-                <div class="relative py-3 sm:py-5">
-                  <div class="absolute inset-0 flex items-center">
-                    <div class="w-full border-t border-gray-200 dark:border-gray-800"></div>
-                  </div>
-                  <div class="relative flex justify-center text-sm">
-                    <span class="p-2 text-gray-400 bg-white dark:bg-gray-900 sm:px-5 sm:py-2">Or</span>
-                  </div>
-                </div>
-                <form>
-                  <div class="space-y-5">
-                    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                      <div class="sm:col-span-1">
-                        <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                          First Name<span class="text-red-600">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          id="fname"
-                          name="fname"
-                          placeholder="Enter your first name"
-                          class="dark:bg-slate-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-sm placeholder:text-gray-400 focus:border-sky-500 focus:outline-none focus:ring-3 focus:ring-sky-500/10 dark:border-gray-700 dark:text-white/90 dark:placeholder:text-white/30"
-                        />
-                      </div>
-                      <div class="sm:col-span-1">
-                        <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                          Last Name<span class="text-red-600">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          id="lname"
-                          name="lname"
-                          placeholder="Enter your last name"
-                          class="dark:bg-slate-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-sm placeholder:text-gray-400 focus:border-sky-500 focus:outline-none focus:ring-3 focus:ring-sky-500/10 dark:border-gray-700 dark:text-white/90 dark:placeholder:text-white/30"
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                        Email<span class="text-red-600">*</span>
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="Enter your email"
-                        class="dark:bg-slate-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-sm placeholder:text-gray-400 focus:border-sky-500 focus:outline-none focus:ring-3 focus:ring-sky-500/10 dark:border-gray-700 dark:text-white/90 dark:placeholder:text-white/30"
-                      />
-                    </div>
-                    <div>
-                      <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                        Password<span class="text-red-600">*</span>
-                      </label>
-                      <div class="relative">
-                        <input
-                          id="password"
-                          type="password"
-                          placeholder="Enter your password"
-                          class="dark:bg-slate-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent py-2.5 pl-4 pr-11 text-sm text-gray-800 shadow-sm placeholder:text-gray-400 focus:border-sky-500 focus:outline-none focus:ring-3 focus:ring-sky-500/10 dark:border-gray-700 dark:text-white/90 dark:placeholder:text-white/30"
-                        />
-                        <button
-                          type="button"
-                          onclick="togglePassword()"
-                          class="absolute z-30 text-gray-500 -translate-y-1/2 cursor-pointer right-4 top-1/2 dark:text-gray-400"
-                        >
-                          <svg id="eye-icon" class="fill-current" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                              fill-rule="evenodd"
-                              clip-rule="evenodd"
-                              d="M10.0002 13.8619C7.23361 13.8619 4.86803 12.1372 3.92328 9.70241C4.86804 7.26761 7.23361 5.54297 10.0002 5.54297C12.7667 5.54297 15.1323 7.26762 16.0771 9.70243C15.1323 12.1372 12.7667 13.8619 10.0002 13.8619ZM10.0002 4.04297C6.48191 4.04297 3.49489 6.30917 2.4155 9.4593C2.3615 9.61687 2.3615 9.78794 2.41549 9.94552C3.49488 13.0957 6.48191 15.3619 10.0002 15.3619C13.5184 15.3619 16.5055 13.0957 17.5849 9.94555C17.6389 9.78797 17.6389 9.6169 17.5849 9.45932C16.5055 6.30919 13.5184 4.04297 10.0002 4.04297ZM9.99151 7.84413C8.96527 7.84413 8.13333 8.67606 8.13333 9.70231C8.13333 10.7286 8.96527 11.5605 9.99151 11.5605H10.0064C11.0326 11.5605 11.8646 10.7286 11.8646 9.70231C11.8646 8.67606 11.0326 7.84413 10.0064 7.84413H9.99151Z"
-                              fill="#98A2B3"
-                            />
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-                    <div>
-                      <label class="flex items-center text-sm font-normal text-gray-700 cursor-pointer select-none dark:text-gray-400">
-                        <input type="checkbox" class="mr-3 h-5 w-5 rounded-md border border-gray-300 accent-sky-600 dark:border-gray-700" />
-                        By creating an account means you agree to the Terms and Conditions, and our Privacy Policy
-                      </label>
-                    </div>
-                    <div>
-                      <button
-                        type="submit"
-                        class="flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-white transition rounded-lg bg-sky-600 shadow-sm hover:bg-sky-700"
-                      >
-                        Sign Up
-                      </button>
-                    </div>
-                  </div>
-                </form>
-                <div class="mt-5">
-                  <p class="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
-                    Already have an account?
-                    <a
-                      href="81-auth-login.html"
-                      class="text-sky-600 hover:text-sky-700 dark:text-sky-400"
-                    >Sign in</a>
-                  </p>
-                </div>
-              </div>
+              <p class="error-msg hidden items-center gap-1 text-xs text-red-600 dark:text-red-400">
+                <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                <span>Full name is required</span>
+              </p>
             </div>
+            <!-- Work email -->
+            <div id="emailField" class="space-y-1.5">
+              <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Work email</label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                  <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                  </svg>
+                </div>
+                <input id="email" name="email" type="email" autocomplete="email" placeholder="you@company.com"
+                  class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 pl-10 pr-3.5 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow" />
+              </div>
+              <p class="error-msg hidden items-center gap-1 text-xs text-red-600 dark:text-red-400">
+                <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                <span id="emailErrMsg">Work email is required</span>
+              </p>
+            </div>
+
+            <!-- Password + strength meter -->
+            <div id="passwordField" class="space-y-1.5">
+              <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                  <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                  </svg>
+                </div>
+                <input id="password" name="password" type="password" autocomplete="new-password" placeholder="Create a strong password"
+                  class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 pl-10 pr-10 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow" />
+                <button type="button" id="togglePassword" aria-label="Toggle password visibility"
+                  class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                  <svg id="eyeOpen" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                  </svg>
+                  <svg id="eyeOff" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>
+                  </svg>
+                </button>
+              </div>
+              <!-- Strength meter -->
+              <div id="strengthMeter" class="hidden">
+                <div class="flex gap-1.5 mt-2">
+                  <div id="seg1" class="flex-1 h-1 rounded-full bg-gray-200 dark:bg-gray-700 transition-colors duration-300"></div>
+                  <div id="seg2" class="flex-1 h-1 rounded-full bg-gray-200 dark:bg-gray-700 transition-colors duration-300"></div>
+                  <div id="seg3" class="flex-1 h-1 rounded-full bg-gray-200 dark:bg-gray-700 transition-colors duration-300"></div>
+                  <div id="seg4" class="flex-1 h-1 rounded-full bg-gray-200 dark:bg-gray-700 transition-colors duration-300"></div>
+                </div>
+                <p id="strengthLabel" class="text-xs mt-1 text-gray-500 dark:text-gray-400"></p>
+              </div>
+              <p class="error-msg hidden items-center gap-1 text-xs text-red-600 dark:text-red-400">
+                <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                <span>Password must be at least 8 characters</span>
+              </p>
+            </div>
+
+            <!-- Confirm password -->
+            <div id="confirmField" class="space-y-1.5">
+              <label for="confirmPassword" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Confirm password</label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                  <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                  </svg>
+                </div>
+                <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" placeholder="Re-enter your password"
+                  class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 pl-10 pr-3.5 py-2.5 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow" />
+              </div>
+              <p class="error-msg hidden items-center gap-1 text-xs text-red-600 dark:text-red-400">
+                <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                <span>Passwords do not match</span>
+              </p>
+            </div>
+            <!-- Terms checkbox -->
+            <div id="termsField" class="space-y-1.5">
+              <label class="flex items-start gap-3 cursor-pointer group">
+                <input id="termsCheck" type="checkbox"
+                  class="mt-0.5 w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 bg-white dark:bg-gray-800 flex-shrink-0" />
+                <span class="text-sm text-gray-600 dark:text-gray-400">
+                  I agree to the
+                  <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline font-medium">Terms of Service</a>
+                  and
+                  <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline font-medium">Privacy Policy</a>
+                </span>
+              </label>
+              <p class="error-msg hidden items-center gap-1 text-xs text-red-600 dark:text-red-400">
+                <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                <span>You must accept the terms to continue</span>
+              </p>
+            </div>
+            <!-- Submit -->
+            <button type="submit" id="submitBtn"
+              class="w-full rounded-lg bg-blue-600 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+              <svg id="btnSpinner" class="w-4 h-4 animate-spin hidden" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"/>
+              </svg>
+              <span id="btnText">Create account</span>
+            </button>
+          </form>
+
+          <!-- Success state -->
+          <div id="successState" class="hidden text-center py-4">
+            <div class="w-14 h-14 bg-green-50 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-7 h-7 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
+            </div>
+            <p class="font-semibold text-gray-900 dark:text-white mb-1">Account created!</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Check your email to verify your account.</p>
           </div>
+          <p class="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
+            Already have an account?
+            <a href="81-auth-login.html" class="text-blue-600 dark:text-blue-400 font-medium hover:underline">Sign in</a>
+          </p>
         </div>
       </div>
     </div>
 
-    <script>
-      function togglePassword() {
-        const input = document.getElementById('password');
-        if (!input) return;
-        input.type = input.type === 'password' ? 'text' : 'password';
-      }
-    </script>
-  </body>
+    <!-- Right branding panel -->
+    <div class="hidden lg:flex lg:w-1/2 bg-indigo-700 flex-col justify-between px-12 py-16 relative overflow-hidden dot-pattern order-1 lg:order-2">
+      <div class="absolute -top-20 -right-20 w-80 h-80 bg-white opacity-5 rounded-full"></div>
+      <div class="absolute bottom-0 left-0 w-96 h-96 bg-white opacity-5 rounded-full -translate-x-1/3 translate-y-1/3"></div>
+      <div class="relative z-10">
+        <div class="flex items-center gap-3 mb-16">
+          <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg">
+            <span class="text-indigo-700 font-bold text-lg leading-none">M</span>
+          </div>
+          <span class="text-white font-bold text-xl tracking-tight">mtverse</span>
+        </div>
+        <h1 class="text-4xl font-bold text-white mb-4 leading-tight">Build something<br/>extraordinary</h1>
+        <p class="text-indigo-100 text-lg mb-12">Join thousands of teams shipping faster with mtverse.</p>
+        <ul class="space-y-5">
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-6 h-6 bg-white/20 rounded-full flex items-center justify-center mt-0.5">
+              <svg class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </span>
+            <span class="text-indigo-50 text-sm leading-relaxed">Set up in minutes — no credit card, no commitment</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-6 h-6 bg-white/20 rounded-full flex items-center justify-center mt-0.5">
+              <svg class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </span>
+            <span class="text-indigo-50 text-sm leading-relaxed">Invite your entire team — unlimited collaborators on all plans</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="flex-shrink-0 w-6 h-6 bg-white/20 rounded-full flex items-center justify-center mt-0.5">
+              <svg class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </span>
+            <span class="text-indigo-50 text-sm leading-relaxed">Enterprise-grade security and 99.9% uptime SLA</span>
+          </li>
+        </ul>
+      </div>
+      <div class="relative z-10 flex items-center gap-3 pt-8 border-t border-white/20">
+        <div class="flex -space-x-2">
+          <div class="w-8 h-8 rounded-full bg-white/30 border-2 border-indigo-700 flex items-center justify-center text-white text-xs font-semibold">A</div>
+          <div class="w-8 h-8 rounded-full bg-white/25 border-2 border-indigo-700 flex items-center justify-center text-white text-xs font-semibold">B</div>
+          <div class="w-8 h-8 rounded-full bg-white/20 border-2 border-indigo-700 flex items-center justify-center text-white text-xs font-semibold">C</div>
+          <div class="w-8 h-8 rounded-full bg-white/15 border-2 border-indigo-700 flex items-center justify-center text-white text-xs font-semibold">+</div>
+        </div>
+        <p class="text-indigo-100 text-xs">Join <strong class="text-white">12,000+</strong> teams building with mtverse</p>
+      </div>
+    </div>
+  </div>
+
+
+<script>
+/* Dark mode */
+(function(){if(localStorage.getItem('darkMode')==='true')document.documentElement.classList.add('dark');})();
+document.getElementById('darkToggle').addEventListener('click',function(){
+  localStorage.setItem('darkMode',document.documentElement.classList.toggle('dark'));
+});
+
+/* Password toggle */
+const passInput=document.getElementById('password');
+document.getElementById('togglePassword').addEventListener('click',function(){
+  const t=passInput.type==='text';
+  passInput.type=t?'password':'text';
+  document.getElementById('eyeOpen').classList.toggle('hidden',!t);
+  document.getElementById('eyeOff').classList.toggle('hidden',t);
+});
+
+/* Strength meter */
+function checkStrength(pw){
+  let score=0;
+  if(pw.length>=8) score++;
+  if(/[A-Z]/.test(pw)) score++;
+  if(/[0-9]/.test(pw)) score++;
+  if(/[^A-Za-z0-9]/.test(pw)) score++;
+  return score;
+}
+const segColors=['bg-red-500','bg-amber-400','bg-blue-500','bg-green-500'];
+const segLabels=['','Weak','Fair','Good','Strong'];
+const segLabelColors=['','text-red-500','text-amber-500','text-blue-500','text-green-600'];
+passInput.addEventListener('input',function(){
+  const v=passInput.value;
+  const meter=document.getElementById('strengthMeter');
+  if(!v){meter.classList.add('hidden');return;}
+  meter.classList.remove('hidden');
+  const score=checkStrength(v);
+  for(let i=1;i<=4;i++){
+    const seg=document.getElementById('seg'+i);
+    seg.className='flex-1 h-1 rounded-full transition-colors duration-300 '+(i<=score?segColors[score-1]:'bg-gray-200 dark:bg-gray-700');
+  }
+  const lbl=document.getElementById('strengthLabel');
+  lbl.textContent=score>0?segLabels[score]+' password':'';
+  lbl.className='text-xs mt-1 '+(score>0?segLabelColors[score]:'text-gray-500');
+});
+
+/* Confirm password match on blur */
+document.getElementById('confirmPassword').addEventListener('blur',function(){
+  if(this.value && this.value!==passInput.value){
+    setError('confirmField','Passwords do not match');
+  } else { clearError('confirmField'); }
+});
+
+/* Validation helpers */
+function setError(id,msg){
+  const w=document.getElementById(id);
+  w.classList.add('field-error');
+  const s=w.querySelector('.error-msg span');
+  if(s && msg) s.textContent=msg;
+  const e=w.querySelector('.error-msg');
+  if(e){e.classList.remove('hidden');e.style.display='flex';}
+}
+function clearError(id){
+  const w=document.getElementById(id);
+  w.classList.remove('field-error');
+  const e=w.querySelector('.error-msg');
+  if(e){e.classList.add('hidden');e.style.display='';}
+}
+
+/* Form submit */
+document.getElementById('registerForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  let valid=true;
+  const name=document.getElementById('fullName').value.trim();
+  const email=document.getElementById('email').value.trim();
+  const pass=passInput.value;
+  const confirm=document.getElementById('confirmPassword').value;
+  const terms=document.getElementById('termsCheck').checked;
+
+  if(!name){setError('nameField');valid=false;}else{clearError('nameField');}
+  if(!email){setError('emailField','Work email is required');valid=false;}
+  else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){setError('emailField','Please enter a valid email');valid=false;}
+  else{clearError('emailField');}
+  if(!pass||pass.length<8){setError('passwordField','Password must be at least 8 characters');valid=false;}else{clearError('passwordField');}
+  if(!confirm||confirm!==pass){setError('confirmField','Passwords do not match');valid=false;}else{clearError('confirmField');}
+  if(!terms){setError('termsField');valid=false;}else{clearError('termsField');}
+
+  if(!valid)return;
+  const btn=document.getElementById('submitBtn');
+  document.getElementById('btnSpinner').classList.remove('hidden');
+  document.getElementById('btnText').textContent='Creating account…';
+  btn.disabled=true;
+  setTimeout(function(){
+    document.getElementById('registerForm').classList.add('hidden');
+    document.getElementById('successState').classList.remove('hidden');
+  },1500);
+});
+</script>
+</body>
 </html>
