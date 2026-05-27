@@ -3,20 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#465fff" />
-  <meta name="description" content="Image cards, media grids, upload previews, and empty-state visuals." />
-  <title>Images - mtverse</title>
+  <meta name="description" content="Image display patterns, shapes, overlays, and galleries — mtverse UI" />
+  <title>Image Components — mtverse</title>
   <style>
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-    .animate-slideDown { animation: slideDown 0.2s ease-out; }
+    .no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+    @keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes shimmer{from{background-position:-200% 0}to{background-position:200% 0}}
+    .shimmer{background:linear-gradient(90deg,#e5e7eb 25%,#f3f4f6 50%,#e5e7eb 75%);background-size:200% 100%;animation:shimmer 1.5s infinite linear;}
+    .dark .shimmer{background:linear-gradient(90deg,#374151 25%,#4b5563 50%,#374151 75%);background-size:200% 100%;animation:shimmer 1.5s infinite linear;}
   </style>
   <link rel="stylesheet" href="tailwind-production.css">
   <link rel="stylesheet" href="pro-styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
 <div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
@@ -26,63 +23,635 @@
     <div id="header-container"></div>
     <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
       <div class="mx-auto w-full max-w-screen-2xl">
-        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <div class="mb-2 flex items-center gap-2 text-sm text-gray-500">
-              <span>mtverse</span><span>/</span><span>ui-elements</span><span>/</span>
-              <span class="font-medium text-gray-800 dark:text-white/90">Images</span>
+
+        <!-- PAGE HEADER -->
+        <div class="mb-8">
+          <nav class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-3">
+            <a href="#" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">mtverse</a>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <a href="#" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">UI Elements</a>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <span class="text-gray-800 dark:text-white font-medium">Image Components</span>
+          </nav>
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-white tracking-tight mb-2">Image Components</h1>
+          <p class="text-gray-500 dark:text-gray-400 text-base max-w-2xl">Comprehensive image display patterns including aspect ratios, shapes, overlays, galleries, skeletons, comparison sliders, and zoom effects.</p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
+            <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4 flex flex-col gap-1">
+              <span class="text-2xl font-bold text-gray-900 dark:text-white">14</span>
+              <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Variants</span>
             </div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white/90">Images</h1>
-            <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Image cards, media grids, upload previews, and empty-state visuals.</p>
+            <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4 flex flex-col gap-1">
+              <span class="text-2xl font-bold text-gray-900 dark:text-white">8</span>
+              <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Patterns</span>
+            </div>
+            <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4 flex flex-col gap-1">
+              <span class="text-2xl font-bold text-emerald-500">✓</span>
+              <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Accessible</span>
+            </div>
+            <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4 flex flex-col gap-1">
+              <span class="text-2xl font-bold text-emerald-500">✓</span>
+              <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Responsive</span>
+            </div>
           </div>
-          <div class="flex flex-wrap gap-2">
-            <button type="button" class="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:bg-white/[0.03] dark:text-gray-300">Preview</button>
-            <button type="button" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">Use Component</button>
+        </div>
+
+
+
+        <!-- SECTION 1: ASPECT RATIOS -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4 gap-4">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Aspect Ratios</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Common image aspect ratios using CSS aspect-ratio utility classes.</p>
+            </div>
+            <button onclick="openSourceDrawer('aspect-ratios','Aspect Ratios')" class="flex-shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="flex flex-col gap-2">
+              <div class="aspect-square bg-gray-200 dark:bg-gray-700 rounded-xl flex items-center justify-center text-gray-500 dark:text-gray-400 text-sm font-medium">1:1</div>
+              <span class="text-xs text-center text-gray-500 dark:text-gray-400 font-medium">Square (1:1)</span>
+            </div>
+            <div class="flex flex-col gap-2">
+              <div style="aspect-ratio:4/3" class="bg-gray-200 dark:bg-gray-700 rounded-xl flex items-center justify-center text-gray-500 dark:text-gray-400 text-sm font-medium">4:3</div>
+              <span class="text-xs text-center text-gray-500 dark:text-gray-400 font-medium">Classic (4:3)</span>
+            </div>
+            <div class="flex flex-col gap-2">
+              <div style="aspect-ratio:16/9" class="bg-gray-200 dark:bg-gray-700 rounded-xl flex items-center justify-center text-gray-500 dark:text-gray-400 text-sm font-medium">16:9</div>
+              <span class="text-xs text-center text-gray-500 dark:text-gray-400 font-medium">Widescreen (16:9)</span>
+            </div>
+            <div class="flex flex-col gap-2">
+              <div style="aspect-ratio:21/9" class="bg-gray-200 dark:bg-gray-700 rounded-xl flex items-center justify-center text-gray-500 dark:text-gray-400 text-sm font-medium">21:9</div>
+              <span class="text-xs text-center text-gray-500 dark:text-gray-400 font-medium">Ultrawide (21:9)</span>
+            </div>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Components</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">24</p>
+        <!-- SECTION 2: IMAGE SHAPES -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4 gap-4">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Image Shapes</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Different border-radius options from square to circular with ring variant.</p>
+            </div>
+            <button onclick="openSourceDrawer('shapes','Image Shapes')" class="flex-shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
           </div>
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">States</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">96</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Responsive</p><p class="mt-2 text-3xl font-bold text-green-600">Ready</p>
-          </div>
-        </div>
-        <div class="mt-5 grid grid-cols-1 gap-5 xl:grid-cols-2">
-
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Media grid</h2>
-            <div class="mt-5"><div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"><div class="aspect-video rounded-xl border border-gray-200" style="background:#eef2ff"><div class="grid h-full place-items-center text-sm font-bold text-gray-600">Image 1</div></div><div class="aspect-video rounded-xl border border-gray-200" style="background:#ecfdf3"><div class="grid h-full place-items-center text-sm font-bold text-gray-600">Image 2</div></div><div class="aspect-video rounded-xl border border-gray-200" style="background:#fff7ed"><div class="grid h-full place-items-center text-sm font-bold text-gray-600">Image 3</div></div><div class="aspect-video rounded-xl border border-gray-200" style="background:#fdf2f8"><div class="grid h-full place-items-center text-sm font-bold text-gray-600">Image 4</div></div></div></div>
-          </section>
-
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] xl:col-span-2">
-            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-              <div>
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Images production states</h2>
-                <p class="mt-1 text-sm text-gray-500">Real dashboard states with actions, accessibility, responsive layout, and clean spacing.</p>
+          <div class="flex flex-wrap items-center gap-8">
+            <div class="flex flex-col items-center gap-3">
+              <div class="w-24 h-24 bg-blue-200 dark:bg-blue-900 rounded-none flex items-center justify-center text-blue-600 dark:text-blue-400">
+                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>
               </div>
-              <div class="inline-flex rounded-xl bg-gray-100 p-1 dark:bg-white/[0.04]">
-                <button class="rounded-lg bg-white px-4 py-2 text-sm font-bold text-blue-600 shadow-sm dark:bg-gray-900">Preview</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">Code</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">States</button>
+              <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Square</span>
+            </div>
+            <div class="flex flex-col items-center gap-3">
+              <div class="w-24 h-24 bg-blue-200 dark:bg-blue-900 rounded-xl flex items-center justify-center text-blue-600 dark:text-blue-400">
+                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>
+              </div>
+              <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Rounded</span>
+            </div>
+            <div class="flex flex-col items-center gap-3">
+              <div class="w-24 h-24 bg-blue-200 dark:bg-blue-900 rounded-full flex items-center justify-center text-blue-600 dark:text-blue-400">
+                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>
+              </div>
+              <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Circle</span>
+            </div>
+            <div class="flex flex-col items-center gap-3">
+              <div class="w-24 h-24 bg-blue-200 dark:bg-blue-900 rounded-full ring-4 ring-blue-500 ring-offset-2 dark:ring-offset-gray-900 flex items-center justify-center text-blue-600 dark:text-blue-400">
+                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>
+              </div>
+              <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Circle + Ring</span>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- SECTION 3: IMAGE OVERLAY ON HOVER -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4 gap-4">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Image Overlay on Hover</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Dark overlay with title and action button revealed on hover using CSS transitions.</p>
+            </div>
+            <button onclick="openSourceDrawer('overlay','Image Overlay')" class="flex-shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="relative rounded-xl overflow-hidden group cursor-pointer">
+              <div class="w-full h-40 bg-gradient-to-br from-blue-400 to-blue-600"></div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-300 flex flex-col items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
+                <p class="text-white font-semibold text-sm">Ocean Sunrise</p>
+                <button class="px-3 py-1 rounded-lg bg-white text-gray-800 text-xs font-semibold hover:bg-gray-100 transition-colors">View</button>
               </div>
             </div>
-            <div class="mt-5 grid gap-4 md:grid-cols-3">
-              <div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Default</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Hover / active</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Loading / empty</p><span class="h-2.5 w-2.5 rounded-full bg-yellow-400"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div>
+            <div class="relative rounded-xl overflow-hidden group cursor-pointer">
+              <div class="w-full h-40 bg-gradient-to-br from-violet-400 to-violet-600"></div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-300 flex flex-col items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
+                <p class="text-white font-semibold text-sm">Purple Mountains</p>
+                <button class="px-3 py-1 rounded-lg bg-white text-gray-800 text-xs font-semibold hover:bg-gray-100 transition-colors">View</button>
+              </div>
             </div>
-          </section>
+            <div class="relative rounded-xl overflow-hidden group cursor-pointer">
+              <div class="w-full h-40 bg-gradient-to-br from-emerald-400 to-emerald-600"></div>
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-300 flex flex-col items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
+                <p class="text-white font-semibold text-sm">Green Valley</p>
+                <button class="px-3 py-1 rounded-lg bg-white text-gray-800 text-xs font-semibold hover:bg-gray-100 transition-colors">View</button>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <!-- SECTION 4: CAPTION -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4 gap-4">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Image with Caption</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Semantic figure element with styled caption text below the image.</p>
+            </div>
+            <button onclick="openSourceDrawer('caption','Image Caption')" class="flex-shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="flex flex-wrap gap-6">
+            <figure class="max-w-xs">
+              <div class="w-full h-40 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-xl border border-gray-200 dark:border-gray-700"></div>
+              <figcaption class="text-sm text-gray-500 dark:text-gray-400 mt-2 italic">Fig. 1 — A stunning cyan gradient representing calm waters at dusk.</figcaption>
+            </figure>
+            <figure class="max-w-xs">
+              <div class="w-full h-40 bg-gradient-to-br from-rose-400 to-rose-600 rounded-xl border border-gray-200 dark:border-gray-700"></div>
+              <figcaption class="text-sm text-gray-500 dark:text-gray-400 mt-2 italic">Fig. 2 — A warm rose gradient capturing the energy of a sunset sky.</figcaption>
+            </figure>
+          </div>
+        </div>
+
+
+
+        <!-- SECTION 5: IMAGE WITH BADGE -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4 gap-4">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Image with Badge</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Product cards with absolute-positioned corner badges for status labels.</p>
+            </div>
+            <button onclick="openSourceDrawer('badge','Image with Badge')" class="flex-shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700">
+              <div class="absolute top-2 left-2 z-10 bg-blue-600 text-white text-xs font-bold px-2 py-0.5 rounded-md">NEW</div>
+              <div class="h-36 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/40 dark:to-blue-800/40"></div>
+              <div class="p-3">
+                <p class="text-sm font-semibold text-gray-900 dark:text-white">Premium Widget</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Just released this month</p>
+              </div>
+            </div>
+            <div class="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700">
+              <div class="absolute top-2 left-2 z-10 bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded-md">SALE</div>
+              <div class="h-36 bg-gradient-to-br from-rose-100 to-rose-200 dark:from-rose-900/40 dark:to-rose-800/40"></div>
+              <div class="p-3">
+                <p class="text-sm font-semibold text-gray-900 dark:text-white">Classic Component</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Save up to 40% today</p>
+              </div>
+            </div>
+            <div class="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700">
+              <div class="absolute top-2 left-2 z-10 bg-amber-500 text-white text-xs font-bold px-2 py-0.5 rounded-md">PRO</div>
+              <div class="h-36 bg-gradient-to-br from-amber-100 to-amber-200 dark:from-amber-900/40 dark:to-amber-800/40"></div>
+              <div class="p-3">
+                <p class="text-sm font-semibold text-gray-900 dark:text-white">Advanced Module</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Exclusive pro feature</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 6: BROKEN / ERROR STATE -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4 gap-4">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Broken / Error State</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Fallback UI shown when an image fails to load or is unavailable.</p>
+            </div>
+            <button onclick="openSourceDrawer('error','Error State')" class="flex-shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="flex flex-wrap gap-4">
+            <div class="w-48 h-36 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl flex flex-col items-center justify-center gap-2 bg-gray-50 dark:bg-gray-800/50">
+              <svg class="w-8 h-8 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              <p class="text-xs text-gray-400 dark:text-gray-500 font-medium">Image unavailable</p>
+            </div>
+            <div class="w-48 h-36 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl flex flex-col items-center justify-center gap-2 bg-gray-50 dark:bg-gray-800/50">
+              <svg class="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+              <p class="text-xs text-red-400 font-medium">Failed to load</p>
+              <button class="text-xs text-blue-500 hover:underline">Retry</button>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- SECTION 7: LAZY LOAD SKELETON -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4 gap-4">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Lazy Load Skeleton</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Shimmer animation placeholders for images loading in async contexts.</p>
+            </div>
+            <button onclick="openSourceDrawer('skeleton','Skeleton Loader')" class="flex-shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+              <div class="h-36 shimmer"></div>
+              <div class="p-3 space-y-2">
+                <div class="h-4 w-3/4 rounded shimmer"></div>
+                <div class="h-3 w-full rounded shimmer"></div>
+                <div class="h-3 w-2/3 rounded shimmer"></div>
+              </div>
+            </div>
+            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+              <div class="h-36 shimmer"></div>
+              <div class="p-3 space-y-2">
+                <div class="h-4 w-1/2 rounded shimmer"></div>
+                <div class="h-3 w-full rounded shimmer"></div>
+                <div class="h-3 w-3/4 rounded shimmer"></div>
+              </div>
+            </div>
+            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+              <div class="h-36 shimmer"></div>
+              <div class="p-3 space-y-2">
+                <div class="h-4 w-2/3 rounded shimmer"></div>
+                <div class="h-3 w-full rounded shimmer"></div>
+                <div class="h-3 w-1/2 rounded shimmer"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 8: GALLERY GRID -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4 gap-4">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Gallery Grid</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">2×3 image grid with hover effect and lightbox on click.</p>
+            </div>
+            <button onclick="openSourceDrawer('gallery','Gallery Grid')" class="flex-shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <div onclick="openImgLightbox(0,'bg-blue-400','Coastal View')" class="h-32 rounded-xl bg-blue-400 cursor-pointer hover:opacity-90 transition-opacity"></div>
+            <div onclick="openImgLightbox(1,'bg-violet-400','Mountain Peak')" class="h-32 rounded-xl bg-violet-400 cursor-pointer hover:opacity-90 transition-opacity"></div>
+            <div onclick="openImgLightbox(2,'bg-emerald-400','Forest Path')" class="h-32 rounded-xl bg-emerald-400 cursor-pointer hover:opacity-90 transition-opacity"></div>
+            <div onclick="openImgLightbox(3,'bg-rose-400','Desert Sand')" class="h-32 rounded-xl bg-rose-400 cursor-pointer hover:opacity-90 transition-opacity"></div>
+            <div onclick="openImgLightbox(4,'bg-amber-400','Golden Hour')" class="h-32 rounded-xl bg-amber-400 cursor-pointer hover:opacity-90 transition-opacity"></div>
+            <div onclick="openImgLightbox(5,'bg-cyan-400','Arctic Ice')" class="h-32 rounded-xl bg-cyan-400 cursor-pointer hover:opacity-90 transition-opacity"></div>
+          </div>
+        </div>
+
+        <!-- GALLERY LIGHTBOX -->
+        <div id="img-lightbox" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center">
+          <button onclick="closeImgLightbox()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+          <div class="flex flex-col items-center gap-4">
+            <div id="img-lb-content" class="w-96 h-64 rounded-2xl shadow-2xl flex items-center justify-center text-white font-bold text-2xl"></div>
+            <p id="img-lb-title" class="text-white text-sm font-medium opacity-80"></p>
+          </div>
+        </div>
+
+
+
+        <!-- SECTION 9: COMPARISON SLIDER -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4 gap-4">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Comparison Slider</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Draggable divider to compare two images side by side.</p>
+            </div>
+            <button onclick="openSourceDrawer('comparison','Comparison Slider')" class="flex-shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="max-w-xl mx-auto">
+            <div id="compare-container" class="relative h-48 rounded-xl overflow-hidden cursor-ew-resize select-none" onmousedown="compStart(event)" ontouchstart="compTouchStart(event)">
+              <!-- Right panel (full width base) -->
+              <div class="absolute inset-0 bg-gradient-to-r from-emerald-400 to-emerald-600 flex items-center justify-center">
+                <span class="text-white font-bold text-lg opacity-60">After</span>
+              </div>
+              <!-- Left panel (clipped) -->
+              <div id="compare-left" class="absolute inset-0 overflow-hidden" style="width:50%">
+                <div class="absolute inset-0 w-full bg-gradient-to-r from-gray-400 to-gray-500 flex items-center justify-center" style="min-width:100%">
+                  <span class="text-white font-bold text-lg opacity-60">Before</span>
+                </div>
+              </div>
+              <!-- Divider -->
+              <div id="compare-divider" class="absolute top-0 bottom-0 w-0.5 bg-white shadow-lg z-10" style="left:50%">
+                <div class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-white shadow-xl flex items-center justify-center border-2 border-gray-200">
+                  <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l-4 3 4 3m8-6l4 3-4 3"/></svg>
+                </div>
+              </div>
+            </div>
+            <p class="text-xs text-center text-gray-400 dark:text-gray-500 mt-2">Drag the divider to compare Before / After</p>
+          </div>
+        </div>
+
+        <!-- SECTION 10: ZOOM ON HOVER -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4 gap-4">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Zoom on Hover</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">CSS transform scale applied on hover within an overflow-hidden container.</p>
+            </div>
+            <button onclick="openSourceDrawer('zoom','Zoom on Hover')" class="flex-shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="overflow-hidden rounded-xl h-40 group cursor-pointer">
+              <div class="w-full h-full bg-gradient-to-br from-blue-400 to-blue-600 transition-transform duration-300 group-hover:scale-110 flex items-center justify-center text-white font-semibold">Hover me</div>
+            </div>
+            <div class="overflow-hidden rounded-xl h-40 group cursor-pointer">
+              <div class="w-full h-full bg-gradient-to-br from-violet-400 to-violet-600 transition-transform duration-300 group-hover:scale-110 flex items-center justify-center text-white font-semibold">Hover me</div>
+            </div>
+            <div class="overflow-hidden rounded-xl h-40 group cursor-pointer">
+              <div class="w-full h-full bg-gradient-to-br from-emerald-400 to-emerald-600 transition-transform duration-300 group-hover:scale-110 flex items-center justify-center text-white font-semibold">Hover me</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 11: IMAGE STACK -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4 gap-4">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Image Stack</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Cards stacked with slight rotations to create a layered deck visual effect.</p>
+            </div>
+            <button onclick="openSourceDrawer('stack','Image Stack')" class="flex-shrink-0 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="flex items-center justify-center py-8">
+            <div class="relative h-48 w-48">
+              <div class="absolute inset-0 bg-violet-400 rounded-xl shadow-lg" style="transform:rotate(-6deg);"></div>
+              <div class="absolute inset-0 bg-blue-400 rounded-xl shadow-lg" style="transform:rotate(-3deg);"></div>
+              <div class="absolute inset-0 bg-gradient-to-br from-blue-500 to-violet-600 rounded-xl shadow-xl flex items-center justify-center text-white font-bold text-lg" style="transform:rotate(0deg);">
+                <svg class="w-10 h-10 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </main>
   </div>
 </div>
-<script src="common-loader.js"></script>
+
+
+
+<!-- Source Drawer -->
+<div id="source-drawer" class="fixed inset-x-0 bottom-0 z-50 hidden">
+  <div class="fixed inset-0 bg-black/30" onclick="closeSourceDrawer()"></div>
+  <div class="relative bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 rounded-t-2xl shadow-2xl max-h-[65vh] flex flex-col mx-auto" style="max-width:720px;border-left:1px solid #e5e7eb;border-right:1px solid #e5e7eb;">
+    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-gray-800 flex-shrink-0">
+      <div class="flex items-center gap-2">
+        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+        <span id="drawer-title" class="text-sm font-semibold text-gray-900 dark:text-white">Source Code</span>
+      </div>
+      <div class="flex gap-2">
+        <button onclick="copyDrawerCode()" class="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700 transition-colors">Copy</button>
+        <button onclick="closeSourceDrawer()" class="rounded-lg border border-gray-200 dark:border-gray-700 p-1.5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+    </div>
+    <div class="overflow-auto flex-1 p-5"><pre id="drawer-code" class="text-xs leading-relaxed text-gray-800 dark:text-gray-200 whitespace-pre-wrap font-mono"></pre></div>
+  </div>
+</div>
+<div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-2 pointer-events-none"></div>
 <script src="common-sidebar.js"></script>
 <script src="common-header.js"></script>
 <script src="app-shell.js"></script>
+<script>
+// ─── SOURCE SNIPPETS ──────────────────────────────────────────────────────────
+const SOURCE_SNIPPETS = {
+  'aspect-ratios': `<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+  <div class="flex flex-col gap-2">
+    <div class="aspect-square bg-gray-200 dark:bg-gray-700 rounded-xl flex items-center justify-center text-gray-500 text-sm font-medium">1:1</div>
+    <span class="text-xs text-center text-gray-500 font-medium">Square (1:1)</span>
+  </div>
+  <div class="flex flex-col gap-2">
+    <div style="aspect-ratio:4/3" class="bg-gray-200 dark:bg-gray-700 rounded-xl flex items-center justify-center text-gray-500 text-sm font-medium">4:3</div>
+    <span class="text-xs text-center text-gray-500 font-medium">Classic (4:3)</span>
+  </div>
+  <div class="flex flex-col gap-2">
+    <div style="aspect-ratio:16/9" class="bg-gray-200 dark:bg-gray-700 rounded-xl flex items-center justify-center text-gray-500 text-sm font-medium">16:9</div>
+    <span class="text-xs text-center text-gray-500 font-medium">Widescreen (16:9)</span>
+  </div>
+  <div class="flex flex-col gap-2">
+    <div style="aspect-ratio:21/9" class="bg-gray-200 dark:bg-gray-700 rounded-xl flex items-center justify-center text-gray-500 text-sm font-medium">21:9</div>
+    <span class="text-xs text-center text-gray-500 font-medium">Ultrawide (21:9)</span>
+  </div>
+</div>`,
+
+  shapes: `<div class="flex flex-wrap items-center gap-8">
+  <!-- Square -->
+  <div class="w-24 h-24 bg-blue-200 dark:bg-blue-900 rounded-none"></div>
+  <!-- Rounded -->
+  <div class="w-24 h-24 bg-blue-200 dark:bg-blue-900 rounded-xl"></div>
+  <!-- Circle -->
+  <div class="w-24 h-24 bg-blue-200 dark:bg-blue-900 rounded-full"></div>
+  <!-- Circle with ring -->
+  <div class="w-24 h-24 bg-blue-200 dark:bg-blue-900 rounded-full ring-4 ring-blue-500 ring-offset-2"></div>
+</div>`,
+
+  overlay: `<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+  <div class="relative rounded-xl overflow-hidden group cursor-pointer">
+    <div class="w-full h-40 bg-gradient-to-br from-blue-400 to-blue-600"></div>
+    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-300
+                flex flex-col items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
+      <p class="text-white font-semibold text-sm">Ocean Sunrise</p>
+      <button class="px-3 py-1 rounded-lg bg-white text-gray-800 text-xs font-semibold">View</button>
+    </div>
+  </div>
+  <!-- repeat for other images -->
+</div>`,
+
+  gallery: `<div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+  <div onclick="openImgLightbox(0,'bg-blue-400','Coastal View')"
+       class="h-32 rounded-xl bg-blue-400 cursor-pointer hover:opacity-90 transition-opacity"></div>
+  <div onclick="openImgLightbox(1,'bg-violet-400','Mountain Peak')"
+       class="h-32 rounded-xl bg-violet-400 cursor-pointer hover:opacity-90 transition-opacity"></div>
+  <!-- ...4 more -->
+</div>
+<!-- Lightbox -->
+<div id="img-lightbox" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center">
+  <button onclick="closeImgLightbox()" class="absolute top-4 right-4 ...">✕</button>
+  <div id="img-lb-content" class="w-96 h-64 rounded-2xl shadow-2xl ..."></div>
+</div>
+<script>
+function openImgLightbox(i, bgClass, title) {
+  const lb = document.getElementById('img-lightbox');
+  const content = document.getElementById('img-lb-content');
+  content.className = 'w-96 h-64 rounded-2xl shadow-2xl flex items-center justify-center text-white font-bold text-2xl ' + bgClass;
+  content.textContent = title;
+  document.getElementById('img-lb-title').textContent = title;
+  lb.classList.remove('hidden');
+  lb.classList.add('flex');
+  document.body.style.overflow = 'hidden';
+}
+function closeImgLightbox() {
+  document.getElementById('img-lightbox').classList.add('hidden');
+  document.getElementById('img-lightbox').classList.remove('flex');
+  document.body.style.overflow = '';
+}
+<\/script>`,
+
+  skeleton: `<style>
+  @keyframes shimmer { from { background-position: -200% 0 } to { background-position: 200% 0 } }
+  .shimmer {
+    background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+  }
+</style>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+  <div class="rounded-xl border border-gray-200 overflow-hidden">
+    <div class="h-36 shimmer"></div>
+    <div class="p-3 space-y-2">
+      <div class="h-4 w-3/4 rounded shimmer"></div>
+      <div class="h-3 w-full rounded shimmer"></div>
+      <div class="h-3 w-2/3 rounded shimmer"></div>
+    </div>
+  </div>
+  <!-- repeat x2 -->
+</div>`,
+
+  badge: `<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+  <div class="relative overflow-hidden rounded-xl border border-gray-200">
+    <div class="absolute top-2 left-2 z-10 bg-blue-600 text-white text-xs font-bold px-2 py-0.5 rounded-md">NEW</div>
+    <div class="h-36 bg-gradient-to-br from-blue-100 to-blue-200"></div>
+    <div class="p-3">
+      <p class="text-sm font-semibold">Premium Widget</p>
+    </div>
+  </div>
+  <!-- SALE badge: bg-red-600, PRO badge: bg-amber-500 -->
+</div>`
+};
+
+
+
+// ─── DRAWER FUNCTIONS ─────────────────────────────────────────────────────────
+function openSourceDrawer(id, title) {
+  document.getElementById('drawer-title').textContent = title + ' — Source';
+  document.getElementById('drawer-code').textContent = SOURCE_SNIPPETS[id] || '<!-- No source available -->';
+  document.getElementById('source-drawer').classList.remove('hidden');
+  document.getElementById('source-drawer').dataset.currentId = id;
+  document.body.style.overflow = 'hidden';
+}
+function closeSourceDrawer() {
+  document.getElementById('source-drawer').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+function copyDrawerCode() {
+  navigator.clipboard.writeText(SOURCE_SNIPPETS[document.getElementById('source-drawer').dataset.currentId] || '').then(() => showToast('Copied to clipboard!'));
+}
+function showToast(msg) {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = 'pointer-events-auto flex items-center gap-2 rounded-xl border border-green-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 shadow-lg dark:border-green-800 dark:bg-gray-900 dark:text-white';
+  t.style.animation = 'toastIn .2s ease';
+  t.innerHTML = '<span class="h-2 w-2 rounded-full bg-green-500 flex-shrink-0"></span>' + msg;
+  c.appendChild(t);
+  setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateX(12px)'; t.style.transition = 'all .2s'; setTimeout(() => t.remove(), 200); }, 2500);
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeSourceDrawer(); closeImgLightbox(); } });
+
+// ─── GALLERY LIGHTBOX ─────────────────────────────────────────────────────────
+function openImgLightbox(i, bgClass, title) {
+  const lb = document.getElementById('img-lightbox');
+  const content = document.getElementById('img-lb-content');
+  content.className = 'w-96 h-64 rounded-2xl shadow-2xl flex items-center justify-center text-white font-bold text-2xl ' + bgClass;
+  content.textContent = title;
+  document.getElementById('img-lb-title').textContent = title;
+  lb.classList.remove('hidden');
+  lb.classList.add('flex');
+  document.body.style.overflow = 'hidden';
+}
+function closeImgLightbox() {
+  const lb = document.getElementById('img-lightbox');
+  lb.classList.add('hidden');
+  lb.classList.remove('flex');
+  document.body.style.overflow = '';
+}
+document.getElementById('img-lightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeImgLightbox();
+});
+
+// ─── COMPARISON SLIDER ────────────────────────────────────────────────────────
+let compDragging = false;
+function compStart(e) {
+  compDragging = true;
+  compMove(e);
+  document.addEventListener('mousemove', compMove);
+  document.addEventListener('mouseup', compEnd);
+}
+function compMove(e) {
+  if (!compDragging) return;
+  const container = document.getElementById('compare-container');
+  const rect = container.getBoundingClientRect();
+  let x = e.clientX - rect.left;
+  x = Math.max(0, Math.min(x, rect.width));
+  const pct = (x / rect.width) * 100;
+  document.getElementById('compare-left').style.width = pct + '%';
+  document.getElementById('compare-divider').style.left = pct + '%';
+}
+function compEnd() {
+  compDragging = false;
+  document.removeEventListener('mousemove', compMove);
+  document.removeEventListener('mouseup', compEnd);
+}
+function compTouchStart(e) {
+  e.preventDefault();
+  const touch = e.touches[0];
+  const container = document.getElementById('compare-container');
+  const rect = container.getBoundingClientRect();
+  let x = touch.clientX - rect.left;
+  x = Math.max(0, Math.min(x, rect.width));
+  const pct = (x / rect.width) * 100;
+  document.getElementById('compare-left').style.width = pct + '%';
+  document.getElementById('compare-divider').style.left = pct + '%';
+  function onMove(ev) {
+    ev.preventDefault();
+    const t = ev.touches[0];
+    let tx = t.clientX - rect.left;
+    tx = Math.max(0, Math.min(tx, rect.width));
+    const tp = (tx / rect.width) * 100;
+    document.getElementById('compare-left').style.width = tp + '%';
+    document.getElementById('compare-divider').style.left = tp + '%';
+  }
+  function onEnd() {
+    document.removeEventListener('touchmove', onMove);
+    document.removeEventListener('touchend', onEnd);
+  }
+  document.addEventListener('touchmove', onMove, { passive: false });
+  document.addEventListener('touchend', onEnd);
+}
+</script>
 </body>
 </html>

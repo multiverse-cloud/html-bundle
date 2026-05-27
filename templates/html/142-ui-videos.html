@@ -3,20 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#465fff" />
-  <meta name="description" content="Video preview cards, lesson rows, and media player controls." />
-  <title>Videos - mtverse</title>
+  <meta name="description" content="Video and media player components — mtverse UI" />
+  <title>Video &amp; Media Players — mtverse</title>
   <style>
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-    .animate-slideDown { animation: slideDown 0.2s ease-out; }
+    .no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+    @keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .progress-bar::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:#3b82f6;cursor:pointer;}
+    .progress-bar{-webkit-appearance:none;height:4px;border-radius:2px;background:#e5e7eb;outline:none;}
   </style>
   <link rel="stylesheet" href="tailwind-production.css">
   <link rel="stylesheet" href="pro-styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
 <div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
@@ -26,63 +22,686 @@
     <div id="header-container"></div>
     <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
       <div class="mx-auto w-full max-w-screen-2xl">
-        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <div class="mb-2 flex items-center gap-2 text-sm text-gray-500">
-              <span>mtverse</span><span>/</span><span>ui-elements</span><span>/</span>
-              <span class="font-medium text-gray-800 dark:text-white/90">Videos</span>
+
+        <!-- Breadcrumb + Hero -->
+        <nav class="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 mb-4 flex-wrap">
+          <a href="#" class="hover:text-gray-700 dark:hover:text-gray-200 transition-colors">mtverse</a>
+          <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          <a href="#" class="hover:text-gray-700 dark:hover:text-gray-200 transition-colors">UI Elements</a>
+          <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          <span class="text-gray-700 dark:text-gray-200 font-medium">Video &amp; Media Players</span>
+        </nav>
+
+        <div class="mb-6">
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-white tracking-tight mb-1">Video &amp; Media Players</h1>
+          <p class="text-gray-500 dark:text-gray-400 text-sm max-w-2xl">HTML5-native and custom-styled video, audio, and media player components. Fully responsive and accessible.</p>
+        </div>
+
+        <!-- Stat Cards -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+          <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4 flex flex-col gap-1">
+            <span class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wide">Variants</span>
+            <span class="text-2xl font-bold text-gray-900 dark:text-white">8</span>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4 flex flex-col gap-1">
+            <span class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wide">HTML5</span>
+            <span class="text-2xl font-bold text-emerald-500">✓</span>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4 flex flex-col gap-1">
+            <span class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wide">Responsive</span>
+            <span class="text-2xl font-bold text-emerald-500">✓</span>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4 flex flex-col gap-1">
+            <span class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wide">Accessible</span>
+            <span class="text-2xl font-bold text-emerald-500">✓</span>
+          </div>
+        </div>
+
+        <!-- SECTION 1: Native Video Player -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between gap-4 mb-5">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-0.5">Native Video Player</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400">HTML5 <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">&lt;video&gt;</code> element with native browser controls — no JavaScript required.</p>
             </div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white/90">Videos</h1>
-            <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Video preview cards, lesson rows, and media player controls.</p>
+            <button onclick="openSourceDrawer('native','Native Video Player')" class="flex-shrink-0 flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
           </div>
-          <div class="flex flex-wrap gap-2">
-            <button type="button" class="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:bg-white/[0.03] dark:text-gray-300">Preview</button>
-            <button type="button" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">Use Component</button>
+          <div class="max-w-2xl">
+            <video controls class="w-full rounded-xl bg-gray-200 dark:bg-gray-700" style="aspect-ratio:16/9;min-height:180px">
+              <source src="" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p class="text-xs text-gray-400 dark:text-gray-500 mt-2 text-center">HTML5 native controls — no JavaScript required</p>
+          </div>
+        </div>
+
+        <!-- SECTION 2: Custom Player UI -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between gap-4 mb-5">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-0.5">Custom Player UI</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400">Fully custom-styled video player with play/pause, seek bar, time display, volume and fullscreen controls.</p>
+            </div>
+            <button onclick="openSourceDrawer('custom-player','Custom Player UI')" class="flex-shrink-0 flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="max-w-2xl">
+            <div id="custom-player-wrap" class="relative bg-gray-900 rounded-xl overflow-hidden select-none" style="aspect-ratio:16/9">
+              <!-- Play overlay -->
+              <div id="play-overlay" class="absolute inset-0 flex items-center justify-center z-10 cursor-pointer" onclick="toggleCustomPlay()">
+                <div id="play-circle" class="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border-2 border-white/40 hover:bg-white/30 transition-all">
+                  <svg id="overlay-play-icon" class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                  <svg id="overlay-pause-icon" class="w-7 h-7 text-white hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                </div>
+              </div>
+              <!-- Video placeholder bg gradient -->
+              <div class="absolute inset-0 bg-gradient-to-br from-gray-800 via-gray-900 to-black flex items-center justify-center">
+                <svg class="w-20 h-20 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 10l4.553-2.069A1 1 0 0121 8.867v6.266a1 1 0 01-1.447.902L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+              </div>
+              <!-- Bottom Controls Bar -->
+              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent px-4 py-3 z-20">
+                <!-- Progress bar -->
+                <div class="mb-2">
+                  <input id="custom-progress" type="range" min="0" max="272" value="0" class="progress-bar w-full cursor-pointer" style="background:linear-gradient(to right,#3b82f6 0%,#6b7280 0%)" oninput="updateCustomProgress(this)" />
+                </div>
+                <div class="flex items-center gap-3">
+                  <!-- Play/pause -->
+                  <button onclick="toggleCustomPlay()" class="text-white hover:text-blue-400 transition-colors flex-shrink-0" aria-label="Play/Pause">
+                    <svg id="ctrl-play-icon" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    <svg id="ctrl-pause-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                  </button>
+                  <!-- Time -->
+                  <span id="current-time-display" class="text-white text-xs font-mono flex-shrink-0">00:00</span>
+                  <span class="text-gray-400 text-xs flex-shrink-0">/</span>
+                  <span class="text-gray-400 text-xs font-mono flex-shrink-0">04:32</span>
+                  <!-- Spacer -->
+                  <div class="flex-1"></div>
+                  <!-- Volume -->
+                  <button class="text-white hover:text-blue-400 transition-colors flex-shrink-0" aria-label="Volume">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                  </button>
+                  <!-- Fullscreen -->
+                  <button onclick="toggleFakeFullscreen()" class="text-white hover:text-blue-400 transition-colors flex-shrink-0" aria-label="Fullscreen">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <p class="text-xs text-gray-400 dark:text-gray-500 mt-2">Keyboard: <kbd class="bg-gray-100 dark:bg-gray-800 px-1 rounded text-xs">Space</kbd> = play/pause &nbsp;|&nbsp; Visual demo — no video file required.</p>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Components</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">24</p>
+
+
+        <!-- SECTION 3: Video Thumbnail Grid -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between gap-4 mb-5">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-0.5">Video Thumbnail Grid</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400">2×2 grid of video thumbnail cards with play overlay, duration badge, and metadata.</p>
+            </div>
+            <button onclick="openSourceDrawer('thumbnail-grid','Video Thumbnail Grid')" class="flex-shrink-0 flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
           </div>
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">States</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">96</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Responsive</p><p class="mt-2 text-3xl font-bold text-green-600">Ready</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
+            <!-- Thumb 1 -->
+            <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+              <div class="relative" style="aspect-ratio:16/9">
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-900 flex items-center justify-center">
+                  <div class="w-11 h-11 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/40 hover:bg-white/30 transition-all cursor-pointer">
+                    <svg class="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                  </div>
+                </div>
+                <span class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-1.5 py-0.5 rounded font-mono">2:34</span>
+              </div>
+              <div class="p-3">
+                <p class="text-sm font-semibold text-gray-800 dark:text-gray-100 leading-snug">Getting Started with Tailwind CSS</p>
+                <p class="text-xs text-gray-400 mt-1">42.1k views</p>
+              </div>
+            </div>
+            <!-- Thumb 2 -->
+            <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+              <div class="relative" style="aspect-ratio:16/9">
+                <div class="absolute inset-0 bg-gradient-to-br from-emerald-600 to-emerald-900 flex items-center justify-center">
+                  <div class="w-11 h-11 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/40 hover:bg-white/30 transition-all cursor-pointer">
+                    <svg class="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                  </div>
+                </div>
+                <span class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-1.5 py-0.5 rounded font-mono">8:15</span>
+              </div>
+              <div class="p-3">
+                <p class="text-sm font-semibold text-gray-800 dark:text-gray-100 leading-snug">Advanced Component Patterns</p>
+                <p class="text-xs text-gray-400 mt-1">18.9k views</p>
+              </div>
+            </div>
+            <!-- Thumb 3 -->
+            <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+              <div class="relative" style="aspect-ratio:16/9">
+                <div class="absolute inset-0 bg-gradient-to-br from-purple-600 to-purple-900 flex items-center justify-center">
+                  <div class="w-11 h-11 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/40 hover:bg-white/30 transition-all cursor-pointer">
+                    <svg class="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                  </div>
+                </div>
+                <span class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-1.5 py-0.5 rounded font-mono">5:48</span>
+              </div>
+              <div class="p-3">
+                <p class="text-sm font-semibold text-gray-800 dark:text-gray-100 leading-snug">Dark Mode Implementation Guide</p>
+                <p class="text-xs text-gray-400 mt-1">31.4k views</p>
+              </div>
+            </div>
+            <!-- Thumb 4 -->
+            <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+              <div class="relative" style="aspect-ratio:16/9">
+                <div class="absolute inset-0 bg-gradient-to-br from-amber-500 to-orange-700 flex items-center justify-center">
+                  <div class="w-11 h-11 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/40 hover:bg-white/30 transition-all cursor-pointer">
+                    <svg class="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                  </div>
+                </div>
+                <span class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-1.5 py-0.5 rounded font-mono">12:02</span>
+              </div>
+              <div class="p-3">
+                <p class="text-sm font-semibold text-gray-800 dark:text-gray-100 leading-snug">Responsive Grid Layouts Masterclass</p>
+                <p class="text-xs text-gray-400 mt-1">9.7k views</p>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="mt-5 grid grid-cols-1 gap-5 xl:grid-cols-2">
 
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Video player</h2>
-            <div class="mt-5"><div class="grid gap-5 lg:grid-cols-[1.5fr_1fr]"><div class="grid aspect-video place-items-center rounded-2xl bg-gray-900 text-white"><button class="grid h-16 w-16 place-items-center rounded-full bg-white text-blue-600 shadow-lg"><svg class="h-7 w-7" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button></div><div class="space-y-3"><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><p class="font-semibold">Getting started</p><p class="text-sm text-gray-500">8:00 min lesson</p></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><p class="font-semibold">Layout system</p><p class="text-sm text-gray-500">12:00 min lesson</p></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><p class="font-semibold">Deploy bundle</p><p class="text-sm text-gray-500">16:00 min lesson</p></div></div></div></div>
-          </section>
+        <!-- SECTION 4: 16:9 Embed Wrapper -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between gap-4 mb-5">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-0.5">16:9 Embed Wrapper</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400">Responsive embed container using the modern <code class="text-xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono">aspect-ratio</code> CSS property.</p>
+            </div>
+            <button onclick="openSourceDrawer('embed','Embed Wrapper')" class="flex-shrink-0 flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="max-w-2xl space-y-5">
+            <!-- Modern aspect-ratio technique -->
+            <div>
+              <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wide">Modern — <code class="font-mono">aspect-ratio: 16/9</code></p>
+              <div class="relative w-full overflow-hidden rounded-xl" style="aspect-ratio:16/9">
+                <div class="absolute inset-0 w-full h-full bg-gray-800 flex flex-col items-center justify-center gap-3">
+                  <div class="w-14 h-14 rounded-full bg-red-600 flex items-center justify-center shadow-lg">
+                    <svg class="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                  </div>
+                  <p class="text-gray-400 text-xs">iframe / embed placeholder</p>
+                </div>
+              </div>
+            </div>
+            <!-- Legacy padding-bottom technique -->
+            <div>
+              <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wide">Legacy — <code class="font-mono">padding-bottom: 56.25%</code></p>
+              <div class="relative w-full overflow-hidden rounded-xl" style="padding-bottom:56.25%">
+                <div class="absolute inset-0 w-full h-full bg-gray-700 flex flex-col items-center justify-center gap-3">
+                  <div class="w-14 h-14 rounded-full bg-red-600 flex items-center justify-center shadow-lg">
+                    <svg class="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                  </div>
+                  <p class="text-gray-400 text-xs">iframe / embed placeholder</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] xl:col-span-2">
-            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <!-- SECTION 5: Video with Caption -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between gap-4 mb-5">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-0.5">Video with Caption</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400">Video player paired with a rich metadata section including title, description, tags, and stats.</p>
+            </div>
+            <button onclick="openSourceDrawer('caption','Video with Caption')" class="flex-shrink-0 flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="max-w-2xl">
+            <div class="relative rounded-xl overflow-hidden bg-gray-800" style="aspect-ratio:16/9">
+              <div class="absolute inset-0 bg-gradient-to-br from-indigo-800 to-gray-900 flex items-center justify-center">
+                <div class="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/40 cursor-pointer hover:bg-white/30 transition-all">
+                  <svg class="w-6 h-6 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
+              <span class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-1.5 py-0.5 rounded font-mono">5:04</span>
+            </div>
+            <div class="mt-4">
+              <h3 class="font-semibold text-gray-900 dark:text-white text-base leading-snug">Product Demo — Feature Overview</h3>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 leading-relaxed">This walkthrough covers the full feature set introduced in v2.0, including the new dashboard layout, real-time sync, and multi-workspace support.</p>
+              <div class="flex flex-wrap gap-2 mt-3">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">Product</span>
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300">Demo</span>
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300">Tutorial</span>
+              </div>
+              <p class="text-xs text-gray-400 dark:text-gray-500 mt-3">1.2k views &nbsp;·&nbsp; 5 min ago &nbsp;·&nbsp; ⭐ 4.8</p>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- SECTION 6: Audio Player -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between gap-4 mb-5">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-0.5">Audio Player</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400">Custom-styled audio player with track metadata, progress bar, and media controls.</p>
+            </div>
+            <button onclick="openSourceDrawer('audio','Audio Player')" class="flex-shrink-0 flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="max-w-lg">
+            <div class="rounded-xl border border-gray-200 dark:border-gray-700 p-4 bg-white dark:bg-gray-800">
+              <div class="flex items-center gap-4">
+                <!-- Music icon -->
+                <div class="w-12 h-12 flex-shrink-0 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow">
+                  <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                </div>
+                <!-- Track info -->
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-semibold text-gray-900 dark:text-white truncate">Midnight Horizon</p>
+                  <p class="text-xs text-gray-400 truncate">Stellar Echo &nbsp;·&nbsp; Ambient Collection</p>
+                </div>
+                <!-- Volume -->
+                <button class="text-gray-400 hover:text-blue-500 transition-colors flex-shrink-0" aria-label="Volume">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                </button>
+              </div>
+
+              <!-- Progress bar -->
+              <div class="mt-4">
+                <input type="range" min="0" max="234" value="58" class="progress-bar w-full" style="background:linear-gradient(to right,#3b82f6 24.8%,#e5e7eb 24.8%)" oninput="updateAudioProgress(this)" />
+                <div class="flex justify-between text-xs text-gray-400 mt-1 font-mono">
+                  <span id="audio-current">0:58</span>
+                  <span>3:54</span>
+                </div>
+              </div>
+
+              <!-- Controls -->
+              <div class="flex items-center justify-center gap-6 mt-3">
+                <!-- Prev -->
+                <button class="text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors" aria-label="Previous">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+                </button>
+                <!-- Play/Pause -->
+                <button onclick="toggleAudioPlay()" class="w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-700 flex items-center justify-center text-white shadow transition-colors" aria-label="Play/Pause">
+                  <svg id="audio-play-icon" class="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                  <svg id="audio-pause-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                </button>
+                <!-- Next -->
+                <button class="text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors" aria-label="Next">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+                </button>
+              </div>
+            </div>
+            <!-- Native audio fallback -->
+            <div class="mt-3">
+              <p class="text-xs text-gray-400 dark:text-gray-500 mb-1.5">Native HTML5 audio element:</p>
+              <audio controls class="w-full rounded-lg" style="height:40px">
+                <source src="" type="audio/mpeg">
+              </audio>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 7: Video Playlist -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between gap-4 mb-5">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-0.5">Video Playlist</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400">Main player with a sidebar playlist — click any item to set it as active.</p>
+            </div>
+            <button onclick="openSourceDrawer('playlist','Video Playlist')" class="flex-shrink-0 flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Main Player -->
+            <div class="md:col-span-2">
+              <div class="relative rounded-xl overflow-hidden bg-gray-900" style="aspect-ratio:16/9">
+                <div id="playlist-main-bg" class="absolute inset-0 bg-gradient-to-br from-blue-700 to-gray-900 flex flex-col items-center justify-center gap-2">
+                  <div class="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/40 cursor-pointer hover:bg-white/30 transition-all">
+                    <svg class="w-6 h-6 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                  </div>
+                  <p id="playlist-active-title" class="text-white text-sm font-medium px-4 text-center">Getting Started with Tailwind CSS</p>
+                </div>
+              </div>
+            </div>
+            <!-- Playlist -->
+            <div class="flex flex-col gap-2">
+              <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">Up Next</p>
+              <!-- Item 1 — active -->
+              <div onclick="setPlaylistItem(this,'Getting Started with Tailwind CSS','from-blue-700 to-gray-900')" class="flex gap-3 p-2 rounded-lg cursor-pointer ring-2 ring-blue-500 bg-blue-50 dark:bg-blue-900/20 transition-all playlist-item">
+                <div class="w-16 h-10 rounded flex-shrink-0 bg-blue-600 flex items-center justify-center">
+                  <svg class="w-4 h-4 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-xs font-semibold text-gray-800 dark:text-gray-100 leading-snug line-clamp-2">Getting Started with Tailwind CSS</p>
+                  <p class="text-xs text-gray-400 mt-0.5 font-mono">2:34</p>
+                </div>
+              </div>
+              <!-- Item 2 -->
+              <div onclick="setPlaylistItem(this,'Advanced Component Patterns','from-emerald-700 to-gray-900')" class="flex gap-3 p-2 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-all playlist-item">
+                <div class="w-16 h-10 rounded flex-shrink-0 bg-emerald-600 flex items-center justify-center">
+                  <svg class="w-4 h-4 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-xs font-semibold text-gray-800 dark:text-gray-100 leading-snug line-clamp-2">Advanced Component Patterns</p>
+                  <p class="text-xs text-gray-400 mt-0.5 font-mono">8:15</p>
+                </div>
+              </div>
+              <!-- Item 3 -->
+              <div onclick="setPlaylistItem(this,'Dark Mode Implementation Guide','from-purple-700 to-gray-900')" class="flex gap-3 p-2 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-all playlist-item">
+                <div class="w-16 h-10 rounded flex-shrink-0 bg-purple-600 flex items-center justify-center">
+                  <svg class="w-4 h-4 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-xs font-semibold text-gray-800 dark:text-gray-100 leading-snug line-clamp-2">Dark Mode Implementation Guide</p>
+                  <p class="text-xs text-gray-400 mt-0.5 font-mono">5:48</p>
+                </div>
+              </div>
+              <!-- Item 4 -->
+              <div onclick="setPlaylistItem(this,'Responsive Grid Layouts Masterclass','from-amber-600 to-gray-900')" class="flex gap-3 p-2 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-all playlist-item">
+                <div class="w-16 h-10 rounded flex-shrink-0 bg-amber-500 flex items-center justify-center">
+                  <svg class="w-4 h-4 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-xs font-semibold text-gray-800 dark:text-gray-100 leading-snug line-clamp-2">Responsive Grid Layouts Masterclass</p>
+                  <p class="text-xs text-gray-400 mt-0.5 font-mono">12:02</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 8: Live Stream Badge -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between gap-4 mb-5">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-0.5">Live Stream Badge</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400">Live stream player with animated LIVE badge, viewer count, and HD quality selector.</p>
+            </div>
+            <button onclick="openSourceDrawer('live','Live Stream Badge')" class="flex-shrink-0 flex items-center gap-1.5 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="max-w-2xl">
+            <div class="relative rounded-xl overflow-hidden bg-gray-900" style="aspect-ratio:16/9">
+              <!-- Video background -->
+              <div class="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-950 flex items-center justify-center">
+                <svg class="w-16 h-16 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 10l4.553-2.069A1 1 0 0121 8.867v6.266a1 1 0 01-1.447.902L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+              </div>
+              <!-- LIVE badge -->
+              <div class="absolute top-3 left-3 bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded flex items-center gap-1.5 z-10">
+                <span class="h-1.5 w-1.5 rounded-full bg-white animate-pulse flex-shrink-0"></span>
+                LIVE
+              </div>
+              <!-- Viewer count -->
+              <div class="absolute top-3 right-3 bg-black/60 text-white text-xs px-2 py-0.5 rounded flex items-center gap-1.5 z-10">
+                <svg class="w-3 h-3 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                1,247 watching
+              </div>
+              <!-- HD badge -->
+              <div class="absolute bottom-3 right-3 bg-black/70 text-white text-xs font-bold px-2 py-0.5 rounded z-10">HD</div>
+              <!-- Center play button -->
+              <div class="absolute inset-0 flex items-center justify-center z-10">
+                <div class="w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center border border-white/30 hover:bg-white/20 transition-all cursor-pointer">
+                  <svg class="w-6 h-6 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
+            </div>
+            <div class="mt-3 flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-pink-600 flex-shrink-0"></div>
               <div>
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Videos production states</h2>
-                <p class="mt-1 text-sm text-gray-500">Real dashboard states with actions, accessibility, responsive layout, and clean spacing.</p>
-              </div>
-              <div class="inline-flex rounded-xl bg-gray-100 p-1 dark:bg-white/[0.04]">
-                <button class="rounded-lg bg-white px-4 py-2 text-sm font-bold text-blue-600 shadow-sm dark:bg-gray-900">Preview</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">Code</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">States</button>
+                <p class="text-sm font-semibold text-gray-900 dark:text-white">mtverse Live — Weekly UI Showcase</p>
+                <p class="text-xs text-gray-400">Started 42 minutes ago</p>
               </div>
             </div>
-            <div class="mt-5 grid gap-4 md:grid-cols-3">
-              <div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Default</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Hover / active</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Loading / empty</p><span class="h-2.5 w-2.5 rounded-full bg-yellow-400"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div>
-            </div>
-          </section>
+          </div>
         </div>
-      </div>
+
+      </div><!-- /max-w-screen-2xl -->
     </main>
   </div>
 </div>
-<script src="common-loader.js"></script>
+
+
+
+<!-- Source Drawer -->
+<div id="source-drawer" class="fixed inset-x-0 bottom-0 z-50 hidden">
+  <div class="fixed inset-0 bg-black/30" onclick="closeSourceDrawer()"></div>
+  <div class="relative bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 rounded-t-2xl shadow-2xl max-h-[65vh] flex flex-col mx-auto" style="max-width:720px;border-left:1px solid #e5e7eb;border-right:1px solid #e5e7eb;">
+    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-gray-800 flex-shrink-0">
+      <div class="flex items-center gap-2">
+        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+        <span id="drawer-title" class="text-sm font-semibold text-gray-900 dark:text-white">Source Code</span>
+      </div>
+      <div class="flex gap-2">
+        <button onclick="copyDrawerCode()" class="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700 transition-colors">Copy</button>
+        <button onclick="closeSourceDrawer()" class="rounded-lg border border-gray-200 dark:border-gray-700 p-1.5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+    </div>
+    <div class="overflow-auto flex-1 p-5"><pre id="drawer-code" class="text-xs leading-relaxed text-gray-800 dark:text-gray-200 whitespace-pre-wrap font-mono"></pre></div>
+  </div>
+</div>
+<div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-2 pointer-events-none"></div>
 <script src="common-sidebar.js"></script>
 <script src="common-header.js"></script>
 <script src="app-shell.js"></script>
+<script>
+const SOURCE_SNIPPETS = {
+  native: `<!-- Native HTML5 Video -->
+<video controls class="w-full rounded-xl bg-gray-200" style="aspect-ratio:16/9;min-height:180px">
+  <source src="your-video.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>`,
+  'custom-player': `<!-- Custom Player UI -->
+<div class="relative bg-gray-900 rounded-xl overflow-hidden" style="aspect-ratio:16/9">
+  <!-- Play overlay -->
+  <div class="absolute inset-0 flex items-center justify-center z-10 cursor-pointer"
+    onclick="toggleCustomPlay()">
+    <div class="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center border-2 border-white/40">
+      <svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+    </div>
+  </div>
+  <!-- Controls bar -->
+  <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 px-4 py-3">
+    <input type="range" min="0" max="272" value="0" class="progress-bar w-full mb-2" />
+    <div class="flex items-center gap-3">
+      <button onclick="toggleCustomPlay()" class="text-white"><!-- play icon --></button>
+      <span class="text-white text-xs font-mono">00:00 / 04:32</span>
+      <div class="flex-1"></div>
+      <button class="text-white"><!-- volume icon --></button>
+      <button class="text-white"><!-- fullscreen icon --></button>
+    </div>
+  </div>
+</div>`,
+  'thumbnail-grid': `<!-- Video Thumbnail Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+  <div class="rounded-xl overflow-hidden border border-gray-200 bg-white">
+    <div class="relative" style="aspect-ratio:16/9">
+      <div class="absolute inset-0 bg-blue-700 flex items-center justify-center">
+        <div class="w-11 h-11 rounded-full bg-white/20 flex items-center justify-center">
+          <svg class="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+      </div>
+      <span class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-1.5 py-0.5 rounded font-mono">2:34</span>
+    </div>
+    <div class="p-3">
+      <p class="text-sm font-semibold">Video Title Here</p>
+      <p class="text-xs text-gray-400 mt-1">42.1k views</p>
+    </div>
+  </div>
+</div>`,
+  embed: `<!-- Responsive Embed — Modern (aspect-ratio) -->
+<div class="relative w-full overflow-hidden rounded-xl" style="aspect-ratio:16/9">
+  <iframe class="absolute inset-0 w-full h-full"
+    src="https://www.youtube.com/embed/VIDEO_ID"
+    frameborder="0" allowfullscreen></iframe>
+</div>
+
+<!-- Responsive Embed — Legacy (padding-bottom) -->
+<div class="relative w-full overflow-hidden rounded-xl" style="padding-bottom:56.25%">
+  <iframe class="absolute inset-0 w-full h-full"
+    src="https://www.youtube.com/embed/VIDEO_ID"
+    frameborder="0" allowfullscreen></iframe>
+</div>`,
+  audio: `<!-- Custom Audio Player -->
+<div class="rounded-xl border border-gray-200 p-4">
+  <div class="flex items-center gap-4">
+    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+      <!-- music note icon -->
+    </div>
+    <div class="flex-1">
+      <p class="text-sm font-semibold">Midnight Horizon</p>
+      <p class="text-xs text-gray-400">Stellar Echo · Ambient Collection</p>
+    </div>
+  </div>
+  <input type="range" min="0" max="234" value="58" class="progress-bar w-full mt-4" />
+  <div class="flex items-center justify-center gap-6 mt-3">
+    <button><!-- prev --></button>
+    <button class="w-10 h-10 rounded-full bg-blue-600 text-white"><!-- play --></button>
+    <button><!-- next --></button>
+  </div>
+</div>`,
+  playlist: `<!-- Video Playlist Layout -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+  <!-- Main Player (col-span-2) -->
+  <div class="md:col-span-2">
+    <div class="relative rounded-xl overflow-hidden bg-gray-900" style="aspect-ratio:16/9">
+      <!-- player content -->
+    </div>
+  </div>
+  <!-- Playlist sidebar -->
+  <div class="flex flex-col gap-2">
+    <div class="flex gap-3 p-2 rounded-lg ring-2 ring-blue-500 cursor-pointer playlist-item">
+      <div class="w-16 h-10 rounded bg-blue-600"></div>
+      <div>
+        <p class="text-xs font-semibold">Video Title</p>
+        <p class="text-xs text-gray-400 font-mono">2:34</p>
+      </div>
+    </div>
+    <!-- more items... -->
+  </div>
+</div>`,
+  live: `<!-- Live Stream Player -->
+<div class="relative rounded-xl overflow-hidden bg-gray-900" style="aspect-ratio:16/9">
+  <!-- LIVE badge -->
+  <div class="absolute top-3 left-3 bg-red-600 text-white text-xs font-bold px-2 py-0.5
+    rounded flex items-center gap-1.5 z-10">
+    <span class="h-1.5 w-1.5 rounded-full bg-white animate-pulse"></span>
+    LIVE
+  </div>
+  <!-- Viewer count -->
+  <div class="absolute top-3 right-3 bg-black/60 text-white text-xs px-2 py-0.5
+    rounded flex items-center gap-1.5 z-10">
+    <!-- eye icon -->
+    1,247 watching
+  </div>
+  <!-- HD badge -->
+  <div class="absolute bottom-3 right-3 bg-black/70 text-white text-xs font-bold
+    px-2 py-0.5 rounded z-10">HD</div>
+</div>`
+};
+
+function openSourceDrawer(id,title){document.getElementById('drawer-title').textContent=title+' — Source';document.getElementById('drawer-code').textContent=SOURCE_SNIPPETS[id]||'<!-- No source available -->';document.getElementById('source-drawer').classList.remove('hidden');document.getElementById('source-drawer').dataset.currentId=id;document.body.style.overflow='hidden';}
+function closeSourceDrawer(){document.getElementById('source-drawer').classList.add('hidden');document.body.style.overflow='';}
+function copyDrawerCode(){navigator.clipboard.writeText(SOURCE_SNIPPETS[document.getElementById('source-drawer').dataset.currentId]||'').then(()=>showToast('Copied to clipboard!'));}
+function showToast(msg){const c=document.getElementById('toast-container');const t=document.createElement('div');t.className='pointer-events-auto flex items-center gap-2 rounded-xl border border-green-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 shadow-lg dark:border-green-800 dark:bg-gray-900 dark:text-white';t.style.animation='toastIn .2s ease';t.innerHTML='<span class="h-2 w-2 rounded-full bg-green-500 flex-shrink-0"></span>'+msg;c.appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(12px)';t.style.transition='all .2s';setTimeout(()=>t.remove(),200);},2500);}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSourceDrawer();});
+
+/* Custom Player JS */
+let customPlaying = false;
+let customTimer = null;
+let customSeconds = 0;
+function toggleCustomPlay() {
+  customPlaying = !customPlaying;
+  const overlayPlay = document.getElementById('overlay-play-icon');
+  const overlayPause = document.getElementById('overlay-pause-icon');
+  const ctrlPlay = document.getElementById('ctrl-play-icon');
+  const ctrlPause = document.getElementById('ctrl-pause-icon');
+  if (customPlaying) {
+    overlayPlay.classList.add('hidden'); overlayPause.classList.remove('hidden');
+    ctrlPlay.classList.add('hidden'); ctrlPause.classList.remove('hidden');
+    customTimer = setInterval(() => {
+      if (customSeconds < 272) { customSeconds++; updateCustomTime(); }
+      else { customPlaying = false; clearInterval(customTimer); }
+    }, 1000);
+  } else {
+    overlayPlay.classList.remove('hidden'); overlayPause.classList.add('hidden');
+    ctrlPlay.classList.remove('hidden'); ctrlPause.classList.add('hidden');
+    clearInterval(customTimer);
+  }
+}
+function updateCustomTime() {
+  const m = Math.floor(customSeconds/60).toString().padStart(2,'0');
+  const s = (customSeconds%60).toString().padStart(2,'0');
+  document.getElementById('current-time-display').textContent = m+':'+s;
+  const bar = document.getElementById('custom-progress');
+  bar.value = customSeconds;
+  const pct = (customSeconds/272*100).toFixed(1);
+  bar.style.background = `linear-gradient(to right,#3b82f6 ${pct}%,#6b7280 ${pct}%)`;
+}
+function updateCustomProgress(el) {
+  customSeconds = parseInt(el.value);
+  updateCustomTime();
+}
+function toggleFakeFullscreen() { showToast('Fullscreen toggled (demo)'); }
+
+/* Audio Player JS */
+let audioPlaying = false;
+function toggleAudioPlay() {
+  audioPlaying = !audioPlaying;
+  document.getElementById('audio-play-icon').classList.toggle('hidden', audioPlaying);
+  document.getElementById('audio-pause-icon').classList.toggle('hidden', !audioPlaying);
+}
+function updateAudioProgress(el) {
+  const secs = parseInt(el.value);
+  const m = Math.floor(secs/60);
+  const s = (secs%60).toString().padStart(2,'0');
+  document.getElementById('audio-current').textContent = m+':'+s;
+  const pct = (secs/234*100).toFixed(1);
+  el.style.background = `linear-gradient(to right,#3b82f6 ${pct}%,#e5e7eb ${pct}%)`;
+}
+
+/* Playlist JS */
+function setPlaylistItem(el, title, gradient) {
+  document.querySelectorAll('.playlist-item').forEach(item => {
+    item.classList.remove('ring-2','ring-blue-500','bg-blue-50','dark:bg-blue-900/20');
+  });
+  el.classList.add('ring-2','ring-blue-500','bg-blue-50','dark:bg-blue-900/20');
+  document.getElementById('playlist-active-title').textContent = title;
+  const mainBg = document.getElementById('playlist-main-bg');
+  mainBg.className = `absolute inset-0 bg-gradient-to-br ${gradient} flex flex-col items-center justify-center gap-2`;
+}
+
+/* Keyboard shortcut: Space = play/pause */
+document.addEventListener('keydown', e => {
+  if (e.key === ' ' && e.target === document.body) {
+    e.preventDefault();
+    toggleCustomPlay();
+  }
+  if (e.key === 'Escape') closeSourceDrawer();
+});
+/* page-specific JS below */
+</script>
 </body>
 </html>

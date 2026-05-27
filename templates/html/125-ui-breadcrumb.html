@@ -3,20 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#465fff" />
-  <meta name="description" content="Breadcrumb patterns for deep dashboard navigation." />
-  <title>Breadcrumb - mtverse</title>
+  <meta name="description" content="Navigation breadcrumb components in multiple styles — mtverse UI" />
+  <title>Breadcrumbs — mtverse</title>
   <style>
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-    .animate-slideDown { animation: slideDown 0.2s ease-out; }
+    .no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+    @keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
   </style>
   <link rel="stylesheet" href="tailwind-production.css">
   <link rel="stylesheet" href="pro-styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
 <div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
@@ -26,63 +20,589 @@
     <div id="header-container"></div>
     <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
       <div class="mx-auto w-full max-w-screen-2xl">
-        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <div class="mb-2 flex items-center gap-2 text-sm text-gray-500">
-              <span>mtverse</span><span>/</span><span>ui-elements</span><span>/</span>
-              <span class="font-medium text-gray-800 dark:text-white/90">Breadcrumb</span>
+
+
+        <!-- Page Header -->
+        <div class="mb-8">
+          <nav class="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 mb-4">
+            <a href="#" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">mtverse</a>
+            <span class="text-gray-300 dark:text-gray-600">/</span>
+            <a href="#" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">UI Elements</a>
+            <span class="text-gray-300 dark:text-gray-600">/</span>
+            <span class="text-gray-800 dark:text-gray-100 font-medium">Breadcrumbs</span>
+          </nav>
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Breadcrumbs</h1>
+          <p class="text-gray-500 dark:text-gray-400 text-base max-w-2xl">Navigation breadcrumbs in 10+ styles — default, chevron, pills, dark, icon-home, overflow/dropdown, and more.</p>
+          <!-- Stat Cards -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
+            <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] px-5 py-4 flex flex-col gap-1">
+              <span class="text-2xl font-bold text-gray-900 dark:text-white">12</span>
+              <span class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wide">Variants</span>
             </div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white/90">Breadcrumb</h1>
-            <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Breadcrumb patterns for deep dashboard navigation.</p>
+            <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] px-5 py-4 flex flex-col gap-1">
+              <span class="text-2xl font-bold text-gray-900 dark:text-white">6</span>
+              <span class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wide">Separators</span>
+            </div>
+            <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] px-5 py-4 flex flex-col gap-1">
+              <span class="text-2xl font-bold text-green-500">✓</span>
+              <span class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wide">Accessible</span>
+            </div>
+            <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] px-5 py-4 flex flex-col gap-1">
+              <span class="text-2xl font-bold text-green-500">✓</span>
+              <span class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wide">Responsive</span>
+            </div>
           </div>
-          <div class="flex flex-wrap gap-2">
-            <button type="button" class="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:bg-white/[0.03] dark:text-gray-300">Preview</button>
-            <button type="button" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">Use Component</button>
+        </div>
+
+
+        <!-- Section 1: Default Breadcrumb -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white">Default Breadcrumb</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Simple slash-separated breadcrumb with linked ancestors and plain current page.</p>
+            </div>
+            <button onclick="openSourceDrawer('default','Default Breadcrumb')" class="flex-shrink-0 ml-4 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl">
+            <nav aria-label="Breadcrumb" class="flex items-center gap-1.5 text-sm">
+              <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Home</a>
+              <span class="text-gray-300 dark:text-gray-600 select-none">/</span>
+              <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Products</a>
+              <span class="text-gray-300 dark:text-gray-600 select-none">/</span>
+              <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Electronics</a>
+              <span class="text-gray-300 dark:text-gray-600 select-none">/</span>
+              <span class="text-gray-900 dark:text-white font-medium" aria-current="page">Laptops</span>
+            </nav>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Components</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">24</p>
+
+        <!-- Section 2: Chevron Separator -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white">Chevron Separator</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">SVG chevron-right icons as separators. Current page in bold semibold.</p>
+            </div>
+            <button onclick="openSourceDrawer('chevron','Chevron Separator')" class="flex-shrink-0 ml-4 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
           </div>
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">States</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">96</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Responsive</p><p class="mt-2 text-3xl font-bold text-green-600">Ready</p>
+          <div class="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl">
+            <nav aria-label="Breadcrumb" class="flex items-center gap-1 text-sm">
+              <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Home</a>
+              <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6"/></svg>
+              <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Products</a>
+              <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6"/></svg>
+              <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Electronics</a>
+              <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6"/></svg>
+              <span class="text-gray-900 dark:text-white font-semibold" aria-current="page">Laptops</span>
+            </nav>
           </div>
         </div>
-        <div class="mt-5 grid grid-cols-1 gap-5 xl:grid-cols-2">
 
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Breadcrumb examples</h2>
-            <div class="mt-5"><div class="space-y-4"><nav class="rounded-xl border border-gray-200 p-4 text-sm text-gray-500 dark:border-gray-800"><span class="">Home</span><span class="mx-2">/</span><span class="">UI Elements</span><span class="mx-2">/</span><span class="font-semibold text-gray-900 dark:text-white">Breadcrumb</span></nav><nav class="rounded-xl border border-gray-200 p-4 text-sm text-gray-500 dark:border-gray-800"><span class="">Dashboard</span><span class="mx-2">/</span><span class="">Ecommerce</span><span class="mx-2">/</span><span class="">Orders</span><span class="mx-2">/</span><span class="font-semibold text-gray-900 dark:text-white">Details</span></nav><nav class="rounded-xl border border-gray-200 p-4 text-sm text-gray-500 dark:border-gray-800"><span class="">Settings</span><span class="mx-2">/</span><span class="">Billing</span><span class="mx-2">/</span><span class="font-semibold text-gray-900 dark:text-white">Payment methods</span></nav></div></div>
-          </section>
 
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] xl:col-span-2">
-            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-              <div>
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Breadcrumb production states</h2>
-                <p class="mt-1 text-sm text-gray-500">Real dashboard states with actions, accessibility, responsive layout, and clean spacing.</p>
+        <!-- Section 3: Arrow Separator -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white">Arrow Separator</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Unicode arrow character → as separator with slightly larger base text.</p>
+            </div>
+            <button onclick="openSourceDrawer('arrow','Arrow Separator')" class="flex-shrink-0 ml-4 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl">
+            <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-base">
+              <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Home</a>
+              <span class="text-gray-400 select-none">→</span>
+              <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Products</a>
+              <span class="text-gray-400 select-none">→</span>
+              <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Electronics</a>
+              <span class="text-gray-400 select-none">→</span>
+              <span class="text-gray-900 dark:text-white font-medium" aria-current="page">Laptops</span>
+            </nav>
+          </div>
+        </div>
+
+        <!-- Section 4: Slash Separator (alternate style) -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white">Slash Separator — Alternate</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Forward slash with wider spacing, muted color, and uppercase link labels.</p>
+            </div>
+            <button onclick="openSourceDrawer('slash','Slash Separator Alt')" class="flex-shrink-0 ml-4 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl">
+            <nav aria-label="Breadcrumb" class="flex items-center gap-3 text-xs font-medium uppercase tracking-wider">
+              <a href="#" class="text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Home</a>
+              <span class="text-gray-300 dark:text-gray-600 select-none font-light text-base">/</span>
+              <a href="#" class="text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Products</a>
+              <span class="text-gray-300 dark:text-gray-600 select-none font-light text-base">/</span>
+              <a href="#" class="text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Electronics</a>
+              <span class="text-gray-300 dark:text-gray-600 select-none font-light text-base">/</span>
+              <span class="text-blue-600 dark:text-blue-400" aria-current="page">Laptops</span>
+            </nav>
+          </div>
+        </div>
+
+
+        <!-- Section 5: Icon Home -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white">Icon Home</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">First crumb uses a house SVG icon instead of text, followed by chevron-separated labels.</p>
+            </div>
+            <button onclick="openSourceDrawer('icon','Icon Home')" class="flex-shrink-0 ml-4 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl">
+            <nav aria-label="Breadcrumb" class="flex items-center gap-1 text-sm">
+              <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors" aria-label="Home">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+              </a>
+              <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6"/></svg>
+              <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Products</a>
+              <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6"/></svg>
+              <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Electronics</a>
+              <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6"/></svg>
+              <span class="text-gray-900 dark:text-white font-medium" aria-current="page">Laptops</span>
+            </nav>
+          </div>
+        </div>
+
+
+        <!-- Section 6: Pills Style -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white">Pills Style</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Each crumb rendered as a pill badge. Active crumb highlighted in blue. No separator character.</p>
+            </div>
+            <button onclick="openSourceDrawer('pills','Pills Style')" class="flex-shrink-0 ml-4 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl">
+            <nav aria-label="Breadcrumb" class="flex items-center flex-wrap gap-2">
+              <a href="#" class="rounded-full bg-gray-100 dark:bg-gray-800 px-3 py-1 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors font-medium">Home</a>
+              <a href="#" class="rounded-full bg-gray-100 dark:bg-gray-800 px-3 py-1 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors font-medium">Products</a>
+              <a href="#" class="rounded-full bg-gray-100 dark:bg-gray-800 px-3 py-1 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors font-medium">Electronics</a>
+              <span class="rounded-full bg-blue-100 dark:bg-blue-900/40 px-3 py-1 text-sm text-blue-700 dark:text-blue-300 font-semibold" aria-current="page">Laptops</span>
+            </nav>
+          </div>
+        </div>
+
+        <!-- Section 7: Dark Background -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white">Dark Background</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Breadcrumb on a dark container — white/gray text, subtle separators.</p>
+            </div>
+            <button onclick="openSourceDrawer('dark','Dark Background')" class="flex-shrink-0 ml-4 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl">
+            <div class="bg-gray-900 rounded-xl px-4 py-3 inline-block">
+              <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-sm">
+                <a href="#" class="text-gray-400 hover:text-white transition-colors">Home</a>
+                <span class="text-gray-600 select-none">/</span>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors">Products</a>
+                <span class="text-gray-600 select-none">/</span>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors">Electronics</a>
+                <span class="text-gray-600 select-none">/</span>
+                <span class="text-white font-medium" aria-current="page">Laptops</span>
+              </nav>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Section 8: Overflow / Truncated -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white">Overflow / Truncated</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Long paths collapsed to show Home / … / near-last / current. Middle items hidden with ellipsis.</p>
+            </div>
+            <button onclick="openSourceDrawer('truncated','Overflow Truncated')" class="flex-shrink-0 ml-4 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl space-y-4">
+            <div>
+              <p class="text-xs text-gray-400 dark:text-gray-500 mb-2 font-medium uppercase tracking-wide">Full path (hidden)</p>
+              <nav aria-label="Full path" class="flex items-center gap-1.5 text-sm text-gray-400 line-through opacity-50">
+                <span>Home</span><span>/</span><span>Dashboard</span><span>/</span><span>Settings</span><span>/</span><span>Account</span><span>/</span><span>Security</span><span>/</span><span>Two-Factor</span><span>/</span><span>Backup Codes</span>
+              </nav>
+            </div>
+            <div>
+              <p class="text-xs text-gray-400 dark:text-gray-500 mb-2 font-medium uppercase tracking-wide">Truncated display</p>
+              <nav aria-label="Breadcrumb" class="flex items-center gap-1.5 text-sm">
+                <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Home</a>
+                <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6"/></svg>
+                <span class="text-gray-400 dark:text-gray-500 select-none px-1 rounded bg-gray-100 dark:bg-gray-800 font-mono text-xs">…</span>
+                <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6"/></svg>
+                <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Two-Factor</a>
+                <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6"/></svg>
+                <span class="text-gray-900 dark:text-white font-medium" aria-current="page">Backup Codes</span>
+              </nav>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Section 9: With Dropdown -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white">With Dropdown</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Middle crumb has a chevron-down; clicking reveals a dropdown menu of sibling pages.</p>
+            </div>
+            <button onclick="openSourceDrawer('overflow','With Dropdown')" class="flex-shrink-0 ml-4 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl">
+            <nav aria-label="Breadcrumb" class="flex items-center gap-1 text-sm">
+              <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Home</a>
+              <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6"/></svg>
+              <!-- Dropdown crumb -->
+              <div class="relative">
+                <button onclick="toggleBreadcrumbDropdown()" class="flex items-center gap-1 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium rounded px-1 py-0.5 hover:bg-gray-100 dark:hover:bg-gray-800">
+                  Products
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </button>
+                <div id="breadcrumb-dropdown" class="hidden absolute top-full left-0 mt-1 bg-white dark:bg-gray-800 shadow-lg rounded-lg py-1 min-w-[160px] border border-gray-200 dark:border-gray-700 z-20">
+                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700">Electronics</a>
+                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700">Clothing</a>
+                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700">Home & Garden</a>
+                </div>
               </div>
-              <div class="inline-flex rounded-xl bg-gray-100 p-1 dark:bg-white/[0.04]">
-                <button class="rounded-lg bg-white px-4 py-2 text-sm font-bold text-blue-600 shadow-sm dark:bg-gray-900">Preview</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">Code</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">States</button>
+              <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6"/></svg>
+              <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Electronics</a>
+              <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6"/></svg>
+              <span class="text-gray-900 dark:text-white font-medium" aria-current="page">Laptops</span>
+            </nav>
+          </div>
+        </div>
+
+
+        <!-- Section 10: Breadcrumb in Page Header -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white">Breadcrumb in Page Header</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Realistic page header card: breadcrumb above title + subtitle + primary action button.</p>
+            </div>
+            <button onclick="openSourceDrawer('pageheader','Page Header')" class="flex-shrink-0 ml-4 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl">
+            <div class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-6 py-5">
+              <nav aria-label="Breadcrumb" class="flex items-center gap-1.5 text-xs mb-3">
+                <a href="#" class="text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Dashboard</a>
+                <svg class="w-3.5 h-3.5 text-gray-300 dark:text-gray-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6"/></svg>
+                <a href="#" class="text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Team</a>
+                <svg class="w-3.5 h-3.5 text-gray-300 dark:text-gray-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6"/></svg>
+                <span class="text-gray-600 dark:text-gray-300 font-medium">Members</span>
+              </nav>
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                  <h2 class="text-xl font-bold text-gray-900 dark:text-white">Team Members</h2>
+                  <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Manage your organization's members, roles, and permissions.</p>
+                </div>
+                <button class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 transition-colors shadow-sm">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                  Invite Member
+                </button>
               </div>
             </div>
-            <div class="mt-5 grid gap-4 md:grid-cols-3">
-              <div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Default</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Hover / active</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Loading / empty</p><span class="h-2.5 w-2.5 rounded-full bg-yellow-400"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div>
-            </div>
-          </section>
+          </div>
         </div>
-      </div>
+
+        <!-- Section 11: Colored Background Variants -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white">Colored Accent Variants</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Current page item styled with different brand accent colors.</p>
+            </div>
+            <button onclick="openSourceDrawer('colored','Colored Variants')" class="flex-shrink-0 ml-4 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl space-y-4">
+            <!-- Blue -->
+            <nav aria-label="Blue" class="flex items-center gap-1.5 text-sm">
+              <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 transition-colors">Home</a>
+              <span class="text-gray-300 dark:text-gray-600">/</span>
+              <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 transition-colors">Products</a>
+              <span class="text-gray-300 dark:text-gray-600">/</span>
+              <span class="text-blue-600 dark:text-blue-400 font-semibold" aria-current="page">Laptops</span>
+            </nav>
+            <!-- Purple -->
+            <nav aria-label="Purple" class="flex items-center gap-1.5 text-sm">
+              <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-purple-600 transition-colors">Home</a>
+              <span class="text-gray-300 dark:text-gray-600">/</span>
+              <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-purple-600 transition-colors">Products</a>
+              <span class="text-gray-300 dark:text-gray-600">/</span>
+              <span class="text-purple-600 dark:text-purple-400 font-semibold" aria-current="page">Laptops</span>
+            </nav>
+            <!-- Emerald -->
+            <nav aria-label="Emerald" class="flex items-center gap-1.5 text-sm">
+              <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-emerald-600 transition-colors">Home</a>
+              <span class="text-gray-300 dark:text-gray-600">/</span>
+              <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-emerald-600 transition-colors">Products</a>
+              <span class="text-gray-300 dark:text-gray-600">/</span>
+              <span class="text-emerald-600 dark:text-emerald-400 font-semibold" aria-current="page">Laptops</span>
+            </nav>
+            <!-- Rose -->
+            <nav aria-label="Rose" class="flex items-center gap-1.5 text-sm">
+              <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-rose-600 transition-colors">Home</a>
+              <span class="text-gray-300 dark:text-gray-600">/</span>
+              <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-rose-600 transition-colors">Products</a>
+              <span class="text-gray-300 dark:text-gray-600">/</span>
+              <span class="text-rose-600 dark:text-rose-400 font-semibold" aria-current="page">Laptops</span>
+            </nav>
+          </div>
+        </div>
+
+
+        <!-- Section 12: Size Variants -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] mb-6">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white">Size Variants</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Extra-small, small, base, and large breadcrumbs for different UI densities.</p>
+            </div>
+            <button onclick="openSourceDrawer('sizes','Size Variants')" class="flex-shrink-0 ml-4 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              View Source
+            </button>
+          </div>
+          <div class="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl space-y-5">
+            <!-- XS -->
+            <div class="flex items-center gap-3">
+              <span class="text-xs text-gray-400 dark:text-gray-500 font-mono w-8">xs</span>
+              <nav aria-label="XS" class="flex items-center gap-1 text-xs">
+                <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 transition-colors">Home</a>
+                <span class="text-gray-300 dark:text-gray-600">/</span>
+                <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 transition-colors">Products</a>
+                <span class="text-gray-300 dark:text-gray-600">/</span>
+                <span class="text-gray-900 dark:text-white font-medium">Laptops</span>
+              </nav>
+            </div>
+            <!-- SM -->
+            <div class="flex items-center gap-3">
+              <span class="text-xs text-gray-400 dark:text-gray-500 font-mono w-8">sm</span>
+              <nav aria-label="SM" class="flex items-center gap-1.5 text-sm">
+                <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 transition-colors">Home</a>
+                <span class="text-gray-300 dark:text-gray-600">/</span>
+                <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 transition-colors">Products</a>
+                <span class="text-gray-300 dark:text-gray-600">/</span>
+                <span class="text-gray-900 dark:text-white font-medium">Laptops</span>
+              </nav>
+            </div>
+            <!-- Base -->
+            <div class="flex items-center gap-3">
+              <span class="text-xs text-gray-400 dark:text-gray-500 font-mono w-8">md</span>
+              <nav aria-label="Base" class="flex items-center gap-2 text-base">
+                <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 transition-colors">Home</a>
+                <span class="text-gray-300 dark:text-gray-600">/</span>
+                <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 transition-colors">Products</a>
+                <span class="text-gray-300 dark:text-gray-600">/</span>
+                <span class="text-gray-900 dark:text-white font-medium">Laptops</span>
+              </nav>
+            </div>
+            <!-- LG -->
+            <div class="flex items-center gap-3">
+              <span class="text-xs text-gray-400 dark:text-gray-500 font-mono w-8">lg</span>
+              <nav aria-label="LG" class="flex items-center gap-2 text-lg">
+                <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 transition-colors">Home</a>
+                <span class="text-gray-300 dark:text-gray-600">/</span>
+                <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 transition-colors">Products</a>
+                <span class="text-gray-300 dark:text-gray-600">/</span>
+                <span class="text-gray-900 dark:text-white font-medium">Laptops</span>
+              </nav>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end max-w-screen-2xl -->
     </main>
   </div>
 </div>
-<script src="common-loader.js"></script>
+
+
+<!-- Source Drawer -->
+<div id="source-drawer" class="fixed inset-x-0 bottom-0 z-50 hidden">
+  <div class="fixed inset-0 bg-black/30" onclick="closeSourceDrawer()"></div>
+  <div class="relative bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 rounded-t-2xl shadow-2xl max-h-[65vh] flex flex-col mx-auto" style="max-width:720px;border-left:1px solid #e5e7eb;border-right:1px solid #e5e7eb;">
+    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-gray-800 flex-shrink-0">
+      <div class="flex items-center gap-2">
+        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+        <span id="drawer-title" class="text-sm font-semibold text-gray-900 dark:text-white">Source Code</span>
+      </div>
+      <div class="flex gap-2">
+        <button onclick="copyDrawerCode()" class="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700 transition-colors">Copy</button>
+        <button onclick="closeSourceDrawer()" class="rounded-lg border border-gray-200 dark:border-gray-700 p-1.5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+    </div>
+    <div class="overflow-auto flex-1 p-5"><pre id="drawer-code" class="text-xs leading-relaxed text-gray-800 dark:text-gray-200 whitespace-pre-wrap font-mono"></pre></div>
+  </div>
+</div>
+<div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-2 pointer-events-none"></div>
 <script src="common-sidebar.js"></script>
 <script src="common-header.js"></script>
 <script src="app-shell.js"></script>
+
+
+<script>
+const SOURCE_SNIPPETS = {
+  'default': `<nav aria-label="Breadcrumb" class="flex items-center gap-1.5 text-sm">
+  <a href="#" class="text-gray-500 hover:text-blue-600 transition-colors">Home</a>
+  <span class="text-gray-300 select-none">/</span>
+  <a href="#" class="text-gray-500 hover:text-blue-600 transition-colors">Products</a>
+  <span class="text-gray-300 select-none">/</span>
+  <a href="#" class="text-gray-500 hover:text-blue-600 transition-colors">Electronics</a>
+  <span class="text-gray-300 select-none">/</span>
+  <span class="text-gray-900 font-medium" aria-current="page">Laptops</span>
+</nav>`,
+
+  'chevron': `<nav aria-label="Breadcrumb" class="flex items-center gap-1 text-sm">
+  <a href="#" class="text-gray-500 hover:text-blue-600 transition-colors">Home</a>
+  <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6"/>
+  </svg>
+  <a href="#" class="text-gray-500 hover:text-blue-600 transition-colors">Products</a>
+  <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6"/>
+  </svg>
+  <a href="#" class="text-gray-500 hover:text-blue-600 transition-colors">Electronics</a>
+  <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6"/>
+  </svg>
+  <span class="text-gray-900 font-semibold" aria-current="page">Laptops</span>
+</nav>`,
+
+  'pills': `<nav aria-label="Breadcrumb" class="flex items-center flex-wrap gap-2">
+  <a href="#" class="rounded-full bg-gray-100 dark:bg-gray-800 px-3 py-1 text-sm
+     text-gray-600 dark:text-gray-300 hover:bg-gray-200 transition-colors font-medium">Home</a>
+  <a href="#" class="rounded-full bg-gray-100 dark:bg-gray-800 px-3 py-1 text-sm
+     text-gray-600 dark:text-gray-300 hover:bg-gray-200 transition-colors font-medium">Products</a>
+  <a href="#" class="rounded-full bg-gray-100 dark:bg-gray-800 px-3 py-1 text-sm
+     text-gray-600 dark:text-gray-300 hover:bg-gray-200 transition-colors font-medium">Electronics</a>
+  <span class="rounded-full bg-blue-100 dark:bg-blue-900/40 px-3 py-1 text-sm
+     text-blue-700 dark:text-blue-300 font-semibold" aria-current="page">Laptops</span>
+</nav>`,
+
+  'dark': `<div class="bg-gray-900 rounded-xl px-4 py-3 inline-block">
+  <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-sm">
+    <a href="#" class="text-gray-400 hover:text-white transition-colors">Home</a>
+    <span class="text-gray-600">/</span>
+    <a href="#" class="text-gray-400 hover:text-white transition-colors">Products</a>
+    <span class="text-gray-600">/</span>
+    <a href="#" class="text-gray-400 hover:text-white transition-colors">Electronics</a>
+    <span class="text-gray-600">/</span>
+    <span class="text-white font-medium" aria-current="page">Laptops</span>
+  </nav>
+</div>`,
+
+  'icon': `<nav aria-label="Breadcrumb" class="flex items-center gap-1 text-sm">
+  <a href="#" class="text-gray-500 hover:text-blue-600 transition-colors" aria-label="Home">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0
+           01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+    </svg>
+  </a>
+  <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6"/>
+  </svg>
+  <a href="#" class="text-gray-500 hover:text-blue-600 transition-colors">Products</a>
+  <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6"/>
+  </svg>
+  <span class="text-gray-900 font-medium" aria-current="page">Laptops</span>
+</nav>`,
+
+  'overflow': `<div class="relative">
+  <button onclick="toggleBreadcrumbDropdown()"
+    class="flex items-center gap-1 text-gray-500 hover:text-blue-600 transition-colors font-medium
+           rounded px-1 py-0.5 hover:bg-gray-100">
+    Products
+    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+    </svg>
+  </button>
+  <div id="breadcrumb-dropdown"
+    class="hidden absolute top-full left-0 mt-1 bg-white shadow-lg rounded-lg py-1
+           min-w-[160px] border border-gray-200 z-20">
+    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Electronics</a>
+    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Clothing</a>
+    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Home &amp; Garden</a>
+  </div>
+</div>`
+};
+
+
+function openSourceDrawer(id,title){
+  document.getElementById('drawer-title').textContent=title+' — Source';
+  document.getElementById('drawer-code').textContent=SOURCE_SNIPPETS[id]||'<!-- No source available -->';
+  document.getElementById('source-drawer').classList.remove('hidden');
+  document.getElementById('source-drawer').dataset.currentId=id;
+  document.body.style.overflow='hidden';
+}
+function closeSourceDrawer(){
+  document.getElementById('source-drawer').classList.add('hidden');
+  document.body.style.overflow='';
+}
+function copyDrawerCode(){
+  navigator.clipboard.writeText(SOURCE_SNIPPETS[document.getElementById('source-drawer').dataset.currentId]||'')
+    .then(()=>showToast('Copied to clipboard!'));
+}
+function showToast(msg){
+  const c=document.getElementById('toast-container');
+  const t=document.createElement('div');
+  t.className='pointer-events-auto flex items-center gap-2 rounded-xl border border-green-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 shadow-lg dark:border-green-800 dark:bg-gray-900 dark:text-white';
+  t.style.animation='toastIn .2s ease';
+  t.innerHTML='<span class="h-2 w-2 rounded-full bg-green-500 flex-shrink-0"></span>'+msg;
+  c.appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(12px)';t.style.transition='all .2s';setTimeout(()=>t.remove(),200);},2500);
+}
+function toggleBreadcrumbDropdown(){
+  const d=document.getElementById('breadcrumb-dropdown');
+  d.classList.toggle('hidden');
+}
+document.addEventListener('click',function(e){
+  const dd=document.getElementById('breadcrumb-dropdown');
+  if(dd && !dd.parentElement.contains(e.target)) dd.classList.add('hidden');
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSourceDrawer();});
+</script>
 </body>
 </html>
