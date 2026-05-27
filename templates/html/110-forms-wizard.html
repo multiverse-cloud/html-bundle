@@ -1,243 +1,473 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#465fff" />
-  <meta name="description" content="Production-ready Multi-step Form Wizard HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
-  <title>Multi-step Form Wizard — mtverse</title>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multi-Step Wizard — mtverse</title>
   <style>
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    .animate-slideDown {
-      animation: slideDown 0.2s ease-out;
-    }
-    .sidebar-text {
-      transition: opacity 0.2s ease-in-out;
-    }
+    .no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+    @keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .step-content{display:none}.step-content.active{display:block}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+    .step-content.active{animation:fadeIn .25s ease}
+    .plan-card{cursor:pointer;border:2px solid #e5e7eb;border-radius:1rem;padding:1.5rem;transition:all .2s}
+    .plan-card:hover{border-color:#93c5fd;box-shadow:0 4px 20px rgba(37,99,235,.08)}
+    .plan-card.selected{border-color:#2563eb;box-shadow:0 0 0 3px #bfdbfe}
+    .dark .plan-card{border-color:#374151;background:#1f2937}
+    .dark .plan-card.selected{border-color:#3b82f6;box-shadow:0 0 0 3px #1e3a8a}
+    .tag-chip{display:inline-flex;align-items:center;gap:4px;background:#dbeafe;color:#1d4ed8;border-radius:9999px;padding:2px 10px;font-size:.75rem;font-weight:500}
+    .dark .tag-chip{background:#1e3a5f;color:#93c5fd}
+    .step-dot{width:8px;height:8px;border-radius:50%;transition:all .2s}
+    .field-error{border-color:#f87171!important;background:#fef2f2}
+    .dark .field-error{background:#450a0a!important}
+    input:focus,select:focus,textarea:focus{outline:none!important}
   </style>
   <link rel="stylesheet" href="tailwind-production.css">
   <link rel="stylesheet" href="pro-styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
-
-<!-- Mobile overlay -->
 <div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
-
 <div class="flex h-screen overflow-hidden">
-  <!-- Sidebar Container -->
   <div id="sidebar-container"></div>
-
-  <!-- Main content -->
   <div class="flex-1 flex flex-col overflow-hidden">
-    <!-- Header Container -->
     <div id="header-container"></div>
-
-    <!-- Page content -->
     <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
       <div class="mx-auto w-full max-w-screen-2xl">
-<div class="mb-6">
-        <h1 class="text-xl font-bold text-gray-900">Multi-step Form Wizard</h1>
-        <p class="text-sm text-gray-500 mt-1">Complete all steps to set up your account.</p>
-      </div>
-      <div class="max-w-2xl mx-auto">
-        <!-- Progress Bar -->
-        <div class="mb-6">
-          <div class="flex justify-between text-xs text-gray-500 mb-2">
-            <span id="step-label">Step 2 of 4</span>
-            <span id="step-pct">50%</span>
-          </div>
-          <div class="w-full bg-gray-200 rounded-full h-1.5">
-            <div id="progress-bar" class="bg-blue-600 h-1.5 rounded-full transition-all duration-300" style="width: 50%"></div>
-          </div>
-        </div>
-        <!-- Step Indicator -->
-        <div class="flex items-center justify-between mb-8">
-          <div class="flex items-center flex-1">
-            <!-- Step 1 -->
-            <div class="flex flex-col items-center">
-              <div id="ind-1" class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-              </div>
-              <span class="text-xs text-blue-600 font-medium mt-1 hidden sm:block">Account</span>
-            </div>
-            <div id="line-1" class="flex-1 h-0.5 bg-blue-600 mx-2"></div>
-            <!-- Step 2 -->
-            <div class="flex flex-col items-center">
-              <div id="ind-2" class="w-8 h-8 rounded-full bg-blue-600 ring-4 ring-blue-100 flex items-center justify-center text-white text-xs font-bold">2</div>
-              <span class="text-xs text-blue-600 font-semibold mt-1 hidden sm:block">Profile</span>
-            </div>
-            <div id="line-2" class="flex-1 h-0.5 bg-gray-200 mx-2"></div>
-            <!-- Step 3 -->
-            <div class="flex flex-col items-center">
-              <div id="ind-3" class="w-8 h-8 rounded-full border-2 border-gray-300 flex items-center justify-center text-gray-400 text-xs font-bold bg-white">3</div>
-              <span class="text-xs text-gray-400 mt-1 hidden sm:block">Plan</span>
-            </div>
-            <div id="line-3" class="flex-1 h-0.5 bg-gray-200 mx-2"></div>
-            <!-- Step 4 -->
-            <div class="flex flex-col items-center">
-              <div id="ind-4" class="w-8 h-8 rounded-full border-2 border-gray-300 flex items-center justify-center text-gray-400 text-xs font-bold bg-white">4</div>
-              <span class="text-xs text-gray-400 mt-1 hidden sm:block">Confirm</span>
-            </div>
-          </div>
+
+        <!-- Page Header -->
+        <div class="mb-8">
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Multi-Step Wizard</h1>
+          <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Guided multi-step form with progress tracking, validation, and summary</p>
         </div>
 
-        <!-- Step 1 Content (hidden - completed) -->
-        <div id="step-1" class="hidden">
-          <div class="bg-white rounded-xl border border-gray-200 p-6">
-            <h2 class="text-base font-semibold text-gray-900 mb-5">Account Setup</h2>
-            <div class="space-y-4">
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                <input type="email" placeholder="you@example.com" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                <input type="password" placeholder="Create a strong password" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
-                <input type="password" placeholder="Repeat your password" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-              </div>
-              <p class="text-sm text-gray-500">Already have an account? <a href="#" class="text-blue-600 hover:underline">Sign in</a></p>
-            </div>
-          </div>
-        </div>
-        <!-- Step 2 Content (ACTIVE) -->
-        <div id="step-2" class="">
-          <div class="bg-white rounded-xl border border-gray-200 p-6">
-            <h2 class="text-base font-semibold text-gray-900 mb-5">Your Profile</h2>
-            <div class="space-y-4">
-              <div class="grid grid-cols-2 gap-4">
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                  <input type="text" value="Jane" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                </div>
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-                  <input type="text" value="Doe" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                </div>
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Job Title</label>
-                <input type="text" value="Senior Product Manager" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Company Name</label>
-                <input type="text" value="Acme Corp" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Avatar Color</label>
-                <div class="flex gap-2">
-                  <button type="button" class="w-8 h-8 rounded-full bg-blue-600 ring-2 ring-offset-2 ring-blue-600"></button>
-                  <button class="w-8 h-8 rounded-full bg-green-500 hover:ring-2 hover:ring-offset-2 hover:ring-green-400"></button>
-                  <button class="w-8 h-8 rounded-full bg-purple-600 hover:ring-2 hover:ring-offset-2 hover:ring-purple-400"></button>
-                  <button class="w-8 h-8 rounded-full bg-orange-500 hover:ring-2 hover:ring-offset-2 hover:ring-orange-400"></button>
-                  <button class="w-8 h-8 rounded-full bg-pink-500 hover:ring-2 hover:ring-offset-2 hover:ring-pink-400"></button>
-                </div>
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Bio</label>
-                <textarea rows="3" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" placeholder="Tell us a bit about yourself..."></textarea>
-              </div>
-            </div>
-          </div>
-        </div>
+        <!-- Wizard Card -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm max-w-3xl mx-auto">
 
-        <!-- Step 3 Content (hidden) -->
-        <div id="step-3" class="hidden">
-          <div class="bg-white rounded-xl border border-gray-200 p-6">
-            <h2 class="text-base font-semibold text-gray-900 mb-5">Choose Your Plan</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <label class="relative flex flex-col p-5 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-blue-300 transition-colors">
-                <input type="radio" name="plan" value="starter" class="sr-only" />
-                <span class="text-sm font-semibold text-gray-900">Starter</span>
-                <span class="text-2xl font-bold text-gray-900 mt-1">$12<span class="text-sm font-normal text-gray-500">/mo</span></span>
-                <ul class="mt-3 space-y-1.5 text-xs text-gray-600">
-                  <li>✓ 5 projects</li><li>✓ 10GB storage</li><li>✓ Basic analytics</li>
-                </ul>
-              </label>
-              <label class="relative flex flex-col p-5 border-2 border-blue-600 rounded-xl cursor-pointer bg-blue-50/50">
-                <span class="absolute top-3 right-3 text-xs bg-blue-600 text-white rounded-full px-2 py-0.5 font-medium">Popular</span>
-                <input type="radio" name="plan" value="pro" checked class="sr-only" />
-                <span class="text-sm font-semibold text-blue-700">Pro</span>
-                <span class="text-2xl font-bold text-blue-700 mt-1">$49<span class="text-sm font-normal text-blue-500">/mo</span></span>
-                <ul class="mt-3 space-y-1.5 text-xs text-blue-700">
-                  <li>✓ 50 projects</li><li>✓ 100GB storage</li><li>✓ Advanced analytics</li>
-                </ul>
-              </label>
-              <label class="relative flex flex-col p-5 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-blue-300 transition-colors">
-                <input type="radio" name="plan" value="enterprise" class="sr-only" />
-                <span class="text-sm font-semibold text-gray-900">Enterprise</span>
-                <span class="text-2xl font-bold text-gray-900 mt-1">$299<span class="text-sm font-normal text-gray-500">/mo</span></span>
-                <ul class="mt-3 space-y-1.5 text-xs text-gray-600">
-                  <li>✓ Unlimited projects</li><li>✓ 1TB storage</li><li>✓ Priority support</li>
-                </ul>
-              </label>
+          <!-- Progress Stepper -->
+          <div class="px-6 pt-8 pb-6 border-b border-gray-100 dark:border-gray-700">
+            <!-- Progress bar -->
+            <div class="relative mb-6">
+              <div class="absolute top-4 left-0 right-0 h-0.5 bg-gray-200 dark:bg-gray-700 mx-8"></div>
+              <div id="progressFill" class="absolute top-4 left-0 h-0.5 bg-blue-600 transition-all duration-500 ml-8" style="width:0%"></div>
+              <div class="relative flex justify-between">
+                <!-- Step 1 -->
+                <div class="flex flex-col items-center" id="stepIcon1">
+                  <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-bold shadow ring-4 ring-blue-100 dark:ring-blue-900/40 z-10">1</div>
+                  <span class="mt-2 text-xs font-medium text-blue-600 whitespace-nowrap">Company Info</span>
+                </div>
+                <!-- Step 2 -->
+                <div class="flex flex-col items-center" id="stepIcon2">
+                  <div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 flex items-center justify-center text-sm font-bold z-10">2</div>
+                  <span class="mt-2 text-xs font-medium text-gray-400 whitespace-nowrap">Team Setup</span>
+                </div>
+                <!-- Step 3 -->
+                <div class="flex flex-col items-center" id="stepIcon3">
+                  <div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 flex items-center justify-center text-sm font-bold z-10">3</div>
+                  <span class="mt-2 text-xs font-medium text-gray-400 whitespace-nowrap">Plan Selection</span>
+                </div>
+                <!-- Step 4 -->
+                <div class="flex flex-col items-center" id="stepIcon4">
+                  <div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 flex items-center justify-center text-sm font-bold z-10">4</div>
+                  <span class="mt-2 text-xs font-medium text-gray-400 whitespace-nowrap">Review &amp; Confirm</span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <!-- Step 4 Content (hidden) -->
-        <div id="step-4" class="hidden">
-          <div class="bg-white rounded-xl border border-gray-200 p-6">
-            <h2 class="text-base font-semibold text-gray-900 mb-5">Review & Confirm</h2>
-            <div class="rounded-lg border border-gray-200 overflow-hidden mb-5">
-              <table class="w-full text-sm">
-                <tbody class="divide-y divide-gray-100">
-                  <tr><td class="px-4 py-3 text-gray-500 font-medium w-1/3">Email</td><td class="px-4 py-3 text-gray-900">jane@company.com</td></tr>
-                  <tr class="bg-gray-50"><td class="px-4 py-3 text-gray-500 font-medium">Plan</td><td class="px-4 py-3 text-gray-900">Pro — $49/mo</td></tr>
-                  <tr><td class="px-4 py-3 text-gray-500 font-medium">Name</td><td class="px-4 py-3 text-gray-900">Jane Doe</td></tr>
-                  <tr class="bg-gray-50"><td class="px-4 py-3 text-gray-500 font-medium">Billing</td><td class="px-4 py-3 text-gray-900">Monthly — billed on 1st</td></tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="space-y-3">
-              <label class="flex items-center gap-3 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                <span class="text-sm text-gray-700">I agree to the <a href="#" class="text-blue-600 underline">Terms of Service</a> and <a href="#" class="text-blue-600 underline">Privacy Policy</a></span>
+
+          <!-- Step Content Area -->
+          <div class="px-6 py-8">
+
+            <!-- ── STEP 1: Company Info ── -->
+            <div id="step1" class="step-content active">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">Tell us about your company</h3>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">We'll personalize your experience based on your details.</p>
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Company Name <span class="text-red-500">*</span></label>
+                  <input type="text" id="f_companyName" placeholder="Acme Inc." class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
+                  <p class="field-msg mt-1 text-xs text-red-500 hidden" id="err_companyName">Company name is required.</p>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Website URL</label>
+                  <input type="url" id="f_website" placeholder="https://example.com" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Industry <span class="text-red-500">*</span></label>
+                    <select id="f_industry" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 transition">
+                      <option value="">Select industry…</option>
+                      <option>SaaS</option><option>E-commerce</option><option>Healthcare</option><option>Finance</option><option>Other</option>
+                    </select>
+                    <p class="field-msg mt-1 text-xs text-red-500 hidden" id="err_industry">Please select an industry.</p>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Country</label>
+                    <select id="f_country" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 transition">
+                      <option value="">Select country…</option>
+                      <option>United States</option><option>United Kingdom</option><option>Canada</option><option>Australia</option><option>Germany</option><option>Other</option>
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Team Size <span class="text-red-500">*</span></label>
+                  <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="teamSizeGroup">
+                    <label class="flex items-center gap-2 border border-gray-200 dark:border-gray-600 rounded-lg p-3 cursor-pointer hover:border-blue-400 transition has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 dark:has-[:checked]:bg-blue-900/20">
+                      <input type="radio" name="teamSize" value="1-10" class="text-blue-600" /><span class="text-sm text-gray-700 dark:text-gray-300">1–10</span>
+                    </label>
+                    <label class="flex items-center gap-2 border border-gray-200 dark:border-gray-600 rounded-lg p-3 cursor-pointer hover:border-blue-400 transition has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 dark:has-[:checked]:bg-blue-900/20">
+                      <input type="radio" name="teamSize" value="11-50" class="text-blue-600" /><span class="text-sm text-gray-700 dark:text-gray-300">11–50</span>
+                    </label>
+                    <label class="flex items-center gap-2 border border-gray-200 dark:border-gray-600 rounded-lg p-3 cursor-pointer hover:border-blue-400 transition has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 dark:has-[:checked]:bg-blue-900/20">
+                      <input type="radio" name="teamSize" value="51-200" class="text-blue-600" /><span class="text-sm text-gray-700 dark:text-gray-300">51–200</span>
+                    </label>
+                    <label class="flex items-center gap-2 border border-gray-200 dark:border-gray-600 rounded-lg p-3 cursor-pointer hover:border-blue-400 transition has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 dark:has-[:checked]:bg-blue-900/20">
+                      <input type="radio" name="teamSize" value="200+" class="text-blue-600" /><span class="text-sm text-gray-700 dark:text-gray-300">200+</span>
+                    </label>
+                  </div>
+                  <p class="field-msg mt-1 text-xs text-red-500 hidden" id="err_teamSize">Please select a team size.</p>
+                </div>
+              </div>
+            </div><!-- /step1 -->
+
+
+            <!-- ── STEP 2: Team Setup ── -->
+            <div id="step2" class="step-content">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">Set up your team</h3>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Add your profile and invite teammates to get started.</p>
+              <div class="space-y-4">
+                <!-- Avatar upload -->
+                <div class="flex items-center gap-4">
+                  <div id="avatarPreviewWrap" class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-xl font-bold cursor-pointer overflow-hidden relative" onclick="document.getElementById('avatarFileInput').click()">
+                    <span id="avatarInitials">?</span>
+                    <img id="avatarImg" src="" alt="" class="hidden absolute inset-0 w-full h-full object-cover" />
+                    <div class="absolute inset-0 bg-black/30 opacity-0 hover:opacity-100 flex items-center justify-center transition">
+                      <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 0 1 2-2h.93a2 2 0 0 0 1.664-.89l.812-1.22A2 2 0 0 1 10.07 4h3.86a2 2 0 0 1 1.664.89l.812 1.22A2 2 0 0 0 18.07 7H19a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9z"/><circle cx="12" cy="13" r="3"/></svg>
+                    </div>
+                  </div>
+                  <input type="file" id="avatarFileInput" accept="image/*" class="hidden" onchange="handleAvatarUpload(event)" />
+                  <div>
+                    <p class="text-sm font-medium text-gray-900 dark:text-gray-100">Profile photo</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Click to upload. PNG, JPG up to 2MB.</p>
+                  </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name <span class="text-red-500">*</span></label>
+                    <input type="text" id="f_fullName" placeholder="Jane Smith" oninput="updateAvatarInitials()" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
+                    <p class="field-msg mt-1 text-xs text-red-500 hidden" id="err_fullName">Full name is required.</p>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Work Email <span class="text-red-500">*</span></label>
+                    <input type="email" id="f_email" placeholder="jane@company.com" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
+                    <p class="field-msg mt-1 text-xs text-red-500 hidden" id="err_email">Valid email is required.</p>
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Job Title</label>
+                  <input type="text" id="f_jobTitle" placeholder="Head of Design" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
+                </div>
+                <!-- Invite teammates -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Invite Teammates</label>
+                  <div id="inviteTagsContainer" class="flex flex-wrap gap-1.5 items-center min-h-[44px] rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500 cursor-text" onclick="document.getElementById('inviteTagsInput').focus()">
+                    <input id="inviteTagsInput" type="email" placeholder="teammate@company.com, press Enter" class="flex-1 min-w-40 outline-none text-sm bg-transparent text-gray-900 dark:text-gray-100 placeholder-gray-400" onkeydown="handleInviteTag(event)" />
+                  </div>
+                  <p class="mt-1 text-xs text-gray-400">Enter email addresses and press Enter to add</p>
+                </div>
+              </div>
+            </div><!-- /step2 -->
+
+            <!-- ── STEP 3: Plan Selection ── -->
+            <div id="step3" class="step-content">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">Choose your plan</h3>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Select the plan that best fits your team's needs.</p>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <!-- Starter -->
+                <div class="plan-card" onclick="selectPlan('Starter','$9/mo',this)" id="planStarter">
+                  <div class="flex items-center justify-between mb-3">
+                    <span class="inline-block px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 text-xs font-medium text-gray-600 dark:text-gray-400">Starter</span>
+                    <div id="planCheckStarter" class="hidden w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div>
+                  </div>
+                  <p class="text-2xl font-bold text-gray-900 dark:text-white mb-1">$9<span class="text-sm font-normal text-gray-400">/mo</span></p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">For individuals &amp; small projects</p>
+                  <ul class="space-y-1.5 text-xs text-gray-600 dark:text-gray-400">
+                    <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>3 projects</li>
+                    <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>5 GB storage</li>
+                    <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Email support</li>
+                    <li class="flex items-center gap-2 opacity-40"><svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>API access</li>
+                  </ul>
+                  <button class="mt-4 w-full py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-sm font-medium text-gray-700 dark:text-gray-300 hover:border-blue-400 hover:text-blue-600 transition">Select</button>
+                </div>
+                <!-- Pro -->
+                <div class="plan-card relative" onclick="selectPlan('Pro','$29/mo',this)" id="planPro">
+                  <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+                    <span class="px-2.5 py-0.5 rounded-full bg-blue-600 text-white text-xs font-medium">Most Popular</span>
+                  </div>
+                  <div class="flex items-center justify-between mb-3">
+                    <span class="inline-block px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/40 text-xs font-medium text-blue-700 dark:text-blue-300">Pro</span>
+                    <div id="planCheckPro" class="hidden w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div>
+                  </div>
+                  <p class="text-2xl font-bold text-gray-900 dark:text-white mb-1">$29<span class="text-sm font-normal text-gray-400">/mo</span></p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">For growing teams</p>
+                  <ul class="space-y-1.5 text-xs text-gray-600 dark:text-gray-400">
+                    <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Unlimited projects</li>
+                    <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>50 GB storage</li>
+                    <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Priority support</li>
+                    <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>API access</li>
+                  </ul>
+                  <button class="mt-4 w-full py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition">Select</button>
+                </div>
+                <!-- Enterprise -->
+                <div class="plan-card" onclick="selectPlan('Enterprise','$99/mo',this)" id="planEnterprise">
+                  <div class="flex items-center justify-between mb-3">
+                    <span class="inline-block px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-900/40 text-xs font-medium text-purple-700 dark:text-purple-300">Enterprise</span>
+                    <div id="planCheckEnterprise" class="hidden w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div>
+                  </div>
+                  <p class="text-2xl font-bold text-gray-900 dark:text-white mb-1">$99<span class="text-sm font-normal text-gray-400">/mo</span></p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">For large organisations</p>
+                  <ul class="space-y-1.5 text-xs text-gray-600 dark:text-gray-400">
+                    <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Everything in Pro</li>
+                    <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>500 GB storage</li>
+                    <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>SSO &amp; audit logs</li>
+                    <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Dedicated manager</li>
+                  </ul>
+                  <button class="mt-4 w-full py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-sm font-medium text-gray-700 dark:text-gray-300 hover:border-blue-400 hover:text-blue-600 transition">Select</button>
+                </div>
+              </div>
+              <p class="field-msg mt-3 text-sm text-red-500 hidden" id="err_plan">Please select a plan to continue.</p>
+              <div id="selectedPlanInfo" class="hidden mt-4 p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 text-sm text-blue-700 dark:text-blue-300">
+                Selected: <strong id="selectedPlanName"></strong>
+              </div>
+            </div><!-- /step3 -->
+
+
+            <!-- ── STEP 4: Review & Confirm ── -->
+            <div id="step4" class="step-content">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">Review &amp; Confirm</h3>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Please review your details before completing setup.</p>
+
+              <div class="bg-gray-50 dark:bg-gray-700/40 rounded-xl border border-gray-200 dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600 mb-6">
+                <div class="px-4 py-3 grid grid-cols-5 gap-2">
+                  <span class="col-span-2 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Company</span>
+                  <span id="sum_company" class="col-span-3 text-sm text-gray-900 dark:text-gray-100 font-medium">—</span>
+                </div>
+                <div class="px-4 py-3 grid grid-cols-5 gap-2">
+                  <span class="col-span-2 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Website</span>
+                  <span id="sum_website" class="col-span-3 text-sm text-gray-900 dark:text-gray-100">—</span>
+                </div>
+                <div class="px-4 py-3 grid grid-cols-5 gap-2">
+                  <span class="col-span-2 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Industry</span>
+                  <span id="sum_industry" class="col-span-3 text-sm text-gray-900 dark:text-gray-100">—</span>
+                </div>
+                <div class="px-4 py-3 grid grid-cols-5 gap-2">
+                  <span class="col-span-2 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Team Size</span>
+                  <span id="sum_teamSize" class="col-span-3 text-sm text-gray-900 dark:text-gray-100">—</span>
+                </div>
+                <div class="px-4 py-3 grid grid-cols-5 gap-2">
+                  <span class="col-span-2 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Contact</span>
+                  <span id="sum_contact" class="col-span-3 text-sm text-gray-900 dark:text-gray-100">—</span>
+                </div>
+                <div class="px-4 py-3 grid grid-cols-5 gap-2">
+                  <span class="col-span-2 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Plan</span>
+                  <span id="sum_plan" class="col-span-3 text-sm font-semibold text-blue-600 dark:text-blue-400">—</span>
+                </div>
+              </div>
+
+              <!-- Terms -->
+              <label class="flex items-start gap-3 cursor-pointer mb-4">
+                <input type="checkbox" id="tosCheck" class="mt-0.5 w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500" />
+                <span class="text-sm text-gray-700 dark:text-gray-300">I agree to the <a href="#" class="text-blue-600 hover:underline">Terms of Service</a> and <a href="#" class="text-blue-600 hover:underline">Privacy Policy</a>.</span>
               </label>
-              <label class="flex items-center gap-3 cursor-pointer">
-                <input type="checkbox" checked class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                <span class="text-sm text-gray-700">Subscribe to product updates and announcements</span>
-              </label>
+              <p class="field-msg text-xs text-red-500 hidden mb-2" id="err_tos">You must accept the terms to continue.</p>
+
+              <!-- Success state (hidden) -->
+              <div id="successState" class="hidden text-center py-8">
+                <div class="w-16 h-16 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center mx-auto mb-4">
+                  <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Setup Complete!</h4>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Your workspace is ready. Check your email for next steps.</p>
+              </div>
+            </div><!-- /step4 -->
+
+          </div><!-- /step content area -->
+
+          <!-- Navigation Footer -->
+          <div class="px-6 py-5 border-t border-gray-100 dark:border-gray-700 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <button id="btnPrev" onclick="prevStep()" class="hidden px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition">← Previous</button>
+              <a href="#" onclick="if(confirm('Cancel setup? Your progress will be lost.'))return false;" class="text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition">Cancel</a>
             </div>
+            <!-- Step dots -->
+            <div class="flex gap-1.5">
+              <div class="step-dot bg-blue-600" id="dot1"></div>
+              <div class="step-dot bg-gray-300 dark:bg-gray-600" id="dot2"></div>
+              <div class="step-dot bg-gray-300 dark:bg-gray-600" id="dot3"></div>
+              <div class="step-dot bg-gray-300 dark:bg-gray-600" id="dot4"></div>
+            </div>
+            <button id="btnNext" onclick="nextStep()" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition">Next →</button>
           </div>
-        </div>
-        <!-- Bottom Navigation -->
-        <div class="flex items-center justify-between mt-6 bg-white rounded-xl border border-gray-200 px-6 py-4">
-          <button id="btn-back" onclick="changeStep(-1)" disabled class="px-4 py-2 text-sm font-medium text-gray-400 border border-gray-200 rounded-lg bg-gray-50 cursor-not-allowed">← Back</button>
-          <span id="step-counter" class="text-sm text-gray-500 font-medium">Step 2 of 4</span>
-          <button id="btn-next" onclick="changeStep(1)" class="px-5 py-2 text-sm font-medium bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">Next →</button>
-        </div>
-      </div>
-      </div>
+
+        </div><!-- /wizard card -->
+      </div><!-- /max-w -->
     </main>
   </div>
 </div>
-
-<!-- Common Components -->
-<script src="common-loader.js"></script>
 <script src="common-sidebar.js"></script>
 <script src="common-header.js"></script>
 <script src="app-shell.js"></script>
+<script>
+  let currentStep = 1;
+  const totalSteps = 4;
+  let selectedPlan = '';
 
+  function goToStep(n) {
+    document.getElementById('step' + currentStep).classList.remove('active');
+    currentStep = n;
+    document.getElementById('step' + currentStep).classList.add('active');
+    updateStepper();
+    if (n === 4) populateSummary();
+  }
+
+  function updateStepper() {
+    const progressPercents = [0, 0, 33, 66, 100];
+    document.getElementById('progressFill').style.width = progressPercents[currentStep] + '%';
+    for (let i = 1; i <= 4; i++) {
+      const icon = document.getElementById('stepIcon' + i);
+      const dot = document.getElementById('dot' + i);
+      const circle = icon.querySelector('div');
+      const label = icon.querySelector('span');
+      if (i < currentStep) {
+        circle.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>';
+        circle.className = 'w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center text-sm font-bold z-10';
+        label.className = 'mt-2 text-xs font-medium text-green-600 dark:text-green-400 whitespace-nowrap';
+        dot.className = 'step-dot bg-green-500';
+      } else if (i === currentStep) {
+        circle.innerHTML = i;
+        circle.className = 'w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-bold shadow ring-4 ring-blue-100 dark:ring-blue-900/40 z-10';
+        label.className = 'mt-2 text-xs font-medium text-blue-600 whitespace-nowrap';
+        dot.className = 'step-dot bg-blue-600';
+      } else {
+        circle.innerHTML = i;
+        circle.className = 'w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 flex items-center justify-center text-sm font-bold z-10';
+        label.className = 'mt-2 text-xs font-medium text-gray-400 whitespace-nowrap';
+        dot.className = 'step-dot bg-gray-300 dark:bg-gray-600';
+      }
+    }
+    document.getElementById('btnPrev').classList.toggle('hidden', currentStep === 1);
+    const btnNext = document.getElementById('btnNext');
+    if (currentStep === 4) { btnNext.textContent = 'Complete Setup ✓'; }
+    else { btnNext.textContent = 'Next →'; }
+  }
+
+  function validateStep(n) {
+    let valid = true;
+    function setErr(id, errId, show) {
+      const el = document.getElementById(id);
+      const err = document.getElementById(errId);
+      if (show) { el.classList.add('field-error'); err.classList.remove('hidden'); valid = false; }
+      else { el.classList.remove('field-error'); err.classList.add('hidden'); }
+    }
+    if (n === 1) {
+      setErr('f_companyName','err_companyName', !document.getElementById('f_companyName').value.trim());
+      setErr('f_industry','err_industry', !document.getElementById('f_industry').value);
+      const tsSelected = document.querySelector('input[name="teamSize"]:checked');
+      const tsErr = document.getElementById('err_teamSize');
+      if (!tsSelected) { tsErr.classList.remove('hidden'); valid = false; } else tsErr.classList.add('hidden');
+    }
+    if (n === 2) {
+      setErr('f_fullName','err_fullName', !document.getElementById('f_fullName').value.trim());
+      const email = document.getElementById('f_email').value;
+      setErr('f_email','err_email', !email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
+    }
+    if (n === 3) {
+      const err = document.getElementById('err_plan');
+      if (!selectedPlan) { err.classList.remove('hidden'); valid = false; } else err.classList.add('hidden');
+    }
+    return valid;
+  }
+
+  function nextStep() {
+    if (currentStep === 4) {
+      if (!document.getElementById('tosCheck').checked) {
+        document.getElementById('err_tos').classList.remove('hidden'); return;
+      }
+      document.getElementById('err_tos').classList.add('hidden');
+      document.getElementById('btnNext').disabled = true;
+      document.getElementById('btnNext').textContent = '✓ Done!';
+      document.getElementById('btnPrev').classList.add('hidden');
+      document.getElementById('successState').classList.remove('hidden');
+      document.querySelector('#step4 > h3').classList.add('hidden');
+      document.querySelector('#step4 > p').classList.add('hidden');
+      document.getElementById('step4').querySelector('.bg-gray-50')?.classList.add('hidden');
+      document.getElementById('step4').querySelector('label')?.classList.add('hidden');
+      return;
+    }
+    if (!validateStep(currentStep)) return;
+    if (currentStep < totalSteps) goToStep(currentStep + 1);
+  }
+
+  function prevStep() {
+    if (currentStep > 1) goToStep(currentStep - 1);
+  }
+
+  function selectPlan(name, price, card) {
+    selectedPlan = name + ' ' + price;
+    document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    document.querySelectorAll('[id^="planCheck"]').forEach(c => c.classList.add('hidden'));
+    const key = name.replace(/\s+/g,'');
+    document.getElementById('planCheck' + key)?.classList.remove('hidden');
+    document.getElementById('selectedPlanInfo').classList.remove('hidden');
+    document.getElementById('selectedPlanName').textContent = name + ' — ' + price;
+    document.getElementById('err_plan')?.classList.add('hidden');
+  }
+
+  function populateSummary() {
+    const v = (id) => document.getElementById(id)?.value || '—';
+    document.getElementById('sum_company').textContent = v('f_companyName');
+    document.getElementById('sum_website').textContent = v('f_website') || '—';
+    document.getElementById('sum_industry').textContent = v('f_industry') || '—';
+    const ts = document.querySelector('input[name="teamSize"]:checked');
+    document.getElementById('sum_teamSize').textContent = ts ? ts.value : '—';
+    const name = v('f_fullName'), email = v('f_email');
+    document.getElementById('sum_contact').textContent = [name,email].filter(x=>x&&x!=='—').join(' · ') || '—';
+    document.getElementById('sum_plan').textContent = selectedPlan || '—';
+  }
+
+  function updateAvatarInitials() {
+    const name = document.getElementById('f_fullName').value.trim();
+    const parts = name.split(' ').filter(Boolean);
+    const initials = parts.map(p=>p[0].toUpperCase()).slice(0,2).join('') || '?';
+    document.getElementById('avatarInitials').textContent = initials;
+  }
+
+  function handleAvatarUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      document.getElementById('avatarImg').src = ev.target.result;
+      document.getElementById('avatarImg').classList.remove('hidden');
+      document.getElementById('avatarInitials').classList.add('hidden');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function handleInviteTag(e) {
+    if (e.key === 'Enter' || e.key === ',') {
+      e.preventDefault();
+      const val = e.target.value.replace(',','').trim();
+      if (val) {
+        const container = document.getElementById('inviteTagsContainer');
+        const input = document.getElementById('inviteTagsInput');
+        const chip = document.createElement('span');
+        chip.className = 'tag-chip';
+        chip.innerHTML = `${val}<button type="button" class="ml-1 text-blue-400 hover:text-blue-700" onclick="this.parentElement.remove()">×</button>`;
+        container.insertBefore(chip, input);
+        e.target.value = '';
+      }
+    }
+  }
+</script>
 </body>
 </html>

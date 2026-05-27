@@ -1,170 +1,671 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#465fff" />
-  <meta name="description" content="Production-ready Basic Forms HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
-  <title>Basic Forms — mtverse</title>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basic Form Elements — mtverse</title>
   <style>
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    .animate-slideDown {
-      animation: slideDown 0.2s ease-out;
-    }
-    .sidebar-text {
-      transition: opacity 0.2s ease-in-out;
-    }
+    .no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+    @keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    /* Toggle switch */
+    .toggle-track{transition:background-color .2s ease}
+    .toggle-thumb{transition:transform .2s ease}
+    /* Range */
+    input[type=range]{accent-color:#2563eb}
+    /* Tags */
+    .tag-chip{display:inline-flex;align-items:center;gap:4px;background:#dbeafe;color:#1d4ed8;border-radius:9999px;padding:2px 10px;font-size:.75rem;font-weight:500}
+    .dark .tag-chip{background:#1e3a5f;color:#93c5fd}
+    /* Radio card */
+    .radio-card{cursor:pointer;border:2px solid #e5e7eb;border-radius:.75rem;padding:1rem;transition:border-color .15s,box-shadow .15s}
+    .radio-card.selected{border-color:#2563eb;box-shadow:0 0 0 3px #bfdbfe}
+    .dark .radio-card{border-color:#374151}
+    .dark .radio-card.selected{border-color:#3b82f6;box-shadow:0 0 0 3px #1e3a8a}
+    /* Drag drop */
+    .drop-zone{border:2px dashed #d1d5db;transition:border-color .2s,background .2s}
+    .drop-zone.drag-over{border-color:#2563eb;background:#eff6ff}
+    .dark .drop-zone{border-color:#4b5563}
+    .dark .drop-zone.drag-over{border-color:#3b82f6;background:#1e3a5f}
+    /* Indeterminate checkbox */
+    input[type=checkbox]:indeterminate{background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 16'%3e%3cpath stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8h8'/%3e%3c/svg%3e")}
   </style>
   <link rel="stylesheet" href="tailwind-production.css">
   <link rel="stylesheet" href="pro-styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
-
-<!-- Mobile overlay -->
 <div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
-
 <div class="flex h-screen overflow-hidden">
-  <!-- Sidebar Container -->
   <div id="sidebar-container"></div>
-
-  <!-- Main content -->
   <div class="flex-1 flex flex-col overflow-hidden">
-    <!-- Header Container -->
     <div id="header-container"></div>
-
-    <!-- Page content -->
     <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
       <div class="mx-auto w-full max-w-screen-2xl">
-<!-- Success Toast -->
-      <div id="toast" class="mb-5 flex items-center gap-3 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl text-sm">
-        <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-        <span class="flex-1">Profile updated successfully</span>
-        <button type="button" onclick="document.getElementById('toast').remove()" class="text-green-400 hover:text-green-600">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-      </div>
-      <div class="mb-6">
-        <h1 class="text-xl font-bold text-gray-900">Basic Forms</h1>
-        <p class="text-sm text-gray-500 mt-1">Manage your personal information and account settings.</p>
-      </div>
-      <!-- Two column grid -->
-      <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        <!-- LEFT: Personal Information -->
-        <div class="bg-white rounded-xl border border-gray-200 p-6">
-          <h2 class="text-base font-semibold text-gray-900 mb-5">Personal Information</h2>
-          <form class="space-y-4">
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-              <input type="text" value="Jane Doe" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-              <input type="email" value="jane@company.com" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-              <input type="tel" value="+1 (555) 842-1923" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-            </div>
 
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Country</label>
-              <select class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
-                <option selected>United States</option>
-                <option>Canada</option>
-                <option>United Kingdom</option>
-                <option>Australia</option>
-                <option>Germany</option>
-                <option>France</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Timezone</label>
-              <select class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
-                <option selected>America/New_York (EST)</option>
-                <option>America/Chicago (CST)</option>
-                <option>America/Denver (MST)</option>
-                <option>America/Los_Angeles (PST)</option>
-                <option>Europe/London (GMT)</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Bio</label>
-              <textarea rows="3" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none">Senior product manager with 8+ years experience building SaaS tools.</textarea>
-            </div>
-            <button type="button" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">Save Changes</button>
-          </form>
+
+        <!-- Page Header -->
+        <div class="mb-8">
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Basic Form Elements</h1>
+          <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">50+ input controls, selects, checkboxes, radios, toggles, sliders, and more</p>
         </div>
-        <!-- RIGHT: Account Settings -->
-        <div class="bg-white rounded-xl border border-gray-200 p-6">
-          <h2 class="text-base font-semibold text-gray-900 mb-5">Account Settings</h2>
-          <form class="space-y-4">
+
+        <!-- SECTION 1: Text Inputs -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 mb-6">
+          <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-5">1 — Text Inputs</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+            <!-- Default -->
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
-              <input type="text" value="janedoe" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Current Password</label>
-              <input type="password" placeholder="Enter current password" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">New Password</label>
-              <input type="password" placeholder="Enter new password" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-              <div class="flex gap-1 mt-2">
-                <div class="h-1.5 flex-1 rounded-full bg-green-400"></div>
-                <div class="h-1.5 flex-1 rounded-full bg-green-400"></div>
-                <div class="h-1.5 flex-1 rounded-full bg-green-400"></div>
-                <div class="h-1.5 flex-1 rounded-full bg-gray-200"></div>
-              </div>
-              <p class="text-xs text-gray-500 mt-1">Password strength: Good</p>
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Confirm New Password</label>
-              <input type="password" placeholder="Confirm new password" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Default Input</label>
+              <input type="text" placeholder="Enter your name…" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
             </div>
 
-            <!-- 2FA Toggle -->
-            <div class="flex items-center justify-between py-2">
-              <div>
-                <p class="text-sm font-medium text-gray-900">Two-Factor Authentication</p>
-                <p class="text-xs text-gray-500 mt-0.5">Add an extra layer of security</p>
+            <!-- Left icon -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">With Left Icon</label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-gray-400">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg>
+                </span>
+                <input type="text" placeholder="Search…" class="w-full pl-10 pr-3 py-2.5 text-sm rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
               </div>
-              <button type="button" onclick="this.classList.toggle('bg-blue-600');this.classList.toggle('bg-gray-200');this.querySelector('span').classList.toggle('translate-x-5');this.querySelector('span').classList.toggle('translate-x-0.5')" class="relative inline-flex h-5 w-9 items-center rounded-full bg-blue-600 transition-colors focus:outline-none flex-shrink-0">
-                <span class="inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform translate-x-5"></span>
+            </div>
+
+            <!-- Right icon -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">With Right Icon (Copy)</label>
+              <div class="relative">
+                <input type="text" value="mtverse/my-project" class="w-full pl-3 pr-10 py-2.5 text-sm rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" readonly />
+                <button onclick="navigator.clipboard.writeText(this.previousElementSibling.value)" class="absolute inset-y-0 right-0 px-3 text-gray-400 hover:text-blue-600 transition" title="Copy">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" stroke-width="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke-width="2" stroke-linecap="round"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Helper text -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">With Helper Text</label>
+              <input type="email" placeholder="you@example.com" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
+              <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">We'll never share your email with anyone.</p>
+            </div>
+
+            <!-- Disabled -->
+            <div>
+              <label class="block text-sm font-medium text-gray-400 dark:text-gray-500 mb-1">Disabled Input</label>
+              <input type="text" value="Cannot edit this" disabled class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-700/50 text-gray-400 dark:text-gray-500 px-3 py-2.5 text-sm cursor-not-allowed" />
+            </div>
+
+            <!-- Readonly -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Read-only Input</label>
+              <input type="text" value="Read-only value" readonly class="w-full rounded-lg border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700/60 text-gray-700 dark:text-gray-300 px-3 py-2.5 text-sm focus:outline-none cursor-default" />
+            </div>
+
+            <!-- Error state -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Error State</label>
+              <input type="text" value="invalid-input" class="w-full rounded-lg border border-red-400 bg-red-50 dark:bg-red-900/20 dark:border-red-500 text-gray-900 dark:text-gray-100 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-400 transition" />
+              <p class="mt-1.5 text-xs text-red-500 flex items-center gap-1"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0zm-7 4a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-1-9a1 1 0 0 0-1 1v4a1 1 0 1 0 2 0V6a1 1 0 0 0-1-1z" clip-rule="evenodd"/></svg>This field is required.</p>
+            </div>
+
+            <!-- Success state -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Success State</label>
+              <div class="relative">
+                <input type="text" value="valid@example.com" class="w-full rounded-lg border border-green-400 bg-green-50 dark:bg-green-900/20 dark:border-green-500 text-gray-900 dark:text-gray-100 pl-3 pr-9 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-400 transition" />
+                <span class="absolute inset-y-0 right-3 flex items-center text-green-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></span>
+              </div>
+              <p class="mt-1.5 text-xs text-green-600 dark:text-green-400">Looks great!</p>
+            </div>
+
+            <!-- Character counter -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Character Counter</label>
+              <input type="text" id="charCountInput" maxlength="200" oninput="document.getElementById('charCount').textContent=this.value.length" placeholder="Type something…" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
+              <p class="mt-1.5 text-xs text-gray-400 text-right"><span id="charCount">0</span>/200</p>
+            </div>
+
+            <!-- Prefix -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Prefix Text</label>
+              <div class="flex rounded-lg border border-gray-300 dark:border-gray-600 overflow-hidden focus-within:ring-2 focus-within:ring-blue-500">
+                <span class="inline-flex items-center px-3 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-sm border-r border-gray-300 dark:border-gray-600 select-none">https://</span>
+                <input type="text" placeholder="example.com" class="flex-1 px-3 py-2.5 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none" />
+              </div>
+            </div>
+
+            <!-- Suffix -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Suffix Text</label>
+              <div class="flex rounded-lg border border-gray-300 dark:border-gray-600 overflow-hidden focus-within:ring-2 focus-within:ring-blue-500">
+                <input type="text" placeholder="yoursite" class="flex-1 px-3 py-2.5 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none" />
+                <span class="inline-flex items-center px-3 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-sm border-l border-gray-300 dark:border-gray-600 select-none">.com</span>
+              </div>
+            </div>
+
+            <!-- Input group -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Input Group</label>
+              <div class="flex gap-2">
+                <input type="email" placeholder="Enter email address" class="flex-1 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
+                <button class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition whitespace-nowrap">Subscribe</button>
+              </div>
+            </div>
+
+          </div>
+        </div><!-- /Section 1 -->
+
+
+        <!-- SECTION 2: Sizes -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 mb-6">
+          <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-5">2 — Input Sizes</h2>
+          <div class="flex flex-col gap-3 max-w-md">
+            <div>
+              <label class="block text-xs text-gray-500 dark:text-gray-400 mb-1">Extra Small (xs)</label>
+              <input type="text" placeholder="Extra small input" class="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-2.5 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
+            </div>
+            <div>
+              <label class="block text-xs text-gray-500 dark:text-gray-400 mb-1">Small (sm)</label>
+              <input type="text" placeholder="Small input" class="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
+            </div>
+            <div>
+              <label class="block text-xs text-gray-500 dark:text-gray-400 mb-1">Medium — default (md)</label>
+              <input type="text" placeholder="Medium input" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
+            </div>
+            <div>
+              <label class="block text-xs text-gray-500 dark:text-gray-400 mb-1">Large (lg)</label>
+              <input type="text" placeholder="Large input" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
+            </div>
+            <div>
+              <label class="block text-xs text-gray-500 dark:text-gray-400 mb-1">Extra Large (xl)</label>
+              <input type="text" placeholder="Extra large input" class="w-full rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-4 py-3.5 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 3: Textarea -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 mb-6">
+          <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-5">3 — Textarea</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Default Textarea</label>
+              <textarea rows="4" placeholder="Enter your message…" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-y"></textarea>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">With Character Counter</label>
+              <textarea rows="4" id="taCounter" maxlength="500" oninput="document.getElementById('taCnt').textContent=this.value.length" placeholder="Max 500 chars…" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-y"></textarea>
+              <p class="mt-1 text-xs text-gray-400 text-right"><span id="taCnt">0</span>/500</p>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Auto-resize Textarea</label>
+              <textarea id="autoResizeTa" rows="2" placeholder="I grow as you type…" oninput="autoResize(this)" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-none overflow-hidden"></textarea>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-400 dark:text-gray-500 mb-1">Disabled Textarea</label>
+              <textarea rows="4" disabled placeholder="This textarea is disabled" class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-700/50 text-gray-400 dark:text-gray-500 px-3 py-2.5 text-sm cursor-not-allowed resize-none"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 4: Select -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 mb-6">
+          <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-5">4 — Select &amp; Dropdown</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Default Select</label>
+              <select class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                <option value="">Choose an option</option>
+                <option>Design</option><option>Engineering</option><option>Marketing</option><option>Sales</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Multi-select</label>
+              <select multiple size="4" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                <option>Design</option><option selected>Engineering</option><option selected>Marketing</option><option>Sales</option><option>Operations</option>
+              </select>
+              <p class="mt-1 text-xs text-gray-400">Hold Ctrl/Cmd to select multiple</p>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Select with Option Groups</label>
+              <select class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                <optgroup label="North America"><option>United States</option><option>Canada</option><option>Mexico</option></optgroup>
+                <optgroup label="Europe"><option>Germany</option><option>France</option><option>United Kingdom</option></optgroup>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-400 dark:text-gray-500 mb-1">Disabled Select</label>
+              <select disabled class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-700/50 text-gray-400 dark:text-gray-500 px-3 py-2.5 text-sm cursor-not-allowed">
+                <option>Disabled option</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- SECTION 5: Checkboxes -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 mb-6">
+          <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-5">5 — Checkboxes</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- States -->
+            <div>
+              <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-3 uppercase tracking-wide">States</p>
+              <div class="flex flex-wrap gap-5">
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" class="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500" />
+                  <span class="text-sm text-gray-700 dark:text-gray-300">Unchecked</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" checked class="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500" />
+                  <span class="text-sm text-gray-700 dark:text-gray-300">Checked</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" id="indetermCheck" class="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500" />
+                  <span class="text-sm text-gray-700 dark:text-gray-300">Indeterminate</span>
+                </label>
+              </div>
+            </div>
+            <!-- Group -->
+            <div>
+              <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-3 uppercase tracking-wide">Group (5 items)</p>
+              <div class="space-y-2">
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" checked class="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500" /><span class="text-sm text-gray-700 dark:text-gray-300">Option Alpha</span></label>
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" checked class="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500" /><span class="text-sm text-gray-700 dark:text-gray-300">Option Beta</span></label>
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500" /><span class="text-sm text-gray-700 dark:text-gray-300">Option Gamma</span></label>
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500" /><span class="text-sm text-gray-700 dark:text-gray-300">Option Delta</span></label>
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500" /><span class="text-sm text-gray-700 dark:text-gray-300">Option Epsilon</span></label>
+              </div>
+            </div>
+            <!-- With description -->
+            <div>
+              <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-3 uppercase tracking-wide">With Description</p>
+              <label class="flex gap-3 cursor-pointer">
+                <input type="checkbox" class="mt-0.5 w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 shrink-0" />
+                <div>
+                  <p class="text-sm font-medium text-gray-900 dark:text-gray-100">Email notifications</p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400">Receive updates about your account activity.</p>
+                </div>
+              </label>
+            </div>
+            <!-- Disabled + Large -->
+            <div>
+              <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-3 uppercase tracking-wide">Disabled &amp; Large</p>
+              <div class="space-y-3">
+                <label class="flex items-center gap-2 cursor-not-allowed opacity-50">
+                  <input type="checkbox" disabled class="w-4 h-4 rounded border-gray-300 text-blue-600 cursor-not-allowed" />
+                  <span class="text-sm text-gray-500">Disabled unchecked</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-not-allowed opacity-50">
+                  <input type="checkbox" checked disabled class="w-4 h-4 rounded border-gray-300 text-blue-600 cursor-not-allowed" />
+                  <span class="text-sm text-gray-500">Disabled checked</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" class="w-5 h-5 rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500" />
+                  <span class="text-base text-gray-700 dark:text-gray-300">Large checkbox</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 6: Radio Buttons -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 mb-6">
+          <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-5">6 — Radio Buttons</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Group -->
+            <div>
+              <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-3 uppercase tracking-wide">Radio Group</p>
+              <div class="space-y-2">
+                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="rg1" value="a" checked class="text-blue-600 border-gray-300 dark:border-gray-600 focus:ring-blue-500" /><span class="text-sm text-gray-700 dark:text-gray-300">Option One</span></label>
+                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="rg1" value="b" class="text-blue-600 border-gray-300 dark:border-gray-600 focus:ring-blue-500" /><span class="text-sm text-gray-700 dark:text-gray-300">Option Two</span></label>
+                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="rg1" value="c" class="text-blue-600 border-gray-300 dark:border-gray-600 focus:ring-blue-500" /><span class="text-sm text-gray-700 dark:text-gray-300">Option Three</span></label>
+              </div>
+            </div>
+            <!-- With description -->
+            <div>
+              <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-3 uppercase tracking-wide">With Description &amp; Disabled</p>
+              <div class="space-y-3">
+                <label class="flex gap-3 cursor-pointer">
+                  <input type="radio" name="rg2" value="x" checked class="mt-0.5 text-blue-600 border-gray-300 dark:border-gray-600 focus:ring-blue-500 shrink-0" />
+                  <div><p class="text-sm font-medium text-gray-900 dark:text-gray-100">Free plan</p><p class="text-xs text-gray-500 dark:text-gray-400">Up to 3 projects, 1 GB storage.</p></div>
+                </label>
+                <label class="flex gap-3 cursor-pointer">
+                  <input type="radio" name="rg2" value="y" class="mt-0.5 text-blue-600 border-gray-300 dark:border-gray-600 focus:ring-blue-500 shrink-0" />
+                  <div><p class="text-sm font-medium text-gray-900 dark:text-gray-100">Pro plan</p><p class="text-xs text-gray-500 dark:text-gray-400">Unlimited projects, 50 GB storage.</p></div>
+                </label>
+                <label class="flex gap-3 cursor-not-allowed opacity-50">
+                  <input type="radio" name="rg2" value="z" disabled class="mt-0.5 text-blue-600 border-gray-300 focus:ring-blue-500 shrink-0 cursor-not-allowed" />
+                  <div><p class="text-sm font-medium text-gray-500">Enterprise (disabled)</p><p class="text-xs text-gray-400">Contact sales.</p></div>
+                </label>
+              </div>
+            </div>
+            <!-- Radio card style -->
+            <div class="md:col-span-2">
+              <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-3 uppercase tracking-wide">Radio Card Style</p>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="radio-card selected" onclick="selectRadioCard(this,'rc1')" id="rc1a">
+                  <div class="flex justify-between items-start mb-2">
+                    <span class="text-sm font-semibold text-gray-900 dark:text-white">Starter</span>
+                    <input type="radio" name="rc1" value="starter" checked class="text-blue-600" />
+                  </div>
+                  <p class="text-xl font-bold text-blue-600">$9<span class="text-xs font-normal text-gray-400">/mo</span></p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Perfect for individuals</p>
+                </div>
+                <div class="radio-card" onclick="selectRadioCard(this,'rc1')" id="rc1b">
+                  <div class="flex justify-between items-start mb-2">
+                    <span class="text-sm font-semibold text-gray-900 dark:text-white">Pro</span>
+                    <input type="radio" name="rc1" value="pro" class="text-blue-600" />
+                  </div>
+                  <p class="text-xl font-bold text-blue-600">$29<span class="text-xs font-normal text-gray-400">/mo</span></p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">For growing teams</p>
+                </div>
+                <div class="radio-card" onclick="selectRadioCard(this,'rc1')" id="rc1c">
+                  <div class="flex justify-between items-start mb-2">
+                    <span class="text-sm font-semibold text-gray-900 dark:text-white">Enterprise</span>
+                    <input type="radio" name="rc1" value="enterprise" class="text-blue-600" />
+                  </div>
+                  <p class="text-xl font-bold text-blue-600">$99<span class="text-xs font-normal text-gray-400">/mo</span></p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">For large organisations</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- SECTION 7: Toggles -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 mb-6">
+          <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-5">7 — Toggle / Switch</h2>
+          <div class="flex flex-wrap gap-6">
+            <!-- Small -->
+            <label class="flex items-center gap-2 cursor-pointer">
+              <button type="button" role="switch" aria-checked="false" onclick="toggleSwitch(this)" class="toggle-track relative inline-flex h-4 w-7 items-center rounded-full bg-gray-300 dark:bg-gray-600">
+                <span class="toggle-thumb inline-block h-3 w-3 rounded-full bg-white shadow translate-x-0.5"></span>
               </button>
-            </div>
-            <button type="button" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors mt-2">Save Password</button>
-          </form>
+              <span class="text-sm text-gray-700 dark:text-gray-300">Small</span>
+            </label>
+            <!-- Default -->
+            <label class="flex items-center gap-2 cursor-pointer">
+              <button type="button" role="switch" aria-checked="true" onclick="toggleSwitch(this)" class="toggle-track relative inline-flex h-6 w-11 items-center rounded-full bg-blue-600">
+                <span class="toggle-thumb inline-block h-4 w-4 rounded-full bg-white shadow translate-x-6"></span>
+              </button>
+              <span class="text-sm text-gray-700 dark:text-gray-300">Default (on)</span>
+            </label>
+            <!-- Large -->
+            <label class="flex items-center gap-2 cursor-pointer">
+              <button type="button" role="switch" aria-checked="false" onclick="toggleSwitch(this)" class="toggle-track relative inline-flex h-8 w-14 items-center rounded-full bg-gray-300 dark:bg-gray-600">
+                <span class="toggle-thumb inline-block h-6 w-6 rounded-full bg-white shadow translate-x-1"></span>
+              </button>
+              <span class="text-sm text-gray-700 dark:text-gray-300">Large</span>
+            </label>
+            <!-- With label -->
+            <label class="flex items-center gap-2 cursor-pointer">
+              <button type="button" role="switch" aria-checked="true" onclick="toggleSwitch(this)" class="toggle-track relative inline-flex h-6 w-11 items-center rounded-full bg-blue-600">
+                <span class="toggle-thumb inline-block h-4 w-4 rounded-full bg-white shadow translate-x-6"></span>
+              </button>
+              <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Notifications enabled</span>
+            </label>
+            <!-- On/Off text -->
+            <label class="flex items-center gap-2 cursor-pointer" id="toggleWithText">
+              <button type="button" role="switch" aria-checked="false" onclick="toggleSwitchText(this)" class="toggle-track relative inline-flex h-6 w-11 items-center rounded-full bg-gray-300 dark:bg-gray-600">
+                <span class="toggle-thumb inline-block h-4 w-4 rounded-full bg-white shadow translate-x-1"></span>
+              </button>
+              <span id="toggleTextLabel" class="text-sm font-medium text-gray-500 dark:text-gray-400">OFF</span>
+            </label>
+            <!-- Disabled off -->
+            <label class="flex items-center gap-2 cursor-not-allowed opacity-50">
+              <button type="button" role="switch" disabled aria-checked="false" class="toggle-track relative inline-flex h-6 w-11 items-center rounded-full bg-gray-300 dark:bg-gray-600 cursor-not-allowed">
+                <span class="toggle-thumb inline-block h-4 w-4 rounded-full bg-white shadow translate-x-1"></span>
+              </button>
+              <span class="text-sm text-gray-500">Disabled (off)</span>
+            </label>
+            <!-- Disabled on -->
+            <label class="flex items-center gap-2 cursor-not-allowed opacity-50">
+              <button type="button" role="switch" disabled aria-checked="true" class="toggle-track relative inline-flex h-6 w-11 items-center rounded-full bg-blue-400 cursor-not-allowed">
+                <span class="toggle-thumb inline-block h-4 w-4 rounded-full bg-white shadow translate-x-6"></span>
+              </button>
+              <span class="text-sm text-gray-500">Disabled (on)</span>
+            </label>
+          </div>
         </div>
-      </div>
-      </div>
+
+        <!-- SECTION 8: Range Sliders -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 mb-6">
+          <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-5">8 — Range Slider</h2>
+          <div class="space-y-6 max-w-lg">
+            <!-- Default -->
+            <div>
+              <div class="flex justify-between mb-2">
+                <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Default Range</label>
+                <span id="rangeVal" class="text-sm font-semibold text-blue-600">60</span>
+              </div>
+              <input type="range" min="0" max="100" value="60" oninput="document.getElementById('rangeVal').textContent=this.value" class="w-full h-2 rounded-lg cursor-pointer" />
+            </div>
+            <!-- Labeled -->
+            <div>
+              <label class="text-sm font-medium text-gray-700 dark:text-gray-300 block mb-2">With Min/Max Labels</label>
+              <div class="flex items-center gap-3">
+                <span class="text-xs text-gray-400">0</span>
+                <input type="range" min="0" max="100" value="35" class="flex-1 h-2 rounded-lg cursor-pointer" />
+                <span class="text-xs text-gray-400">100</span>
+              </div>
+            </div>
+            <!-- Disabled -->
+            <div>
+              <label class="text-sm font-medium text-gray-400 dark:text-gray-500 block mb-2">Disabled</label>
+              <input type="range" min="0" max="100" value="50" disabled class="w-full h-2 rounded-lg cursor-not-allowed opacity-50" />
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 9: File Upload -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 mb-6">
+          <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-5">9 — File Upload</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Native styled -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Default File Input</label>
+              <input type="file" class="block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-600 file:text-white hover:file:bg-blue-700 file:cursor-pointer cursor-pointer" />
+            </div>
+            <!-- Multiple -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Multiple Files</label>
+              <input type="file" multiple class="block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-gray-100 file:text-gray-700 dark:file:bg-gray-700 dark:file:text-gray-300 hover:file:bg-gray-200 file:cursor-pointer cursor-pointer" />
+            </div>
+            <!-- Drag & Drop -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Drag &amp; Drop Zone</label>
+              <div class="drop-zone rounded-xl p-8 text-center cursor-pointer" id="dropZone"
+                ondragover="event.preventDefault();this.classList.add('drag-over')"
+                ondragleave="this.classList.remove('drag-over')"
+                ondrop="event.preventDefault();this.classList.remove('drag-over')"
+                onclick="document.getElementById('hiddenFileInput').click()">
+                <svg class="mx-auto mb-3 w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 0 1-.88-7.903A5 5 0 1 1 15.9 6L16 6a5 5 0 0 1 1 9.9M15 13l-3-3m0 0-3 3m3-3v8"/></svg>
+                <p class="text-sm text-gray-600 dark:text-gray-400"><span class="text-blue-600 font-medium">Click to upload</span> or drag and drop</p>
+                <p class="text-xs text-gray-400 mt-1">PNG, JPG, PDF up to 10MB</p>
+                <input type="file" id="hiddenFileInput" class="hidden" />
+              </div>
+            </div>
+            <!-- Image preview -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Image Upload with Preview</label>
+              <div class="flex items-center gap-4">
+                <div class="w-20 h-20 rounded-xl bg-gray-100 dark:bg-gray-700 flex items-center justify-center overflow-hidden border border-gray-200 dark:border-gray-600">
+                  <img id="imgPreview" src="" alt="" class="hidden w-full h-full object-cover" />
+                  <svg id="imgPreviewPlaceholder" class="w-8 h-8 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" stroke-width="1.5"/><circle cx="8.5" cy="8.5" r="1.5" stroke-width="1.5"/><path d="m21 15-5-5L5 21" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <label class="cursor-pointer">
+                  <input type="file" accept="image/*" class="hidden" onchange="previewImage(event)" />
+                  <span class="px-3 py-2 text-sm font-medium text-blue-600 border border-blue-300 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition">Choose image</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 10: Date / Time -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 mb-6">
+          <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-5">10 — Date / Time</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Date</label>
+              <input type="date" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Time</label>
+              <input type="time" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Date &amp; Time</label>
+              <input type="datetime-local" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Date Range</label>
+              <div class="flex gap-2">
+                <input type="date" class="flex-1 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-2 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
+                <input type="date" class="flex-1 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-2 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 11: Color Picker -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 mb-6">
+          <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-5">11 — Color Picker</h2>
+          <div class="flex items-center gap-4">
+            <input type="color" id="colorPicker" value="#2563eb" class="w-14 h-10 rounded-lg border border-gray-300 dark:border-gray-600 cursor-pointer p-0.5 bg-white dark:bg-gray-700" oninput="document.getElementById('colorVal').textContent=this.value" />
+            <div>
+              <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Selected color</p>
+              <p id="colorVal" class="text-xs font-mono text-blue-600 dark:text-blue-400">#2563eb</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 12: Tags Input -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 mb-6">
+          <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-5">12 — Tags Input</h2>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Press Enter or comma to add a tag</label>
+            <div id="tagsContainer" class="flex flex-wrap gap-1.5 items-center min-h-[44px] rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent transition cursor-text" onclick="document.getElementById('tagsInput').focus()">
+              <span class="tag-chip">design<button type="button" class="ml-1 text-blue-400 hover:text-blue-700" onclick="removeTag(this,'design')">×</button></span>
+              <span class="tag-chip">ux<button type="button" class="ml-1 text-blue-400 hover:text-blue-700" onclick="removeTag(this,'ux')">×</button></span>
+              <input id="tagsInput" type="text" placeholder="Add tag…" class="flex-1 min-w-24 outline-none text-sm bg-transparent text-gray-900 dark:text-gray-100 placeholder-gray-400" onkeydown="handleTagInput(event)" />
+            </div>
+            <p class="mt-1.5 text-xs text-gray-400">Tags: design, ux (click × to remove)</p>
+          </div>
+        </div>
+
+        <!-- SECTION 13: Validation States Summary -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 mb-6">
+          <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-5">13 — Validation States Summary</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Default -->
+            <div>
+              <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-wide">Default</label>
+              <input type="text" placeholder="Username" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2.5 text-sm focus:outline-none transition" />
+              <p class="mt-1 text-xs text-gray-400">Awaiting input</p>
+            </div>
+            <!-- Focus (simulated) -->
+            <div>
+              <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-wide">Focus</label>
+              <input type="text" placeholder="Username" class="w-full rounded-lg border border-blue-500 ring-2 ring-blue-500/30 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2.5 text-sm focus:outline-none transition" />
+              <p class="mt-1 text-xs text-blue-500">Active / focused</p>
+            </div>
+            <!-- Error -->
+            <div>
+              <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-wide">Error</label>
+              <div class="relative">
+                <input type="text" value="bad input!" class="w-full rounded-lg border border-red-400 bg-red-50 dark:bg-red-900/20 dark:border-red-500 text-gray-900 dark:text-gray-100 pl-3 pr-9 py-2.5 text-sm focus:outline-none transition" />
+                <span class="absolute inset-y-0 right-3 flex items-center text-red-500"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0zm-7 4a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-1-9a1 1 0 0 0-1 1v4a1 1 0 1 0 2 0V6a1 1 0 0 0-1-1z" clip-rule="evenodd"/></svg></span>
+              </div>
+              <p class="mt-1 text-xs text-red-500">Invalid value</p>
+            </div>
+            <!-- Success -->
+            <div>
+              <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-wide">Success</label>
+              <div class="relative">
+                <input type="text" value="valid-user" class="w-full rounded-lg border border-green-400 bg-green-50 dark:bg-green-900/20 dark:border-green-500 text-gray-900 dark:text-gray-100 pl-3 pr-9 py-2.5 text-sm focus:outline-none transition" />
+                <span class="absolute inset-y-0 right-3 flex items-center text-green-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></span>
+              </div>
+              <p class="mt-1 text-xs text-green-600 dark:text-green-400">All good!</p>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /max-w -->
     </main>
   </div>
 </div>
-
-<!-- Common Components -->
-<script src="common-loader.js"></script>
 <script src="common-sidebar.js"></script>
 <script src="common-header.js"></script>
 <script src="app-shell.js"></script>
+<script>
+  // Indeterminate checkbox
+  document.getElementById('indetermCheck').indeterminate = true;
 
+  // Auto-resize textarea
+  function autoResize(el){el.style.height='auto';el.style.height=(el.scrollHeight)+'px';}
+
+  // Toggle switch
+  function toggleSwitch(btn){
+    const isOn = btn.getAttribute('aria-checked')==='true';
+    btn.setAttribute('aria-checked', String(!isOn));
+    const thumb = btn.querySelector('.toggle-thumb');
+    if(!isOn){
+      btn.classList.remove('bg-gray-300','dark:bg-gray-600');
+      btn.classList.add('bg-blue-600');
+      const w = btn.classList.contains('w-14') ? 'translate-x-7' : btn.classList.contains('w-7') ? 'translate-x-3' : 'translate-x-6';
+      thumb.className = thumb.className.replace(/translate-x-\S+/, w);
+    } else {
+      btn.classList.remove('bg-blue-600');
+      btn.classList.add('bg-gray-300','dark:bg-gray-600');
+      const off = btn.classList.contains('w-14') ? 'translate-x-1' : btn.classList.contains('w-7') ? 'translate-x-0.5' : 'translate-x-1';
+      thumb.className = thumb.className.replace(/translate-x-\S+/, off);
+    }
+  }
+
+  function toggleSwitchText(btn){
+    toggleSwitch(btn);
+    const label = document.getElementById('toggleTextLabel');
+    const isNowOn = btn.getAttribute('aria-checked')==='true';
+    label.textContent = isNowOn ? 'ON' : 'OFF';
+    label.className = isNowOn ? 'text-sm font-medium text-blue-600 dark:text-blue-400' : 'text-sm font-medium text-gray-500 dark:text-gray-400';
+  }
+
+  // Radio card
+  function selectRadioCard(card, name){
+    document.querySelectorAll('[id^="'+name+'"]').forEach(c=>c.classList.remove('selected'));
+    card.classList.add('selected');
+    card.querySelector('input[type=radio]').checked = true;
+  }
+
+  // Image preview
+  function previewImage(e){
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const img = document.getElementById('imgPreview');
+      img.src = ev.target.result; img.classList.remove('hidden');
+      document.getElementById('imgPreviewPlaceholder').classList.add('hidden');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // Tags input
+  function handleTagInput(e){
+    if(e.key==='Enter'||e.key===','){
+      e.preventDefault();
+      const val = e.target.value.replace(',','').trim();
+      if(val) addTag(val);
+      e.target.value='';
+    }
+  }
+  function addTag(text){
+    const container = document.getElementById('tagsContainer');
+    const input = document.getElementById('tagsInput');
+    const chip = document.createElement('span');
+    chip.className='tag-chip';
+    chip.innerHTML=`${text}<button type="button" class="ml-1 text-blue-400 hover:text-blue-700" onclick="this.parentElement.remove()">×</button>`;
+    container.insertBefore(chip, input);
+  }
+  function removeTag(btn){ btn.parentElement.remove(); }
+</script>
 </body>
 </html>
