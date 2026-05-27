@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready Task Detail HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>Task Detail — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<!-- Breadcrumb -->
+    <div class="flex items-center gap-2 text-xs text-gray-500 mb-4">
+      <a href="#" class="text-blue-600 hover:underline">Tasks</a>
+      <span>/</span>
+      <a href="#" class="text-blue-600 hover:underline">Dashboard Templates</a>
+      <span>/</span>
+      <span>Build Kanban board template</span>
+    </div>
+
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+      <!-- Main Task Area -->
+      <div class="xl:col-span-2 space-y-5">
+        <!-- Title -->
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900 leading-tight" contenteditable="true" class="focus:outline-none">Build Kanban board template</h1>
+          <div class="flex flex-wrap items-center gap-2 mt-2">
+            <span class="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs rounded-full font-medium">TASK-042</span>
+            <span class="text-gray-400 text-xs">Created May 18 by Jane Doe</span>
+          </div>
+        </div>
+
+        <!-- Status / Priority Row -->
+        <div class="flex flex-wrap gap-3">
+          <div>
+            <label class="block text-xs font-medium text-gray-500 mb-1">Status</label>
+            <select class="px-3 py-1.5 text-xs border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-blue-50 text-blue-700 font-medium">
+              <option>Backlog</option>
+              <option selected>In Progress</option>
+              <option>In Review</option>
+              <option>Done</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-500 mb-1">Priority</label>
+            <select class="px-3 py-1.5 text-xs border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-red-50 text-red-700 font-medium">
+              <option>Low</option>
+              <option>Medium</option>
+              <option selected>High</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-500 mb-1">Assignee</label>
+            <div class="flex items-center gap-2 px-3 py-1.5 border border-gray-200 rounded-lg bg-white cursor-pointer hover:bg-gray-50">
+              <div class="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold">J</div>
+              <span class="text-xs text-gray-700">Jane Doe</span>
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-500 mb-1">Due Date</label>
+            <input type="date" value="2026-05-25" class="px-3 py-1.5 text-xs border border-red-200 text-red-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-red-50" />
+          </div>
+        </div>
+
+        <!-- Labels -->
+        <div>
+          <label class="block text-xs font-medium text-gray-500 mb-2">Labels</label>
+          <div class="flex flex-wrap gap-2">
+            <span class="flex items-center gap-1 px-2 py-0.5 bg-purple-100 text-purple-700 text-xs rounded-full">UI <button type="button" onclick="this.parentElement.remove()" class="text-purple-400">✕</button></span>
+            <span class="flex items-center gap-1 px-2 py-0.5 bg-blue-100 text-blue-700 text-xs rounded-full">Frontend <button type="button" onclick="this.parentElement.remove()" class="text-blue-400">✕</button></span>
+            <span class="flex items-center gap-1 px-2 py-0.5 bg-gray-100 text-gray-600 text-xs rounded-full">Sprint-4 <button type="button" onclick="this.parentElement.remove()" class="text-gray-400">✕</button></span>
+            <button class="px-2 py-0.5 border border-dashed border-gray-300 text-gray-400 text-xs rounded-full hover:border-gray-400">+ Add label</button>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div>
+          <label class="block text-xs font-medium text-gray-500 mb-2">Description</label>
+          <div class="bg-white border border-gray-200 rounded-xl p-4">
+            <!-- Toolbar -->
+            <div class="flex gap-1 mb-3 pb-2 border-b border-gray-100">
+              <button class="px-2 py-1 rounded hover:bg-gray-100 text-xs font-bold text-gray-600">B</button>
+              <button class="px-2 py-1 rounded hover:bg-gray-100 text-xs italic text-gray-600">I</button>
+              <button class="px-2 py-1 rounded hover:bg-gray-100 text-xs text-gray-600">🔗</button>
+              <button class="px-2 py-1 rounded hover:bg-gray-100 text-xs text-gray-600">≡</button>
+            </div>
+            <div contenteditable="true" class="text-sm text-gray-700 focus:outline-none min-h-24 space-y-2">
+              <p>Create a fully functional Kanban board template with 4 columns: Backlog, In Progress, In Review, and Done.</p>
+              <p>Each task card should include: title, priority badge, assignee avatar, due date chip, tag chips, and drag handle icon.</p>
+              <p><strong>Acceptance criteria:</strong></p>
+              <ul class="list-disc pl-5">
+                <li>All 4 columns with count badges</li>
+                <li>Task cards with all required fields</li>
+                <li>Filter bar at top (assignee, priority, label)</li>
+                <li>Add task button per column</li>
+                <li>Mobile responsive</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subtasks -->
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <label class="text-xs font-medium text-gray-500">Subtasks <span class="text-gray-400">(2/3 done)</span></label>
+            <div class="w-24 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+              <div class="h-full bg-green-500 rounded-full" style="width: 66%"></div>
+            </div>
+          </div>
+          <div class="bg-white border border-gray-200 rounded-xl divide-y divide-gray-50">
+            <div class="flex items-center gap-3 px-4 py-2.5">
+              <input type="checkbox" checked class="w-4 h-4 rounded text-blue-600" />
+              <p class="text-sm text-gray-400 line-through flex-1">Design card layout</p>
+              <button class="text-gray-300 hover:text-red-400 text-xs">🗑️</button>
+            </div>
+            <div class="flex items-center gap-3 px-4 py-2.5">
+              <input type="checkbox" checked class="w-4 h-4 rounded text-blue-600" />
+              <p class="text-sm text-gray-400 line-through flex-1">Implement drag-handle visual</p>
+              <button class="text-gray-300 hover:text-red-400 text-xs">🗑️</button>
+            </div>
+            <div class="flex items-center gap-3 px-4 py-2.5">
+              <input type="checkbox" class="w-4 h-4 rounded text-blue-600" />
+              <p class="text-sm text-gray-800 flex-1">Add column "Add task" button</p>
+              <button class="text-gray-300 hover:text-red-400 text-xs">🗑️</button>
+            </div>
+            <div class="px-4 py-2.5">
+              <input type="text" placeholder="+ Add subtask" class="w-full text-sm text-gray-600 focus:outline-none placeholder-gray-400" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Attachments -->
+        <div>
+          <label class="block text-xs font-medium text-gray-500 mb-2">Attachments</label>
+          <div class="bg-white border border-gray-200 rounded-xl p-3 space-y-2">
+            <div class="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg">
+              <span class="text-lg">🖼️</span>
+              <div class="flex-1">
+                <p class="text-xs font-medium text-gray-800">kanban-design-v2.png</p>
+                <p class="text-xs text-gray-400">248 KB · Uploaded by Jane · May 19</p>
+              </div>
+              <button class="text-xs text-blue-600 hover:underline">⬇️</button>
+            </div>
+            <div class="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg">
+              <span class="text-lg">📄</span>
+              <div class="flex-1">
+                <p class="text-xs font-medium text-gray-800">component-spec.pdf</p>
+                <p class="text-xs text-gray-400">1.2 MB · Uploaded by Marcus · May 18</p>
+              </div>
+              <button class="text-xs text-blue-600 hover:underline">⬇️</button>
+            </div>
+            <div class="border-2 border-dashed border-gray-200 rounded-lg p-3 text-center hover:border-blue-400 cursor-pointer">
+              <p class="text-xs text-gray-400">📎 Attach files</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Activity & Comments -->
+        <div>
+          <label class="block text-xs font-medium text-gray-500 mb-3">Activity & Comments</label>
+          <div class="space-y-4">
+            <div class="flex gap-3">
+              <div class="w-7 h-7 rounded-full bg-orange-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">M</div>
+              <div class="flex-1">
+                <div class="bg-white border border-gray-200 rounded-xl rounded-tl-none p-3">
+                  <div class="flex items-center justify-between mb-1">
+                    <p class="text-xs font-semibold text-gray-800">Marcus Turner</p>
+                    <span class="text-xs text-gray-400">May 20, 3:15 PM</span>
+                  </div>
+                  <p class="text-sm text-gray-700">I've started on the drag handle visual. Using the CSS cursor: grab approach. Should be done by EOD.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex gap-3">
+              <div class="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">J</div>
+              <div class="flex-1">
+                <div class="bg-white border border-gray-200 rounded-xl rounded-tl-none p-3">
+                  <div class="flex items-center justify-between mb-1">
+                    <p class="text-xs font-semibold text-gray-800">Jane Doe</p>
+                    <span class="text-xs text-gray-400">May 21, 9:00 AM</span>
+                  </div>
+                  <p class="text-sm text-gray-700">Great! Once that's done, I'll handle the "Add task" button per column. Let's keep the column count badges next to headers.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- System events -->
+            <div class="flex items-center gap-3 text-xs text-gray-400 pl-5">
+              <div class="w-1.5 h-1.5 rounded-full bg-gray-300 flex-shrink-0"></div>
+              <span><strong class="text-gray-600">Jane Doe</strong> changed status to <strong class="text-blue-600">In Progress</strong> · May 20</span>
+            </div>
+            <div class="flex items-center gap-3 text-xs text-gray-400 pl-5">
+              <div class="w-1.5 h-1.5 rounded-full bg-gray-300 flex-shrink-0"></div>
+              <span><strong class="text-gray-600">Marcus Turner</strong> was assigned to this task · May 19</span>
+            </div>
+
+            <!-- Comment Input -->
+            <div class="flex gap-3">
+              <div class="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">J</div>
+              <div class="flex-1">
+                <textarea rows="2" placeholder="Leave a comment..." class="w-full px-3 py-2 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
+                <button type="button" class="mt-1.5 px-3 py-1.5 bg-blue-600 text-white text-xs font-medium rounded-lg hover:bg-blue-700">Post Comment</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Sidebar: Related Tasks -->
+      <div class="xl:col-span-1 space-y-4">
+        <div class="bg-white rounded-xl border border-gray-200 p-4">
+          <h3 class="font-semibold text-gray-800 text-sm mb-3">Task Details</h3>
+          <div class="space-y-3 text-xs">
+            <div class="flex justify-between">
+              <span class="text-gray-500">Project</span>
+              <span class="text-blue-600 font-medium">Dashboard Templates</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-500">Sprint</span>
+              <span class="text-gray-700">Sprint 4</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-500">Estimated</span>
+              <span class="text-gray-700">8h</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-500">Logged</span>
+              <span class="text-gray-700">3.5h</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-500">Created</span>
+              <span class="text-gray-700">May 18, 2026</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-500">Updated</span>
+              <span class="text-gray-700">May 24, 2026</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Related Tasks -->
+        <div class="bg-white rounded-xl border border-gray-200 p-4">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="font-semibold text-gray-800 text-sm">Related Tasks</h3>
+            <button class="text-xs text-blue-600 hover:underline">+ Link</button>
+          </div>
+          <div class="space-y-2">
+            <div class="flex items-start gap-2 p-2 hover:bg-gray-50 rounded-lg cursor-pointer">
+              <span class="px-1 py-0.5 bg-purple-100 text-purple-700 text-xs rounded font-mono flex-shrink-0">042</span>
+              <p class="text-xs text-gray-700 leading-tight">Dashboard analytics chart component</p>
+            </div>
+            <div class="flex items-start gap-2 p-2 hover:bg-gray-50 rounded-lg cursor-pointer">
+              <span class="px-1 py-0.5 bg-blue-100 text-blue-700 text-xs rounded font-mono flex-shrink-0">038</span>
+              <p class="text-xs text-gray-700 leading-tight">Implement drag-and-drop library</p>
+            </div>
+            <div class="flex items-start gap-2 p-2 hover:bg-gray-50 rounded-lg cursor-pointer">
+              <span class="px-1 py-0.5 bg-green-100 text-green-700 text-xs rounded font-mono flex-shrink-0">035</span>
+              <p class="text-xs text-gray-400 line-through leading-tight">Redesign user profile page</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="bg-white rounded-xl border border-gray-200 p-4 space-y-2">
+          <button type="button" class="w-full px-3 py-2 bg-blue-600 text-white text-xs font-medium rounded-lg hover:bg-blue-700">Save Changes</button>
+          <button class="w-full px-3 py-2 border border-gray-200 text-gray-600 text-xs rounded-lg hover:bg-gray-50">Duplicate Task</button>
+          <button class="w-full px-3 py-2 border border-red-200 text-red-600 text-xs rounded-lg hover:bg-red-50">Delete Task</button>
+        </div>
+      </div>
+    </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

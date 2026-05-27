@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready Activity Logs HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>Activity Logs — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<div class="mb-6 flex items-center justify-between"><div><h1 class="text-2xl font-bold text-gray-900">Activity Logs</h1><p class="text-sm text-gray-500 mt-1">Audit trail of all system events</p></div><button class="border border-gray-300 text-gray-700 text-sm px-4 py-2 rounded-lg hover:bg-gray-50 transition">Export Logs</button></div>
+      <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div class="px-5 py-4 border-b border-gray-200 flex flex-col sm:flex-row gap-3">
+          <input type="text" placeholder="Search logs..." class="flex-1 text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <select class="text-sm border border-gray-200 rounded-lg px-3 py-2 text-gray-700 focus:outline-none"><option>All Types</option><option>Auth</option><option>API</option><option>Admin</option><option>Error</option></select>
+          <input type="date" class="text-sm border border-gray-200 rounded-lg px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-gray-50 border-b border-gray-200">
+              <tr>
+                <th class="text-left px-5 py-3 font-semibold text-gray-600">Timestamp</th>
+                <th class="text-left px-5 py-3 font-semibold text-gray-600">User</th>
+                <th class="text-left px-5 py-3 font-semibold text-gray-600">Action</th>
+                <th class="text-left px-5 py-3 font-semibold text-gray-600">Type</th>
+                <th class="text-left px-5 py-3 font-semibold text-gray-600">IP Address</th>
+                <th class="text-left px-5 py-3 font-semibold text-gray-600">Status</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              <tr class="hover:bg-gray-50"><td class="px-5 py-3 text-gray-400 font-mono text-xs">2026-05-07 09:42:11</td><td class="px-5 py-3 text-gray-700">sarah@company.com</td><td class="px-5 py-3 text-gray-900">User login</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-blue-100 text-blue-700">Auth</span></td><td class="px-5 py-3 font-mono text-xs text-gray-500">192.168.1.10</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-green-100 text-green-700">Success</span></td></tr>
+              <tr class="hover:bg-gray-50"><td class="px-5 py-3 text-gray-400 font-mono text-xs">2026-05-07 09:38:03</td><td class="px-5 py-3 text-gray-700">james@company.com</td><td class="px-5 py-3 text-gray-900">API key created</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-purple-100 text-purple-700">API</span></td><td class="px-5 py-3 font-mono text-xs text-gray-500">10.0.0.42</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-green-100 text-green-700">Success</span></td></tr>
+              <tr class="hover:bg-gray-50"><td class="px-5 py-3 text-gray-400 font-mono text-xs">2026-05-07 09:21:55</td><td class="px-5 py-3 text-gray-700">jane@company.com</td><td class="px-5 py-3 text-gray-900">User role changed</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-orange-100 text-orange-700">Admin</span></td><td class="px-5 py-3 font-mono text-xs text-gray-500">172.16.0.5</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-green-100 text-green-700">Success</span></td></tr>
+              <tr class="hover:bg-gray-50"><td class="px-5 py-3 text-gray-400 font-mono text-xs">2026-05-07 08:59:47</td><td class="px-5 py-3 text-gray-700">system</td><td class="px-5 py-3 text-gray-900">Backup completed</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-gray-100 text-gray-600">System</span></td><td class="px-5 py-3 font-mono text-xs text-gray-500">—</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-green-100 text-green-700">Success</span></td></tr>
+              <tr class="hover:bg-gray-50"><td class="px-5 py-3 text-gray-400 font-mono text-xs">2026-05-07 08:44:22</td><td class="px-5 py-3 text-gray-700">marco@company.com</td><td class="px-5 py-3 text-gray-900">Failed login attempt</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-blue-100 text-blue-700">Auth</span></td><td class="px-5 py-3 font-mono text-xs text-gray-500">203.0.113.8</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-red-100 text-red-700">Failed</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="px-5 py-3 border-t border-gray-200 flex items-center justify-between text-xs text-gray-500"><span>Showing 1–5 of 2,148 entries</span><div class="flex gap-1"><button class="px-2 py-1 rounded border border-gray-200 hover:bg-gray-50">Prev</button><button type="button" class="px-2 py-1 rounded bg-blue-600 text-white">1</button><button class="px-2 py-1 rounded border border-gray-200 hover:bg-gray-50">2</button><button class="px-2 py-1 rounded border border-gray-200 hover:bg-gray-50">Next</button></div></div>
+      </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready Alert Rules HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>Alert Rules — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div>
+        <h1 class="text-xl font-bold text-gray-900">Alert Rules</h1>
+        <p class="text-sm text-gray-500 mt-1">Set up automated alerts for important conditions</p>
+      </div>
+      <button type="button" onclick="toggleNewAlert()" class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 w-fit">+ Create Alert</button>
+    </div>
+
+    <!-- New Alert Form -->
+    <div id="new-alert-form" class="hidden bg-white rounded-xl border border-blue-200 p-5">
+      <h3 class="font-semibold text-gray-800 text-sm mb-4">New Alert Rule</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">Alert Name</label>
+          <input type="text" placeholder="e.g. High API Usage" class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">Condition</label>
+          <select class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option>API usage > 80%</option>
+            <option>API usage > 95%</option>
+            <option>Storage > 80%</option>
+            <option>Failed login attempts > 5</option>
+            <option>Invoice overdue</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">Channel</label>
+          <select class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option>Email</option>
+            <option>Slack</option>
+            <option>SMS</option>
+            <option>Webhook</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">Severity</label>
+          <select class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option>Critical</option>
+            <option>Warning</option>
+            <option>Info</option>
+          </select>
+        </div>
+      </div>
+      <div class="flex gap-2 mt-4">
+        <button type="button" class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700">Create Rule</button>
+        <button type="button" onclick="toggleNewAlert()" class="px-4 py-2 border border-gray-200 text-sm text-gray-700 rounded-lg hover:bg-gray-50">Cancel</button>
+      </div>
+    </div>
+
+    <!-- Alert Rules Table -->
+    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+      <div class="px-4 py-3 border-b border-gray-100">
+        <h2 class="font-semibold text-gray-800 text-sm">Configured Rules</h2>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="text-left px-4 py-2.5 text-xs font-semibold text-gray-500">Rule Name</th>
+              <th class="text-left px-4 py-2.5 text-xs font-semibold text-gray-500 hidden sm:table-cell">Condition</th>
+              <th class="text-left px-4 py-2.5 text-xs font-semibold text-gray-500 hidden md:table-cell">Channel</th>
+              <th class="text-center px-4 py-2.5 text-xs font-semibold text-gray-500">Severity</th>
+              <th class="text-center px-4 py-2.5 text-xs font-semibold text-gray-500 hidden sm:table-cell">Status</th>
+              <th class="text-left px-4 py-2.5 text-xs font-semibold text-gray-500 hidden lg:table-cell">Last Triggered</th>
+              <th class="text-right px-4 py-2.5 text-xs font-semibold text-gray-500">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-50">
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3 font-medium text-gray-800 text-xs">High API Usage</td>
+              <td class="px-4 py-3 text-xs text-gray-600 hidden sm:table-cell font-mono">API usage &gt; 80%</td>
+              <td class="px-4 py-3 text-xs text-gray-600 hidden md:table-cell">Email + Slack</td>
+              <td class="px-4 py-3 text-center"><span class="px-2 py-0.5 bg-red-100 text-red-700 text-xs rounded-full font-medium">Critical</span></td>
+              <td class="px-4 py-3 text-center hidden sm:table-cell"><span class="flex items-center justify-center gap-1 text-xs text-green-600"><span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>Active</span></td>
+              <td class="px-4 py-3 text-xs text-gray-400 hidden lg:table-cell">Today, 10:42 AM</td>
+              <td class="px-4 py-3 text-right"><div class="flex justify-end gap-2"><button class="text-xs text-blue-600 hover:underline">Edit</button><button class="text-xs text-red-500 hover:underline">Delete</button></div></td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3 font-medium text-gray-800 text-xs">Critical API Limit</td>
+              <td class="px-4 py-3 text-xs text-gray-600 hidden sm:table-cell font-mono">API usage &gt; 95%</td>
+              <td class="px-4 py-3 text-xs text-gray-600 hidden md:table-cell">Email + SMS</td>
+              <td class="px-4 py-3 text-center"><span class="px-2 py-0.5 bg-red-100 text-red-700 text-xs rounded-full font-medium">Critical</span></td>
+              <td class="px-4 py-3 text-center hidden sm:table-cell"><span class="flex items-center justify-center gap-1 text-xs text-green-600"><span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>Active</span></td>
+              <td class="px-4 py-3 text-xs text-gray-400 hidden lg:table-cell">Never</td>
+              <td class="px-4 py-3 text-right"><div class="flex justify-end gap-2"><button class="text-xs text-blue-600 hover:underline">Edit</button><button class="text-xs text-red-500 hover:underline">Delete</button></div></td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3 font-medium text-gray-800 text-xs">Storage Warning</td>
+              <td class="px-4 py-3 text-xs text-gray-600 hidden sm:table-cell font-mono">Storage &gt; 80%</td>
+              <td class="px-4 py-3 text-xs text-gray-600 hidden md:table-cell">Email</td>
+              <td class="px-4 py-3 text-center"><span class="px-2 py-0.5 bg-yellow-100 text-yellow-700 text-xs rounded-full font-medium">Warning</span></td>
+              <td class="px-4 py-3 text-center hidden sm:table-cell"><span class="flex items-center justify-center gap-1 text-xs text-green-600"><span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>Active</span></td>
+              <td class="px-4 py-3 text-xs text-gray-400 hidden lg:table-cell">3 days ago</td>
+              <td class="px-4 py-3 text-right"><div class="flex justify-end gap-2"><button class="text-xs text-blue-600 hover:underline">Edit</button><button class="text-xs text-red-500 hover:underline">Delete</button></div></td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3 font-medium text-gray-800 text-xs">Failed Logins</td>
+              <td class="px-4 py-3 text-xs text-gray-600 hidden sm:table-cell font-mono">Failed logins &gt; 5</td>
+              <td class="px-4 py-3 text-xs text-gray-600 hidden md:table-cell">Email + SMS</td>
+              <td class="px-4 py-3 text-center"><span class="px-2 py-0.5 bg-red-100 text-red-700 text-xs rounded-full font-medium">Critical</span></td>
+              <td class="px-4 py-3 text-center hidden sm:table-cell"><span class="flex items-center justify-center gap-1 text-xs text-gray-500"><span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>Paused</span></td>
+              <td class="px-4 py-3 text-xs text-gray-400 hidden lg:table-cell">May 19, 2026</td>
+              <td class="px-4 py-3 text-right"><div class="flex justify-end gap-2"><button class="text-xs text-blue-600 hover:underline">Edit</button><button class="text-xs text-red-500 hover:underline">Delete</button></div></td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3 font-medium text-gray-800 text-xs">New Team Member</td>
+              <td class="px-4 py-3 text-xs text-gray-600 hidden sm:table-cell font-mono">member.joined</td>
+              <td class="px-4 py-3 text-xs text-gray-600 hidden md:table-cell">In-App</td>
+              <td class="px-4 py-3 text-center"><span class="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs rounded-full font-medium">Info</span></td>
+              <td class="px-4 py-3 text-center hidden sm:table-cell"><span class="flex items-center justify-center gap-1 text-xs text-green-600"><span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>Active</span></td>
+              <td class="px-4 py-3 text-xs text-gray-400 hidden lg:table-cell">May 22, 2026</td>
+              <td class="px-4 py-3 text-right"><div class="flex justify-end gap-2"><button class="text-xs text-blue-600 hover:underline">Edit</button><button class="text-xs text-red-500 hover:underline">Delete</button></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Alert History -->
+    <div class="bg-white rounded-xl border border-gray-200 p-6">
+      <h2 class="font-semibold text-gray-800 text-sm mb-4">Alert History (Last 10)</h2>
+      <div class="space-y-3">
+        <div class="flex items-start gap-3 p-3 bg-red-50 rounded-lg border border-red-100">
+          <span class="w-2 h-2 rounded-full bg-red-500 mt-1.5 flex-shrink-0"></span>
+          <div class="flex-1">
+            <div class="flex items-start justify-between gap-2">
+              <p class="text-xs font-medium text-gray-800">High API Usage triggered — 84.7% consumed</p>
+              <span class="text-xs text-gray-400 flex-shrink-0">Today, 10:42 AM</span>
+            </div>
+            <p class="text-xs text-gray-500 mt-0.5">Action taken: Email sent to jane@mtverse.dev, Slack #alerts notified</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3 bg-yellow-50 rounded-lg border border-yellow-100">
+          <span class="w-2 h-2 rounded-full bg-yellow-500 mt-1.5 flex-shrink-0"></span>
+          <div class="flex-1">
+            <div class="flex items-start justify-between gap-2">
+              <p class="text-xs font-medium text-gray-800">Storage Warning triggered — 80.3% used</p>
+              <span class="text-xs text-gray-400 flex-shrink-0">3 days ago</span>
+            </div>
+            <p class="text-xs text-gray-500 mt-0.5">Action taken: Email sent to jane@mtverse.dev</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3 bg-blue-50 rounded-lg border border-blue-100">
+          <span class="w-2 h-2 rounded-full bg-blue-500 mt-1.5 flex-shrink-0"></span>
+          <div class="flex-1">
+            <div class="flex items-start justify-between gap-2">
+              <p class="text-xs font-medium text-gray-800">New Team Member — sophie@mtverse.dev joined</p>
+              <span class="text-xs text-gray-400 flex-shrink-0">May 22, 2026</span>
+            </div>
+            <p class="text-xs text-gray-500 mt-0.5">Action taken: In-app notification sent</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 p-3 bg-red-50 rounded-lg border border-red-100">
+          <span class="w-2 h-2 rounded-full bg-red-500 mt-1.5 flex-shrink-0"></span>
+          <div class="flex-1">
+            <div class="flex items-start justify-between gap-2">
+              <p class="text-xs font-medium text-gray-800">High API Usage triggered — 81.2% consumed</p>
+              <span class="text-xs text-gray-400 flex-shrink-0">May 19, 2026</span>
+            </div>
+            <p class="text-xs text-gray-500 mt-0.5">Action taken: Email sent to jane@mtverse.dev, Slack #alerts notified</p>
+          </div>
+        </div>
+      </div>
+    </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

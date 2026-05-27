@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready Settings HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>Settings — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<div class="mb-6"><h1 class="text-2xl font-bold text-gray-900">Settings</h1><p class="text-sm text-gray-500 mt-1">Manage your account and workspace preferences</p></div>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2 space-y-6">
+          <div class="bg-white rounded-xl border border-gray-200 p-5">
+            <h2 class="font-semibold text-gray-900 mb-4">Profile Settings</h2>
+            <div class="space-y-4">
+              <div class="flex gap-4"><div class="flex-1"><label class="block text-xs font-medium text-gray-600 mb-1">First Name</label><input type="text" value="Jane" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" /></div><div class="flex-1"><label class="block text-xs font-medium text-gray-600 mb-1">Last Name</label><input type="text" value="Doe" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" /></div></div>
+              <div><label class="block text-xs font-medium text-gray-600 mb-1">Email</label><input type="email" value="jane@company.com" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" /></div>
+              <div><label class="block text-xs font-medium text-gray-600 mb-1">Role</label><input type="text" value="Admin" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" /></div>
+              <button type="button" class="bg-blue-600 text-white text-sm px-4 py-2 rounded-lg hover:bg-blue-700 transition">Save Changes</button>
+            </div>
+          </div>
+          <div class="bg-white rounded-xl border border-gray-200 p-5">
+            <h2 class="font-semibold text-gray-900 mb-4">Security</h2>
+            <div class="space-y-4">
+              <div><label class="block text-xs font-medium text-gray-600 mb-1">Current Password</label><input type="password" placeholder="••••••••" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" /></div>
+              <div><label class="block text-xs font-medium text-gray-600 mb-1">New Password</label><input type="password" placeholder="••••••••" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" /></div>
+              <button type="button" class="bg-blue-600 text-white text-sm px-4 py-2 rounded-lg hover:bg-blue-700 transition">Update Password</button>
+            </div>
+          </div>
+        </div>
+        <div class="space-y-6">
+          <div class="bg-white rounded-xl border border-gray-200 p-5">
+            <h2 class="font-semibold text-gray-900 mb-4">Notifications</h2>
+            <div class="space-y-3">
+              <label class="flex items-center justify-between"><span class="text-sm text-gray-700">Email alerts</span><input type="checkbox" checked class="rounded" /></label>
+              <label class="flex items-center justify-between"><span class="text-sm text-gray-700">Push notifications</span><input type="checkbox" checked class="rounded" /></label>
+              <label class="flex items-center justify-between"><span class="text-sm text-gray-700">Weekly digest</span><input type="checkbox" class="rounded" /></label>
+            </div>
+          </div>
+          <div class="bg-white rounded-xl border border-gray-200 p-5">
+            <h2 class="font-semibold text-gray-900 mb-4">Danger Zone</h2>
+            <p class="text-xs text-gray-500 mb-3">Permanently delete your account and all data.</p>
+            <button class="text-sm text-red-600 border border-red-300 rounded-lg px-4 py-2 hover:bg-red-50 transition">Delete Account</button>
+          </div>
+        </div>
+      </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

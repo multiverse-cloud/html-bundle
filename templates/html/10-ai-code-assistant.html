@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready AI Code Assistant HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>AI Code Assistant — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<div class="flex items-center gap-2 text-sm text-gray-500 mb-4">
+        <span>AI Tools</span><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg><span class="text-gray-800 font-medium">Code Assistant</span>
+      </div>
+      <div class="flex items-center justify-between mb-4">
+        <h1 class="text-xl font-bold text-gray-900">AI Code Assistant</h1>
+        <!-- Language Selector -->
+        <div class="flex gap-2">
+          <select class="text-sm border border-gray-200 rounded-lg px-3 py-1.5 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+            <option>TypeScript</option><option>JavaScript</option><option>Python</option><option>Go</option><option>Rust</option><option>Java</option><option>SQL</option>
+          </select>
+          <button type="button" class="px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700">Run</button>
+        </div>
+      </div>
+      <!-- Mode Tabs -->
+      <div class="flex items-center gap-1 mb-4 bg-white border border-gray-200 rounded-lg p-1 w-fit">
+        <button type="button" class="px-4 py-1.5 text-xs font-medium bg-blue-600 text-white rounded-md">Explain</button>
+        <button class="px-4 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-100 rounded-md">Refactor</button>
+        <button class="px-4 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-100 rounded-md">Complete</button>
+        <button class="px-4 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-100 rounded-md">Debug</button>
+        <button class="px-4 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-100 rounded-md">Generate Tests</button>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+        <!-- Code panels -->
+        <div class="lg:col-span-3 space-y-4">
+          <!-- Input code -->
+          <div class="rounded-xl overflow-hidden border border-gray-700">
+            <div class="flex items-center justify-between bg-gray-800 px-4 py-2">
+              <div class="flex items-center gap-2">
+                <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-500"></div><div class="w-3 h-3 rounded-full bg-yellow-500"></div><div class="w-3 h-3 rounded-full bg-green-500"></div></div>
+                <span class="text-xs text-gray-400 font-mono">userService.ts · Input</span>
+              </div>
+              <div class="flex gap-2">
+                <button class="text-xs text-gray-400 hover:text-white px-2 py-1 rounded hover:bg-gray-700">Copy</button>
+                <button class="text-xs text-gray-400 hover:text-white px-2 py-1 rounded hover:bg-gray-700">Clear</button>
+              </div>
+            </div>
+            <div class="bg-gray-900 p-4 font-mono text-sm text-gray-300 min-h-40 overflow-auto">
+              <div class="flex gap-4">
+                <div class="text-gray-600 select-none text-right" style="min-width:2rem"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div><div>10</div><div>11</div><div>12</div><div>13</div><div>14</div><div>15</div></div>
+                <div><div><span class="text-purple-400">async function</span> <span class="text-yellow-300">getUserById</span><span class="text-gray-300">(</span><span class="text-orange-300">id</span><span class="text-gray-300">: </span><span class="text-blue-300">string</span><span class="text-gray-300">) {</span></div><div class="ml-4"><span class="text-blue-400">const</span> <span class="text-orange-300">user</span> <span class="text-gray-300">= </span><span class="text-blue-400">await</span> <span class="text-gray-300">db.query(</span><span class="text-green-300">`SELECT * FROM users WHERE id = ${id}`</span><span class="text-gray-300">);</span></div><div class="ml-4"><span class="text-blue-400">if</span> <span class="text-gray-300">(!</span><span class="text-orange-300">user</span><span class="text-gray-300">) {</span></div><div class="ml-8"><span class="text-blue-400">throw new</span> <span class="text-yellow-300">Error</span><span class="text-gray-300">(</span><span class="text-green-300">'User not found'</span><span class="text-gray-300">);</span></div><div class="ml-4"><span class="text-gray-300">}</span></div><div class="ml-4"><span class="text-blue-400">return</span> <span class="text-orange-300">user</span><span class="text-gray-300">;</span></div><div><span class="text-gray-300">}</span></div><div>&nbsp;</div><div><span class="text-purple-400">async function</span> <span class="text-yellow-300">updateUserEmail</span><span class="text-gray-300">(</span><span class="text-orange-300">id</span><span class="text-gray-300">: </span><span class="text-blue-300">string</span><span class="text-gray-300">, </span><span class="text-orange-300">email</span><span class="text-gray-300">: </span><span class="text-blue-300">string</span><span class="text-gray-300">) {</span></div><div class="ml-4"><span class="text-blue-400">await</span> <span class="text-gray-300">db.query(</span><span class="text-green-300">`UPDATE users SET email = '${email}' WHERE id = ${id}`</span><span class="text-gray-300">);</span></div><div class="ml-4"><span class="text-blue-400">return</span> <span class="text-gray-300">{ </span><span class="text-orange-300">success</span><span class="text-gray-300">: </span><span class="text-blue-300">true</span><span class="text-gray-300"> };</span></div><div><span class="text-gray-300">}</span></div></div>
+              </div>
+            </div>
+          </div>
+          <!-- Output code -->
+          <div class="rounded-xl overflow-hidden border border-gray-700">
+            <div class="flex items-center justify-between bg-gray-800 px-4 py-2">
+              <div class="flex items-center gap-2">
+                <div class="flex gap-1.5"><div class="w-3 h-3 rounded-full bg-red-500"></div><div class="w-3 h-3 rounded-full bg-yellow-500"></div><div class="w-3 h-3 rounded-full bg-green-500"></div></div>
+                <span class="text-xs text-gray-400 font-mono">⚡ AI Output · Explanation</span>
+              </div>
+              <div class="flex gap-2">
+                <button class="text-xs text-gray-400 hover:text-white px-2 py-1 rounded hover:bg-gray-700">Copy</button>
+              </div>
+            </div>
+            <div class="bg-gray-950 p-4 font-mono text-sm text-gray-300 min-h-40 overflow-auto">
+              <div class="text-yellow-400 mb-2">// ⚠️ Security Issues Found: 2 critical, 1 warning</div>
+              <div class="text-red-400 mb-1">// ❌ CRITICAL: SQL Injection vulnerability on line 2</div>
+              <div class="text-gray-400 mb-3">//   User input `id` is directly interpolated into SQL query.</div>
+              <div class="text-red-400 mb-1">// ❌ CRITICAL: SQL Injection vulnerability on line 10</div>
+              <div class="text-gray-400 mb-3">//   Both `id` and `email` are unsanitized. Use parameterized queries.</div>
+              <div class="text-yellow-400 mb-1">// ⚠️ WARNING: No input validation on email format (line 9)</div>
+              <div class="text-green-400 mb-3">//   Suggested fix: use a parameterized query library like `pg`:</div>
+              <div class="text-blue-300">db.query(</div>
+              <div class="ml-4 text-green-300">'SELECT * FROM users WHERE id = $1'</div>
+              <div class="ml-4 text-gray-300">[id]</div>
+              <div class="text-blue-300">);</div>
+            </div>
+          </div>
+        </div>
+        <!-- File History Sidebar -->
+        <div class="bg-white rounded-xl border border-gray-200 p-4">
+          <h3 class="text-sm font-semibold text-gray-800 mb-3">File History</h3>
+          <div class="space-y-2">
+            <div class="p-2 rounded-lg bg-blue-50 border border-blue-200 cursor-pointer">
+              <p class="text-xs font-semibold text-blue-800">userService.ts</p>
+              <p class="text-xs text-blue-500">Explain · 2 min ago</p>
+            </div>
+            <div class="p-2 rounded-lg bg-gray-50 cursor-pointer hover:bg-gray-100">
+              <p class="text-xs font-medium text-gray-700">authMiddleware.ts</p>
+              <p class="text-xs text-gray-400">Refactor · 15 min ago</p>
+            </div>
+            <div class="p-2 rounded-lg bg-gray-50 cursor-pointer hover:bg-gray-100">
+              <p class="text-xs font-medium text-gray-700">payments.ts</p>
+              <p class="text-xs text-gray-400">Debug · 1 hr ago</p>
+            </div>
+            <div class="p-2 rounded-lg bg-gray-50 cursor-pointer hover:bg-gray-100">
+              <p class="text-xs font-medium text-gray-700">schema.sql</p>
+              <p class="text-xs text-gray-400">Complete · 2 hrs ago</p>
+            </div>
+            <div class="p-2 rounded-lg bg-gray-50 cursor-pointer hover:bg-gray-100">
+              <p class="text-xs font-medium text-gray-700">webhookHandler.ts</p>
+              <p class="text-xs text-gray-400">Generate Tests · 4 hrs ago</p>
+            </div>
+            <div class="p-2 rounded-lg bg-gray-50 cursor-pointer hover:bg-gray-100">
+              <p class="text-xs font-medium text-gray-700">cronJobs.ts</p>
+              <p class="text-xs text-gray-400">Explain · Yesterday</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

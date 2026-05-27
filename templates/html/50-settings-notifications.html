@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready Notification Preferences HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>Notification Preferences — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<div class="mb-6">
+      <h1 class="text-xl font-bold text-gray-900">Notification Preferences</h1>
+      <p class="text-sm text-gray-500 mt-1">Choose how and when you receive notifications</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Category List -->
+      <div class="lg:col-span-1">
+        <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+          <div class="px-4 py-3 border-b border-gray-100">
+            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Categories</p>
+          </div>
+          <nav class="p-2 space-y-0.5">
+            <button type="button" onclick="selectCategory('account')" id="cat-account" class="w-full text-left px-3 py-2.5 rounded-lg text-sm bg-blue-50 text-blue-600 font-medium flex items-center gap-2">
+              <span>👤</span> Account
+            </button>
+            <button type="button" onclick="selectCategory('billing')" id="cat-billing" class="w-full text-left px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-gray-50 flex items-center gap-2">
+              <span>💳</span> Billing
+            </button>
+            <button type="button" onclick="selectCategory('security')" id="cat-security" class="w-full text-left px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-gray-50 flex items-center gap-2">
+              <span>🔒</span> Security
+            </button>
+            <button type="button" onclick="selectCategory('team')" id="cat-team" class="w-full text-left px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-gray-50 flex items-center gap-2">
+              <span>👥</span> Team
+            </button>
+            <button type="button" onclick="selectCategory('ai')" id="cat-ai" class="w-full text-left px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-gray-50 flex items-center gap-2">
+              <span>🤖</span> AI Usage
+            </button>
+            <button type="button" onclick="selectCategory('api')" id="cat-api" class="w-full text-left px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-gray-50 flex items-center gap-2">
+              <span>🔑</span> API
+            </button>
+            <button type="button" onclick="selectCategory('marketing')" id="cat-marketing" class="w-full text-left px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-gray-50 flex items-center gap-2">
+              <span>📢</span> Marketing
+            </button>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Settings Panel -->
+      <div class="lg:col-span-2 space-y-4">
+        <div class="bg-white rounded-xl border border-gray-200 p-5">
+          <h2 class="font-semibold text-gray-800 mb-1" id="category-title">Account Notifications</h2>
+          <p class="text-xs text-gray-500 mb-5" id="category-desc">Get notified about account activity and profile changes</p>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-gray-100">
+                  <th class="text-left py-2 text-xs font-semibold text-gray-500 w-full">Event</th>
+                  <th class="text-center py-2 px-3 text-xs font-semibold text-gray-500 whitespace-nowrap">Email</th>
+                  <th class="text-center py-2 px-3 text-xs font-semibold text-gray-500 whitespace-nowrap">In-App</th>
+                  <th class="text-center py-2 px-3 text-xs font-semibold text-gray-500 whitespace-nowrap">SMS</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-50">
+                <tr>
+                  <td class="py-3 pr-4">
+                    <p class="text-sm text-gray-800">Profile updated</p>
+                    <p class="text-xs text-gray-400">When your profile information changes</p>
+                  </td>
+                  <td class="py-3 px-3 text-center"><input type="checkbox" checked class="w-4 h-4 rounded text-blue-600" /></td>
+                  <td class="py-3 px-3 text-center"><input type="checkbox" checked class="w-4 h-4 rounded text-blue-600" /></td>
+                  <td class="py-3 px-3 text-center"><input type="checkbox" class="w-4 h-4 rounded text-blue-600" /></td>
+                </tr>
+                <tr>
+                  <td class="py-3 pr-4">
+                    <p class="text-sm text-gray-800">Password changed</p>
+                    <p class="text-xs text-gray-400">When your account password is updated</p>
+                  </td>
+                  <td class="py-3 px-3 text-center"><input type="checkbox" checked class="w-4 h-4 rounded text-blue-600" /></td>
+                  <td class="py-3 px-3 text-center"><input type="checkbox" checked class="w-4 h-4 rounded text-blue-600" /></td>
+                  <td class="py-3 px-3 text-center"><input type="checkbox" checked class="w-4 h-4 rounded text-blue-600" /></td>
+                </tr>
+                <tr>
+                  <td class="py-3 pr-4">
+                    <p class="text-sm text-gray-800">New login detected</p>
+                    <p class="text-xs text-gray-400">When your account is accessed from a new device</p>
+                  </td>
+                  <td class="py-3 px-3 text-center"><input type="checkbox" checked class="w-4 h-4 rounded text-blue-600" /></td>
+                  <td class="py-3 px-3 text-center"><input type="checkbox" checked class="w-4 h-4 rounded text-blue-600" /></td>
+                  <td class="py-3 px-3 text-center"><input type="checkbox" checked class="w-4 h-4 rounded text-blue-600" /></td>
+                </tr>
+                <tr>
+                  <td class="py-3 pr-4">
+                    <p class="text-sm text-gray-800">Template published</p>
+                    <p class="text-xs text-gray-400">When one of your templates goes live</p>
+                  </td>
+                  <td class="py-3 px-3 text-center"><input type="checkbox" checked class="w-4 h-4 rounded text-blue-600" /></td>
+                  <td class="py-3 px-3 text-center"><input type="checkbox" checked class="w-4 h-4 rounded text-blue-600" /></td>
+                  <td class="py-3 px-3 text-center"><input type="checkbox" class="w-4 h-4 rounded text-blue-600" /></td>
+                </tr>
+                <tr>
+                  <td class="py-3 pr-4">
+                    <p class="text-sm text-gray-800">New follower</p>
+                    <p class="text-xs text-gray-400">When someone starts following your profile</p>
+                  </td>
+                  <td class="py-3 px-3 text-center"><input type="checkbox" class="w-4 h-4 rounded text-blue-600" /></td>
+                  <td class="py-3 px-3 text-center"><input type="checkbox" checked class="w-4 h-4 rounded text-blue-600" /></td>
+                  <td class="py-3 px-3 text-center"><input type="checkbox" class="w-4 h-4 rounded text-blue-600" /></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Quiet Hours -->
+        <div class="bg-white rounded-xl border border-gray-200 p-5">
+          <h2 class="font-semibold text-gray-800 mb-1">Quiet Hours</h2>
+          <p class="text-xs text-gray-500 mb-4">Mute non-critical notifications during these hours</p>
+          <div class="flex flex-wrap items-center gap-4">
+            <label class="flex items-center gap-2 text-sm text-gray-700">
+              <input type="checkbox" checked class="w-4 h-4 rounded text-blue-600" /> Enable quiet hours
+            </label>
+            <div class="flex items-center gap-2 text-sm text-gray-600">
+              <span>From</span>
+              <input type="time" value="22:00" class="px-2 py-1 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <span>to</span>
+              <input type="time" value="08:00" class="px-2 py-1 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Digest Frequency -->
+        <div class="bg-white rounded-xl border border-gray-200 p-5">
+          <h2 class="font-semibold text-gray-800 mb-1">Digest Frequency</h2>
+          <p class="text-xs text-gray-500 mb-3">How often to receive bundled notification summaries</p>
+          <select class="w-full max-w-xs px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option>Real-time (as they happen)</option>
+            <option selected>Daily digest (9:00 AM)</option>
+            <option>Weekly digest (Monday 9:00 AM)</option>
+            <option>Never (only direct notifications)</option>
+          </select>
+        </div>
+
+        <div class="flex justify-end gap-3">
+          <button class="px-4 py-2 border border-gray-200 text-sm text-gray-700 rounded-lg hover:bg-gray-50">Reset to Defaults</button>
+          <button type="button" class="px-5 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700">Save Preferences</button>
+        </div>
+      </div>
+    </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

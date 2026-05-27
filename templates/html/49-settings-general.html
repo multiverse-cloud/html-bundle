@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready General Settings HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>General Settings — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<div class="mb-2">
+      <h1 class="text-xl font-bold text-gray-900">General Settings</h1>
+      <p class="text-sm text-gray-500 mt-1">Configure your workspace defaults and preferences</p>
+    </div>
+
+    <!-- App Identity -->
+    <div class="bg-white rounded-xl border border-gray-200 p-6 space-y-5">
+      <h2 class="font-semibold text-gray-800 text-sm">App Identity</h2>
+
+      <div>
+        <label class="block text-xs font-medium text-gray-700 mb-1">App Name</label>
+        <input type="text" value="mtverse" class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-sm" />
+        <p class="text-xs text-gray-400 mt-1">Displayed in the browser tab and emails</p>
+      </div>
+
+      <div>
+        <label class="block text-xs font-medium text-gray-700 mb-2">Logo</label>
+        <div class="flex items-center gap-4">
+          <div class="w-14 h-14 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-xl">M</div>
+          <div class="flex-1">
+            <div class="border-2 border-dashed border-gray-200 rounded-xl p-4 text-center hover:border-blue-400 cursor-pointer transition-colors max-w-xs">
+              <p class="text-sm text-gray-500">📁 Drop logo here or <span class="text-blue-600">browse</span></p>
+              <p class="text-xs text-gray-400 mt-1">SVG, PNG up to 1MB · 512×512px recommended</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-xs font-medium text-gray-700 mb-2">Favicon</label>
+        <div class="flex items-center gap-4">
+          <div class="w-8 h-8 rounded bg-blue-600 flex items-center justify-center text-white font-bold text-xs">M</div>
+          <div class="border-2 border-dashed border-gray-200 rounded-xl p-3 text-center hover:border-blue-400 cursor-pointer transition-colors">
+            <p class="text-xs text-gray-500">📁 Upload favicon · ICO, PNG, 32×32px</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Locale & Format -->
+    <div class="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
+      <h2 class="font-semibold text-gray-800 text-sm">Locale & Formatting</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">Timezone</label>
+          <select class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option selected>America/Los_Angeles (UTC-7)</option>
+            <option>America/New_York (UTC-4)</option>
+            <option>Europe/London (UTC+0)</option>
+            <option>Asia/Tokyo (UTC+9)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">Date Format</label>
+          <select class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option selected>MM/DD/YYYY</option>
+            <option>DD/MM/YYYY</option>
+            <option>YYYY-MM-DD</option>
+            <option>MMM D, YYYY</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">Language</label>
+          <select class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option selected>English (US)</option>
+            <option>English (UK)</option>
+            <option>Spanish</option>
+            <option>French</option>
+            <option>German</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">Currency</label>
+          <select class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option selected>USD — US Dollar</option>
+            <option>EUR — Euro</option>
+            <option>GBP — British Pound</option>
+            <option>JPY — Japanese Yen</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Settings -->
+    <div class="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
+      <h2 class="font-semibold text-gray-800 text-sm">AI Defaults</h2>
+      <div>
+        <label class="block text-xs font-medium text-gray-700 mb-1">Default AI Model</label>
+        <select class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 max-w-sm">
+          <option selected>GPT-4o (OpenAI)</option>
+          <option>GPT-4 Turbo (OpenAI)</option>
+          <option>Claude 3.5 Sonnet (Anthropic)</option>
+          <option>Claude 3 Haiku (Anthropic)</option>
+          <option>Gemini 1.5 Pro (Google)</option>
+        </select>
+        <p class="text-xs text-gray-400 mt-1">Used as default in new AI Tool sessions</p>
+      </div>
+    </div>
+
+    <!-- Maintenance Mode -->
+    <div class="bg-white rounded-xl border border-gray-200 p-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="font-semibold text-gray-800 text-sm">Maintenance Mode</h2>
+          <p class="text-xs text-gray-500 mt-1">Show a maintenance page to visitors while you make updates</p>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" class="sr-only peer" id="maint-toggle" onchange="toggleMaintenanceWarning()">
+          <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-red-500 after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+        </label>
+      </div>
+      <div id="maint-warning" class="hidden mt-4 bg-red-50 border border-red-200 rounded-lg p-3">
+        <p class="text-xs text-red-700">⚠️ Maintenance mode is ON. Visitors will see a maintenance page. Remember to turn this off when you're done.</p>
+      </div>
+    </div>
+
+    <!-- Save / Discard -->
+    <div class="flex items-center justify-end gap-3 pb-4">
+      <button class="px-4 py-2 border border-gray-200 text-sm text-gray-700 rounded-lg hover:bg-gray-50">Discard Changes</button>
+      <button type="button" class="px-5 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700">Save Settings</button>
+    </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

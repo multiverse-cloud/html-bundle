@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready Prompt CMS Editor HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>Prompt CMS Editor — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<div class="flex items-center gap-2 text-sm text-gray-500 mb-4">
+        <span>Prompt CMS</span><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg><span class="text-gray-800 font-medium">Edit Prompt</span>
+      </div>
+      <div class="flex items-center justify-between mb-6">
+        <h1 class="text-xl font-bold text-gray-900">Prompt Editor</h1>
+        <div class="flex gap-2">
+          <button class="px-3 py-1.5 text-sm border border-gray-200 rounded-lg hover:bg-gray-50 text-gray-600">Save Draft</button>
+          <button type="button" class="px-4 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700">Publish</button>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Main form -->
+        <div class="lg:col-span-2 space-y-5">
+          <!-- Title + Meta -->
+          <div class="bg-white rounded-xl border border-gray-200 p-5">
+            <h2 class="text-sm font-semibold text-gray-800 mb-4">Prompt Details</h2>
+            <div class="space-y-4">
+              <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Prompt Title</label>
+                <input type="text" value="Blog Post Outline Generator" class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-medium text-gray-600 mb-1">Category</label>
+                  <select class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option>Marketing</option><option>Customer Support</option><option>Sales</option><option>Engineering</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-gray-600 mb-1">AI Model</label>
+                  <select class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option>GPT-4o</option><option>Claude 3.5 Sonnet</option><option>Gemini Pro</option><option>GPT-3.5 Turbo</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- System Message -->
+          <div class="bg-white rounded-xl border border-gray-200 p-5">
+            <div class="flex items-center justify-between mb-3">
+              <label class="text-sm font-semibold text-gray-800">System Message</label>
+              <span class="text-xs text-gray-400">248 chars</span>
+            </div>
+            <textarea rows="4" class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono resize-none">You are an expert content strategist specializing in SEO-optimized blog content. Your task is to create detailed, structured blog post outlines that are engaging, well-researched, and optimized for search engines. Always include H2 and H3 headings, key points per section, and suggested word counts.</textarea>
+          </div>
+          <!-- User Message -->
+          <div class="bg-white rounded-xl border border-gray-200 p-5">
+            <div class="flex items-center justify-between mb-3">
+              <label class="text-sm font-semibold text-gray-800">User Message Template</label>
+              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded font-medium">Uses variables</span>
+            </div>
+            <textarea rows="5" class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono resize-none">Create a comprehensive blog post outline for the topic: "{{topic}}".
+
+Target audience: {{audience}}
+Desired tone: {{tone}}
+Target word count: {{word_count}} words
+Primary keyword: {{keyword}}
+
+Please structure the outline with a compelling title, introduction hook, main sections with subpoints, and a conclusion with CTA.</textarea>
+          </div>
+          <!-- Test Run Output -->
+          <div class="bg-white rounded-xl border border-gray-200 p-5">
+            <div class="flex items-center justify-between mb-3">
+              <h2 class="text-sm font-semibold text-gray-800">Test Run Output</h2>
+              <button class="px-3 py-1.5 text-xs bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Run Test</button>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-4 text-sm text-gray-700 font-mono min-h-32 border border-gray-200">
+              <p class="text-gray-400 text-xs mb-2">// Last run: May 24, 2026 at 14:32 · 1,240 tokens · 2.1s</p>
+              <p class="font-semibold text-gray-800 mb-2">📝 Blog Post Outline: "10 Proven SaaS Growth Strategies for 2026"</p>
+              <p class="text-gray-600 mb-1"><strong>Introduction</strong> (~150 words)</p>
+              <p class="text-gray-500 ml-4 text-xs">Hook: The SaaS market is projected to hit $908B by 2030...</p>
+              <p class="text-gray-600 mb-1 mt-2"><strong>H2: 1. Product-Led Growth (PLG)</strong> (~300 words)</p>
+              <p class="text-gray-500 ml-4 text-xs">- Define PLG and why it works · Key metrics to track · Case study: Slack</p>
+            </div>
+          </div>
+        </div>
+        <!-- Variables Panel -->
+        <div class="space-y-5">
+          <div class="bg-white rounded-xl border border-gray-200 p-5">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-sm font-semibold text-gray-800">Variables</h2>
+              <button class="text-xs text-blue-600 hover:underline font-medium">+ Add Variable</button>
+            </div>
+            <div class="space-y-3">
+              <div class="flex items-center justify-between p-2 bg-blue-50 rounded-lg border border-blue-100">
+                <div><p class="text-xs font-semibold text-blue-800">{{topic}}</p><p class="text-xs text-blue-600">string · required</p></div>
+                <button class="text-gray-400 hover:text-red-500"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+              </div>
+              <div class="flex items-center justify-between p-2 bg-blue-50 rounded-lg border border-blue-100">
+                <div><p class="text-xs font-semibold text-blue-800">{{audience}}</p><p class="text-xs text-blue-600">string · optional</p></div>
+                <button class="text-gray-400 hover:text-red-500"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+              </div>
+              <div class="flex items-center justify-between p-2 bg-blue-50 rounded-lg border border-blue-100">
+                <div><p class="text-xs font-semibold text-blue-800">{{tone}}</p><p class="text-xs text-blue-600">select · optional</p></div>
+                <button class="text-gray-400 hover:text-red-500"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+              </div>
+              <div class="flex items-center justify-between p-2 bg-blue-50 rounded-lg border border-blue-100">
+                <div><p class="text-xs font-semibold text-blue-800">{{word_count}}</p><p class="text-xs text-blue-600">number · optional</p></div>
+                <button class="text-gray-400 hover:text-red-500"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+              </div>
+              <div class="flex items-center justify-between p-2 bg-blue-50 rounded-lg border border-blue-100">
+                <div><p class="text-xs font-semibold text-blue-800">{{keyword}}</p><p class="text-xs text-blue-600">string · optional</p></div>
+                <button class="text-gray-400 hover:text-red-500"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+              </div>
+            </div>
+          </div>
+          <!-- Prompt Settings -->
+          <div class="bg-white rounded-xl border border-gray-200 p-5">
+            <h2 class="text-sm font-semibold text-gray-800 mb-4">Settings</h2>
+            <div class="space-y-3">
+              <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Temperature</label>
+                <input type="range" min="0" max="2" step="0.1" value="0.7" class="w-full accent-blue-600" />
+                <div class="flex justify-between text-xs text-gray-400 mt-1"><span>0.0</span><span class="text-blue-600 font-medium">0.7</span><span>2.0</span></div>
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Max Tokens</label>
+                <input type="number" value="2048" class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              </div>
+              <div class="flex items-center justify-between">
+                <label class="text-xs font-medium text-gray-600">Stream Response</label>
+                <div class="relative inline-flex items-center cursor-pointer"><input type="checkbox" checked class="sr-only peer" /><div class="w-9 h-5 bg-blue-600 rounded-full peer peer-checked:bg-blue-600"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

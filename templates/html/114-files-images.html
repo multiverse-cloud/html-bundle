@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready Image Gallery HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>Image Gallery — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<div class="mb-6 flex items-center justify-between"><div><h1 class="text-2xl font-bold text-gray-900">Image Gallery</h1><p class="text-sm text-gray-500 mt-1">Browse and manage uploaded images</p></div><button type="button" class="bg-blue-600 text-white text-sm px-4 py-2 rounded-lg hover:bg-blue-700 transition">+ Upload Images</button></div>
+      <div class="flex gap-2 mb-5 flex-wrap">
+        <button type="button" class="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-full">All</button>
+        <button class="text-xs bg-white border border-gray-200 text-gray-600 px-3 py-1.5 rounded-full hover:bg-gray-50">Marketing</button>
+        <button class="text-xs bg-white border border-gray-200 text-gray-600 px-3 py-1.5 rounded-full hover:bg-gray-50">Products</button>
+        <button class="text-xs bg-white border border-gray-200 text-gray-600 px-3 py-1.5 rounded-full hover:bg-gray-50">Team</button>
+        <button class="text-xs bg-white border border-gray-200 text-gray-600 px-3 py-1.5 rounded-full hover:bg-gray-50">Branding</button>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div class="group relative bg-gray-200 rounded-xl overflow-hidden aspect-square cursor-pointer"><div class="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-600"></div><div class="absolute bottom-0 left-0 right-0 p-2 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition"><p class="text-white text-xs truncate">hero-banner.jpg</p><p class="text-gray-300 text-xs">1.2 MB</p></div></div>
+        <div class="group relative bg-gray-200 rounded-xl overflow-hidden aspect-square cursor-pointer"><div class="absolute inset-0 bg-gradient-to-br from-purple-400 to-pink-500"></div><div class="absolute bottom-0 left-0 right-0 p-2 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition"><p class="text-white text-xs truncate">product-shot.png</p><p class="text-gray-300 text-xs">840 KB</p></div></div>
+        <div class="group relative bg-gray-200 rounded-xl overflow-hidden aspect-square cursor-pointer"><div class="absolute inset-0 bg-gradient-to-br from-green-400 to-teal-500"></div><div class="absolute bottom-0 left-0 right-0 p-2 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition"><p class="text-white text-xs truncate">team-photo.jpg</p><p class="text-gray-300 text-xs">2.4 MB</p></div></div>
+        <div class="group relative bg-gray-200 rounded-xl overflow-hidden aspect-square cursor-pointer"><div class="absolute inset-0 bg-gradient-to-br from-orange-400 to-red-500"></div><div class="absolute bottom-0 left-0 right-0 p-2 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition"><p class="text-white text-xs truncate">logo-white.svg</p><p class="text-gray-300 text-xs">24 KB</p></div></div>
+        <div class="group relative bg-gray-200 rounded-xl overflow-hidden aspect-square cursor-pointer"><div class="absolute inset-0 bg-gradient-to-br from-yellow-300 to-orange-400"></div><div class="absolute bottom-0 left-0 right-0 p-2 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition"><p class="text-white text-xs truncate">icon-set.png</p><p class="text-gray-300 text-xs">380 KB</p></div></div>
+        <div class="group relative bg-gray-200 rounded-xl overflow-hidden aspect-square cursor-pointer"><div class="absolute inset-0 bg-gradient-to-br from-indigo-400 to-blue-600"></div><div class="absolute bottom-0 left-0 right-0 p-2 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition"><p class="text-white text-xs truncate">dashboard-preview.png</p><p class="text-gray-300 text-xs">1.8 MB</p></div></div>
+        <div class="group relative bg-gray-200 rounded-xl overflow-hidden aspect-square cursor-pointer"><div class="absolute inset-0 bg-gradient-to-br from-pink-400 to-red-400"></div><div class="absolute bottom-0 left-0 right-0 p-2 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition"><p class="text-white text-xs truncate">social-cover.jpg</p><p class="text-gray-300 text-xs">960 KB</p></div></div>
+        <div class="group relative bg-gray-200 rounded-xl overflow-hidden aspect-square cursor-pointer border-2 border-dashed border-gray-300 flex items-center justify-center hover:border-blue-400 transition"><div class="text-center"><svg class="w-8 h-8 text-gray-300 mx-auto mb-1" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg><p class="text-xs text-gray-400">Upload</p></div></div>
+      </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

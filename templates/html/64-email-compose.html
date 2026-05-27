@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready Compose Email HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>Compose Email — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<div class="max-w-3xl mx-auto">
+      <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+        <!-- Compose Header -->
+        <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-gray-50">
+          <h1 class="font-semibold text-gray-800 text-sm">New Message</h1>
+          <div class="flex gap-2">
+            <button class="text-xs text-gray-500 hover:text-gray-700 px-2 py-1 hover:bg-gray-200 rounded">⤵</button>
+            <button class="text-xs text-gray-500 hover:text-gray-700 px-2 py-1 hover:bg-gray-200 rounded">✕</button>
+          </div>
+        </div>
+
+        <!-- To Field -->
+        <div class="border-b border-gray-100 px-4 py-2 flex items-center gap-2">
+          <span class="text-xs font-medium text-gray-500 w-12 flex-shrink-0">To</span>
+          <div class="flex flex-wrap gap-1.5 flex-1 items-center">
+            <!-- Tag -->
+            <span class="flex items-center gap-1 bg-blue-100 text-blue-700 text-xs rounded-full px-2 py-0.5">
+              marcus@startup.io <button type="button" onclick="this.parentElement.remove()" class="text-blue-500 hover:text-blue-700">✕</button>
+            </span>
+            <span class="flex items-center gap-1 bg-blue-100 text-blue-700 text-xs rounded-full px-2 py-0.5">
+              sophie@mtverse.dev <button type="button" onclick="this.parentElement.remove()" class="text-blue-500 hover:text-blue-700">✕</button>
+            </span>
+            <input type="text" placeholder="Add recipient..." class="flex-1 min-w-24 text-sm focus:outline-none py-0.5" />
+          </div>
+          <!-- Suggestions dropdown (static) -->
+          <div class="hidden absolute mt-8 bg-white border border-gray-200 rounded-lg shadow-lg z-10 w-64">
+            <div class="p-2">
+              <div class="flex items-center gap-2 px-2 py-1.5 hover:bg-gray-50 cursor-pointer rounded">
+                <div class="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center text-white text-xs">MC</div>
+                <div><p class="text-xs font-medium">Marcus Chen</p><p class="text-xs text-gray-400">marcus@startup.io</p></div>
+              </div>
+            </div>
+          </div>
+          <button type="button" onclick="toggleCcBcc()" class="text-xs text-blue-600 hover:underline whitespace-nowrap">CC / BCC</button>
+        </div>
+
+        <!-- CC/BCC (hidden by default) -->
+        <div id="cc-bcc" class="hidden border-b border-gray-100">
+          <div class="px-4 py-2 flex items-center gap-2 border-b border-gray-50">
+            <span class="text-xs font-medium text-gray-500 w-12 flex-shrink-0">CC</span>
+            <input type="text" placeholder="Add CC recipients..." class="flex-1 text-sm focus:outline-none" />
+          </div>
+          <div class="px-4 py-2 flex items-center gap-2">
+            <span class="text-xs font-medium text-gray-500 w-12 flex-shrink-0">BCC</span>
+            <input type="text" placeholder="Add BCC recipients..." class="flex-1 text-sm focus:outline-none" />
+          </div>
+        </div>
+
+        <!-- Subject -->
+        <div class="border-b border-gray-100 px-4 py-2">
+          <input type="text" value="Follow-up: API Integration Issue" class="w-full text-sm font-medium text-gray-800 focus:outline-none" placeholder="Subject" />
+        </div>
+
+        <!-- Toolbar -->
+        <div class="border-b border-gray-100 px-4 py-2 flex items-center gap-1 flex-wrap">
+          <button class="p-1.5 rounded hover:bg-gray-100 text-sm font-bold text-gray-600" title="Bold"><b>B</b></button>
+          <button class="p-1.5 rounded hover:bg-gray-100 text-sm italic text-gray-600" title="Italic"><i>I</i></button>
+          <button class="p-1.5 rounded hover:bg-gray-100 text-sm underline text-gray-600" title="Underline">U</button>
+          <div class="w-px h-4 bg-gray-200 mx-1"></div>
+          <button class="p-1.5 rounded hover:bg-gray-100 text-sm text-gray-600" title="Link">🔗</button>
+          <button class="p-1.5 rounded hover:bg-gray-100 text-sm text-gray-600" title="Bullet list">≡</button>
+          <button class="p-1.5 rounded hover:bg-gray-100 text-sm text-gray-600" title="Numbered list">1.</button>
+          <div class="w-px h-4 bg-gray-200 mx-1"></div>
+          <button class="p-1.5 rounded hover:bg-gray-100 text-sm text-gray-600" title="Image">🖼️</button>
+          <button class="p-1.5 rounded hover:bg-gray-100 text-sm text-gray-600" title="Table">⊞</button>
+        </div>
+
+        <!-- Body -->
+        <div class="px-4 py-3">
+          <div class="text-sm text-gray-700 space-y-3 min-h-48 focus:outline-none" contenteditable="true">
+            <p>Hi Marcus,</p>
+            <p>Thanks for the follow-up. I've looked into your account and I can see what might be causing the issue.</p>
+            <p>Could you try the following steps:</p>
+            <ol class="list-decimal pl-5 space-y-1">
+              <li>Log out and back in to refresh your session token</li>
+              <li>Check that your role has API key creation permissions (Settings → Team)</li>
+              <li>Try using an incognito window to rule out extensions</li>
+            </ol>
+            <p>Please let me know if any of these work. If not, I'll escalate this to our engineering team.</p>
+            <p>Best regards,<br/>Jane Doe<br/>mtverse Support</p>
+          </div>
+        </div>
+
+        <!-- Attachment Drop Zone -->
+        <div class="mx-4 mb-3 border-2 border-dashed border-gray-200 rounded-xl p-3 text-center hover:border-blue-400 transition-colors cursor-pointer">
+          <p class="text-xs text-gray-500">📎 Drag & drop files here or <span class="text-blue-600">browse</span></p>
+          <p class="text-xs text-gray-400 mt-0.5">Max 25 MB per file</p>
+        </div>
+
+        <!-- Actions Row -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-4 pb-4">
+          <div class="flex items-center gap-2">
+            <button type="button" class="px-5 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700">Send ↗</button>
+            <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden">
+              <button type="button" onclick="toggleSchedule()" class="px-3 py-2 text-xs text-gray-600 hover:bg-gray-50 flex items-center gap-1">🕐 Schedule</button>
+            </div>
+            <button class="px-3 py-2 text-xs border border-gray-200 text-gray-600 rounded-lg hover:bg-gray-50">Save Draft</button>
+          </div>
+          <button class="text-xs text-red-500 hover:underline self-start sm:self-auto">🗑️ Discard</button>
+        </div>
+
+        <!-- Schedule Panel -->
+        <div id="schedule-panel" class="hidden border-t border-gray-100 px-4 py-3 bg-gray-50">
+          <p class="text-xs font-medium text-gray-700 mb-2">Schedule Send</p>
+          <div class="flex flex-wrap gap-2">
+            <button class="px-3 py-1.5 text-xs border border-gray-200 bg-white rounded-lg hover:bg-gray-50">Tomorrow 9:00 AM</button>
+            <button class="px-3 py-1.5 text-xs border border-gray-200 bg-white rounded-lg hover:bg-gray-50">Tomorrow 2:00 PM</button>
+            <button class="px-3 py-1.5 text-xs border border-gray-200 bg-white rounded-lg hover:bg-gray-50">Monday 9:00 AM</button>
+            <div class="flex items-center gap-2">
+              <input type="datetime-local" class="px-2 py-1.5 text-xs border border-gray-200 bg-white rounded-lg focus:outline-none" />
+              <button type="button" class="px-3 py-1.5 bg-blue-600 text-white text-xs rounded-lg hover:bg-blue-700">Schedule</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

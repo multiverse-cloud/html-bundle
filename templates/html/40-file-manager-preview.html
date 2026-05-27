@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready File Preview HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>File Preview — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<!-- Preview Body: 2-column -->
+    <div class="flex flex-1 overflow-hidden">
+
+      <!-- CENTER: Document Preview -->
+      <div class="flex-1 overflow-y-auto bg-gray-100 p-6">
+        <!-- Simulated PDF Page -->
+        <div class="bg-white max-w-2xl mx-auto rounded-xl shadow-lg border border-gray-200 p-10 mb-6">
+
+          <!-- Document Header -->
+          <div class="text-center border-b border-gray-200 pb-6 mb-6">
+            <div class="flex items-center justify-center gap-2 mb-2">
+              <div class="w-7 h-7 bg-blue-600 rounded-md flex items-center justify-center text-white font-bold text-xs">M</div>
+              <span class="font-bold text-gray-800">mtverse</span>
+            </div>
+            <h1 class="text-2xl font-bold text-gray-900 mt-2">Q2 2026 Performance Report</h1>
+            <p class="text-sm text-gray-500 mt-2">Prepared by: Finance &amp; Analytics Team · May 24, 2026</p>
+            <span class="inline-block mt-2 text-xs font-semibold text-red-600 bg-red-50 px-3 py-1 rounded-full border border-red-200">Confidential — Internal Use Only</span>
+          </div>
+
+          <!-- Executive Summary -->
+          <div class="mb-6">
+            <h2 class="text-base font-bold text-gray-900 mb-3 uppercase tracking-wide text-xs text-blue-600 border-l-4 border-blue-500 pl-3">Executive Summary</h2>
+            <p class="text-sm text-gray-700 leading-relaxed">mtverse delivered exceptional performance in Q2 2026, with total revenue surpassing $284,500 — a 22% increase year-over-year driven by accelerated enterprise adoption and strong retention rates. New user acquisition reached 3,842, reflecting the continued expansion of our self-serve channel. API usage hit 1.24 million calls, confirming growing platform reliance from integrated partners. Churn rate declined to 2.1%, a 0.4 percentage point improvement reflecting improved onboarding flows launched in Q1.</p>
+          </div>
+
+          <!-- Key Metrics -->
+          <div class="mb-6">
+            <h2 class="text-xs font-bold text-blue-600 uppercase tracking-wide border-l-4 border-blue-500 pl-3 mb-4">Key Metrics</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div class="bg-blue-50 rounded-xl p-4 text-center">
+                <p class="text-2xl font-bold text-blue-700">$284.5K</p>
+                <p class="text-xs text-blue-600 font-medium mt-1">Revenue</p>
+                <p class="text-xs text-green-600 font-semibold mt-1">+22% YoY</p>
+              </div>
+              <div class="bg-green-50 rounded-xl p-4 text-center">
+                <p class="text-2xl font-bold text-green-700">3,842</p>
+                <p class="text-xs text-green-600 font-medium mt-1">New Users</p>
+                <p class="text-xs text-green-600 font-semibold mt-1">+8.1%</p>
+              </div>
+              <div class="bg-purple-50 rounded-xl p-4 text-center">
+                <p class="text-2xl font-bold text-purple-700">1.24M</p>
+                <p class="text-xs text-purple-600 font-medium mt-1">API Calls</p>
+                <p class="text-xs text-green-600 font-semibold mt-1">+31%</p>
+              </div>
+              <div class="bg-orange-50 rounded-xl p-4 text-center">
+                <p class="text-2xl font-bold text-orange-700">2.1%</p>
+                <p class="text-xs text-orange-600 font-medium mt-1">Churn Rate</p>
+                <p class="text-xs text-green-600 font-semibold mt-1">-0.4%</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Revenue Breakdown Table -->
+          <div class="mb-6">
+            <h2 class="text-xs font-bold text-blue-600 uppercase tracking-wide border-l-4 border-blue-500 pl-3 mb-4">Revenue Breakdown</h2>
+            <table class="min-w-full text-sm border border-gray-200 rounded-lg overflow-hidden">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-4 py-2 text-left text-xs font-semibold text-gray-600">Product</th>
+                  <th class="px-4 py-2 text-right text-xs font-semibold text-gray-600">Q1 2026</th>
+                  <th class="px-4 py-2 text-right text-xs font-semibold text-gray-600">Q2 2026</th>
+                  <th class="px-4 py-2 text-right text-xs font-semibold text-gray-600">Change</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                <tr>
+                  <td class="px-4 py-2 text-gray-800">Pro Plan</td>
+                  <td class="px-4 py-2 text-right text-gray-600">$142,000</td>
+                  <td class="px-4 py-2 text-right font-medium text-gray-900">$184,000</td>
+                  <td class="px-4 py-2 text-right text-green-600 font-semibold">+29.6%</td>
+                </tr>
+                <tr class="bg-gray-50">
+                  <td class="px-4 py-2 text-gray-800">Enterprise</td>
+                  <td class="px-4 py-2 text-right text-gray-600">$68,000</td>
+                  <td class="px-4 py-2 text-right font-medium text-gray-900">$81,200</td>
+                  <td class="px-4 py-2 text-right text-green-600 font-semibold">+19.4%</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-2 text-gray-800">Starter</td>
+                  <td class="px-4 py-2 text-right text-gray-600">$14,300</td>
+                  <td class="px-4 py-2 text-right font-medium text-gray-900">$19,300</td>
+                  <td class="px-4 py-2 text-right text-green-600 font-semibold">+35%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Observations & Next Steps -->
+          <div class="mb-8">
+            <h2 class="text-xs font-bold text-blue-600 uppercase tracking-wide border-l-4 border-blue-500 pl-3 mb-3">Observations &amp; Next Steps</h2>
+            <ul class="space-y-2 text-sm text-gray-700">
+              <li class="flex items-start gap-2"><span class="text-blue-500 mt-0.5">▸</span> Enterprise tier exceeded projections by 12%; dedicated onboarding campaign to be expanded in Q3.</li>
+              <li class="flex items-start gap-2"><span class="text-blue-500 mt-0.5">▸</span> API usage growth signals opportunity to introduce tiered usage pricing; feasibility study scheduled for June.</li>
+              <li class="flex items-start gap-2"><span class="text-blue-500 mt-0.5">▸</span> Churn reduction attributed to new in-app onboarding flow; team to continue A/B testing retention messaging.</li>
+              <li class="flex items-start gap-2"><span class="text-blue-500 mt-0.5">▸</span> Starter plan conversion to Pro increased 18%; consider dedicated upgrade prompts in the dashboard UI.</li>
+            </ul>
+          </div>
+
+          <!-- Page footer + nav -->
+          <div class="border-t border-gray-200 pt-4 flex items-center justify-between">
+            <p class="text-xs text-gray-400">Page 1 of 8</p>
+            <div class="flex items-center gap-3">
+              <button class="w-8 h-8 rounded-lg border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-50 disabled:opacity-30" disabled>‹</button>
+              <span class="text-sm text-gray-700 font-medium">1 / 8</span>
+              <button class="w-8 h-8 rounded-lg border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-50">›</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- RIGHT PANEL -->
+      <div class="hidden lg:flex flex-col w-72 border-l border-gray-200 bg-white overflow-y-auto flex-shrink-0">
+
+        <!-- File Info Card -->
+        <div class="p-5 border-b border-gray-100">
+          <h3 class="text-sm font-semibold text-gray-900 mb-3">📋 File Info</h3>
+          <dl class="space-y-2 text-sm">
+            <div class="flex justify-between"><dt class="text-gray-500">Size</dt><dd class="font-medium text-gray-900">4.2 MB</dd></div>
+            <div class="flex justify-between"><dt class="text-gray-500">Type</dt><dd class="font-medium text-gray-900">PDF Document</dd></div>
+            <div class="flex justify-between"><dt class="text-gray-500">Pages</dt><dd class="font-medium text-gray-900">8</dd></div>
+            <div class="flex justify-between"><dt class="text-gray-500">Owner</dt><dd class="font-medium text-gray-900">Jane Doe</dd></div>
+            <div class="flex justify-between"><dt class="text-gray-500">Uploaded</dt><dd class="font-medium text-gray-900">May 24, 2026</dd></div>
+            <div class="flex justify-between"><dt class="text-gray-500">Modified</dt><dd class="font-medium text-gray-900">May 24, 2026</dd></div>
+            <div class="flex justify-between"><dt class="text-gray-500">Version</dt><dd class="font-medium text-blue-600">v3.0</dd></div>
+          </dl>
+        </div>
+
+        <!-- Comments Card -->
+        <div class="p-5 flex-1 overflow-y-auto">
+          <h3 class="text-sm font-semibold text-gray-900 mb-4">💬 Comments <span class="text-gray-400 font-normal">(3)</span></h3>
+          <div class="space-y-4 mb-5">
+
+            <!-- Comment 1 -->
+            <div class="flex gap-3">
+              <div class="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white text-xs font-semibold flex-shrink-0">JP</div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                  <p class="text-xs font-semibold text-gray-900">James Patel</p>
+                  <span class="text-xs text-gray-400">2h ago</span>
+                </div>
+                <div class="bg-gray-50 rounded-lg px-3 py-2 text-xs text-gray-700">Revenue numbers look great! Can we get the breakdown by region?</div>
+              </div>
+            </div>
+
+            <!-- Comment 2 -->
+            <div class="flex gap-3">
+              <div class="w-8 h-8 rounded-full bg-pink-500 flex items-center justify-center text-white text-xs font-semibold flex-shrink-0">LC</div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                  <p class="text-xs font-semibold text-gray-900">Laura Chen</p>
+                  <span class="text-xs text-gray-400">5h ago</span>
+                </div>
+                <div class="bg-gray-50 rounded-lg px-3 py-2 text-xs text-gray-700">Updating the charts for the presentation.</div>
+              </div>
+            </div>
+
+            <!-- Comment 3 -->
+            <div class="flex gap-3">
+              <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-semibold flex-shrink-0">JD</div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                  <p class="text-xs font-semibold text-gray-900">Jane Doe</p>
+                  <span class="text-xs text-gray-400">Yesterday</span>
+                </div>
+                <div class="bg-blue-50 rounded-lg px-3 py-2 text-xs text-gray-700">Final version — approved for distribution.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Add Comment -->
+          <div class="mt-4">
+            <textarea rows="2" placeholder="Add a comment..." class="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
+            <button type="button" class="mt-2 w-full bg-blue-600 text-white text-xs font-medium py-2 rounded-lg hover:bg-blue-700">Post Comment</button>
+          </div>
+        </div>
+      </div><!-- end right panel -->
+
+    </div><!-- end 2-col preview body -->
+  </div><!-- end main content -->
+</div><!-- end outer flex -->
+
+<script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    sidebar.classList.toggle('-translate-x-full');
+    overlay.classList.toggle('hidden');
+  }
+</script>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

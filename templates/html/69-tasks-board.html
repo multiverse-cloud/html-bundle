@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready Task Board HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>Task Board — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<!-- Board Header & Filter Bar -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
+      <div>
+        <h1 class="text-xl font-bold text-gray-900">mtverse — Dashboard Templates</h1>
+        <p class="text-xs text-gray-500 mt-0.5">Sprint 4 · May 13 – May 31, 2026</p>
+      </div>
+      <div class="flex flex-wrap gap-2 items-center">
+        <!-- Assignee filter -->
+        <select class="px-3 py-1.5 text-xs border border-gray-200 rounded-lg focus:outline-none">
+          <option>All Assignees</option>
+          <option>Jane Doe</option>
+          <option>Marcus Turner</option>
+          <option>Sophie Lin</option>
+        </select>
+        <select class="px-3 py-1.5 text-xs border border-gray-200 rounded-lg focus:outline-none">
+          <option>All Priorities</option>
+          <option>High</option>
+          <option>Medium</option>
+          <option>Low</option>
+        </select>
+        <select class="px-3 py-1.5 text-xs border border-gray-200 rounded-lg focus:outline-none">
+          <option>All Labels</option>
+          <option>UI</option>
+          <option>API</option>
+          <option>Bug</option>
+        </select>
+        <button type="button" class="px-3 py-1.5 bg-blue-600 text-white text-xs font-medium rounded-lg hover:bg-blue-700">+ Add Task</button>
+      </div>
+    </div>
+
+    <!-- Kanban Columns -->
+    <div class="flex gap-4 min-w-max">
+      <!-- Backlog -->
+      <div class="w-72 flex-shrink-0">
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <span class="font-semibold text-gray-700 text-sm">Backlog</span>
+            <span class="px-1.5 py-0.5 bg-gray-100 text-gray-600 text-xs rounded-full">5</span>
+          </div>
+          <button class="text-gray-400 hover:text-gray-600 text-lg leading-none">+</button>
+        </div>
+        <div class="space-y-2">
+          <div class="bg-white rounded-xl border border-gray-200 p-3 hover:shadow-md transition-shadow cursor-grab">
+            <div class="flex items-start justify-between mb-2">
+              <p class="text-sm font-medium text-gray-800 leading-tight">Set up CI/CD pipeline for templates</p>
+              <span class="text-gray-300 text-xs ml-2 flex-shrink-0">⋮⋮</span>
+            </div>
+            <div class="flex flex-wrap gap-1 mb-2">
+              <span class="px-1.5 py-0.5 bg-yellow-100 text-yellow-700 text-xs rounded">medium</span>
+              <span class="px-1.5 py-0.5 bg-blue-100 text-blue-700 text-xs rounded">DevOps</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-1.5">
+                <div class="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center text-white text-xs">M</div>
+              </div>
+              <span class="text-xs text-gray-400">Jun 5</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl border border-gray-200 p-3 hover:shadow-md transition-shadow cursor-grab">
+            <div class="flex items-start justify-between mb-2">
+              <p class="text-sm font-medium text-gray-800 leading-tight">Add dark mode support to all templates</p>
+              <span class="text-gray-300 text-xs ml-2 flex-shrink-0">⋮⋮</span>
+            </div>
+            <div class="flex flex-wrap gap-1 mb-2">
+              <span class="px-1.5 py-0.5 bg-red-100 text-red-700 text-xs rounded">high</span>
+              <span class="px-1.5 py-0.5 bg-purple-100 text-purple-700 text-xs rounded">UI</span>
+              <span class="px-1.5 py-0.5 bg-gray-100 text-gray-600 text-xs rounded">Design</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-1.5">
+                <div class="w-5 h-5 rounded-full bg-teal-500 flex items-center justify-center text-white text-xs">S</div>
+              </div>
+              <span class="text-xs text-gray-400">Jun 12</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl border border-gray-200 p-3 hover:shadow-md transition-shadow cursor-grab">
+            <div class="flex items-start justify-between mb-2">
+              <p class="text-sm font-medium text-gray-800 leading-tight">Write API documentation for v3</p>
+              <span class="text-gray-300 text-xs ml-2 flex-shrink-0">⋮⋮</span>
+            </div>
+            <div class="flex flex-wrap gap-1 mb-2">
+              <span class="px-1.5 py-0.5 bg-green-100 text-green-700 text-xs rounded">low</span>
+              <span class="px-1.5 py-0.5 bg-blue-100 text-blue-700 text-xs rounded">API</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-1.5">
+                <div class="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs">J</div>
+              </div>
+              <span class="text-xs text-gray-400">Jun 20</span>
+            </div>
+          </div>
+
+          <button class="w-full py-2 text-xs text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">+ Add task</button>
+        </div>
+      </div>
+
+      <!-- In Progress -->
+      <div class="w-72 flex-shrink-0">
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <span class="font-semibold text-gray-700 text-sm">In Progress</span>
+            <span class="px-1.5 py-0.5 bg-blue-100 text-blue-700 text-xs rounded-full">3</span>
+          </div>
+          <button class="text-gray-400 hover:text-gray-600 text-lg leading-none">+</button>
+        </div>
+        <div class="space-y-2">
+          <div class="bg-white rounded-xl border border-blue-200 border-l-4 border-l-blue-500 p-3 hover:shadow-md transition-shadow cursor-grab">
+            <div class="flex items-start justify-between mb-2">
+              <p class="text-sm font-medium text-gray-800 leading-tight">Build Kanban board template</p>
+              <span class="text-gray-300 text-xs ml-2 flex-shrink-0">⋮⋮</span>
+            </div>
+            <div class="flex flex-wrap gap-1 mb-2">
+              <span class="px-1.5 py-0.5 bg-red-100 text-red-700 text-xs rounded">high</span>
+              <span class="px-1.5 py-0.5 bg-purple-100 text-purple-700 text-xs rounded">UI</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex -space-x-1">
+                <div class="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs border border-white">J</div>
+                <div class="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center text-white text-xs border border-white">M</div>
+              </div>
+              <span class="text-xs text-red-500 font-medium">May 25</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl border border-blue-200 border-l-4 border-l-blue-500 p-3 hover:shadow-md transition-shadow cursor-grab">
+            <div class="flex items-start justify-between mb-2">
+              <p class="text-sm font-medium text-gray-800 leading-tight">Implement webhook notification system</p>
+              <span class="text-gray-300 text-xs ml-2 flex-shrink-0">⋮⋮</span>
+            </div>
+            <div class="flex flex-wrap gap-1 mb-2">
+              <span class="px-1.5 py-0.5 bg-yellow-100 text-yellow-700 text-xs rounded">medium</span>
+              <span class="px-1.5 py-0.5 bg-blue-100 text-blue-700 text-xs rounded">API</span>
+              <span class="px-1.5 py-0.5 bg-blue-100 text-blue-700 text-xs rounded">Backend</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="w-5 h-5 rounded-full bg-pink-500 flex items-center justify-center text-white text-xs">R</div>
+              <span class="text-xs text-gray-400">May 28</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl border border-blue-200 border-l-4 border-l-blue-500 p-3 hover:shadow-md transition-shadow cursor-grab">
+            <div class="flex items-start justify-between mb-2">
+              <p class="text-sm font-medium text-gray-800 leading-tight">Fix mobile sidebar overflow bug</p>
+              <span class="text-gray-300 text-xs ml-2 flex-shrink-0">⋮⋮</span>
+            </div>
+            <div class="flex flex-wrap gap-1 mb-2">
+              <span class="px-1.5 py-0.5 bg-red-100 text-red-700 text-xs rounded">high</span>
+              <span class="px-1.5 py-0.5 bg-red-50 text-red-600 text-xs rounded">Bug</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="w-5 h-5 rounded-full bg-teal-500 flex items-center justify-center text-white text-xs">S</div>
+              <span class="text-xs text-orange-500 font-medium">May 24</span>
+            </div>
+          </div>
+
+          <button class="w-full py-2 text-xs text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">+ Add task</button>
+        </div>
+      </div>
+
+      <!-- In Review -->
+      <div class="w-72 flex-shrink-0">
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <span class="font-semibold text-gray-700 text-sm">In Review</span>
+            <span class="px-1.5 py-0.5 bg-purple-100 text-purple-700 text-xs rounded-full">2</span>
+          </div>
+          <button class="text-gray-400 hover:text-gray-600 text-lg leading-none">+</button>
+        </div>
+        <div class="space-y-2">
+          <div class="bg-white rounded-xl border border-purple-200 border-l-4 border-l-purple-500 p-3 hover:shadow-md transition-shadow cursor-grab">
+            <div class="flex items-start justify-between mb-2">
+              <p class="text-sm font-medium text-gray-800 leading-tight">Dashboard analytics chart component</p>
+              <span class="text-gray-300 text-xs ml-2 flex-shrink-0">⋮⋮</span>
+            </div>
+            <div class="flex flex-wrap gap-1 mb-2">
+              <span class="px-1.5 py-0.5 bg-yellow-100 text-yellow-700 text-xs rounded">medium</span>
+              <span class="px-1.5 py-0.5 bg-purple-100 text-purple-700 text-xs rounded">UI</span>
+              <span class="px-1.5 py-0.5 bg-gray-100 text-gray-600 text-xs rounded">Charts</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs">J</div>
+              <span class="text-xs text-gray-400">May 22</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl border border-purple-200 border-l-4 border-l-purple-500 p-3 hover:shadow-md transition-shadow cursor-grab">
+            <div class="flex items-start justify-between mb-2">
+              <p class="text-sm font-medium text-gray-800 leading-tight">OAuth2 provider integration</p>
+              <span class="text-gray-300 text-xs ml-2 flex-shrink-0">⋮⋮</span>
+            </div>
+            <div class="flex flex-wrap gap-1 mb-2">
+              <span class="px-1.5 py-0.5 bg-red-100 text-red-700 text-xs rounded">high</span>
+              <span class="px-1.5 py-0.5 bg-blue-100 text-blue-700 text-xs rounded">Auth</span>
+              <span class="px-1.5 py-0.5 bg-blue-100 text-blue-700 text-xs rounded">Backend</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center text-white text-xs">M</div>
+              <span class="text-xs text-gray-400">May 20</span>
+            </div>
+          </div>
+
+          <button class="w-full py-2 text-xs text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">+ Add task</button>
+        </div>
+      </div>
+
+      <!-- Done -->
+      <div class="w-72 flex-shrink-0">
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <span class="font-semibold text-gray-700 text-sm">Done</span>
+            <span class="px-1.5 py-0.5 bg-green-100 text-green-700 text-xs rounded-full">4</span>
+          </div>
+          <button class="text-gray-400 hover:text-gray-600 text-lg leading-none">+</button>
+        </div>
+        <div class="space-y-2 opacity-75">
+          <div class="bg-white rounded-xl border border-green-200 border-l-4 border-l-green-500 p-3 cursor-grab">
+            <div class="flex items-start justify-between mb-2">
+              <p class="text-sm font-medium text-gray-500 leading-tight line-through">Redesign user profile page</p>
+              <span class="text-gray-200 text-xs ml-2 flex-shrink-0">⋮⋮</span>
+            </div>
+            <div class="flex flex-wrap gap-1 mb-2">
+              <span class="px-1.5 py-0.5 bg-green-100 text-green-700 text-xs rounded">low</span>
+              <span class="px-1.5 py-0.5 bg-purple-100 text-purple-700 text-xs rounded">UI</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="w-5 h-5 rounded-full bg-teal-500 flex items-center justify-center text-white text-xs">S</div>
+              <span class="text-xs text-green-500">✓ May 20</span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl border border-green-200 border-l-4 border-l-green-500 p-3 cursor-grab">
+            <div class="flex items-start justify-between mb-2">
+              <p class="text-sm font-medium text-gray-500 leading-tight line-through">Set up Stripe webhook handlers</p>
+              <span class="text-gray-200 text-xs ml-2 flex-shrink-0">⋮⋮</span>
+            </div>
+            <div class="flex flex-wrap gap-1 mb-2">
+              <span class="px-1.5 py-0.5 bg-red-100 text-red-700 text-xs rounded">high</span>
+              <span class="px-1.5 py-0.5 bg-blue-100 text-blue-700 text-xs rounded">Backend</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="w-5 h-5 rounded-full bg-pink-500 flex items-center justify-center text-white text-xs">R</div>
+              <span class="text-xs text-green-500">✓ May 18</span>
+            </div>
+          </div>
+
+          <button class="w-full py-2 text-xs text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">+ Add task</button>
+        </div>
+      </div>
+    </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready Create API Key HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>Create API Key — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<!-- Page header -->
+      <div class="flex items-center gap-3 mb-6">
+        <a href="#" class="p-2 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-gray-700">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+        </a>
+        <div>
+          <h1 class="text-xl font-bold text-gray-900">Create API Key</h1>
+          <p class="text-sm text-gray-500 mt-0.5">Generate a new key for API access</p>
+        </div>
+      </div>
+
+      <!-- Warning banner -->
+      <div class="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-6 flex items-start gap-3">
+        <span class="text-xl leading-none">⚠️</span>
+        <p class="text-sm text-amber-800"><strong class="font-semibold">Keep your API key secure.</strong> It will only be shown once after creation. Store it in a password manager or secrets vault immediately.</p>
+      </div>
+
+      <div class="flex flex-col lg:flex-row gap-6">
+        <!-- Main form -->
+        <div class="flex-1">
+          <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6 max-w-2xl">
+            <div class="space-y-5">
+              <!-- Key Name -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Key Name <span class="text-red-500">*</span></label>
+                <input type="text" placeholder="e.g. Production Backend" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                <p class="text-xs text-gray-400 mt-1">A descriptive name to identify this key.</p>
+              </div>
+              <!-- Description -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <textarea rows="3" placeholder="What will this key be used for?" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
+              </div>
+              <!-- Scopes -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-3">Scopes <span class="text-red-500">*</span></label>
+                <div class="space-y-3">
+                  <label class="flex items-start gap-3 p-3 border border-blue-200 bg-blue-50 rounded-lg cursor-pointer">
+                    <input type="checkbox" checked class="mt-0.5 rounded text-blue-600 border-gray-300" />
+                    <div>
+                      <p class="text-sm font-medium text-gray-800">Read</p>
+                      <p class="text-xs text-gray-500">Access data and retrieve resources</p>
+                    </div>
+                  </label>
+                  <label class="flex items-start gap-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50">
+                    <input type="checkbox" class="mt-0.5 rounded text-blue-600 border-gray-300" />
+                    <div>
+                      <p class="text-sm font-medium text-gray-800">Write</p>
+                      <p class="text-xs text-gray-500">Create and update resources</p>
+                    </div>
+                  </label>
+                  <label class="flex items-start gap-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50">
+                    <input type="checkbox" class="mt-0.5 rounded text-blue-600 border-gray-300" />
+                    <div>
+                      <p class="text-sm font-medium text-gray-800">Delete</p>
+                      <p class="text-xs text-gray-500">Remove resources permanently</p>
+                    </div>
+                  </label>
+                  <label class="flex items-start gap-3 p-3 border border-orange-100 bg-orange-50 rounded-lg cursor-pointer hover:bg-orange-100">
+                    <input type="checkbox" class="mt-0.5 rounded text-orange-600 border-gray-300" />
+                    <div>
+                      <p class="text-sm font-medium text-gray-800">Admin</p>
+                      <p class="text-xs text-gray-500">Full administrative access</p>
+                      <p class="text-xs text-orange-600 mt-0.5 font-medium">⚠ Grants unrestricted access. Use with caution.</p>
+                    </div>
+                  </label>
+                </div>
+              </div>
+              <!-- Expiration -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Expiration</label>
+                <select class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  <option>No expiration</option>
+                  <option>30 days</option>
+                  <option>60 days</option>
+                  <option>90 days</option>
+                  <option>1 year</option>
+                </select>
+              </div>
+              <!-- IP Whitelist -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">IP Whitelist <span class="text-gray-400 font-normal">(optional)</span></label>
+                <textarea rows="3" placeholder="Enter IP addresses, one per line&#10;192.168.1.0/24&#10;10.0.0.1" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm font-mono focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
+                <p class="text-xs text-gray-400 mt-1">Leave blank to allow all IPs. Supports CIDR notation.</p>
+              </div>
+              <!-- Environment tag -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Environment Tag</label>
+                <select class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  <option>Production</option>
+                  <option>Staging</option>
+                  <option>Development</option>
+                  <option>Testing</option>
+                </select>
+              </div>
+              <!-- Actions -->
+              <div class="pt-2">
+                <button type="button" class="w-full py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors">
+                  Generate API Key
+                </button>
+                <div class="text-center mt-3">
+                  <a href="#" class="text-sm text-gray-500 hover:text-gray-700 underline">Cancel</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right tips panel -->
+        <div class="lg:w-72 space-y-4">
+          <div class="bg-blue-50 border border-blue-100 rounded-xl p-4">
+            <h3 class="text-sm font-semibold text-blue-900 mb-2 flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+              Security Tips
+            </h3>
+            <ul class="text-xs text-blue-800 space-y-2">
+              <li class="flex items-start gap-1.5"><span class="mt-0.5">•</span>Never expose API keys in client-side code or version control.</li>
+              <li class="flex items-start gap-1.5"><span class="mt-0.5">•</span>Use the minimum required scopes for each key.</li>
+              <li class="flex items-start gap-1.5"><span class="mt-0.5">•</span>Set an expiration date for temporary integrations.</li>
+              <li class="flex items-start gap-1.5"><span class="mt-0.5">•</span>Use IP whitelisting for production keys.</li>
+              <li class="flex items-start gap-1.5"><span class="mt-0.5">•</span>Rotate keys regularly, at least every 90 days.</li>
+            </ul>
+          </div>
+          <div class="bg-white border border-gray-200 rounded-xl p-4">
+            <h3 class="text-sm font-semibold text-gray-800 mb-3">API Documentation</h3>
+            <div class="space-y-2">
+              <a href="#" class="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                Authentication Guide
+              </a>
+              <a href="#" class="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.121 8.464l1.007-1.007a4 4 0 015.657 5.656l-4 4a4 4 0 01-5.657 0"/></svg>
+                API Reference
+              </a>
+              <a href="#" class="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                Code Examples
+              </a>
+            </div>
+          </div>
+          <div class="bg-white border border-gray-200 rounded-xl p-4">
+            <h3 class="text-sm font-semibold text-gray-800 mb-2">Rate Limits</h3>
+            <div class="space-y-1.5 text-xs text-gray-600">
+              <div class="flex justify-between"><span>Free plan</span><span class="font-medium text-gray-800">100 / min</span></div>
+              <div class="flex justify-between"><span>Pro plan</span><span class="font-medium text-gray-800">1,000 / min</span></div>
+              <div class="flex justify-between"><span>Enterprise</span><span class="font-medium text-gray-800">Custom</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

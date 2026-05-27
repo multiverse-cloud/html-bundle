@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready Maps - Regional Analytics HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>Maps - Regional Analytics — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<!-- Breadcrumb -->
+      <nav class="flex items-center gap-1.5 text-sm text-gray-500 mb-4">
+        <a href="#" class="hover:text-blue-600">Dashboard</a>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <a href="#" class="hover:text-blue-600">Maps</a>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <span class="text-gray-800 font-medium">Regional Analytics</span>
+      </nav>
+
+      <!-- Page title row -->
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+        <div>
+          <h1 class="text-xl font-bold text-gray-900">Regional Analytics</h1>
+          <p class="text-sm text-gray-500 mt-0.5">Performance breakdown across global regions</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="compareBtn" onclick="toggleCompare()" class="flex items-center gap-1.5 text-sm bg-white border border-gray-200 rounded-lg px-3 py-1.5 hover:bg-gray-50 font-medium">
+            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+            Comparison Mode
+          </button>
+          <select class="text-sm border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+            <option>Last 30 days</option>
+            <option>Last 90 days</option>
+            <option>This Year</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Summary stats bar -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div class="bg-white rounded-xl border border-gray-200 p-4">
+          <p class="text-xs text-gray-500 font-medium uppercase tracking-wide">Total Regions</p>
+          <p class="text-2xl font-bold text-gray-900 mt-1">6</p>
+          <p class="text-xs text-gray-400 mt-1">Global coverage</p>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 p-4">
+          <p class="text-xs text-gray-500 font-medium uppercase tracking-wide">Total Users</p>
+          <p class="text-2xl font-bold text-gray-900 mt-1">128,450</p>
+          <p class="text-xs text-green-600 mt-1 flex items-center gap-1"><span>↑</span> +18.4% YoY</p>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 p-4">
+          <p class="text-xs text-gray-500 font-medium uppercase tracking-wide">Total Revenue</p>
+          <p class="text-2xl font-bold text-gray-900 mt-1">$284,500</p>
+          <p class="text-xs text-green-600 mt-1 flex items-center gap-1"><span>↑</span> +22.1% YoY</p>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 p-4">
+          <p class="text-xs text-gray-500 font-medium uppercase tracking-wide">YoY Growth</p>
+          <p class="text-2xl font-bold text-green-600 mt-1">+18.4%</p>
+          <p class="text-xs text-gray-400 mt-1">vs last year</p>
+        </div>
+      </div>
+
+
+      <!-- Region cards grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+
+        <!-- North America -->
+        <div class="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-md transition-shadow">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">🌎</span>
+              <h3 class="font-semibold text-gray-800">North America</h3>
+            </div>
+            <span class="text-xs bg-green-100 text-green-700 font-semibold px-2 py-0.5 rounded-full">+8.2% MoM</span>
+          </div>
+          <div class="flex items-end justify-between mb-3">
+            <div>
+              <p class="text-3xl font-bold text-gray-900">49,210</p>
+              <p class="text-xs text-gray-500">users</p>
+            </div>
+            <div class="text-right">
+              <p class="text-lg font-bold text-gray-800">$128,400</p>
+              <p class="text-xs text-gray-500">revenue</p>
+            </div>
+          </div>
+          <p class="text-xs text-gray-500 mb-3">Top country: <span class="font-medium text-gray-700">🇺🇸 USA</span></p>
+          <!-- Mini bar chart -->
+          <svg viewBox="0 0 100 30" class="w-full h-8">
+            <rect x="0"  y="22" width="14" height="8"  fill="#bfdbfe" rx="2"/>
+            <rect x="17" y="18" width="14" height="12" fill="#93c5fd" rx="2"/>
+            <rect x="34" y="14" width="14" height="16" fill="#60a5fa" rx="2"/>
+            <rect x="51" y="10" width="14" height="20" fill="#3b82f6" rx="2"/>
+            <rect x="68" y="5"  width="14" height="25" fill="#2563eb" rx="2"/>
+          </svg>
+          <p class="text-xs text-gray-400 mt-1">Last 5 months trend ↑</p>
+        </div>
+
+        <!-- Europe -->
+        <div class="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-md transition-shadow">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">🌍</span>
+              <h3 class="font-semibold text-gray-800">Europe</h3>
+            </div>
+            <span class="text-xs bg-green-100 text-green-700 font-semibold px-2 py-0.5 rounded-full">+12.1% MoM</span>
+          </div>
+          <div class="flex items-end justify-between mb-3">
+            <div>
+              <p class="text-3xl font-bold text-gray-900">38,420</p>
+              <p class="text-xs text-gray-500">users</p>
+            </div>
+            <div class="text-right">
+              <p class="text-lg font-bold text-gray-800">$94,800</p>
+              <p class="text-xs text-gray-500">revenue</p>
+            </div>
+          </div>
+          <p class="text-xs text-gray-500 mb-3">Top country: <span class="font-medium text-gray-700">🇩🇪 Germany</span></p>
+          <svg viewBox="0 0 100 30" class="w-full h-8">
+            <rect x="0"  y="20" width="14" height="10" fill="#bfdbfe" rx="2"/>
+            <rect x="17" y="16" width="14" height="14" fill="#93c5fd" rx="2"/>
+            <rect x="34" y="15" width="14" height="15" fill="#60a5fa" rx="2"/>
+            <rect x="51" y="9"  width="14" height="21" fill="#3b82f6" rx="2"/>
+            <rect x="68" y="3"  width="14" height="27" fill="#2563eb" rx="2"/>
+          </svg>
+          <p class="text-xs text-gray-400 mt-1">Last 5 months trend ↑</p>
+        </div>
+
+        <!-- Asia Pacific -->
+        <div class="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-md transition-shadow">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">🌏</span>
+              <h3 class="font-semibold text-gray-800">Asia Pacific</h3>
+            </div>
+            <span class="text-xs bg-green-100 text-green-700 font-semibold px-2 py-0.5 rounded-full">+22.4% MoM</span>
+          </div>
+          <div class="flex items-end justify-between mb-3">
+            <div>
+              <p class="text-3xl font-bold text-gray-900">24,190</p>
+              <p class="text-xs text-gray-500">users</p>
+            </div>
+            <div class="text-right">
+              <p class="text-lg font-bold text-gray-800">$41,200</p>
+              <p class="text-xs text-gray-500">revenue</p>
+            </div>
+          </div>
+          <p class="text-xs text-gray-500 mb-3">Top country: <span class="font-medium text-gray-700">🇯🇵 Japan</span></p>
+          <svg viewBox="0 0 100 30" class="w-full h-8">
+            <rect x="0"  y="10" width="14" height="20" fill="#60a5fa" rx="2"/>
+            <rect x="17" y="18" width="14" height="12" fill="#93c5fd" rx="2"/>
+            <rect x="34" y="8"  width="14" height="22" fill="#3b82f6" rx="2"/>
+            <rect x="51" y="16" width="14" height="14" fill="#60a5fa" rx="2"/>
+            <rect x="68" y="4"  width="14" height="26" fill="#2563eb" rx="2"/>
+          </svg>
+          <p class="text-xs text-gray-400 mt-1">Last 5 months mixed</p>
+        </div>
+
+        <!-- Latin America -->
+        <div class="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-md transition-shadow">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">🌎</span>
+              <h3 class="font-semibold text-gray-800">Latin America</h3>
+            </div>
+            <span class="text-xs bg-green-100 text-green-700 font-semibold px-2 py-0.5 rounded-full">+18.9% MoM</span>
+          </div>
+          <div class="flex items-end justify-between mb-3">
+            <div>
+              <p class="text-3xl font-bold text-gray-900">11,840</p>
+              <p class="text-xs text-gray-500">users</p>
+            </div>
+            <div class="text-right">
+              <p class="text-lg font-bold text-gray-800">$14,200</p>
+              <p class="text-xs text-gray-500">revenue</p>
+            </div>
+          </div>
+          <p class="text-xs text-gray-500 mb-3">Top country: <span class="font-medium text-gray-700">🇧🇷 Brazil</span></p>
+          <svg viewBox="0 0 100 30" class="w-full h-8">
+            <rect x="0"  y="24" width="14" height="6"  fill="#bfdbfe" rx="2"/>
+            <rect x="17" y="20" width="14" height="10" fill="#93c5fd" rx="2"/>
+            <rect x="34" y="16" width="14" height="14" fill="#60a5fa" rx="2"/>
+            <rect x="51" y="11" width="14" height="19" fill="#3b82f6" rx="2"/>
+            <rect x="68" y="6"  width="14" height="24" fill="#2563eb" rx="2"/>
+          </svg>
+          <p class="text-xs text-gray-400 mt-1">Last 5 months trend ↑</p>
+        </div>
+
+        <!-- Middle East -->
+        <div class="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-md transition-shadow">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">🌍</span>
+              <h3 class="font-semibold text-gray-800">Middle East</h3>
+            </div>
+            <span class="text-xs bg-green-100 text-green-700 font-semibold px-2 py-0.5 rounded-full">+5.4% MoM</span>
+          </div>
+          <div class="flex items-end justify-between mb-3">
+            <div>
+              <p class="text-3xl font-bold text-gray-900">3,140</p>
+              <p class="text-xs text-gray-500">users</p>
+            </div>
+            <div class="text-right">
+              <p class="text-lg font-bold text-gray-800">$4,200</p>
+              <p class="text-xs text-gray-500">revenue</p>
+            </div>
+          </div>
+          <p class="text-xs text-gray-500 mb-3">Top country: <span class="font-medium text-gray-700">🇦🇪 UAE</span></p>
+          <svg viewBox="0 0 100 30" class="w-full h-8">
+            <rect x="0"  y="12" width="14" height="18" fill="#60a5fa" rx="2"/>
+            <rect x="17" y="14" width="14" height="16" fill="#93c5fd" rx="2"/>
+            <rect x="34" y="12" width="14" height="18" fill="#60a5fa" rx="2"/>
+            <rect x="51" y="13" width="14" height="17" fill="#93c5fd" rx="2"/>
+            <rect x="68" y="10" width="14" height="20" fill="#3b82f6" rx="2"/>
+          </svg>
+          <p class="text-xs text-gray-400 mt-1">Last 5 months flat</p>
+        </div>
+
+        <!-- Africa -->
+        <div class="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-md transition-shadow">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">🌍</span>
+              <h3 class="font-semibold text-gray-800">Africa</h3>
+            </div>
+            <span class="text-xs bg-green-100 text-green-700 font-semibold px-2 py-0.5 rounded-full">+31.2% MoM</span>
+          </div>
+          <div class="flex items-end justify-between mb-3">
+            <div>
+              <p class="text-3xl font-bold text-gray-900">1,650</p>
+              <p class="text-xs text-gray-500">users</p>
+            </div>
+            <div class="text-right">
+              <p class="text-lg font-bold text-gray-800">$1,700</p>
+              <p class="text-xs text-gray-500">revenue</p>
+            </div>
+          </div>
+          <p class="text-xs text-gray-500 mb-3">Top country: <span class="font-medium text-gray-700">🇳🇬 Nigeria</span></p>
+          <svg viewBox="0 0 100 30" class="w-full h-8">
+            <rect x="0"  y="26" width="14" height="4"  fill="#bfdbfe" rx="2"/>
+            <rect x="17" y="22" width="14" height="8"  fill="#93c5fd" rx="2"/>
+            <rect x="34" y="17" width="14" height="13" fill="#60a5fa" rx="2"/>
+            <rect x="51" y="11" width="14" height="19" fill="#3b82f6" rx="2"/>
+            <rect x="68" y="4"  width="14" height="26" fill="#2563eb" rx="2"/>
+          </svg>
+          <p class="text-xs text-gray-400 mt-1">Last 5 months trend ↑</p>
+        </div>
+
+      </div>
+
+      <!-- Comparison table -->
+      <div class="bg-white rounded-xl border border-gray-200 overflow-hidden" id="comparisonTable">
+        <div class="px-5 py-3 border-b border-gray-100 flex items-center justify-between">
+          <h2 class="font-semibold text-gray-800 text-sm">Region Comparison</h2>
+          <span class="text-xs text-gray-400">Sorted by users</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-gray-50 text-xs text-gray-500 uppercase tracking-wide">
+              <tr>
+                <th class="text-left px-5 py-3 font-medium">Region</th>
+                <th class="text-right px-5 py-3 font-medium">Users</th>
+                <th class="text-right px-5 py-3 font-medium">Revenue</th>
+                <th class="text-right px-5 py-3 font-medium">MoM Growth</th>
+                <th class="text-right px-5 py-3 font-medium">ARPU</th>
+                <th class="text-right px-5 py-3 font-medium">% of Total</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              <tr class="hover:bg-gray-50"><td class="px-5 py-3 font-medium">🌎 North America</td><td class="px-5 py-3 text-right">49,210</td><td class="px-5 py-3 text-right">$128,400</td><td class="px-5 py-3 text-right text-green-600 font-semibold">+8.2%</td><td class="px-5 py-3 text-right text-gray-600">$2.61</td><td class="px-5 py-3 text-right text-gray-600">38.3%</td></tr>
+              <tr class="hover:bg-gray-50"><td class="px-5 py-3 font-medium">🌍 Europe</td><td class="px-5 py-3 text-right">38,420</td><td class="px-5 py-3 text-right">$94,800</td><td class="px-5 py-3 text-right text-green-600 font-semibold">+12.1%</td><td class="px-5 py-3 text-right text-gray-600">$2.47</td><td class="px-5 py-3 text-right text-gray-600">29.9%</td></tr>
+              <tr class="hover:bg-gray-50"><td class="px-5 py-3 font-medium">🌏 Asia Pacific</td><td class="px-5 py-3 text-right">24,190</td><td class="px-5 py-3 text-right">$41,200</td><td class="px-5 py-3 text-right text-green-600 font-semibold">+22.4%</td><td class="px-5 py-3 text-right text-gray-600">$1.70</td><td class="px-5 py-3 text-right text-gray-600">18.8%</td></tr>
+              <tr class="hover:bg-gray-50"><td class="px-5 py-3 font-medium">🌎 Latin America</td><td class="px-5 py-3 text-right">11,840</td><td class="px-5 py-3 text-right">$14,200</td><td class="px-5 py-3 text-right text-green-600 font-semibold">+18.9%</td><td class="px-5 py-3 text-right text-gray-600">$1.20</td><td class="px-5 py-3 text-right text-gray-600">9.2%</td></tr>
+              <tr class="hover:bg-gray-50"><td class="px-5 py-3 font-medium">🌍 Middle East</td><td class="px-5 py-3 text-right">3,140</td><td class="px-5 py-3 text-right">$4,200</td><td class="px-5 py-3 text-right text-green-600 font-semibold">+5.4%</td><td class="px-5 py-3 text-right text-gray-600">$1.34</td><td class="px-5 py-3 text-right text-gray-600">2.4%</td></tr>
+              <tr class="hover:bg-gray-50"><td class="px-5 py-3 font-medium">🌍 Africa</td><td class="px-5 py-3 text-right">1,650</td><td class="px-5 py-3 text-right">$1,700</td><td class="px-5 py-3 text-right text-green-600 font-semibold">+31.2%</td><td class="px-5 py-3 text-right text-gray-600">$1.03</td><td class="px-5 py-3 text-right text-gray-600">1.3%</td></tr>
+              <tr class="bg-gray-50 font-semibold border-t-2 border-gray-200"><td class="px-5 py-3">Total</td><td class="px-5 py-3 text-right">128,450</td><td class="px-5 py-3 text-right">$284,500</td><td class="px-5 py-3 text-right text-green-600">+18.4%</td><td class="px-5 py-3 text-right">$2.21</td><td class="px-5 py-3 text-right">100%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

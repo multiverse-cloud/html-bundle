@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready File Upload HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>File Upload — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<!-- Upload Content -->
+    <div class="flex-1 overflow-y-auto p-6 max-w-3xl mx-auto w-full">
+
+      <!-- Page Title -->
+      <div class="mb-6">
+        <h1 class="text-2xl font-bold text-gray-900">Upload Files</h1>
+        <p class="text-sm text-gray-500 mt-1">Upload files to My Files / Projects / Q2 2026</p>
+      </div>
+
+      <!-- Drag & Drop Zone -->
+      <div class="border-2 border-dashed border-blue-300 bg-blue-50 rounded-xl p-12 text-center cursor-pointer hover:bg-blue-100 hover:border-blue-400 transition-colors mb-8">
+        <div class="flex flex-col items-center gap-4">
+          <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-4xl">☁️</div>
+          <div>
+            <p class="text-lg font-semibold text-gray-800">Drag &amp; drop files here, or click to browse</p>
+            <p class="text-sm text-gray-500 mt-1">Supports: PNG, JPG, PDF, XLSX, ZIP · Max 100 MB per file</p>
+          </div>
+          <button type="button" class="bg-blue-600 text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-blue-700">Browse Files</button>
+        </div>
+      </div>
+
+      <!-- Upload Queue -->
+      <div class="bg-white rounded-xl border border-gray-200 overflow-hidden mb-6">
+        <!-- Queue Header -->
+        <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+          <div>
+            <h2 class="text-base font-semibold text-gray-900">Upload Queue <span class="text-gray-400 font-normal">(4 files)</span></h2>
+            <!-- Overall Progress -->
+            <div class="flex items-center gap-3 mt-2">
+              <div class="flex-1 bg-gray-200 rounded-full h-2 w-48">
+                <div class="bg-blue-500 h-2 rounded-full" style="width:23%"></div>
+              </div>
+              <span class="text-xs text-gray-500">4.6 MB of 19.3 MB uploaded (23%)</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button class="text-sm text-gray-600 border border-gray-200 px-3 py-1.5 rounded-lg hover:bg-gray-50">⏸ Pause All</button>
+            <button class="text-sm text-red-600 border border-red-200 px-3 py-1.5 rounded-lg hover:bg-red-50">✕ Cancel All</button>
+          </div>
+        </div>
+
+        <!-- Item 1: Uploading 78% -->
+        <div class="px-5 py-4 border-b border-gray-100">
+          <div class="flex items-center gap-4">
+            <div class="w-9 h-9 bg-red-100 rounded-lg flex items-center justify-center text-lg flex-shrink-0">📄</div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between mb-1">
+                <p class="text-sm font-medium text-gray-900 truncate">Q2-Report-Final.pdf</p>
+                <div class="flex items-center gap-2 ml-3">
+                  <span class="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">UPLOADING</span>
+                  <span class="text-xs text-gray-500">4.2 MB</span>
+                  <button class="text-xs text-gray-400 hover:text-red-500">Cancel</button>
+                </div>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-1.5">
+                <div class="bg-blue-500 h-1.5 rounded-full transition-all" style="width:78%"></div>
+              </div>
+              <p class="text-xs text-gray-400 mt-1">78% · 3.3 MB / 4.2 MB</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 2: Uploading 45% -->
+        <div class="px-5 py-4 border-b border-gray-100">
+          <div class="flex items-center gap-4">
+            <div class="w-9 h-9 bg-green-100 rounded-lg flex items-center justify-center text-lg flex-shrink-0">📊</div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between mb-1">
+                <p class="text-sm font-medium text-gray-900 truncate">Analytics-May2026.xlsx</p>
+                <div class="flex items-center gap-2 ml-3">
+                  <span class="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">UPLOADING</span>
+                  <span class="text-xs text-gray-500">1.8 MB</span>
+                  <button class="text-xs text-gray-400 hover:text-red-500">Cancel</button>
+                </div>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-1.5">
+                <div class="bg-blue-500 h-1.5 rounded-full" style="width:45%"></div>
+              </div>
+              <p class="text-xs text-gray-400 mt-1">45% · 0.8 MB / 1.8 MB</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 3: Waiting -->
+        <div class="px-5 py-4 border-b border-gray-100 opacity-60">
+          <div class="flex items-center gap-4">
+            <div class="w-9 h-9 bg-purple-100 rounded-lg flex items-center justify-center text-lg flex-shrink-0">🖼</div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between mb-1">
+                <p class="text-sm font-medium text-gray-900 truncate">hero-banner-v3.png</p>
+                <div class="flex items-center gap-2 ml-3">
+                  <span class="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">WAITING</span>
+                  <span class="text-xs text-gray-500">892 KB</span>
+                  <button class="text-xs text-gray-400">—</button>
+                </div>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-1.5"></div>
+              <p class="text-xs text-gray-400 mt-1">Waiting to start...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 4: Error -->
+        <div class="px-5 py-4">
+          <div class="flex items-center gap-4">
+            <div class="w-9 h-9 bg-yellow-100 rounded-lg flex items-center justify-center text-lg flex-shrink-0">🗜</div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between mb-1">
+                <p class="text-sm font-medium text-gray-900 truncate">source-code-backup.zip</p>
+                <div class="flex items-center gap-2 ml-3">
+                  <span class="text-xs font-medium text-red-600 bg-red-50 px-2 py-0.5 rounded-full">ERROR</span>
+                  <span class="text-xs text-gray-500">12.4 MB</span>
+                  <button class="text-xs text-blue-600 hover:text-blue-800">Retry</button>
+                </div>
+              </div>
+              <div class="w-full bg-red-100 rounded-full h-1.5"></div>
+              <p class="text-xs text-red-500 mt-1">File type not allowed</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Completed Files -->
+      <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div class="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+          <h2 class="text-base font-semibold text-gray-900">Completed <span class="text-gray-400 font-normal">(3)</span></h2>
+          <button class="text-sm text-gray-400 hover:text-gray-600">Clear all</button>
+        </div>
+
+        <!-- Completed Item 1 -->
+        <div class="px-5 py-4 border-b border-gray-100 flex items-center gap-4">
+          <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 flex-shrink-0">✓</div>
+          <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center text-base flex-shrink-0">📝</div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-gray-900 truncate">product-roadmap-v2.docx</p>
+            <p class="text-xs text-gray-400">234 KB · Uploaded May 24, 2026</p>
+          </div>
+          <a href="#" class="text-sm text-blue-600 hover:underline flex-shrink-0">View</a>
+        </div>
+
+        <!-- Completed Item 2 -->
+        <div class="px-5 py-4 border-b border-gray-100 flex items-center gap-4">
+          <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 flex-shrink-0">✓</div>
+          <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center text-base flex-shrink-0">🖼</div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-gray-900 truncate">team-photo-q2.jpg</p>
+            <p class="text-xs text-gray-400">2.1 MB · Uploaded May 24, 2026</p>
+          </div>
+          <a href="#" class="text-sm text-blue-600 hover:underline flex-shrink-0">View</a>
+        </div>
+
+        <!-- Completed Item 3 -->
+        <div class="px-5 py-4 flex items-center gap-4">
+          <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 flex-shrink-0">✓</div>
+          <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center text-base flex-shrink-0">📄</div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-gray-900 truncate">api-docs-v4.pdf</p>
+            <p class="text-xs text-gray-400">1.1 MB · Uploaded May 24, 2026</p>
+          </div>
+          <a href="#" class="text-sm text-blue-600 hover:underline flex-shrink-0">View</a>
+        </div>
+      </div>
+
+    </div><!-- end upload content -->
+  </div><!-- end main content -->
+</div><!-- end outer flex -->
+
+<script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    sidebar.classList.toggle('-translate-x-full');
+    overlay.classList.toggle('hidden');
+  }
+</script>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

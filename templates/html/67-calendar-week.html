@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready Week View — Calendar HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>Week View — Calendar — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<!-- Controls -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+      <div class="flex items-center gap-3">
+        <button class="p-2 rounded-lg hover:bg-gray-100 text-gray-600">←</button>
+        <h1 class="text-lg font-bold text-gray-900">May 19 – 25, 2026</h1>
+        <button class="p-2 rounded-lg hover:bg-gray-100 text-gray-600">→</button>
+        <button class="px-3 py-1.5 text-xs border border-gray-200 text-gray-600 rounded-lg hover:bg-gray-50">Today</button>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="flex border border-gray-200 rounded-lg overflow-hidden text-xs">
+          <button class="px-3 py-1.5 text-gray-600 hover:bg-gray-50">Month</button>
+          <button type="button" class="px-3 py-1.5 bg-blue-600 text-white font-medium">Week</button>
+          <button class="px-3 py-1.5 text-gray-600 hover:bg-gray-50">Day</button>
+        </div>
+        <button type="button" class="px-4 py-2 bg-blue-600 text-white text-xs font-medium rounded-lg hover:bg-blue-700">+ New Event</button>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl border border-gray-200 overflow-auto" style="max-height: calc(100vh - 200px)">
+      <div class="flex">
+        <!-- Time column -->
+        <div class="w-14 flex-shrink-0 border-r border-gray-200">
+          <!-- Blank corner for header -->
+          <div class="h-16 border-b border-gray-200 bg-gray-50"></div>
+          <!-- All-day spacer -->
+          <div class="h-10 border-b border-gray-200 bg-gray-50"></div>
+          <!-- Hours -->
+          <div class="relative">
+            <div class="h-14 border-b border-gray-100 flex items-start justify-end pr-2 pt-1"><span class="text-xs text-gray-400">7 AM</span></div>
+            <div class="h-14 border-b border-gray-100 flex items-start justify-end pr-2 pt-1"><span class="text-xs text-gray-400">8 AM</span></div>
+            <div class="h-14 border-b border-gray-100 flex items-start justify-end pr-2 pt-1"><span class="text-xs text-gray-400">9 AM</span></div>
+            <div class="h-14 border-b border-gray-100 flex items-start justify-end pr-2 pt-1"><span class="text-xs text-gray-400">10 AM</span></div>
+            <div class="h-14 border-b border-gray-100 flex items-start justify-end pr-2 pt-1"><span class="text-xs text-gray-400">11 AM</span></div>
+            <div class="h-14 border-b border-gray-100 flex items-start justify-end pr-2 pt-1"><span class="text-xs text-gray-400">12 PM</span></div>
+            <div class="h-14 border-b border-gray-100 flex items-start justify-end pr-2 pt-1"><span class="text-xs text-gray-400">1 PM</span></div>
+            <div class="h-14 border-b border-gray-100 flex items-start justify-end pr-2 pt-1"><span class="text-xs text-gray-400">2 PM</span></div>
+            <div class="h-14 border-b border-gray-100 flex items-start justify-end pr-2 pt-1"><span class="text-xs text-gray-400">3 PM</span></div>
+            <div class="h-14 border-b border-gray-100 flex items-start justify-end pr-2 pt-1"><span class="text-xs text-gray-400">4 PM</span></div>
+            <div class="h-14 border-b border-gray-100 flex items-start justify-end pr-2 pt-1"><span class="text-xs text-gray-400">5 PM</span></div>
+            <div class="h-14 border-b border-gray-100 flex items-start justify-end pr-2 pt-1"><span class="text-xs text-gray-400">6 PM</span></div>
+            <div class="h-14 flex items-start justify-end pr-2 pt-1"><span class="text-xs text-gray-400">7 PM</span></div>
+          </div>
+        </div>
+
+        <!-- Days grid -->
+        <div class="flex-1 min-w-0">
+          <!-- Day header row -->
+          <div class="grid grid-cols-7 border-b border-gray-200 bg-gray-50" style="height: 64px">
+            <div class="border-r border-gray-200 flex flex-col items-center justify-center px-1">
+              <p class="text-xs text-gray-500">Mon</p>
+              <p class="text-sm font-medium text-gray-700">19</p>
+            </div>
+            <div class="border-r border-gray-200 flex flex-col items-center justify-center px-1">
+              <p class="text-xs text-gray-500">Tue</p>
+              <p class="text-sm font-medium text-gray-700">20</p>
+            </div>
+            <div class="border-r border-gray-200 flex flex-col items-center justify-center px-1">
+              <p class="text-xs text-gray-500">Wed</p>
+              <p class="text-sm font-medium text-gray-700">21</p>
+            </div>
+            <div class="border-r border-gray-200 flex flex-col items-center justify-center px-1">
+              <p class="text-xs text-gray-500">Thu</p>
+              <p class="text-sm font-medium text-gray-700">22</p>
+            </div>
+            <div class="border-r border-gray-200 flex flex-col items-center justify-center px-1">
+              <p class="text-xs text-gray-500">Fri</p>
+              <p class="text-sm font-medium text-gray-700">23</p>
+            </div>
+            <div class="border-r border-gray-200 flex flex-col items-center justify-center bg-blue-50 px-1">
+              <p class="text-xs text-blue-500 font-semibold">SAT</p>
+              <div class="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center">
+                <p class="text-sm font-bold text-white">24</p>
+              </div>
+            </div>
+            <div class="flex flex-col items-center justify-center px-1">
+              <p class="text-xs text-gray-500">Sun</p>
+              <p class="text-sm font-medium text-gray-700">25</p>
+            </div>
+          </div>
+
+          <!-- All-day row -->
+          <div class="grid grid-cols-7 border-b border-gray-200 bg-gray-50" style="height: 40px">
+            <div class="border-r border-gray-100 px-1 flex items-center"></div>
+            <div class="border-r border-gray-100 px-1 flex items-center">
+              <div class="w-full text-xs bg-green-100 text-green-700 rounded px-1 truncate">API Docs Due</div>
+            </div>
+            <div class="border-r border-gray-100 px-1"></div>
+            <div class="border-r border-gray-100 px-1"></div>
+            <div class="border-r border-gray-100 px-1"></div>
+            <div class="border-r border-gray-100 px-1 flex items-center">
+              <div class="w-full text-xs bg-orange-100 text-orange-700 rounded px-1 truncate">Sub. Renews</div>
+            </div>
+            <div class="px-1"></div>
+          </div>
+
+          <!-- Hour rows -->
+          <div class="grid grid-cols-7 relative">
+            <!-- Current time indicator (at ~9am = 2*56px offset) -->
+            <div class="absolute left-0 right-0 flex items-center z-10 pointer-events-none" style="top: 168px">
+              <div class="w-2 h-2 rounded-full bg-red-500 -ml-1"></div>
+              <div class="flex-1 h-px bg-red-400"></div>
+            </div>
+
+            <!-- Mon rows (7am-7pm) -->
+            <div class="border-r border-gray-200 relative">
+              <div class="h-14 border-b border-gray-100"></div>
+              <div class="h-14 border-b border-gray-100"></div>
+              <div class="h-14 border-b border-gray-100 relative">
+                <div class="absolute top-0 left-1 right-1 h-14 bg-blue-500 text-white rounded-lg p-1 text-xs cursor-pointer overflow-hidden">
+                  <p class="font-medium">1:1 Marcus</p>
+                  <p class="opacity-80">9-9:30 AM</p>
+                </div>
+              </div>
+              <div class="h-14 border-b border-gray-100"></div>
+              <div class="h-14 border-b border-gray-100"></div>
+              <div class="h-14 border-b border-gray-100"></div>
+              <div class="h-14 border-b border-gray-100"></div>
+              <div class="h-14 border-b border-gray-100"></div>
+              <div class="h-14 border-b border-gray-100"></div>
+              <div class="h-14 border-b border-gray-100"></div>
+              <div class="h-14 border-b border-gray-100"></div>
+              <div class="h-14 border-b border-gray-100"></div>
+              <div class="h-14"></div>
+            </div>
+
+            <!-- Tue-Thu blank -->
+            <div class="border-r border-gray-200">
+              <div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14"></div>
+            </div>
+            <div class="border-r border-gray-200">
+              <div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14"></div>
+            </div>
+            <div class="border-r border-gray-200">
+              <div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div>
+              <div class="h-14 border-b border-gray-100 relative">
+                <div class="absolute top-0 left-1 right-1 bg-purple-500 text-white rounded-lg p-1 text-xs cursor-pointer" style="height:84px; z-index:5">
+                  <p class="font-medium">Design Review</p>
+                  <p class="opacity-80">10-11:30 AM</p>
+                </div>
+              </div>
+              <div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14"></div>
+            </div>
+            <div class="border-r border-gray-200">
+              <div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14"></div>
+            </div>
+
+            <!-- Saturday (Today) -->
+            <div class="border-r border-gray-200 bg-blue-50/20">
+              <div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div>
+              <div class="h-14 border-b border-gray-100 relative">
+                <div class="absolute top-0 left-1 right-1 bg-blue-600 text-white rounded-lg p-1 text-xs cursor-pointer" style="height:112px; z-index:5">
+                  <p class="font-medium">All-hands</p>
+                  <p class="opacity-80">2:00 – 3:30 PM</p>
+                </div>
+              </div>
+              <div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14"></div>
+            </div>
+
+            <!-- Sun -->
+            <div>
+              <div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14 border-b border-gray-100"></div><div class="h-14"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

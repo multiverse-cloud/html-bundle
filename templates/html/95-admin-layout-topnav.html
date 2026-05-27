@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready Top Nav Dashboard HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>Top Nav Dashboard — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<!-- 4-col KPI Cards -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <div class="bg-white rounded-xl border border-gray-200 p-5">
+      <div class="flex items-center justify-between mb-2">
+        <p class="text-xs font-medium text-gray-500 uppercase tracking-wide">Total Revenue</p>
+        <div class="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center">
+          <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+      </div>
+      <p class="text-2xl font-bold text-gray-900">$284,500</p>
+      <p class="text-xs text-green-600 mt-1">↑ 12.4% vs last month</p>
+    </div>
+    <div class="bg-white rounded-xl border border-gray-200 p-5">
+      <div class="flex items-center justify-between mb-2">
+        <p class="text-xs font-medium text-gray-500 uppercase tracking-wide">Active Users</p>
+        <div class="w-8 h-8 bg-green-50 rounded-lg flex items-center justify-center">
+          <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </div>
+      </div>
+      <p class="text-2xl font-bold text-gray-900">128,450</p>
+      <p class="text-xs text-green-600 mt-1">↑ 8.1% growth</p>
+    </div>
+    <div class="bg-white rounded-xl border border-gray-200 p-5">
+      <div class="flex items-center justify-between mb-2">
+        <p class="text-xs font-medium text-gray-500 uppercase tracking-wide">API Calls</p>
+        <div class="w-8 h-8 bg-purple-50 rounded-lg flex items-center justify-center">
+          <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        </div>
+      </div>
+      <p class="text-2xl font-bold text-gray-900">2.4M</p>
+      <p class="text-xs text-blue-600 mt-1">↑ 21.3% this week</p>
+    </div>
+    <div class="bg-white rounded-xl border border-gray-200 p-5">
+      <div class="flex items-center justify-between mb-2">
+        <p class="text-xs font-medium text-gray-500 uppercase tracking-wide">Templates</p>
+        <div class="w-8 h-8 bg-orange-50 rounded-lg flex items-center justify-center">
+          <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
+        </div>
+      </div>
+      <p class="text-2xl font-bold text-gray-900">142</p>
+      <p class="text-xs text-green-600 mt-1">+4 published this month</p>
+    </div>
+  </div>
+
+  <!-- 3-col grid: chart + quick stats -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+    <!-- Revenue chart (spans 2 cols) -->
+    <div class="lg:col-span-2 bg-white rounded-xl border border-gray-200 p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 class="text-sm font-semibold text-gray-900">Revenue Overview</h2>
+          <p class="text-xs text-gray-400">12-month performance</p>
+        </div>
+        <div class="flex gap-2">
+          <button class="px-3 py-1 text-xs rounded-lg bg-blue-50 text-blue-600 font-medium">12M</button>
+          <button class="px-3 py-1 text-xs rounded-lg text-gray-500 hover:bg-gray-100">6M</button>
+        </div>
+      </div>
+      <svg viewBox="0 0 560 140" class="w-full">
+        <line x1="0" y1="30" x2="560" y2="30" stroke="#f3f4f6" stroke-width="1"/>
+        <line x1="0" y1="65" x2="560" y2="65" stroke="#f3f4f6" stroke-width="1"/>
+        <line x1="0" y1="100" x2="560" y2="100" stroke="#f3f4f6" stroke-width="1"/>
+        <polygon points="0,130 47,118 93,110 140,95 186,102 233,78 280,65 326,70 373,50 420,36 466,22 513,12 560,6 560,140 0,140" fill="rgba(59,130,246,0.08)"/>
+        <polyline points="0,130 47,118 93,110 140,95 186,102 233,78 280,65 326,70 373,50 420,36 466,22 513,12 560,6" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linejoin="round"/>
+        <circle cx="560" cy="6" r="4" fill="#3b82f6"/>
+        <text x="2" y="138" font-size="9" fill="#9ca3af">Jan</text>
+        <text x="49" y="138" font-size="9" fill="#9ca3af">Feb</text>
+        <text x="95" y="138" font-size="9" fill="#9ca3af">Mar</text>
+        <text x="142" y="138" font-size="9" fill="#9ca3af">Apr</text>
+        <text x="188" y="138" font-size="9" fill="#9ca3af">May</text>
+        <text x="235" y="138" font-size="9" fill="#9ca3af">Jun</text>
+        <text x="281" y="138" font-size="9" fill="#9ca3af">Jul</text>
+        <text x="327" y="138" font-size="9" fill="#9ca3af">Aug</text>
+        <text x="373" y="138" font-size="9" fill="#9ca3af">Sep</text>
+        <text x="419" y="138" font-size="9" fill="#9ca3af">Oct</text>
+        <text x="465" y="138" font-size="9" fill="#9ca3af">Nov</text>
+        <text x="513" y="138" font-size="9" fill="#9ca3af">Dec</text>
+      </svg>
+    </div>
+    <!-- Quick Stats -->
+    <div class="bg-white rounded-xl border border-gray-200 p-6">
+      <h2 class="text-sm font-semibold text-gray-900 mb-4">Quick Stats</h2>
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-600">Conversion Rate</span>
+          <span class="text-sm font-semibold text-gray-900">3.8%</span>
+        </div>
+        <div class="w-full bg-gray-100 rounded-full h-1.5"><div class="bg-blue-500 h-1.5 rounded-full" style="width:38%"></div></div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-600">Avg. Session</span>
+          <span class="text-sm font-semibold text-gray-900">4m 32s</span>
+        </div>
+        <div class="w-full bg-gray-100 rounded-full h-1.5"><div class="bg-green-500 h-1.5 rounded-full" style="width:62%"></div></div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-600">Bounce Rate</span>
+          <span class="text-sm font-semibold text-gray-900">28.4%</span>
+        </div>
+        <div class="w-full bg-gray-100 rounded-full h-1.5"><div class="bg-orange-400 h-1.5 rounded-full" style="width:28%"></div></div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-600">Satisfaction</span>
+          <span class="text-sm font-semibold text-gray-900">94.2%</span>
+        </div>
+        <div class="w-full bg-gray-100 rounded-full h-1.5"><div class="bg-purple-500 h-1.5 rounded-full" style="width:94%"></div></div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-600">Uptime SLA</span>
+          <span class="text-sm font-semibold text-green-600">99.98%</span>
+        </div>
+        <div class="w-full bg-gray-100 rounded-full h-1.5"><div class="bg-green-500 h-1.5 rounded-full" style="width:99%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Activity Table (full-width) -->
+  <div class="bg-white rounded-xl border border-gray-200">
+    <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+      <h2 class="text-sm font-semibold text-gray-900">Recent Activity</h2>
+      <a href="#" class="text-xs text-blue-600 hover:underline">View all</a>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-gray-50 text-xs text-gray-500 uppercase">
+          <tr>
+            <th class="px-6 py-3 text-left">User</th>
+            <th class="px-6 py-3 text-left">Action</th>
+            <th class="px-6 py-3 text-left">Resource</th>
+            <th class="px-6 py-3 text-left">IP Address</th>
+            <th class="px-6 py-3 text-left">Time</th>
+            <th class="px-6 py-3 text-left">Status</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          <tr class="hover:bg-gray-50">
+            <td class="px-6 py-3"><div class="flex items-center gap-2"><div class="w-6 h-6 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center text-xs font-bold">AM</div><span class="font-medium text-gray-800">Alex Morgan</span></div></td>
+            <td class="px-6 py-3 text-gray-600">Purchased template</td>
+            <td class="px-6 py-3 text-gray-600">SaaS Pro Kit</td>
+            <td class="px-6 py-3 font-mono text-xs text-gray-500">192.168.1.42</td>
+            <td class="px-6 py-3 text-gray-500">3 min ago</td>
+            <td class="px-6 py-3"><span class="px-2 py-0.5 text-xs rounded-full bg-green-100 text-green-700">Success</span></td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+            <td class="px-6 py-3"><div class="flex items-center gap-2"><div class="w-6 h-6 bg-purple-100 text-purple-700 rounded-full flex items-center justify-center text-xs font-bold">SC</div><span class="font-medium text-gray-800">Sarah Chen</span></div></td>
+            <td class="px-6 py-3 text-gray-600">Generated API key</td>
+            <td class="px-6 py-3 text-gray-600">API Keys</td>
+            <td class="px-6 py-3 font-mono text-xs text-gray-500">10.0.0.15</td>
+            <td class="px-6 py-3 text-gray-500">18 min ago</td>
+            <td class="px-6 py-3"><span class="px-2 py-0.5 text-xs rounded-full bg-green-100 text-green-700">Success</span></td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+            <td class="px-6 py-3"><div class="flex items-center gap-2"><div class="w-6 h-6 bg-green-100 text-green-700 rounded-full flex items-center justify-center text-xs font-bold">RP</div><span class="font-medium text-gray-800">Raj Patel</span></div></td>
+            <td class="px-6 py-3 text-gray-600">Failed login attempt</td>
+            <td class="px-6 py-3 text-gray-600">Auth</td>
+            <td class="px-6 py-3 font-mono text-xs text-gray-500">203.0.113.7</td>
+            <td class="px-6 py-3 text-gray-500">34 min ago</td>
+            <td class="px-6 py-3"><span class="px-2 py-0.5 text-xs rounded-full bg-red-100 text-red-700">Failed</span></td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+            <td class="px-6 py-3"><div class="flex items-center gap-2"><div class="w-6 h-6 bg-orange-100 text-orange-700 rounded-full flex items-center justify-center text-xs font-bold">ER</div><span class="font-medium text-gray-800">Emily Ross</span></div></td>
+            <td class="px-6 py-3 text-gray-600">Updated settings</td>
+            <td class="px-6 py-3 text-gray-600">Settings</td>
+            <td class="px-6 py-3 font-mono text-xs text-gray-500">172.16.0.9</td>
+            <td class="px-6 py-3 text-gray-500">1 hr ago</td>
+            <td class="px-6 py-3"><span class="px-2 py-0.5 text-xs rounded-full bg-green-100 text-green-700">Success</span></td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+            <td class="px-6 py-3"><div class="flex items-center gap-2"><div class="w-6 h-6 bg-pink-100 text-pink-700 rounded-full flex items-center justify-center text-xs font-bold">TW</div><span class="font-medium text-gray-800">Tom Walker</span></div></td>
+            <td class="px-6 py-3 text-gray-600">Exported report</td>
+            <td class="px-6 py-3 text-gray-600">Analytics</td>
+            <td class="px-6 py-3 font-mono text-xs text-gray-500">192.0.2.88</td>
+            <td class="px-6 py-3 text-gray-500">2 hrs ago</td>
+            <td class="px-6 py-3"><span class="px-2 py-0.5 text-xs rounded-full bg-green-100 text-green-700">Success</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

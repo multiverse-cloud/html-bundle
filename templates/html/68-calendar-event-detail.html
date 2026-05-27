@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready Event Detail HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>Event Detail — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<div class="flex items-center gap-3 mb-5">
+      <a href="#" class="text-xs text-blue-600 hover:underline">← Calendar</a>
+      <span class="text-gray-300">/</span>
+      <p class="text-xs text-gray-500">Event Detail</p>
+    </div>
+
+    <div class="bg-white rounded-xl border border-gray-200 p-6 space-y-5">
+      <!-- Title -->
+      <div>
+        <label class="block text-xs font-medium text-gray-500 mb-1">Event Title</label>
+        <input type="text" value="All-Hands Meeting — May 2026" class="w-full text-lg font-bold text-gray-900 focus:outline-none border-0 px-0 py-1 border-b-2 border-transparent focus:border-blue-500" />
+      </div>
+
+      <!-- Date & Time -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">Start Date & Time</label>
+          <input type="datetime-local" value="2026-05-24T14:00" class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">End Date & Time</label>
+          <input type="datetime-local" value="2026-05-24T15:30" class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+      </div>
+
+      <!-- Location -->
+      <div>
+        <label class="block text-xs font-medium text-gray-700 mb-1">Location</label>
+        <input type="text" value="Zoom · https://zoom.us/j/94823710428" class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      </div>
+
+      <!-- Description -->
+      <div>
+        <label class="block text-xs font-medium text-gray-700 mb-1">Description</label>
+        <textarea class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" rows="3">Monthly all-hands meeting covering Q2 OKRs, product roadmap updates, and team Q&A session. Please prepare your team updates in advance.</textarea>
+      </div>
+
+      <!-- Attendees -->
+      <div>
+        <label class="block text-xs font-medium text-gray-700 mb-2">Attendees</label>
+        <div class="flex flex-wrap gap-2 mb-2">
+          <div class="flex items-center gap-1.5 bg-blue-50 border border-blue-200 rounded-full px-2.5 py-1">
+            <div class="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold">JD</div>
+            <span class="text-xs text-gray-700">Jane Doe</span>
+            <span class="text-xs text-green-600">✓</span>
+            <button type="button" onclick="this.parentElement.remove()" class="text-gray-400 hover:text-gray-600 text-xs">✕</button>
+          </div>
+          <div class="flex items-center gap-1.5 bg-green-50 border border-green-200 rounded-full px-2.5 py-1">
+            <div class="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center text-white text-xs font-bold">MT</div>
+            <span class="text-xs text-gray-700">Marcus Turner</span>
+            <span class="text-xs text-green-600">✓</span>
+            <button type="button" onclick="this.parentElement.remove()" class="text-gray-400 hover:text-gray-600 text-xs">✕</button>
+          </div>
+          <div class="flex items-center gap-1.5 bg-yellow-50 border border-yellow-200 rounded-full px-2.5 py-1">
+            <div class="w-5 h-5 rounded-full bg-teal-500 flex items-center justify-center text-white text-xs font-bold">SL</div>
+            <span class="text-xs text-gray-700">Sophie Lin</span>
+            <span class="text-xs text-yellow-600">?</span>
+            <button type="button" onclick="this.parentElement.remove()" class="text-gray-400 hover:text-gray-600 text-xs">✕</button>
+          </div>
+          <div class="flex items-center gap-1.5 bg-red-50 border border-red-200 rounded-full px-2.5 py-1">
+            <div class="w-5 h-5 rounded-full bg-pink-500 flex items-center justify-center text-white text-xs font-bold">RC</div>
+            <span class="text-xs text-gray-700">Ryan Chen</span>
+            <span class="text-xs text-red-500">✕</span>
+            <button type="button" onclick="this.parentElement.remove()" class="text-gray-400 hover:text-gray-600 text-xs">✕</button>
+          </div>
+        </div>
+        <input type="text" placeholder="Add attendee (email)..." class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <div class="flex items-center gap-4 mt-2 text-xs text-gray-500">
+          <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-green-500"></span> Accepted (2)</span>
+          <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-yellow-500"></span> Pending (1)</span>
+          <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-red-500"></span> Declined (1)</span>
+        </div>
+      </div>
+
+      <!-- Options Row -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">Recurrence</label>
+          <select class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option>Does not repeat</option>
+            <option selected>Monthly (last Saturday)</option>
+            <option>Weekly</option>
+            <option>Custom...</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">Reminder</label>
+          <select class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option>None</option>
+            <option>5 minutes before</option>
+            <option selected>15 minutes before</option>
+            <option>30 minutes before</option>
+            <option>1 hour before</option>
+            <option>1 day before</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">Calendar</label>
+          <select class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option selected>Work</option>
+            <option>Deadlines</option>
+            <option>Personal</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">Visibility</label>
+          <select class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option selected>Team (visible to team)</option>
+            <option>Private</option>
+            <option>Public</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Color Picker -->
+      <div>
+        <label class="block text-xs font-medium text-gray-700 mb-2">Event Color</label>
+        <div class="flex gap-2">
+          <button class="w-7 h-7 rounded-full bg-blue-500 ring-2 ring-offset-2 ring-blue-500"></button>
+          <button class="w-7 h-7 rounded-full bg-green-500 hover:ring-2 hover:ring-offset-2 hover:ring-green-500"></button>
+          <button class="w-7 h-7 rounded-full bg-orange-500 hover:ring-2 hover:ring-offset-2 hover:ring-orange-500"></button>
+          <button class="w-7 h-7 rounded-full bg-purple-500 hover:ring-2 hover:ring-offset-2 hover:ring-purple-500"></button>
+          <button class="w-7 h-7 rounded-full bg-red-500 hover:ring-2 hover:ring-offset-2 hover:ring-red-500"></button>
+          <button class="w-7 h-7 rounded-full bg-gray-500 hover:ring-2 hover:ring-offset-2 hover:ring-gray-500"></button>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-2 border-t border-gray-100">
+        <button class="px-4 py-2 border border-red-200 text-red-600 text-sm rounded-lg hover:bg-red-50 w-fit">🗑️ Delete Event</button>
+        <div class="flex gap-2">
+          <button class="px-4 py-2 border border-gray-200 text-sm text-gray-700 rounded-lg hover:bg-gray-50">Cancel</button>
+          <button type="button" class="px-5 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700">Save Event</button>
+        </div>
+      </div>
+    </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

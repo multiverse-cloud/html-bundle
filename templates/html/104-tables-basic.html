@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready Basic Data Table HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>Basic Data Table — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<!-- Page Header -->
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900 flex items-center gap-2">
+            User Management
+            <span class="text-sm font-medium bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">247</span>
+          </h1>
+        </div>
+        <button type="button" class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          Add User
+        </button>
+      </div>
+      <!-- Toolbar -->
+      <div class="bg-white rounded-xl border border-gray-200 p-4 mb-4 flex flex-wrap items-center gap-3">
+        <div class="relative flex-1 min-w-48">
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" placeholder="Search users..." class="w-full pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <select class="px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700">
+          <option>All Roles</option>
+          <option>Admin</option>
+          <option>Editor</option>
+          <option>Viewer</option>
+          <option>Developer</option>
+        </select>
+        <select class="px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700">
+          <option>All Status</option>
+          <option>Active</option>
+          <option>Inactive</option>
+          <option>Suspended</option>
+        </select>
+        <button class="ml-auto flex items-center gap-2 px-4 py-2 text-sm border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50 font-medium">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          Export CSV
+        </button>
+      </div>
+      <!-- Table -->
+      <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-gray-50 border-b border-gray-200">
+              <tr>
+                <th class="pl-4 pr-2 py-3 text-left"><input type="checkbox" class="rounded border-gray-300 text-blue-600" onclick="toggleAll(this)" /></th>
+                <th class="px-3 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Name</th>
+                <th class="px-3 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Email</th>
+                <th class="px-3 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Role</th>
+                <th class="px-3 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Status</th>
+                <th class="px-3 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Joined Date</th>
+                <th class="px-3 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Last Active</th>
+                <th class="px-3 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+
+              <tr class="hover:bg-gray-50">
+                <td class="pl-4 pr-2 py-3"><input type="checkbox" class="rounded border-gray-300 text-blue-600" /></td>
+                <td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">SM</div><span class="font-medium text-gray-900">Sarah Mitchell</span></div></td>
+                <td class="px-3 py-3 text-gray-600">sarah@company.com</td>
+                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-purple-100 text-purple-700 text-xs font-semibold rounded-full">Admin</span></td>
+                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-semibold rounded-full">Active</span></td>
+                <td class="px-3 py-3 text-gray-600">Jan 12, 2026</td>
+                <td class="px-3 py-3 text-gray-500">2 min ago</td>
+                <td class="px-3 py-3"><div class="flex items-center gap-1"><button class="p-1.5 rounded hover:bg-gray-100 text-gray-500 hover:text-blue-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button><button class="p-1.5 rounded hover:bg-gray-100 text-gray-500 hover:text-red-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button></div></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="pl-4 pr-2 py-3"><input type="checkbox" class="rounded border-gray-300 text-blue-600" /></td>
+                <td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">JP</div><span class="font-medium text-gray-900">James Patel</span></div></td>
+                <td class="px-3 py-3 text-gray-600">james@company.com</td>
+                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-semibold rounded-full">Developer</span></td>
+                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-semibold rounded-full">Active</span></td>
+                <td class="px-3 py-3 text-gray-600">Feb 3, 2026</td>
+                <td class="px-3 py-3 text-gray-500">1 hr ago</td>
+                <td class="px-3 py-3"><div class="flex items-center gap-1"><button class="p-1.5 rounded hover:bg-gray-100 text-gray-500 hover:text-blue-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button><button class="p-1.5 rounded hover:bg-gray-100 text-gray-500 hover:text-red-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button></div></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="pl-4 pr-2 py-3"><input type="checkbox" class="rounded border-gray-300 text-blue-600" /></td>
+                <td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">LC</div><span class="font-medium text-gray-900">Laura Chen</span></div></td>
+                <td class="px-3 py-3 text-gray-600">laura@company.com</td>
+                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs font-semibold rounded-full">Editor</span></td>
+                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-semibold rounded-full">Active</span></td>
+                <td class="px-3 py-3 text-gray-600">Dec 5, 2025</td>
+                <td class="px-3 py-3 text-gray-500">3 hrs ago</td>
+                <td class="px-3 py-3"><div class="flex items-center gap-1"><button class="p-1.5 rounded hover:bg-gray-100 text-gray-500 hover:text-blue-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button><button class="p-1.5 rounded hover:bg-gray-100 text-gray-500 hover:text-red-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button></div></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="pl-4 pr-2 py-3"><input type="checkbox" class="rounded border-gray-300 text-blue-600" /></td>
+                <td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">MR</div><span class="font-medium text-gray-900">Marco Rivera</span></div></td>
+                <td class="px-3 py-3 text-gray-600">marco@company.com</td>
+                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-semibold rounded-full">Developer</span></td>
+                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-semibold rounded-full">Active</span></td>
+                <td class="px-3 py-3 text-gray-600">Mar 18, 2026</td>
+                <td class="px-3 py-3 text-gray-500">Yesterday</td>
+                <td class="px-3 py-3"><div class="flex items-center gap-1"><button class="p-1.5 rounded hover:bg-gray-100 text-gray-500 hover:text-blue-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button><button class="p-1.5 rounded hover:bg-gray-100 text-gray-500 hover:text-red-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button></div></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="pl-4 pr-2 py-3"><input type="checkbox" class="rounded border-gray-300 text-blue-600" /></td>
+                <td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">ET</div><span class="font-medium text-gray-900">Emma Thompson</span></div></td>
+                <td class="px-3 py-3 text-gray-600">emma@company.com</td>
+                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-gray-100 text-gray-600 text-xs font-semibold rounded-full">Viewer</span></td>
+                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-gray-100 text-gray-600 text-xs font-semibold rounded-full">Inactive</span></td>
+                <td class="px-3 py-3 text-gray-600">Aug 14, 2025</td>
+                <td class="px-3 py-3 text-gray-500">2 weeks ago</td>
+                <td class="px-3 py-3"><div class="flex items-center gap-1"><button class="p-1.5 rounded hover:bg-gray-100 text-gray-500 hover:text-blue-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button><button class="p-1.5 rounded hover:bg-gray-100 text-gray-500 hover:text-red-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button></div></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="pl-4 pr-2 py-3"><input type="checkbox" class="rounded border-gray-300 text-blue-600" /></td>
+                <td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-pink-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">DK</div><span class="font-medium text-gray-900">Daniel Kim</span></div></td>
+                <td class="px-3 py-3 text-gray-600">daniel@company.com</td>
+                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-semibold rounded-full">Developer</span></td>
+                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-semibold rounded-full">Active</span></td>
+                <td class="px-3 py-3 text-gray-600">Apr 1, 2026</td>
+                <td class="px-3 py-3 text-gray-500">5 min ago</td>
+                <td class="px-3 py-3"><div class="flex items-center gap-1"><button class="p-1.5 rounded hover:bg-gray-100 text-gray-500 hover:text-blue-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button><button class="p-1.5 rounded hover:bg-gray-100 text-gray-500 hover:text-red-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button></div></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="pl-4 pr-2 py-3"><input type="checkbox" class="rounded border-gray-300 text-blue-600" /></td>
+                <td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-teal-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">PS</div><span class="font-medium text-gray-900">Priya Sharma</span></div></td>
+                <td class="px-3 py-3 text-gray-600">priya@company.com</td>
+                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs font-semibold rounded-full">Editor</span></td>
+                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-semibold rounded-full">Active</span></td>
+                <td class="px-3 py-3 text-gray-600">Nov 20, 2025</td>
+                <td class="px-3 py-3 text-gray-500">4 hrs ago</td>
+                <td class="px-3 py-3"><div class="flex items-center gap-1"><button class="p-1.5 rounded hover:bg-gray-100 text-gray-500 hover:text-blue-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button><button class="p-1.5 rounded hover:bg-gray-100 text-gray-500 hover:text-red-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button></div></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="pl-4 pr-2 py-3"><input type="checkbox" class="rounded border-gray-300 text-blue-600" /></td>
+                <td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">AJ</div><span class="font-medium text-gray-900">Alex Johnson</span></div></td>
+                <td class="px-3 py-3 text-gray-600">alex@company.com</td>
+                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-gray-100 text-gray-600 text-xs font-semibold rounded-full">Viewer</span></td>
+                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-semibold rounded-full">Active</span></td>
+                <td class="px-3 py-3 text-gray-600">May 7, 2026</td>
+                <td class="px-3 py-3 text-gray-500">Just now</td>
+                <td class="px-3 py-3"><div class="flex items-center gap-1"><button class="p-1.5 rounded hover:bg-gray-100 text-gray-500 hover:text-blue-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button><button class="p-1.5 rounded hover:bg-gray-100 text-gray-500 hover:text-red-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button></div></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="pl-4 pr-2 py-3"><input type="checkbox" class="rounded border-gray-300 text-blue-600" /></td>
+                <td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-yellow-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">OB</div><span class="font-medium text-gray-900">Olivia Brown</span></div></td>
+                <td class="px-3 py-3 text-gray-600">olivia@company.com</td>
+                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs font-semibold rounded-full">Editor</span></td>
+                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-red-100 text-red-700 text-xs font-semibold rounded-full">Suspended</span></td>
+                <td class="px-3 py-3 text-gray-600">Sep 30, 2025</td>
+                <td class="px-3 py-3 text-gray-500">1 month ago</td>
+                <td class="px-3 py-3"><div class="flex items-center gap-1"><button class="p-1.5 rounded hover:bg-gray-100 text-gray-500 hover:text-blue-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button><button class="p-1.5 rounded hover:bg-gray-100 text-gray-500 hover:text-red-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button></div></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="pl-4 pr-2 py-3"><input type="checkbox" class="rounded border-gray-300 text-blue-600" /></td>
+                <td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-cyan-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">RF</div><span class="font-medium text-gray-900">Ryan Foster</span></div></td>
+                <td class="px-3 py-3 text-gray-600">ryan@company.com</td>
+                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-purple-100 text-purple-700 text-xs font-semibold rounded-full">Admin</span></td>
+                <td class="px-3 py-3"><span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-semibold rounded-full">Active</span></td>
+                <td class="px-3 py-3 text-gray-600">Jun 15, 2026</td>
+                <td class="px-3 py-3 text-gray-500">30 min ago</td>
+                <td class="px-3 py-3"><div class="flex items-center gap-1"><button class="p-1.5 rounded hover:bg-gray-100 text-gray-500 hover:text-blue-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button><button class="p-1.5 rounded hover:bg-gray-100 text-gray-500 hover:text-red-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Pagination -->
+        <div class="flex items-center justify-between px-4 py-3 border-t border-gray-200">
+          <p class="text-sm text-gray-500">Showing <span class="font-medium text-gray-700">1–10</span> of <span class="font-medium text-gray-700">247</span> users</p>
+          <div class="flex items-center gap-2">
+            <button class="px-3 py-1.5 text-sm border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 disabled:opacity-40" disabled>← Prev</button>
+            <input type="number" value="1" min="1" class="w-14 text-center py-1.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <span class="text-sm text-gray-400">of 25</span>
+            <button class="px-3 py-1.5 text-sm border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50">Next →</button>
+          </div>
+        </div>
+      </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

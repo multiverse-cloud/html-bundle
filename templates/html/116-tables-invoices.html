@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready Invoices HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>Invoices — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<div class="mb-6 flex items-center justify-between"><div><h1 class="text-2xl font-bold text-gray-900">Invoices</h1><p class="text-sm text-gray-500 mt-1">Billing history and invoice management</p></div><button type="button" class="bg-blue-600 text-white text-sm px-4 py-2 rounded-lg hover:bg-blue-700 transition">+ Create Invoice</button></div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        <div class="bg-white rounded-xl border border-gray-200 p-4"><p class="text-xs text-gray-500 mb-1">Total Billed</p><p class="text-2xl font-bold text-gray-900">$48,320</p></div>
+        <div class="bg-white rounded-xl border border-gray-200 p-4"><p class="text-xs text-gray-500 mb-1">Outstanding</p><p class="text-2xl font-bold text-yellow-600">$3,200</p></div>
+        <div class="bg-white rounded-xl border border-gray-200 p-4"><p class="text-xs text-gray-500 mb-1">Overdue</p><p class="text-2xl font-bold text-red-500">$890</p></div>
+      </div>
+      <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div class="px-5 py-4 border-b border-gray-200 flex gap-3">
+          <input type="text" placeholder="Search invoices..." class="flex-1 text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <select class="text-sm border border-gray-200 rounded-lg px-3 py-2 text-gray-700 focus:outline-none"><option>All Status</option><option>Paid</option><option>Pending</option><option>Overdue</option></select>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-gray-50 border-b border-gray-200"><tr><th class="text-left px-5 py-3 font-semibold text-gray-600">Invoice</th><th class="text-left px-5 py-3 font-semibold text-gray-600">Client</th><th class="text-left px-5 py-3 font-semibold text-gray-600">Amount</th><th class="text-left px-5 py-3 font-semibold text-gray-600">Status</th><th class="text-left px-5 py-3 font-semibold text-gray-600">Due Date</th><th class="text-left px-5 py-3 font-semibold text-gray-600">Actions</th></tr></thead>
+            <tbody class="divide-y divide-gray-100">
+              <tr class="hover:bg-gray-50"><td class="px-5 py-3 font-mono text-xs text-gray-500">INV-2026-001</td><td class="px-5 py-3 font-medium text-gray-900">Acme Corp</td><td class="px-5 py-3 font-semibold text-gray-900">$1,200.00</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-green-100 text-green-700">Paid</span></td><td class="px-5 py-3 text-gray-400">Jan 31, 2026</td><td class="px-5 py-3"><button class="text-blue-600 hover:underline text-xs mr-2">Download</button><button class="text-gray-500 hover:underline text-xs">View</button></td></tr>
+              <tr class="hover:bg-gray-50"><td class="px-5 py-3 font-mono text-xs text-gray-500">INV-2026-002</td><td class="px-5 py-3 font-medium text-gray-900">Globex Inc</td><td class="px-5 py-3 font-semibold text-gray-900">$3,200.00</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-yellow-100 text-yellow-700">Pending</span></td><td class="px-5 py-3 text-gray-400">Feb 28, 2026</td><td class="px-5 py-3"><button class="text-blue-600 hover:underline text-xs mr-2">Download</button><button class="text-gray-500 hover:underline text-xs">View</button></td></tr>
+              <tr class="hover:bg-gray-50"><td class="px-5 py-3 font-mono text-xs text-gray-500">INV-2026-003</td><td class="px-5 py-3 font-medium text-gray-900">Initech LLC</td><td class="px-5 py-3 font-semibold text-gray-900">$890.00</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-red-100 text-red-700">Overdue</span></td><td class="px-5 py-3 text-gray-400">Jan 15, 2026</td><td class="px-5 py-3"><button class="text-blue-600 hover:underline text-xs mr-2">Download</button><button class="text-gray-500 hover:underline text-xs">View</button></td></tr>
+              <tr class="hover:bg-gray-50"><td class="px-5 py-3 font-mono text-xs text-gray-500">INV-2026-004</td><td class="px-5 py-3 font-medium text-gray-900">Umbrella Co</td><td class="px-5 py-3 font-semibold text-gray-900">$5,400.00</td><td class="px-5 py-3"><span class="px-2 py-0.5 rounded-full text-xs bg-green-100 text-green-700">Paid</span></td><td class="px-5 py-3 text-gray-400">Mar 10, 2026</td><td class="px-5 py-3"><button class="text-blue-600 hover:underline text-xs mr-2">Download</button><button class="text-gray-500 hover:underline text-xs">View</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="px-5 py-3 border-t border-gray-200 flex items-center justify-between text-xs text-gray-500"><span>Showing 1–4 of 42 invoices</span><div class="flex gap-1"><button class="px-2 py-1 rounded border border-gray-200 hover:bg-gray-50">Prev</button><button type="button" class="px-2 py-1 rounded bg-blue-600 text-white">1</button><button class="px-2 py-1 rounded border border-gray-200 hover:bg-gray-50">2</button><button class="px-2 py-1 rounded border border-gray-200 hover:bg-gray-50">Next</button></div></div>
+      </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

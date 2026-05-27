@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready File Share HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>File Share — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<!-- Share Content -->
+    <div class="flex-1 overflow-y-auto p-6">
+
+      <!-- File Header -->
+      <div class="bg-white rounded-xl border border-gray-200 p-5 mb-6 flex items-center gap-4">
+        <div class="w-14 h-14 bg-red-100 rounded-xl flex items-center justify-center text-3xl flex-shrink-0">📄</div>
+        <div class="flex-1 min-w-0">
+          <h1 class="text-xl font-bold text-gray-900">Q2 Report.pdf</h1>
+          <p class="text-sm text-gray-500 mt-0.5">4.2 MB · PDF Document</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="flex items-center gap-2 border border-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+            Download
+          </button>
+          <button class="p-2 border border-gray-200 rounded-lg text-gray-400 hover:bg-gray-50 hover:text-gray-600">✕</button>
+        </div>
+      </div>
+
+      <!-- Two-column layout -->
+      <div class="flex flex-col lg:flex-row gap-6">
+
+        <!-- LEFT: Share Settings -->
+        <div class="flex-1 space-y-6">
+
+          <!-- Link Sharing Card -->
+          <div class="bg-white rounded-xl border border-gray-200 p-5">
+            <h2 class="text-base font-semibold text-gray-900 mb-4">🔗 Link Sharing</h2>
+
+            <!-- Toggle -->
+            <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-100">
+              <div>
+                <p class="text-sm font-medium text-gray-900">Anyone with the link can view</p>
+                <p class="text-xs text-gray-500 mt-0.5">Share a public link to this file</p>
+              </div>
+              <!-- Toggle ON -->
+              <button type="button" class="relative inline-flex w-11 h-6 items-center rounded-full bg-blue-600 transition-colors focus:outline-none">
+                <span class="inline-block w-4 h-4 translate-x-6 bg-white rounded-full transition-transform shadow-sm"></span>
+              </button>
+            </div>
+
+            <!-- Link URL -->
+            <div class="mb-4">
+              <label class="block text-xs font-medium text-gray-500 mb-1.5">Share link</label>
+              <div class="flex gap-2">
+                <input type="text" value="https://mtverse.dev/share/q2-report-abc123" class="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-700 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                <button type="button" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 flex-shrink-0">Copy</button>
+              </div>
+            </div>
+
+            <!-- Permission selector -->
+            <div class="mb-4">
+              <label class="block text-xs font-medium text-gray-500 mb-1.5">Permission</label>
+              <select class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option selected>View only</option>
+                <option>Can edit</option>
+                <option>Can comment</option>
+              </select>
+            </div>
+
+            <!-- Expiry date -->
+            <div class="mb-4">
+              <label class="block text-xs font-medium text-gray-500 mb-1.5">Link expires on</label>
+              <input type="date" value="2026-06-30" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+            </div>
+
+            <!-- Download toggle -->
+            <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-100">
+              <div>
+                <p class="text-sm font-medium text-gray-900">Allow download</p>
+                <p class="text-xs text-gray-500 mt-0.5">Let viewers download this file</p>
+              </div>
+              <!-- Toggle OFF -->
+              <button class="relative inline-flex w-11 h-6 items-center rounded-full bg-gray-200 transition-colors focus:outline-none">
+                <span class="inline-block w-4 h-4 translate-x-1 bg-white rounded-full transition-transform shadow-sm"></span>
+              </button>
+            </div>
+
+            <button class="text-sm text-blue-600 hover:underline">↻ Regenerate Link</button>
+          </div>
+
+          <!-- Invite People Card -->
+          <div class="bg-white rounded-xl border border-gray-200 p-5">
+            <h2 class="text-base font-semibold text-gray-900 mb-4">👥 Invite People</h2>
+            <div class="flex gap-2 mb-4">
+              <input type="email" placeholder="Add people by email..." class="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+              <button type="button" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 flex-shrink-0">Add People</button>
+            </div>
+            <p class="text-xs text-gray-500 mb-3">Recent collaborators</p>
+            <div class="space-y-2">
+              <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
+                <div class="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white text-xs font-semibold">JP</div>
+                <div><p class="text-sm text-gray-900">James Patel</p><p class="text-xs text-gray-400">james@company.com</p></div>
+              </div>
+              <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
+                <div class="w-8 h-8 rounded-full bg-pink-500 flex items-center justify-center text-white text-xs font-semibold">LC</div>
+                <div><p class="text-sm text-gray-900">Laura Chen</p><p class="text-xs text-gray-400">laura@company.com</p></div>
+              </div>
+              <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
+                <div class="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center text-white text-xs font-semibold">MR</div>
+                <div><p class="text-sm text-gray-900">Marco Rivera</p><p class="text-xs text-gray-400">marco@company.com</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- RIGHT: Access List -->
+        <div class="lg:w-96">
+          <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+            <div class="px-5 py-4 border-b border-gray-100">
+              <h2 class="text-base font-semibold text-gray-900">Who Has Access <span class="text-gray-400 font-normal text-sm">(5 people)</span></h2>
+            </div>
+            <div class="divide-y divide-gray-100">
+
+              <!-- Row 1: Owner -->
+              <div class="flex items-center gap-3 px-5 py-3">
+                <div class="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm font-semibold flex-shrink-0">JD</div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium text-gray-900">Jane Doe</p>
+                  <p class="text-xs text-gray-400 truncate">jane@company.com</p>
+                </div>
+                <span class="text-xs font-medium bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Owner</span>
+              </div>
+
+              <!-- Row 2: Editor -->
+              <div class="flex items-center gap-3 px-5 py-3">
+                <div class="w-9 h-9 rounded-full bg-indigo-500 flex items-center justify-center text-white text-sm font-semibold flex-shrink-0">JP</div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium text-gray-900">James Patel</p>
+                  <p class="text-xs text-gray-400 truncate">james@company.com</p>
+                </div>
+                <span class="text-xs font-medium bg-green-100 text-green-700 px-2 py-0.5 rounded-full mr-2">Editor</span>
+                <button class="text-xs text-gray-400 hover:text-red-500 border border-gray-200 px-2 py-1 rounded hover:border-red-200">Remove</button>
+              </div>
+
+              <!-- Row 3: Viewer -->
+              <div class="flex items-center gap-3 px-5 py-3">
+                <div class="w-9 h-9 rounded-full bg-pink-500 flex items-center justify-center text-white text-sm font-semibold flex-shrink-0">LC</div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium text-gray-900">Laura Chen</p>
+                  <p class="text-xs text-gray-400 truncate">laura@company.com</p>
+                </div>
+                <span class="text-xs font-medium bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full mr-2">Viewer</span>
+                <button class="text-xs text-gray-400 hover:text-red-500 border border-gray-200 px-2 py-1 rounded hover:border-red-200">Remove</button>
+              </div>
+
+              <!-- Row 4: Viewer -->
+              <div class="flex items-center gap-3 px-5 py-3">
+                <div class="w-9 h-9 rounded-full bg-orange-500 flex items-center justify-center text-white text-sm font-semibold flex-shrink-0">MR</div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium text-gray-900">Marco Rivera</p>
+                  <p class="text-xs text-gray-400 truncate">marco@company.com</p>
+                </div>
+                <span class="text-xs font-medium bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full mr-2">Viewer</span>
+                <button class="text-xs text-gray-400 hover:text-red-500 border border-gray-200 px-2 py-1 rounded hover:border-red-200">Remove</button>
+              </div>
+
+              <!-- Row 5: Link access -->
+              <div class="flex items-center gap-3 px-5 py-3">
+                <div class="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-lg flex-shrink-0">🔗</div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium text-gray-900">Anyone with link</p>
+                  <p class="text-xs text-green-500">Active link</p>
+                </div>
+                <span class="text-xs font-medium bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full mr-2">Viewer</span>
+                <button class="text-xs text-red-500 hover:text-red-700 border border-red-200 px-2 py-1 rounded hover:bg-red-50">Disable</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end 2-col -->
+    </div><!-- end share content -->
+  </div><!-- end main content -->
+</div><!-- end outer flex -->
+
+<script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    sidebar.classList.toggle('-translate-x-full');
+    overlay.classList.toggle('hidden');
+  }
+</script>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

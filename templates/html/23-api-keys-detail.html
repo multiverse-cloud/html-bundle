@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready API Key Detail HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>API Key Detail — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<!-- Page header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        <div class="flex items-center gap-3">
+          <a href="#" class="p-2 rounded-lg hover:bg-gray-100 text-gray-500"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg></a>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-xl font-bold text-gray-900">Production API Key</h1>
+              <span class="text-xs bg-green-100 text-green-700 font-semibold px-2 py-0.5 rounded-full">Active</span>
+            </div>
+            <p class="text-sm text-gray-500 mt-0.5">Created Jan 12, 2026 · Last used 2 hours ago</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>Regenerate
+          </button>
+          <button class="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>Edit
+          </button>
+          <button class="px-3 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>Revoke
+          </button>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="border-b border-gray-200 mb-6">
+        <nav class="flex gap-1">
+          <button type="button" onclick="switchTab('overview')" id="tab-overview" class="px-4 py-2.5 text-sm font-medium text-blue-600 border-b-2 border-blue-600 -mb-px">Overview</button>
+          <button type="button" onclick="switchTab('usage')" id="tab-usage" class="px-4 py-2.5 text-sm font-medium text-gray-500 hover:text-gray-700 border-b-2 border-transparent -mb-px">Usage</button>
+          <button type="button" onclick="switchTab('logs')" id="tab-logs" class="px-4 py-2.5 text-sm font-medium text-gray-500 hover:text-gray-700 border-b-2 border-transparent -mb-px">Logs</button>
+        </nav>
+      </div>
+
+      <!-- OVERVIEW TAB -->
+      <div id="content-overview">
+        <!-- Key display -->
+        <div class="bg-white border border-gray-200 rounded-xl p-5 mb-5 shadow-sm">
+          <p class="text-sm font-medium text-gray-700 mb-3">API Key</p>
+          <div class="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-lg px-4 py-3">
+            <code id="key-display" class="flex-1 font-mono text-sm text-gray-700">sk-mt••••••••••••••••8f3a</code>
+            <button type="button" onclick="toggleKeyVisibility()" id="eye-btn" title="Reveal" class="p-1.5 rounded hover:bg-gray-200 text-gray-400">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            </button>
+            <button type="button" onclick="navigator.clipboard.writeText('sk-mt-real-key-value-8f3a')" title="Copy" class="p-1.5 rounded hover:bg-gray-200 text-gray-400">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            </button>
+          </div>
+        </div>
+        <!-- Scopes -->
+        <div class="bg-white border border-gray-200 rounded-xl p-5 mb-5 shadow-sm">
+          <p class="text-sm font-medium text-gray-700 mb-3">Scopes</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="flex items-center gap-1.5 bg-blue-50 text-blue-700 text-sm font-medium px-3 py-1 rounded-full"><span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>read</span>
+            <span class="flex items-center gap-1.5 bg-green-50 text-green-700 text-sm font-medium px-3 py-1 rounded-full"><span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>write</span>
+            <span class="flex items-center gap-1.5 bg-orange-50 text-orange-700 text-sm font-medium px-3 py-1 rounded-full"><span class="w-1.5 h-1.5 bg-orange-500 rounded-full"></span>delete</span>
+          </div>
+        </div>
+        <!-- Details grid -->
+        <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+          <p class="text-sm font-medium text-gray-700 mb-4">Key Details</p>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div><p class="text-xs text-gray-400 uppercase tracking-wider mb-1">Created</p><p class="text-sm font-medium text-gray-800">Jan 12, 2026</p></div>
+            <div><p class="text-xs text-gray-400 uppercase tracking-wider mb-1">Expires</p><p class="text-sm font-medium text-gray-800">Never</p></div>
+            <div><p class="text-xs text-gray-400 uppercase tracking-wider mb-1">Environment</p><p class="text-sm font-medium text-gray-800">Production</p></div>
+            <div><p class="text-xs text-gray-400 uppercase tracking-wider mb-1">Requests (month)</p><p class="text-sm font-medium text-gray-800">48,291</p></div>
+            <div><p class="text-xs text-gray-400 uppercase tracking-wider mb-1">Rate Limit</p><p class="text-sm font-medium text-gray-800">1,000 / min</p></div>
+            <div><p class="text-xs text-gray-400 uppercase tracking-wider mb-1">IP Whitelist</p><p class="text-sm font-medium text-gray-800">3 IPs listed</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- USAGE TAB -->
+      <div id="content-usage" class="hidden">
+        <div class="bg-white border border-gray-200 rounded-xl p-5 mb-5 shadow-sm">
+          <p class="text-sm font-semibold text-gray-700 mb-4">Daily Requests — Last 7 Days</p>
+          <svg viewBox="0 0 500 120" class="w-full h-32" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#93c5fd"/></linearGradient></defs>
+            <rect x="20" y="30" width="50" height="70" rx="4" fill="url(#barGrad)" opacity="0.8"/>
+            <rect x="90" y="50" width="50" height="50" rx="4" fill="url(#barGrad)" opacity="0.8"/>
+            <rect x="160" y="15" width="50" height="85" rx="4" fill="url(#barGrad)" opacity="0.9"/>
+            <rect x="230" y="40" width="50" height="60" rx="4" fill="url(#barGrad)" opacity="0.8"/>
+            <rect x="300" y="20" width="50" height="80" rx="4" fill="url(#barGrad)" opacity="0.9"/>
+            <rect x="370" y="55" width="50" height="45" rx="4" fill="url(#barGrad)" opacity="0.8"/>
+            <rect x="440" y="10" width="50" height="90" rx="4" fill="#3b82f6"/>
+            <text x="45" y="115" text-anchor="middle" class="text-xs" font-size="10" fill="#9ca3af">Mon</text>
+            <text x="115" y="115" text-anchor="middle" font-size="10" fill="#9ca3af">Tue</text>
+            <text x="185" y="115" text-anchor="middle" font-size="10" fill="#9ca3af">Wed</text>
+            <text x="255" y="115" text-anchor="middle" font-size="10" fill="#9ca3af">Thu</text>
+            <text x="325" y="115" text-anchor="middle" font-size="10" fill="#9ca3af">Fri</text>
+            <text x="395" y="115" text-anchor="middle" font-size="10" fill="#9ca3af">Sat</text>
+            <text x="465" y="115" text-anchor="middle" font-size="10" fill="#3b82f6" font-weight="600">Sun</text>
+          </svg>
+        </div>
+        <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+          <div class="px-5 py-4 border-b border-gray-100"><p class="text-sm font-semibold text-gray-700">Top Endpoints</p></div>
+          <table class="w-full text-sm">
+            <thead class="bg-gray-50"><tr>
+              <th class="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3">Endpoint</th>
+              <th class="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3">Method</th>
+              <th class="text-right text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3">Calls</th>
+              <th class="text-right text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3">Avg Latency</th>
+            </tr></thead>
+            <tbody class="divide-y divide-gray-50">
+              <tr class="hover:bg-gray-50"><td class="px-4 py-3 font-mono text-xs text-gray-700">/api/v1/users</td><td class="px-4 py-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded font-medium">GET</span></td><td class="px-4 py-3 text-right text-gray-700 font-medium">18,204</td><td class="px-4 py-3 text-right text-gray-500">42 ms</td></tr>
+              <tr class="hover:bg-gray-50"><td class="px-4 py-3 font-mono text-xs text-gray-700">/api/v1/prompts</td><td class="px-4 py-3"><span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded font-medium">POST</span></td><td class="px-4 py-3 text-right text-gray-700 font-medium">12,847</td><td class="px-4 py-3 text-right text-gray-500">187 ms</td></tr>
+              <tr class="hover:bg-gray-50"><td class="px-4 py-3 font-mono text-xs text-gray-700">/api/v1/analytics</td><td class="px-4 py-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded font-medium">GET</span></td><td class="px-4 py-3 text-right text-gray-700 font-medium">9,321</td><td class="px-4 py-3 text-right text-gray-500">55 ms</td></tr>
+              <tr class="hover:bg-gray-50"><td class="px-4 py-3 font-mono text-xs text-gray-700">/api/v1/export</td><td class="px-4 py-3"><span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded font-medium">POST</span></td><td class="px-4 py-3 text-right text-gray-700 font-medium">4,102</td><td class="px-4 py-3 text-right text-gray-500">340 ms</td></tr>
+              <tr class="hover:bg-gray-50"><td class="px-4 py-3 font-mono text-xs text-gray-700">/api/v1/webhooks</td><td class="px-4 py-3"><span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded font-medium">GET</span></td><td class="px-4 py-3 text-right text-gray-700 font-medium">3,817</td><td class="px-4 py-3 text-right text-gray-500">28 ms</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- LOGS TAB -->
+      <div id="content-logs" class="hidden">
+        <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+          <div class="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+            <p class="text-sm font-semibold text-gray-700">Recent API Calls</p>
+            <span class="text-xs text-gray-400">Live · updated just now</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead class="bg-gray-50"><tr>
+                <th class="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3">Timestamp</th>
+                <th class="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3">Endpoint</th>
+                <th class="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3">Method</th>
+                <th class="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3">Status</th>
+                <th class="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3">IP</th>
+                <th class="text-right text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3">Latency</th>
+              </tr></thead>
+              <tbody class="divide-y divide-gray-50">
+                <tr class="hover:bg-gray-50"><td class="px-4 py-2.5 text-xs text-gray-500 whitespace-nowrap">2026-04-28 14:32:11</td><td class="px-4 py-2.5 font-mono text-xs">/api/v1/users</td><td class="px-4 py-2.5"><span class="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded">GET</span></td><td class="px-4 py-2.5"><span class="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded font-medium">200</span></td><td class="px-4 py-2.5 text-xs font-mono text-gray-500">203.0.113.42</td><td class="px-4 py-2.5 text-xs text-right text-gray-500">38 ms</td></tr>
+                <tr class="hover:bg-gray-50"><td class="px-4 py-2.5 text-xs text-gray-500 whitespace-nowrap">2026-04-28 14:31:54</td><td class="px-4 py-2.5 font-mono text-xs">/api/v1/prompts</td><td class="px-4 py-2.5"><span class="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded">POST</span></td><td class="px-4 py-2.5"><span class="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded font-medium">201</span></td><td class="px-4 py-2.5 text-xs font-mono text-gray-500">203.0.113.42</td><td class="px-4 py-2.5 text-xs text-right text-gray-500">192 ms</td></tr>
+                <tr class="hover:bg-gray-50"><td class="px-4 py-2.5 text-xs text-gray-500 whitespace-nowrap">2026-04-28 14:30:09</td><td class="px-4 py-2.5 font-mono text-xs">/api/v1/analytics</td><td class="px-4 py-2.5"><span class="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded">GET</span></td><td class="px-4 py-2.5"><span class="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded font-medium">200</span></td><td class="px-4 py-2.5 text-xs font-mono text-gray-500">198.51.100.7</td><td class="px-4 py-2.5 text-xs text-right text-gray-500">61 ms</td></tr>
+                <tr class="hover:bg-gray-50"><td class="px-4 py-2.5 text-xs text-gray-500 whitespace-nowrap">2026-04-28 14:28:44</td><td class="px-4 py-2.5 font-mono text-xs">/api/v1/users</td><td class="px-4 py-2.5"><span class="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded">GET</span></td><td class="px-4 py-2.5"><span class="text-xs bg-red-100 text-red-700 px-1.5 py-0.5 rounded font-medium">429</span></td><td class="px-4 py-2.5 text-xs font-mono text-gray-500">203.0.113.42</td><td class="px-4 py-2.5 text-xs text-right text-gray-500">8 ms</td></tr>
+                <tr class="hover:bg-gray-50"><td class="px-4 py-2.5 text-xs text-gray-500 whitespace-nowrap">2026-04-28 14:27:33</td><td class="px-4 py-2.5 font-mono text-xs">/api/v1/export</td><td class="px-4 py-2.5"><span class="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded">POST</span></td><td class="px-4 py-2.5"><span class="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded font-medium">200</span></td><td class="px-4 py-2.5 text-xs font-mono text-gray-500">198.51.100.7</td><td class="px-4 py-2.5 text-xs text-right text-gray-500">324 ms</td></tr>
+                <tr class="hover:bg-gray-50"><td class="px-4 py-2.5 text-xs text-gray-500 whitespace-nowrap">2026-04-28 14:25:01</td><td class="px-4 py-2.5 font-mono text-xs">/api/v1/webhooks</td><td class="px-4 py-2.5"><span class="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded">GET</span></td><td class="px-4 py-2.5"><span class="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded font-medium">200</span></td><td class="px-4 py-2.5 text-xs font-mono text-gray-500">10.0.0.14</td><td class="px-4 py-2.5 text-xs text-right text-gray-500">29 ms</td></tr>
+                <tr class="hover:bg-gray-50"><td class="px-4 py-2.5 text-xs text-gray-500 whitespace-nowrap">2026-04-28 14:22:18</td><td class="px-4 py-2.5 font-mono text-xs">/api/v1/prompts</td><td class="px-4 py-2.5"><span class="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded">POST</span></td><td class="px-4 py-2.5"><span class="text-xs bg-red-100 text-red-600 px-1.5 py-0.5 rounded font-medium">500</span></td><td class="px-4 py-2.5 text-xs font-mono text-gray-500">203.0.113.42</td><td class="px-4 py-2.5 text-xs text-right text-gray-500">2,104 ms</td></tr>
+                <tr class="hover:bg-gray-50"><td class="px-4 py-2.5 text-xs text-gray-500 whitespace-nowrap">2026-04-28 14:19:55</td><td class="px-4 py-2.5 font-mono text-xs">/api/v1/analytics</td><td class="px-4 py-2.5"><span class="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded">GET</span></td><td class="px-4 py-2.5"><span class="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded font-medium">200</span></td><td class="px-4 py-2.5 text-xs font-mono text-gray-500">198.51.100.7</td><td class="px-4 py-2.5 text-xs text-right text-gray-500">49 ms</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

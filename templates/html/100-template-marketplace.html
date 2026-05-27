@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready Template Marketplace HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>Template Marketplace — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<!-- Page title -->
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-xl font-bold text-gray-900">Template Marketplace</h1>
+          <p class="text-sm text-gray-500 mt-0.5">Browse 142 premium templates across all frameworks</p>
+        </div>
+        <button type="button" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          Submit Template
+        </button>
+      </div>
+
+      <!-- Hero search bar -->
+      <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-6 text-white">
+        <h2 class="text-lg font-bold mb-1">Find your perfect template</h2>
+        <p class="text-blue-100 text-sm mb-4">Production-ready HTML, React, Vue, Next.js and SvelteKit templates</p>
+        <div class="flex gap-2">
+          <div class="relative flex-1">
+            <svg class="w-4 h-4 text-blue-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <input type="text" placeholder="Search 142 premium templates..." class="w-full pl-9 pr-4 py-2.5 text-sm bg-white/10 border border-white/20 rounded-lg text-white placeholder-blue-200 focus:outline-none focus:bg-white/20" />
+          </div>
+          <button class="px-5 py-2.5 bg-white text-blue-700 font-semibold text-sm rounded-lg hover:bg-blue-50 transition flex-shrink-0">Search</button>
+        </div>
+      </div>
+
+      <!-- Category filter chips -->
+      <div class="flex flex-wrap gap-2">
+        <button type="button" class="px-4 py-1.5 bg-blue-600 text-white text-sm font-semibold rounded-full">All</button>
+        <button class="px-4 py-1.5 bg-white border border-gray-200 text-gray-600 text-sm rounded-full hover:bg-gray-50 transition">Dashboard</button>
+        <button class="px-4 py-1.5 bg-white border border-gray-200 text-gray-600 text-sm rounded-full hover:bg-gray-50 transition">Auth</button>
+        <button class="px-4 py-1.5 bg-white border border-gray-200 text-gray-600 text-sm rounded-full hover:bg-gray-50 transition">Charts</button>
+        <button class="px-4 py-1.5 bg-white border border-gray-200 text-gray-600 text-sm rounded-full hover:bg-gray-50 transition">Forms</button>
+        <button class="px-4 py-1.5 bg-white border border-gray-200 text-gray-600 text-sm rounded-full hover:bg-gray-50 transition">Tables</button>
+        <button class="px-4 py-1.5 bg-white border border-gray-200 text-gray-600 text-sm rounded-full hover:bg-gray-50 transition">Landing</button>
+        <button class="px-4 py-1.5 bg-white border border-gray-200 text-gray-600 text-sm rounded-full hover:bg-gray-50 transition">Analytics</button>
+        <button class="px-4 py-1.5 bg-white border border-gray-200 text-gray-600 text-sm rounded-full hover:bg-gray-50 transition">Maps</button>
+      </div>
+
+
+      <!-- Featured Templates -->
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-base font-semibold text-gray-800">⭐ Featured Templates</h2>
+          <a href="#" class="text-sm text-blue-600 hover:underline font-medium">View all</a>
+        </div>
+        <div class="flex gap-4 overflow-x-auto pb-2 -mx-1 px-1">
+          <!-- SaaS Pro Kit -->
+          <div class="flex-shrink-0 w-64 bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+            <div class="h-36 bg-gradient-to-br from-purple-500 to-indigo-700 flex items-end p-3">
+              <span class="px-2 py-0.5 bg-white/20 text-white text-xs font-semibold rounded-full backdrop-blur-sm">React</span>
+            </div>
+            <div class="p-4">
+              <p class="font-semibold text-gray-900 text-sm">SaaS Pro Kit</p>
+              <div class="flex items-center gap-1 mt-1 text-xs text-gray-500">
+                <svg class="w-3.5 h-3.5 text-yellow-400 fill-yellow-400" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span class="font-semibold text-gray-700">4.9</span>
+                <span>(128)</span>
+                <span class="mx-1">·</span>
+                <span>4,200 downloads</span>
+              </div>
+              <div class="flex items-center justify-between mt-3">
+                <span class="text-base font-bold text-gray-900">$79</span>
+                <button type="button" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition">Purchase</button>
+              </div>
+            </div>
+          </div>
+          <!-- Admin Dashboard -->
+          <div class="flex-shrink-0 w-64 bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+            <div class="h-36 bg-gradient-to-br from-blue-500 to-cyan-600 flex items-end p-3">
+              <span class="px-2 py-0.5 bg-white/20 text-white text-xs font-semibold rounded-full backdrop-blur-sm">HTML</span>
+            </div>
+            <div class="p-4">
+              <p class="font-semibold text-gray-900 text-sm">Admin Dashboard</p>
+              <div class="flex items-center gap-1 mt-1 text-xs text-gray-500">
+                <svg class="w-3.5 h-3.5 text-yellow-400 fill-yellow-400" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span class="font-semibold text-gray-700">4.7</span>
+                <span>(84)</span>
+                <span class="mx-1">·</span>
+                <span>3,540 downloads</span>
+              </div>
+              <div class="flex items-center justify-between mt-3">
+                <span class="text-base font-bold text-emerald-600">Free</span>
+                <button type="button" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition">Download</button>
+              </div>
+            </div>
+          </div>
+          <!-- Analytics Suite -->
+          <div class="flex-shrink-0 w-64 bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+            <div class="h-36 bg-gradient-to-br from-emerald-500 to-teal-700 flex items-end p-3">
+              <span class="px-2 py-0.5 bg-white/20 text-white text-xs font-semibold rounded-full backdrop-blur-sm">Next.js</span>
+            </div>
+            <div class="p-4">
+              <p class="font-semibold text-gray-900 text-sm">Analytics Suite</p>
+              <div class="flex items-center gap-1 mt-1 text-xs text-gray-500">
+                <svg class="w-3.5 h-3.5 text-yellow-400 fill-yellow-400" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span class="font-semibold text-gray-700">4.8</span>
+                <span>(62)</span>
+                <span class="mx-1">·</span>
+                <span>2,910 downloads</span>
+              </div>
+              <div class="flex items-center justify-between mt-3">
+                <span class="text-base font-bold text-gray-900">$49</span>
+                <button type="button" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition">Purchase</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Template Grid -->
+      <div>
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-base font-semibold text-gray-800">All Templates <span class="text-gray-400 font-normal text-sm">(142)</span></h2>
+          <select class="text-sm border border-gray-200 rounded-lg px-3 py-1.5 bg-white text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option>Most Popular</option>
+            <option>Newest First</option>
+            <option>Price: Low to High</option>
+            <option>Highest Rated</option>
+          </select>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+
+          <!-- 1. Landing Page Pro -->
+          <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition group">
+            <div class="h-28 bg-gradient-to-br from-pink-400 to-rose-600 relative">
+              <div class="absolute top-2 left-2"><span class="px-1.5 py-0.5 bg-white/20 text-white text-xs font-medium rounded backdrop-blur-sm">HTML</span></div>
+            </div>
+            <div class="p-3">
+              <p class="text-sm font-semibold text-gray-900 truncate">Landing Page Pro</p>
+              <div class="flex items-center gap-1 my-1 text-xs text-gray-500">
+                <svg class="w-3 h-3 text-yellow-400 fill-yellow-400" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span class="font-medium text-gray-700">4.8</span><span>· 1,240</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-bold text-gray-900">$39</span>
+                <div class="flex gap-1">
+                  <button class="px-2 py-1 text-xs border border-gray-200 rounded text-gray-600 hover:bg-gray-50">Preview</button>
+                  <button type="button" class="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700">Buy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. CRM Dashboard -->
+          <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition group">
+            <div class="h-28 bg-gradient-to-br from-blue-500 to-indigo-700 relative">
+              <div class="absolute top-2 left-2"><span class="px-1.5 py-0.5 bg-white/20 text-white text-xs font-medium rounded backdrop-blur-sm">React</span></div>
+            </div>
+            <div class="p-3">
+              <p class="text-sm font-semibold text-gray-900 truncate">CRM Dashboard</p>
+              <div class="flex items-center gap-1 my-1 text-xs text-gray-500">
+                <svg class="w-3 h-3 text-yellow-400 fill-yellow-400" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span class="font-medium text-gray-700">4.9</span><span>· 2,180</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-bold text-gray-900">$59</span>
+                <div class="flex gap-1">
+                  <button class="px-2 py-1 text-xs border border-gray-200 rounded text-gray-600 hover:bg-gray-50">Preview</button>
+                  <button type="button" class="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700">Buy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Chat Interface -->
+          <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition group">
+            <div class="h-28 bg-gradient-to-br from-violet-500 to-purple-700 relative">
+              <div class="absolute top-2 left-2"><span class="px-1.5 py-0.5 bg-white/20 text-white text-xs font-medium rounded backdrop-blur-sm">Vue</span></div>
+            </div>
+            <div class="p-3">
+              <p class="text-sm font-semibold text-gray-900 truncate">Chat Interface</p>
+              <div class="flex items-center gap-1 my-1 text-xs text-gray-500">
+                <svg class="w-3 h-3 text-yellow-400 fill-yellow-400" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span class="font-medium text-gray-700">4.7</span><span>· 870</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-bold text-gray-900">$29</span>
+                <div class="flex gap-1">
+                  <button class="px-2 py-1 text-xs border border-gray-200 rounded text-gray-600 hover:bg-gray-50">Preview</button>
+                  <button type="button" class="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700">Buy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. File Manager UI -->
+          <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition group">
+            <div class="h-28 bg-gradient-to-br from-amber-400 to-orange-600 relative">
+              <div class="absolute top-2 left-2"><span class="px-1.5 py-0.5 bg-white/20 text-white text-xs font-medium rounded backdrop-blur-sm">HTML</span></div>
+            </div>
+            <div class="p-3">
+              <p class="text-sm font-semibold text-gray-900 truncate">File Manager UI</p>
+              <div class="flex items-center gap-1 my-1 text-xs text-gray-500">
+                <svg class="w-3 h-3 text-yellow-400 fill-yellow-400" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span class="font-medium text-gray-700">4.6</span><span>· 650</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-bold text-emerald-600">Free</span>
+                <div class="flex gap-1">
+                  <button class="px-2 py-1 text-xs border border-gray-200 rounded text-gray-600 hover:bg-gray-50">Preview</button>
+                  <button type="button" class="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700">Get</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Auth Pages Pack -->
+          <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition group">
+            <div class="h-28 bg-gradient-to-br from-teal-400 to-cyan-700 relative">
+              <div class="absolute top-2 left-2"><span class="px-1.5 py-0.5 bg-white/20 text-white text-xs font-medium rounded backdrop-blur-sm">Next.js</span></div>
+            </div>
+            <div class="p-3">
+              <p class="text-sm font-semibold text-gray-900 truncate">Auth Pages Pack</p>
+              <div class="flex items-center gap-1 my-1 text-xs text-gray-500">
+                <svg class="w-3 h-3 text-yellow-400 fill-yellow-400" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span class="font-medium text-gray-700">4.8</span><span>· 1,900</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-bold text-gray-900">$19</span>
+                <div class="flex gap-1">
+                  <button class="px-2 py-1 text-xs border border-gray-200 rounded text-gray-600 hover:bg-gray-50">Preview</button>
+                  <button type="button" class="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700">Buy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. Kanban Board -->
+          <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition group">
+            <div class="h-28 bg-gradient-to-br from-sky-400 to-blue-700 relative">
+              <div class="absolute top-2 left-2"><span class="px-1.5 py-0.5 bg-white/20 text-white text-xs font-medium rounded backdrop-blur-sm">React</span></div>
+            </div>
+            <div class="p-3">
+              <p class="text-sm font-semibold text-gray-900 truncate">Kanban Board</p>
+              <div class="flex items-center gap-1 my-1 text-xs text-gray-500">
+                <svg class="w-3 h-3 text-yellow-400 fill-yellow-400" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span class="font-medium text-gray-700">4.9</span><span>· 3,420</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-bold text-gray-900">$49</span>
+                <div class="flex gap-1">
+                  <button class="px-2 py-1 text-xs border border-gray-200 rounded text-gray-600 hover:bg-gray-50">Preview</button>
+                  <button type="button" class="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700">Buy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7. Invoice Manager -->
+          <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition group">
+            <div class="h-28 bg-gradient-to-br from-lime-400 to-green-700 relative">
+              <div class="absolute top-2 left-2"><span class="px-1.5 py-0.5 bg-white/20 text-white text-xs font-medium rounded backdrop-blur-sm">SvelteKit</span></div>
+            </div>
+            <div class="p-3">
+              <p class="text-sm font-semibold text-gray-900 truncate">Invoice Manager</p>
+              <div class="flex items-center gap-1 my-1 text-xs text-gray-500">
+                <svg class="w-3 h-3 text-yellow-400 fill-yellow-400" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span class="font-medium text-gray-700">4.5</span><span>· 490</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-bold text-gray-900">$69</span>
+                <div class="flex gap-1">
+                  <button class="px-2 py-1 text-xs border border-gray-200 rounded text-gray-600 hover:bg-gray-50">Preview</button>
+                  <button type="button" class="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700">Buy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 8. Dark Mode Admin -->
+          <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition group">
+            <div class="h-28 bg-gradient-to-br from-gray-700 to-gray-900 relative">
+              <div class="absolute top-2 left-2"><span class="px-1.5 py-0.5 bg-white/20 text-white text-xs font-medium rounded backdrop-blur-sm">React</span></div>
+            </div>
+            <div class="p-3">
+              <p class="text-sm font-semibold text-gray-900 truncate">Dark Mode Admin</p>
+              <div class="flex items-center gap-1 my-1 text-xs text-gray-500">
+                <svg class="w-3 h-3 text-yellow-400 fill-yellow-400" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span class="font-medium text-gray-700">5.0</span><span>· 780</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-bold text-gray-900">$89</span>
+                <div class="flex gap-1">
+                  <button class="px-2 py-1 text-xs border border-gray-200 rounded text-gray-600 hover:bg-gray-50">Preview</button>
+                  <button type="button" class="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700">Buy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 9. Multi-step Form -->
+          <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition group">
+            <div class="h-28 bg-gradient-to-br from-fuchsia-400 to-pink-700 relative">
+              <div class="absolute top-2 left-2"><span class="px-1.5 py-0.5 bg-white/20 text-white text-xs font-medium rounded backdrop-blur-sm">HTML</span></div>
+            </div>
+            <div class="p-3">
+              <p class="text-sm font-semibold text-gray-900 truncate">Multi-step Form</p>
+              <div class="flex items-center gap-1 my-1 text-xs text-gray-500">
+                <svg class="w-3 h-3 text-yellow-400 fill-yellow-400" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span class="font-medium text-gray-700">4.6</span><span>· 310</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-bold text-emerald-600">Free</span>
+                <div class="flex gap-1">
+                  <button class="px-2 py-1 text-xs border border-gray-200 rounded text-gray-600 hover:bg-gray-50">Preview</button>
+                  <button type="button" class="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700">Get</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 10. Email Client UI -->
+          <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition group">
+            <div class="h-28 bg-gradient-to-br from-blue-300 to-sky-600 relative">
+              <div class="absolute top-2 left-2"><span class="px-1.5 py-0.5 bg-white/20 text-white text-xs font-medium rounded backdrop-blur-sm">Next.js</span></div>
+            </div>
+            <div class="p-3">
+              <p class="text-sm font-semibold text-gray-900 truncate">Email Client UI</p>
+              <div class="flex items-center gap-1 my-1 text-xs text-gray-500">
+                <svg class="w-3 h-3 text-yellow-400 fill-yellow-400" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span class="font-medium text-gray-700">4.7</span><span>· 1,020</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-bold text-gray-900">$79</span>
+                <div class="flex gap-1">
+                  <button class="px-2 py-1 text-xs border border-gray-200 rounded text-gray-600 hover:bg-gray-50">Preview</button>
+                  <button type="button" class="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700">Buy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 11. Maps Analytics -->
+          <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition group">
+            <div class="h-28 bg-gradient-to-br from-emerald-300 to-teal-700 relative">
+              <div class="absolute top-2 left-2"><span class="px-1.5 py-0.5 bg-white/20 text-white text-xs font-medium rounded backdrop-blur-sm">Vue</span></div>
+            </div>
+            <div class="p-3">
+              <p class="text-sm font-semibold text-gray-900 truncate">Maps Analytics</p>
+              <div class="flex items-center gap-1 my-1 text-xs text-gray-500">
+                <svg class="w-3 h-3 text-yellow-400 fill-yellow-400" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span class="font-medium text-gray-700">4.8</span><span>· 590</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-bold text-gray-900">$99</span>
+                <div class="flex gap-1">
+                  <button class="px-2 py-1 text-xs border border-gray-200 rounded text-gray-600 hover:bg-gray-50">Preview</button>
+                  <button type="button" class="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700">Buy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 12. Calendar App -->
+          <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition group">
+            <div class="h-28 bg-gradient-to-br from-red-400 to-orange-600 relative">
+              <div class="absolute top-2 left-2"><span class="px-1.5 py-0.5 bg-white/20 text-white text-xs font-medium rounded backdrop-blur-sm">SvelteKit</span></div>
+            </div>
+            <div class="p-3">
+              <p class="text-sm font-semibold text-gray-900 truncate">Calendar App</p>
+              <div class="flex items-center gap-1 my-1 text-xs text-gray-500">
+                <svg class="w-3 h-3 text-yellow-400 fill-yellow-400" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span class="font-medium text-gray-700">4.9</span><span>· 1,670</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-bold text-gray-900">$129</span>
+                <div class="flex gap-1">
+                  <button class="px-2 py-1 text-xs border border-gray-200 rounded text-gray-600 hover:bg-gray-50">Preview</button>
+                  <button type="button" class="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700">Buy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- Pagination -->
+      <div class="flex items-center justify-center gap-1 pb-4">
+        <button class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 transition text-sm">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <button type="button" class="w-9 h-9 flex items-center justify-center rounded-lg bg-blue-600 text-white font-semibold text-sm">1</button>
+        <button class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 transition text-sm">2</button>
+        <button class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 transition text-sm">3</button>
+        <button class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 transition text-sm">4</button>
+        <button class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 transition text-sm">5</button>
+        <button class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 transition text-sm">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

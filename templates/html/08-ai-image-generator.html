@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready AI Image Generator HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>AI Image Generator — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<div class="flex items-center gap-2 text-sm text-gray-500 mb-4">
+        <span>AI Tools</span><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg><span class="text-gray-800 font-medium">Image Generator</span>
+      </div>
+      <h1 class="text-xl font-bold text-gray-900 mb-6">AI Image Generator</h1>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Left: Form panel -->
+        <div class="bg-white rounded-xl border border-gray-200 p-5 space-y-4">
+          <h2 class="text-sm font-semibold text-gray-800">Generation Settings</h2>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Image Prompt</label>
+            <textarea rows="4" placeholder="A futuristic city skyline at dusk with neon lights reflecting on rain-soaked streets, cinematic lighting, ultra-detailed..." class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none">A futuristic city skyline at dusk with neon lights reflecting on rain-soaked streets, cinematic lighting, ultra-detailed, 8K resolution</textarea>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Style</label>
+            <select class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option>Photorealistic</option><option>Cinematic</option><option>Digital Art</option><option>Oil Painting</option><option>Anime</option><option>Watercolor</option><option>3D Render</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Aspect Ratio</label>
+            <div class="grid grid-cols-3 gap-2">
+              <button class="py-1.5 text-xs border-2 border-blue-500 bg-blue-50 text-blue-700 rounded-lg font-medium">1:1</button>
+              <button class="py-1.5 text-xs border border-gray-200 text-gray-600 rounded-lg hover:bg-gray-50">16:9</button>
+              <button class="py-1.5 text-xs border border-gray-200 text-gray-600 rounded-lg hover:bg-gray-50">9:16</button>
+              <button class="py-1.5 text-xs border border-gray-200 text-gray-600 rounded-lg hover:bg-gray-50">4:3</button>
+              <button class="py-1.5 text-xs border border-gray-200 text-gray-600 rounded-lg hover:bg-gray-50">3:2</button>
+              <button class="py-1.5 text-xs border border-gray-200 text-gray-600 rounded-lg hover:bg-gray-50">21:9</button>
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Number of Images</label>
+            <select class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option>1 Image</option><option selected>4 Images</option><option>8 Images</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1">Negative Prompt <span class="text-gray-400 font-normal">(optional)</span></label>
+            <textarea rows="2" placeholder="blurry, low quality, watermark, text, deformed..." class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none">blurry, low quality, watermark, deformed faces, distorted</textarea>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-2">Quality</label>
+            <input type="range" min="1" max="3" value="2" class="w-full accent-blue-600" />
+            <div class="flex justify-between text-xs text-gray-400 mt-1"><span>Standard</span><span class="text-blue-600 font-medium">HD</span><span>Ultra HD</span></div>
+          </div>
+          <button type="button" class="w-full py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            Generate Images
+          </button>
+          <p class="text-xs text-center text-gray-400">Estimated: ~12s · 0.08 credits per image</p>
+        </div>
+        <!-- Right: Generated images -->
+        <div class="lg:col-span-2 space-y-5">
+          <div class="grid grid-cols-2 gap-4">
+            <!-- Image placeholder 1 -->
+            <div class="relative group rounded-xl overflow-hidden border border-gray-200">
+              <div class="w-full aspect-square bg-gradient-to-br from-indigo-900 via-purple-800 to-blue-900 flex items-center justify-center">
+                <div class="text-center">
+                  <div class="text-6xl mb-2">🌆</div>
+                  <p class="text-white/60 text-xs">Generated Image 1</p>
+                </div>
+              </div>
+              <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                <button class="p-2 bg-white rounded-lg hover:bg-gray-100"><svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg></button>
+                <button class="p-2 bg-white rounded-lg hover:bg-gray-100"><svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg></button>
+                <button class="p-2 bg-white rounded-lg hover:bg-gray-100"><svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg></button>
+              </div>
+            </div>
+            <!-- Image placeholder 2 -->
+            <div class="relative group rounded-xl overflow-hidden border border-gray-200">
+              <div class="w-full aspect-square bg-gradient-to-br from-cyan-900 via-teal-800 to-emerald-900 flex items-center justify-center">
+                <div class="text-center"><div class="text-6xl mb-2">🏙️</div><p class="text-white/60 text-xs">Generated Image 2</p></div>
+              </div>
+              <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                <button class="p-2 bg-white rounded-lg hover:bg-gray-100"><svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg></button>
+                <button class="p-2 bg-white rounded-lg hover:bg-gray-100"><svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg></button>
+                <button class="p-2 bg-white rounded-lg hover:bg-gray-100"><svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg></button>
+              </div>
+            </div>
+            <!-- Image placeholder 3 -->
+            <div class="relative group rounded-xl overflow-hidden border border-gray-200">
+              <div class="w-full aspect-square bg-gradient-to-br from-rose-900 via-pink-800 to-orange-900 flex items-center justify-center">
+                <div class="text-center"><div class="text-6xl mb-2">🌃</div><p class="text-white/60 text-xs">Generated Image 3</p></div>
+              </div>
+              <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                <button class="p-2 bg-white rounded-lg hover:bg-gray-100"><svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg></button>
+                <button class="p-2 bg-white rounded-lg hover:bg-gray-100"><svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg></button>
+                <button class="p-2 bg-white rounded-lg hover:bg-gray-100"><svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg></button>
+              </div>
+            </div>
+            <!-- Image placeholder 4 -->
+            <div class="relative group rounded-xl overflow-hidden border border-gray-200">
+              <div class="w-full aspect-square bg-gradient-to-br from-violet-900 via-indigo-800 to-blue-900 flex items-center justify-center">
+                <div class="text-center"><div class="text-6xl mb-2">✨</div><p class="text-white/60 text-xs">Generated Image 4</p></div>
+              </div>
+              <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                <button class="p-2 bg-white rounded-lg hover:bg-gray-100"><svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg></button>
+                <button class="p-2 bg-white rounded-lg hover:bg-gray-100"><svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg></button>
+                <button class="p-2 bg-white rounded-lg hover:bg-gray-100"><svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg></button>
+              </div>
+            </div>
+          </div>
+          <!-- History strip -->
+          <div class="bg-white rounded-xl border border-gray-200 p-4">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-sm font-semibold text-gray-800">Recent Generations</h3>
+              <button class="text-xs text-blue-600 hover:underline">View all</button>
+            </div>
+            <div class="flex gap-3 overflow-x-auto pb-1">
+              <div class="flex-shrink-0 w-16 h-16 rounded-lg bg-gradient-to-br from-green-800 to-teal-900 flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-blue-500 text-2xl">🌿</div>
+              <div class="flex-shrink-0 w-16 h-16 rounded-lg bg-gradient-to-br from-yellow-800 to-orange-900 flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-blue-500 text-2xl">🌅</div>
+              <div class="flex-shrink-0 w-16 h-16 rounded-lg bg-gradient-to-br from-blue-800 to-indigo-900 flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-blue-500 text-2xl">🌊</div>
+              <div class="flex-shrink-0 w-16 h-16 rounded-lg bg-gradient-to-br from-red-800 to-pink-900 flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-blue-500 text-2xl">🔥</div>
+              <div class="flex-shrink-0 w-16 h-16 rounded-lg bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-blue-500 text-2xl">🏔️</div>
+              <div class="flex-shrink-0 w-16 h-16 rounded-lg bg-gradient-to-br from-purple-800 to-violet-900 flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-blue-500 text-2xl">🌌</div>
+              <div class="flex-shrink-0 w-16 h-16 rounded-lg bg-gradient-to-br from-emerald-800 to-green-900 flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-blue-500 text-2xl">🦋</div>
+              <div class="flex-shrink-0 w-16 h-16 rounded-lg bg-gradient-to-br from-sky-800 to-cyan-900 flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-blue-500 text-2xl">❄️</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

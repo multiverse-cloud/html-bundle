@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready Notification Settings HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>Notification Settings — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<div class="mb-2">
+      <h1 class="text-xl font-bold text-gray-900">Notification Settings</h1>
+      <p class="text-sm text-gray-500 mt-1">Configure your notification channels and preferences</p>
+    </div>
+
+    <!-- Email -->
+    <div class="bg-white rounded-xl border border-gray-200 p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 bg-blue-100 rounded-lg flex items-center justify-center">📧</div>
+          <div>
+            <h2 class="font-semibold text-gray-800 text-sm">Email</h2>
+            <p class="text-xs text-gray-500">jane@mtverse.dev</p>
+          </div>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" checked class="sr-only peer">
+          <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+        </label>
+      </div>
+      <div class="space-y-3 pl-12">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm text-gray-700">Frequency</p>
+          </div>
+          <select class="px-3 py-1.5 text-xs border border-gray-200 rounded-lg">
+            <option>Immediate</option>
+            <option selected>Daily Digest</option>
+            <option>Weekly Digest</option>
+          </select>
+        </div>
+        <div class="flex items-center justify-between">
+          <p class="text-sm text-gray-700">Include digest summary</p>
+          <input type="checkbox" checked class="w-4 h-4 rounded text-blue-600" />
+        </div>
+        <div class="flex items-center justify-between">
+          <p class="text-sm text-gray-700">Marketing emails</p>
+          <input type="checkbox" class="w-4 h-4 rounded text-blue-600" />
+        </div>
+        <a href="#" class="text-xs text-red-500 hover:underline block">Unsubscribe from all emails</a>
+      </div>
+    </div>
+
+    <!-- In-App -->
+    <div class="bg-white rounded-xl border border-gray-200 p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 bg-purple-100 rounded-lg flex items-center justify-center">🔔</div>
+          <div>
+            <h2 class="font-semibold text-gray-800 text-sm">In-App</h2>
+            <p class="text-xs text-gray-500">Browser & dashboard notifications</p>
+          </div>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" checked class="sr-only peer">
+          <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+        </label>
+      </div>
+      <div class="space-y-3 pl-12">
+        <div class="flex items-center justify-between">
+          <p class="text-sm text-gray-700">Browser push notifications</p>
+          <input type="checkbox" checked class="w-4 h-4 rounded text-blue-600" />
+        </div>
+        <div class="flex items-center justify-between">
+          <p class="text-sm text-gray-700">Sound alerts</p>
+          <input type="checkbox" class="w-4 h-4 rounded text-blue-600" />
+        </div>
+      </div>
+    </div>
+
+    <!-- SMS -->
+    <div class="bg-white rounded-xl border border-gray-200 p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 bg-green-100 rounded-lg flex items-center justify-center">📱</div>
+          <div>
+            <h2 class="font-semibold text-gray-800 text-sm">SMS</h2>
+            <p class="text-xs text-gray-500">+1 (415) 555-0192</p>
+          </div>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" class="sr-only peer">
+          <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+        </label>
+      </div>
+      <div class="pl-12">
+        <p class="text-xs text-gray-400">Enable to configure SMS preferences. Standard rates apply.</p>
+      </div>
+    </div>
+
+    <!-- Slack -->
+    <div class="bg-white rounded-xl border border-gray-200 p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 bg-yellow-100 rounded-lg flex items-center justify-center">💬</div>
+          <div>
+            <h2 class="font-semibold text-gray-800 text-sm">Slack</h2>
+            <p class="text-xs text-green-600">Connected · #alerts channel</p>
+          </div>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" checked class="sr-only peer">
+          <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+        </label>
+      </div>
+      <div class="space-y-3 pl-12">
+        <div class="flex items-center justify-between">
+          <p class="text-sm text-gray-700">Critical alerts only</p>
+          <input type="checkbox" checked class="w-4 h-4 rounded text-blue-600" />
+        </div>
+        <div class="flex items-center justify-between">
+          <p class="text-sm text-gray-700">Billing notifications</p>
+          <input type="checkbox" checked class="w-4 h-4 rounded text-blue-600" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Webhook -->
+    <div class="bg-white rounded-xl border border-gray-200 p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 bg-gray-100 rounded-lg flex items-center justify-center">🔗</div>
+          <div>
+            <h2 class="font-semibold text-gray-800 text-sm">Webhook</h2>
+            <p class="text-xs text-gray-500">POST to your endpoint</p>
+          </div>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="wh-toggle" onchange="toggleWebhook()" class="sr-only peer">
+          <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+        </label>
+      </div>
+      <div id="webhook-config" class="hidden pl-12 space-y-3">
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">Webhook URL</label>
+          <div class="flex gap-2">
+            <input type="url" placeholder="https://api.yourapp.com/webhooks/mtverse" class="flex-1 px-3 py-2 text-xs border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono" />
+            <button class="px-3 py-2 text-xs bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200">Test</button>
+          </div>
+        </div>
+        <div>
+          <p class="text-xs font-medium text-gray-700 mb-2">Events to send</p>
+          <div class="grid grid-cols-2 gap-2">
+            <label class="flex items-center gap-2 text-xs text-gray-600"><input type="checkbox" checked class="w-3 h-3 rounded" /> template.published</label>
+            <label class="flex items-center gap-2 text-xs text-gray-600"><input type="checkbox" checked class="w-3 h-3 rounded" /> sale.completed</label>
+            <label class="flex items-center gap-2 text-xs text-gray-600"><input type="checkbox" class="w-3 h-3 rounded" /> team.member_added</label>
+            <label class="flex items-center gap-2 text-xs text-gray-600"><input type="checkbox" checked class="w-3 h-3 rounded" /> billing.invoice_paid</label>
+            <label class="flex items-center gap-2 text-xs text-gray-600"><input type="checkbox" checked class="w-3 h-3 rounded" /> api.limit_warning</label>
+            <label class="flex items-center gap-2 text-xs text-gray-600"><input type="checkbox" class="w-3 h-3 rounded" /> security.login</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-end gap-3 pb-4">
+      <button class="px-4 py-2 border border-gray-200 text-sm text-gray-700 rounded-lg hover:bg-gray-50">Cancel</button>
+      <button type="button" class="px-5 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700">Save Settings</button>
+    </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

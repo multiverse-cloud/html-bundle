@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready AI Document Summarizer HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>AI Document Summarizer — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<div class="flex items-center gap-2 text-sm text-gray-500 mb-4"><span>AI Tools</span><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg><span class="text-gray-800 font-medium">Document Summarizer</span></div>
+      <h1 class="text-xl font-bold text-gray-900 mb-6">AI Document Summarizer</h1>
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <!-- Main area -->
+        <div class="lg:col-span-3 space-y-5">
+          <!-- Upload / URL area -->
+          <div class="bg-white rounded-xl border border-gray-200 p-5">
+            <h2 class="text-sm font-semibold text-gray-800 mb-4">Input Document</h2>
+            <!-- Upload zone -->
+            <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-blue-400 hover:bg-blue-50/30 transition-colors cursor-pointer mb-4">
+              <div class="text-4xl mb-3">📄</div>
+              <p class="text-sm font-medium text-gray-700 mb-1">Drag & drop your document here</p>
+              <p class="text-xs text-gray-400 mb-3">Supports PDF, DOCX, TXT, MD — up to 50MB</p>
+              <button class="px-4 py-2 text-xs bg-white border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 font-medium">Browse Files</button>
+            </div>
+            <!-- URL input -->
+            <div class="flex items-center gap-2 mb-1">
+              <div class="flex-1 h-px bg-gray-200"></div>
+              <span class="text-xs text-gray-400 px-2">OR</span>
+              <div class="flex-1 h-px bg-gray-200"></div>
+            </div>
+            <div class="flex gap-2 mt-3">
+              <input type="url" value="https://arxiv.org/abs/2405.14327" placeholder="Paste a URL to summarize..." class="flex-1 px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <button type="button" class="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium">Fetch</button>
+            </div>
+          </div>
+          <!-- Document Preview -->
+          <div class="bg-white rounded-xl border border-gray-200 p-5">
+            <div class="flex items-center justify-between mb-3">
+              <h2 class="text-sm font-semibold text-gray-800">Document Preview</h2>
+              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded font-medium">PDF · 24 pages · 18,420 words</span>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-4 text-sm text-gray-600 leading-relaxed border border-gray-200 max-h-48 overflow-y-auto">
+              <p class="font-semibold text-gray-800 mb-2">Scaling Language Models: Methods, Analysis &amp; Insights from Training Gopher</p>
+              <p class="text-xs text-gray-500 mb-3">DeepMind · Published May 2024 · 18,420 words</p>
+              <p class="mb-2">Language model performance has been consistently improving with scale, motivating interest in training very large models. However, the relationship between model size, dataset size, and compute budget for optimal performance is poorly understood. In this paper, we investigate the scaling behavior of language model performance on a diverse set of tasks...</p>
+              <p>We train a series of language models ranging from 44M to 280B parameters, named Gopher, on a high-quality dataset. We analyze model performance across 152 diverse tasks, finding that larger models are often better, but improvements depend heavily on the task category...</p>
+            </div>
+          </div>
+          <!-- Summary Output -->
+          <div class="bg-white rounded-xl border border-gray-200 p-5">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-sm font-semibold text-gray-800">Summary Output</h2>
+              <div class="flex items-center gap-3">
+                <div class="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
+                  <button class="px-3 py-1 text-xs font-medium bg-white rounded-md shadow-sm text-gray-700">Bullets</button>
+                  <button class="px-3 py-1 text-xs font-medium text-gray-500 hover:text-gray-700 rounded-md">Paragraph</button>
+                </div>
+                <button class="px-3 py-1.5 text-xs border border-gray-200 rounded-lg hover:bg-gray-50 text-gray-600 flex items-center gap-1"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>Copy</button>
+                <button type="button" class="px-3 py-1.5 text-xs bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center gap-1"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>Export</button>
+              </div>
+            </div>
+            <!-- Length slider -->
+            <div class="flex items-center gap-4 mb-4">
+              <span class="text-xs text-gray-500 whitespace-nowrap">Summary Length</span>
+              <input type="range" min="1" max="5" value="3" class="flex-1 accent-blue-600" />
+              <span class="text-xs font-medium text-blue-600 whitespace-nowrap">Medium (300w)</span>
+            </div>
+            <div class="space-y-2 text-sm text-gray-700">
+              <div class="flex items-start gap-2"><span class="text-blue-500 mt-0.5 flex-shrink-0">•</span><p><strong>Core Contribution:</strong> The paper investigates optimal compute allocation for training large language models, proposing that current frontier models may be significantly under-trained relative to their parameter count.</p></div>
+              <div class="flex items-start gap-2"><span class="text-blue-500 mt-0.5 flex-shrink-0">•</span><p><strong>Scale Study:</strong> Models ranging from 44M to 280B parameters (Gopher family) were trained and evaluated across 152 diverse NLP benchmarks.</p></div>
+              <div class="flex items-start gap-2"><span class="text-blue-500 mt-0.5 flex-shrink-0">•</span><p><strong>Key Finding:</strong> Compute-optimal training requires scaling training tokens proportionally to model parameters — roughly 20 training tokens per parameter.</p></div>
+              <div class="flex items-start gap-2"><span class="text-blue-500 mt-0.5 flex-shrink-0">•</span><p><strong>Benchmark Performance:</strong> The 280B Gopher model achieves state-of-the-art on 100 of 152 tasks, with particularly strong gains in reading comprehension, common knowledge, and fact checking.</p></div>
+              <div class="flex items-start gap-2"><span class="text-blue-500 mt-0.5 flex-shrink-0">•</span><p><strong>Limitations:</strong> Performance degrades on mathematical reasoning and code generation relative to specialized models, suggesting domain-specific fine-tuning remains important.</p></div>
+            </div>
+          </div>
+        </div>
+        <!-- Recent Documents Sidebar -->
+        <div class="bg-white rounded-xl border border-gray-200 p-4">
+          <h3 class="text-sm font-semibold text-gray-800 mb-3">Recent Documents</h3>
+          <div class="space-y-3">
+            <div class="p-3 rounded-lg bg-blue-50 border border-blue-200 cursor-pointer">
+              <div class="flex items-center gap-2 mb-1"><span class="text-lg">📄</span><span class="text-xs font-semibold text-blue-800 truncate">Gopher Paper.pdf</span></div>
+              <p class="text-xs text-blue-600">18,420 words · 2 min ago</p>
+            </div>
+            <div class="p-3 rounded-lg hover:bg-gray-50 cursor-pointer border border-gray-100">
+              <div class="flex items-center gap-2 mb-1"><span class="text-lg">📝</span><span class="text-xs font-medium text-gray-700 truncate">Q2 Board Report.docx</span></div>
+              <p class="text-xs text-gray-400">4,200 words · 1 hr ago</p>
+            </div>
+            <div class="p-3 rounded-lg hover:bg-gray-50 cursor-pointer border border-gray-100">
+              <div class="flex items-center gap-2 mb-1"><span class="text-lg">🔗</span><span class="text-xs font-medium text-gray-700 truncate">YC Application Guide</span></div>
+              <p class="text-xs text-gray-400">URL · 8,100 words · 3 hrs ago</p>
+            </div>
+            <div class="p-3 rounded-lg hover:bg-gray-50 cursor-pointer border border-gray-100">
+              <div class="flex items-center gap-2 mb-1"><span class="text-lg">📄</span><span class="text-xs font-medium text-gray-700 truncate">Enterprise Contract v3.pdf</span></div>
+              <p class="text-xs text-gray-400">12,800 words · Yesterday</p>
+            </div>
+            <div class="p-3 rounded-lg hover:bg-gray-50 cursor-pointer border border-gray-100">
+              <div class="flex items-center gap-2 mb-1"><span class="text-lg">📝</span><span class="text-xs font-medium text-gray-700 truncate">Product Roadmap H2.docx</span></div>
+              <p class="text-xs text-gray-400">2,340 words · Yesterday</p>
+            </div>
+            <div class="p-3 rounded-lg hover:bg-gray-50 cursor-pointer border border-gray-100">
+              <div class="flex items-center gap-2 mb-1"><span class="text-lg">📄</span><span class="text-xs font-medium text-gray-700 truncate">Investor Memo May 2026.pdf</span></div>
+              <p class="text-xs text-gray-400">6,700 words · 2 days ago</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

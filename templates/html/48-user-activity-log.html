@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready Activity Log HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>Activity Log — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+      <div>
+        <h1 class="text-xl font-bold text-gray-900">Activity Log</h1>
+        <p class="text-sm text-gray-500 mt-1">Track all actions taken on your account</p>
+      </div>
+      <button class="px-4 py-2 border border-gray-200 text-sm text-gray-700 rounded-lg hover:bg-gray-50 w-fit">⬇️ Export Log</button>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="bg-white rounded-xl border border-gray-200 p-4 mb-6 flex flex-wrap gap-3">
+      <select class="px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <option>All Action Types</option>
+        <option>API Key</option>
+        <option>Template</option>
+        <option>Billing</option>
+        <option>Team</option>
+        <option>Security</option>
+        <option>Profile</option>
+      </select>
+      <input type="date" value="2026-05-01" class="px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      <input type="date" value="2026-05-24" class="px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      <select class="px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <option>All Users</option>
+        <option>Jane Doe</option>
+        <option>Marcus Turner</option>
+        <option>Sophie Lin</option>
+      </select>
+      <button type="button" class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700">Apply Filters</button>
+    </div>
+
+    <!-- Timeline -->
+    <div class="space-y-1">
+      <!-- Date Group -->
+      <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider px-2 mb-3">Today — May 24, 2026</p>
+
+      <!-- Log Entry -->
+      <div class="bg-white rounded-xl border border-gray-200">
+        <div class="flex items-start gap-4 p-4">
+          <div class="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 text-sm">🔑</div>
+          <div class="flex-1 min-w-0">
+            <div class="flex flex-wrap items-start justify-between gap-2">
+              <div>
+                <p class="text-sm font-medium text-gray-800">Updated API key <code class="bg-gray-100 text-xs px-1.5 py-0.5 rounded font-mono">sk-mt...8f3a</code></p>
+                <div class="flex flex-wrap items-center gap-2 mt-1">
+                  <div class="flex items-center gap-1.5">
+                    <div class="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold">JD</div>
+                    <span class="text-xs text-gray-500">Jane Doe</span>
+                  </div>
+                  <span class="text-xs text-gray-400">·</span>
+                  <span class="text-xs text-gray-400 font-mono">192.168.1.42</span>
+                  <span class="px-1.5 py-0.5 bg-blue-100 text-blue-700 text-xs rounded-full">API Key</span>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs text-gray-400">10:42 AM</span>
+                <button type="button" onclick="toggleDetail('d1')" class="text-xs text-blue-600 hover:underline">Details ▾</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="d1" class="hidden border-t border-gray-100 bg-gray-50 px-4 py-3 rounded-b-xl">
+          <p class="text-xs text-gray-600 font-mono">Action: API_KEY_UPDATE · Key ID: key_8f3a · Changes: renamed "Production Key" → "Prod API v2", scopes: read+write</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-gray-200">
+        <div class="flex items-start gap-4 p-4">
+          <div class="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 text-sm">📝</div>
+          <div class="flex-1 min-w-0">
+            <div class="flex flex-wrap items-start justify-between gap-2">
+              <div>
+                <p class="text-sm font-medium text-gray-800">Published template <span class="text-blue-600">Dashboard Pro</span></p>
+                <div class="flex flex-wrap items-center gap-2 mt-1">
+                  <div class="flex items-center gap-1.5">
+                    <div class="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold">JD</div>
+                    <span class="text-xs text-gray-500">Jane Doe</span>
+                  </div>
+                  <span class="text-xs text-gray-400">·</span>
+                  <span class="text-xs text-gray-400 font-mono">192.168.1.42</span>
+                  <span class="px-1.5 py-0.5 bg-green-100 text-green-700 text-xs rounded-full">Template</span>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs text-gray-400">9:15 AM</span>
+                <button type="button" onclick="toggleDetail('d2')" class="text-xs text-blue-600 hover:underline">Details ▾</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="d2" class="hidden border-t border-gray-100 bg-gray-50 px-4 py-3 rounded-b-xl">
+          <p class="text-xs text-gray-600 font-mono">Action: TEMPLATE_PUBLISH · Template ID: tpl_dash_pro · Version: 2.1.0 · Category: Dashboard</p>
+        </div>
+      </div>
+
+      <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider px-2 pt-4 mb-3">Yesterday — May 23, 2026</p>
+
+      <div class="bg-white rounded-xl border border-gray-200">
+        <div class="flex items-start gap-4 p-4">
+          <div class="w-9 h-9 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0 text-sm">✉️</div>
+          <div class="flex-1 min-w-0">
+            <div class="flex flex-wrap items-start justify-between gap-2">
+              <div>
+                <p class="text-sm font-medium text-gray-800">Invited <span class="text-blue-600">sarah@company.com</span> to the team</p>
+                <div class="flex flex-wrap items-center gap-2 mt-1">
+                  <div class="flex items-center gap-1.5">
+                    <div class="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center text-white text-xs font-bold">MT</div>
+                    <span class="text-xs text-gray-500">Marcus Turner</span>
+                  </div>
+                  <span class="text-xs text-gray-400">·</span>
+                  <span class="text-xs text-gray-400 font-mono">10.0.1.88</span>
+                  <span class="px-1.5 py-0.5 bg-purple-100 text-purple-700 text-xs rounded-full">Team</span>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs text-gray-400">3:22 PM</span>
+                <button type="button" onclick="toggleDetail('d3')" class="text-xs text-blue-600 hover:underline">Details ▾</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="d3" class="hidden border-t border-gray-100 bg-gray-50 px-4 py-3 rounded-b-xl">
+          <p class="text-xs text-gray-600 font-mono">Action: TEAM_INVITE_SENT · Invitee: sarah@company.com · Role: Member · Invite expires: Jun 6, 2026</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-gray-200">
+        <div class="flex items-start gap-4 p-4">
+          <div class="w-9 h-9 rounded-full bg-yellow-100 flex items-center justify-center flex-shrink-0 text-sm">💳</div>
+          <div class="flex-1 min-w-0">
+            <div class="flex flex-wrap items-start justify-between gap-2">
+              <div>
+                <p class="text-sm font-medium text-gray-800">Upgraded subscription to <span class="text-blue-600">Pro Plan</span></p>
+                <div class="flex flex-wrap items-center gap-2 mt-1">
+                  <div class="flex items-center gap-1.5">
+                    <div class="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold">JD</div>
+                    <span class="text-xs text-gray-500">Jane Doe</span>
+                  </div>
+                  <span class="text-xs text-gray-400">·</span>
+                  <span class="text-xs text-gray-400 font-mono">192.168.1.42</span>
+                  <span class="px-1.5 py-0.5 bg-yellow-100 text-yellow-700 text-xs rounded-full">Billing</span>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs text-gray-400">11:05 AM</span>
+                <button type="button" onclick="toggleDetail('d4')" class="text-xs text-blue-600 hover:underline">Details ▾</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="d4" class="hidden border-t border-gray-100 bg-gray-50 px-4 py-3 rounded-b-xl">
+          <p class="text-xs text-gray-600 font-mono">Action: SUBSCRIPTION_UPGRADE · From: Starter ($9/mo) → Pro ($49/mo) · Invoice: INV-2026-0523</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-gray-200">
+        <div class="flex items-start gap-4 p-4">
+          <div class="w-9 h-9 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0 text-sm">🔒</div>
+          <div class="flex-1 min-w-0">
+            <div class="flex flex-wrap items-start justify-between gap-2">
+              <div>
+                <p class="text-sm font-medium text-gray-800">Enabled two-factor authentication</p>
+                <div class="flex flex-wrap items-center gap-2 mt-1">
+                  <div class="flex items-center gap-1.5">
+                    <div class="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold">JD</div>
+                    <span class="text-xs text-gray-500">Jane Doe</span>
+                  </div>
+                  <span class="text-xs text-gray-400">·</span>
+                  <span class="text-xs text-gray-400 font-mono">192.168.1.42</span>
+                  <span class="px-1.5 py-0.5 bg-red-100 text-red-700 text-xs rounded-full">Security</span>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs text-gray-400">9:50 AM</span>
+                <button type="button" onclick="toggleDetail('d5')" class="text-xs text-blue-600 hover:underline">Details ▾</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="d5" class="hidden border-t border-gray-100 bg-gray-50 px-4 py-3 rounded-b-xl">
+          <p class="text-xs text-gray-600 font-mono">Action: 2FA_ENABLED · Method: TOTP (Authenticator App) · Backup codes generated: 6</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex items-center justify-between mt-6">
+      <p class="text-xs text-gray-500">Showing 5 of 128 entries</p>
+      <div class="flex gap-2">
+        <button class="px-3 py-1.5 border border-gray-200 text-sm text-gray-600 rounded-lg hover:bg-gray-50">← Previous</button>
+        <button class="px-3 py-1.5 border border-gray-200 text-sm text-gray-600 rounded-lg hover:bg-gray-50">Next →</button>
+      </div>
+    </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

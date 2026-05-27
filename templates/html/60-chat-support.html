@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready Support Chat HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>Support Chat — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<!-- Chat Layout -->
+  <div class="flex-1 flex overflow-hidden" style="height: calc(100vh - 57px)">
+    <!-- Conversation List -->
+    <div class="w-72 bg-white border-r border-gray-200 flex flex-col flex-shrink-0 hidden md:flex">
+      <div class="p-3 border-b border-gray-100">
+        <input type="text" placeholder="Search conversations..." class="w-full px-3 py-2 text-xs border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      </div>
+      <div class="flex-1 overflow-y-auto">
+        <!-- Active conv -->
+        <div class="p-3 bg-blue-50 border-b border-gray-100 cursor-pointer">
+          <div class="flex items-start gap-3">
+            <div class="w-9 h-9 rounded-full bg-orange-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">MC</div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <p class="text-sm font-semibold text-gray-900 truncate">Marcus Chen</p>
+                <span class="text-xs text-gray-400">2m</span>
+              </div>
+              <p class="text-xs text-gray-500 truncate">Can you help me with the API key setup...</p>
+            </div>
+            <span class="w-4 h-4 bg-blue-500 rounded-full text-white text-xs flex items-center justify-center flex-shrink-0">2</span>
+          </div>
+        </div>
+        <div class="p-3 border-b border-gray-100 cursor-pointer hover:bg-gray-50">
+          <div class="flex items-start gap-3">
+            <div class="w-9 h-9 rounded-full bg-green-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">SP</div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <p class="text-sm font-medium text-gray-700 truncate">Sarah Park</p>
+                <span class="text-xs text-gray-400">1h</span>
+              </div>
+              <p class="text-xs text-gray-400 truncate">Thanks for your help! Will try that...</p>
+            </div>
+          </div>
+        </div>
+        <div class="p-3 border-b border-gray-100 cursor-pointer hover:bg-gray-50">
+          <div class="flex items-start gap-3">
+            <div class="w-9 h-9 rounded-full bg-purple-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">RJ</div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <p class="text-sm font-medium text-gray-700 truncate">Raj Johnson</p>
+                <span class="text-xs text-gray-400">3h</span>
+              </div>
+              <p class="text-xs text-gray-400 truncate">Billing question about overage charges</p>
+            </div>
+            <span class="w-4 h-4 bg-red-500 rounded-full text-white text-xs flex items-center justify-center flex-shrink-0">1</span>
+          </div>
+        </div>
+        <div class="p-3 border-b border-gray-100 cursor-pointer hover:bg-gray-50">
+          <div class="flex items-start gap-3">
+            <div class="w-9 h-9 rounded-full bg-teal-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">AL</div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <p class="text-sm font-medium text-gray-700 truncate">Ana Lee</p>
+                <span class="text-xs text-gray-400">1d</span>
+              </div>
+              <p class="text-xs text-gray-400 truncate">Issue resolved. Closing ticket.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Conversation -->
+    <div class="flex-1 flex flex-col min-w-0">
+      <!-- Conversation Header -->
+      <div class="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full bg-orange-500 flex items-center justify-center text-white text-xs font-bold">MC</div>
+          <div>
+            <p class="font-semibold text-gray-900 text-sm">Marcus Chen</p>
+            <p class="text-xs text-gray-500">marcus@startup.io · <span class="text-green-600">Open</span></p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs rounded-full">Open</span>
+          <button class="px-3 py-1.5 text-xs border border-gray-200 rounded-lg hover:bg-gray-50 text-gray-600">Resolve</button>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div class="flex-1 overflow-y-auto p-4 space-y-4">
+        <!-- Agent message -->
+        <div class="flex items-end gap-2">
+          <div class="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">JD</div>
+          <div class="max-w-xs lg:max-w-md">
+            <div class="bg-white border border-gray-200 rounded-2xl rounded-bl-none px-4 py-2.5 shadow-sm">
+              <p class="text-sm text-gray-800">Hi Marcus! Welcome to mtverse support. How can I help you today?</p>
+            </div>
+            <p class="text-xs text-gray-400 mt-1 ml-1">10:30 AM · Jane Doe</p>
+          </div>
+        </div>
+
+        <!-- Customer message -->
+        <div class="flex items-end gap-2 flex-row-reverse">
+          <div class="w-7 h-7 rounded-full bg-orange-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">MC</div>
+          <div class="max-w-xs lg:max-w-md">
+            <div class="bg-blue-600 text-white rounded-2xl rounded-br-none px-4 py-2.5">
+              <p class="text-sm">Hi! I'm having trouble generating an API key. The create button seems to not be working on my end.</p>
+            </div>
+            <p class="text-xs text-gray-400 mt-1 text-right mr-1">10:32 AM</p>
+          </div>
+        </div>
+
+        <!-- Agent message -->
+        <div class="flex items-end gap-2">
+          <div class="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">JD</div>
+          <div class="max-w-xs lg:max-w-md">
+            <div class="bg-white border border-gray-200 rounded-2xl rounded-bl-none px-4 py-2.5 shadow-sm">
+              <p class="text-sm text-gray-800">I can help with that! Could you try clearing your browser cache first and then navigate to Settings → API Keys? Also, which browser are you using?</p>
+            </div>
+            <p class="text-xs text-gray-400 mt-1 ml-1">10:33 AM · Jane Doe</p>
+          </div>
+        </div>
+
+        <!-- Customer message -->
+        <div class="flex items-end gap-2 flex-row-reverse">
+          <div class="w-7 h-7 rounded-full bg-orange-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">MC</div>
+          <div class="max-w-xs lg:max-w-md">
+            <div class="bg-blue-600 text-white rounded-2xl rounded-br-none px-4 py-2.5">
+              <p class="text-sm">I'm using Chrome 124. Let me try that.</p>
+            </div>
+            <p class="text-xs text-gray-400 mt-1 text-right mr-1">10:35 AM</p>
+          </div>
+        </div>
+
+        <div class="flex items-end gap-2 flex-row-reverse">
+          <div class="w-7 h-7 rounded-full bg-orange-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">MC</div>
+          <div class="max-w-xs lg:max-w-md">
+            <div class="bg-blue-600 text-white rounded-2xl rounded-br-none px-4 py-2.5">
+              <p class="text-sm">Still not working 😔 The button just spins for a few seconds then nothing happens.</p>
+            </div>
+            <p class="text-xs text-gray-400 mt-1 text-right mr-1">10:37 AM</p>
+          </div>
+        </div>
+
+        <!-- Typing indicator -->
+        <div class="flex items-end gap-2">
+          <div class="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">JD</div>
+          <div class="bg-white border border-gray-200 rounded-2xl rounded-bl-none px-4 py-3 shadow-sm flex gap-1 items-center">
+            <span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay:0ms"></span>
+            <span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay:150ms"></span>
+            <span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay:300ms"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Replies -->
+      <div class="px-4 pb-2 flex gap-2 overflow-x-auto">
+        <button class="px-3 py-1 text-xs bg-blue-50 text-blue-600 rounded-full whitespace-nowrap hover:bg-blue-100">Can you share your screen?</button>
+        <button class="px-3 py-1 text-xs bg-blue-50 text-blue-600 rounded-full whitespace-nowrap hover:bg-blue-100">What error message do you see?</button>
+        <button class="px-3 py-1 text-xs bg-blue-50 text-blue-600 rounded-full whitespace-nowrap hover:bg-blue-100">Let me escalate this</button>
+      </div>
+
+      <!-- Message Input -->
+      <div class="bg-white border-t border-gray-200 p-3">
+        <div class="flex items-end gap-2 bg-gray-50 rounded-xl border border-gray-200 px-3 py-2">
+          <button class="text-gray-400 hover:text-gray-600 text-sm flex-shrink-0">📎</button>
+          <textarea class="flex-1 bg-transparent text-sm resize-none focus:outline-none max-h-24 min-h-[2rem]" placeholder="Type a message..." rows="1"></textarea>
+          <button type="button" class="bg-blue-600 text-white w-8 h-8 rounded-lg flex items-center justify-center hover:bg-blue-700 flex-shrink-0">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    sidebar.classList.toggle('-translate-x-full');
+    overlay.classList.toggle('hidden');
+  }
+</script>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>

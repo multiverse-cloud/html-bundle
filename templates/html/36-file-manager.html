@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#465fff" />
+  <meta name="description" content="Production-ready File Manager HTML dashboard template with responsive TailAdmin-style layout, dark mode, command palette, actions, loaders, and polished UI states." />
+  <title>File Manager — mtverse</title>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.2s ease-out;
+    }
+    .sidebar-text {
+      transition: opacity 0.2s ease-in-out;
+    }
+  </style>
+  <link rel="stylesheet" href="tailwind-production.css">
+  <link rel="stylesheet" href="pro-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
+
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar Container -->
+  <div id="sidebar-container"></div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Page content -->
+    <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
+      <div class="mx-auto w-full max-w-screen-2xl">
+<!-- File Manager Body: 3-col layout -->
+    <div class="flex flex-1 overflow-hidden">
+
+      <!-- Left Folder Tree Panel -->
+      <div class="hidden lg:flex flex-col w-48 border-r border-gray-200 bg-white overflow-y-auto flex-shrink-0">
+        <div class="px-4 py-3 border-b border-gray-100">
+          <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Storage</p>
+        </div>
+        <nav class="flex-1 px-2 py-3 space-y-0.5">
+          <a href="#" class="flex items-center justify-between px-3 py-2 rounded-lg bg-blue-50 text-blue-600 text-sm font-medium">
+            <span>📁 My Files</span><span class="text-xs bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded-full">142</span>
+          </a>
+          <a href="#" class="flex items-center justify-between px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-50 text-sm">
+            <span>📁 Shared with Me</span><span class="text-xs text-gray-400">28</span>
+          </a>
+          <a href="#" class="flex items-center justify-between px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-50 text-sm">
+            <span>📁 Recent</span><span class="text-xs text-gray-400">15</span>
+          </a>
+          <a href="#" class="flex items-center justify-between px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-50 text-sm">
+            <span>📁 Starred</span><span class="text-xs text-gray-400">7</span>
+          </a>
+          <a href="#" class="flex items-center justify-between px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-50 text-sm">
+            <span>🗑 Trash</span><span class="text-xs text-gray-400">4</span>
+          </a>
+        </nav>
+        <div class="px-4 py-4 border-t border-gray-100">
+          <p class="text-xs text-gray-500 mb-2">73.2 GB of 100 GB used</p>
+          <div class="w-full bg-gray-200 rounded-full h-2">
+            <div class="bg-blue-500 h-2 rounded-full" style="width:73.2%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Area -->
+      <div class="flex-1 overflow-y-auto p-6">
+        <!-- Toolbar Row -->
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <nav class="flex items-center gap-1 text-sm text-gray-500 flex-1">
+            <a href="#" class="hover:text-blue-600">My Files</a>
+            <span>/</span>
+            <a href="#" class="hover:text-blue-600">Projects</a>
+            <span>/</span>
+            <span class="text-gray-900 font-medium">Q2 2026</span>
+          </nav>
+          <div class="flex items-center gap-2">
+            <button type="button" class="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+              Upload
+            </button>
+            <button class="flex items-center gap-2 border border-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+              New Folder
+            </button>
+            <div class="flex border border-gray-200 rounded-lg overflow-hidden">
+              <button class="p-2 bg-blue-50 text-blue-600 hover:bg-blue-100">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+              </button>
+              <button class="p-2 text-gray-400 hover:bg-gray-50">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Folders Section -->
+        <div class="mb-6">
+          <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Folders</h3>
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            <!-- Folder Card -->
+            <div class="group relative bg-white rounded-xl border border-gray-200 p-4 hover:border-blue-300 hover:shadow-sm cursor-pointer transition-all">
+              <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center text-2xl mb-3">📁</div>
+              <p class="text-sm font-medium text-gray-900 truncate">Design Assets</p>
+              <p class="text-xs text-gray-400 mt-1">24 files · May 20, 2026</p>
+              <div class="absolute top-2 right-2 hidden group-hover:flex items-center gap-1">
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400 hover:text-gray-600" title="Download">⬇️</button>
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400 hover:text-gray-600" title="Share">🔗</button>
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400 hover:text-red-500" title="Delete">🗑</button>
+              </div>
+            </div>
+            <div class="group relative bg-white rounded-xl border border-gray-200 p-4 hover:border-blue-300 hover:shadow-sm cursor-pointer transition-all">
+              <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-2xl mb-3">📁</div>
+              <p class="text-sm font-medium text-gray-900 truncate">Engineering Docs</p>
+              <p class="text-xs text-gray-400 mt-1">67 files · May 22, 2026</p>
+              <div class="absolute top-2 right-2 hidden group-hover:flex items-center gap-1">
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400" title="Download">⬇️</button>
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400" title="Share">🔗</button>
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400 hover:text-red-500" title="Delete">🗑</button>
+              </div>
+            </div>
+            <div class="group relative bg-white rounded-xl border border-gray-200 p-4 hover:border-blue-300 hover:shadow-sm cursor-pointer transition-all">
+              <div class="w-10 h-10 bg-pink-100 rounded-lg flex items-center justify-center text-2xl mb-3">📁</div>
+              <p class="text-sm font-medium text-gray-900 truncate">Marketing</p>
+              <p class="text-xs text-gray-400 mt-1">18 files · May 18, 2026</p>
+              <div class="absolute top-2 right-2 hidden group-hover:flex items-center gap-1">
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400" title="Download">⬇️</button>
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400" title="Share">🔗</button>
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400 hover:text-red-500" title="Delete">🗑</button>
+              </div>
+            </div>
+            <div class="group relative bg-white rounded-xl border border-gray-200 p-4 hover:border-blue-300 hover:shadow-sm cursor-pointer transition-all">
+              <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center text-2xl mb-3">📁</div>
+              <p class="text-sm font-medium text-gray-900 truncate">Reports</p>
+              <p class="text-xs text-gray-400 mt-1">11 files · May 24, 2026</p>
+              <div class="absolute top-2 right-2 hidden group-hover:flex items-center gap-1">
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400" title="Download">⬇️</button>
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400" title="Share">🔗</button>
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400 hover:text-red-500" title="Delete">🗑</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Files Section -->
+        <div class="mb-6">
+          <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Files</h3>
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            <!-- File: PDF -->
+            <div class="group relative bg-white rounded-xl border border-gray-200 p-4 hover:border-blue-300 hover:shadow-sm cursor-pointer transition-all">
+              <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center text-2xl mb-3">📄</div>
+              <p class="text-sm font-medium text-gray-900 truncate">Q2 Report.pdf</p>
+              <p class="text-xs text-gray-400 mt-1">4.2 MB · May 24, 2026</p>
+              <div class="absolute top-2 right-2 hidden group-hover:flex items-center gap-1">
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400" title="Download">⬇️</button>
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400" title="Share">🔗</button>
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400 hover:text-red-500" title="Delete">🗑</button>
+              </div>
+            </div>
+            <!-- File: XLSX -->
+            <div class="group relative bg-white rounded-xl border border-gray-200 p-4 hover:border-blue-300 hover:shadow-sm cursor-pointer transition-all">
+              <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center text-2xl mb-3">📊</div>
+              <p class="text-sm font-medium text-gray-900 truncate">Analytics Dashboard.xlsx</p>
+              <p class="text-xs text-gray-400 mt-1">1.8 MB · May 23, 2026</p>
+              <div class="absolute top-2 right-2 hidden group-hover:flex items-center gap-1">
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400" title="Download">⬇️</button>
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400" title="Share">🔗</button>
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400 hover:text-red-500" title="Delete">🗑</button>
+              </div>
+            </div>
+
+
+            <!-- File: PNG -->
+            <div class="group relative bg-white rounded-xl border border-gray-200 p-4 hover:border-blue-300 hover:shadow-sm cursor-pointer transition-all">
+              <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center text-2xl mb-3">🖼</div>
+              <p class="text-sm font-medium text-gray-900 truncate">Hero Banner.png</p>
+              <p class="text-xs text-gray-400 mt-1">892 KB · May 21, 2026</p>
+              <div class="absolute top-2 right-2 hidden group-hover:flex items-center gap-1">
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400" title="Download">⬇️</button>
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400" title="Share">🔗</button>
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400 hover:text-red-500" title="Delete">🗑</button>
+              </div>
+            </div>
+            <!-- File: DOCX -->
+            <div class="group relative bg-white rounded-xl border border-gray-200 p-4 hover:border-blue-300 hover:shadow-sm cursor-pointer transition-all">
+              <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-2xl mb-3">📝</div>
+              <p class="text-sm font-medium text-gray-900 truncate">Product Roadmap.docx</p>
+              <p class="text-xs text-gray-400 mt-1">234 KB · May 20, 2026</p>
+              <div class="absolute top-2 right-2 hidden group-hover:flex items-center gap-1">
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400" title="Download">⬇️</button>
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400" title="Share">🔗</button>
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400 hover:text-red-500" title="Delete">🗑</button>
+              </div>
+            </div>
+            <!-- File: MP4 -->
+            <div class="group relative bg-white rounded-xl border border-gray-200 p-4 hover:border-blue-300 hover:shadow-sm cursor-pointer transition-all">
+              <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center text-2xl mb-3">🎥</div>
+              <p class="text-sm font-medium text-gray-900 truncate">Demo Video.mp4</p>
+              <p class="text-xs text-gray-400 mt-1">48.2 MB · May 19, 2026</p>
+              <div class="absolute top-2 right-2 hidden group-hover:flex items-center gap-1">
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400" title="Download">⬇️</button>
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400" title="Share">🔗</button>
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400 hover:text-red-500" title="Delete">🗑</button>
+              </div>
+            </div>
+            <!-- File: PDF 2 -->
+            <div class="group relative bg-white rounded-xl border border-gray-200 p-4 hover:border-blue-300 hover:shadow-sm cursor-pointer transition-all">
+              <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center text-2xl mb-3">📄</div>
+              <p class="text-sm font-medium text-gray-900 truncate">API Documentation.pdf</p>
+              <p class="text-xs text-gray-400 mt-1">1.1 MB · May 17, 2026</p>
+              <div class="absolute top-2 right-2 hidden group-hover:flex items-center gap-1">
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400" title="Download">⬇️</button>
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400" title="Share">🔗</button>
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400 hover:text-red-500" title="Delete">🗑</button>
+              </div>
+            </div>
+            <!-- File: XLSX 2 -->
+            <div class="group relative bg-white rounded-xl border border-gray-200 p-4 hover:border-blue-300 hover:shadow-sm cursor-pointer transition-all">
+              <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center text-2xl mb-3">📊</div>
+              <p class="text-sm font-medium text-gray-900 truncate">Budget Forecast.xlsx</p>
+              <p class="text-xs text-gray-400 mt-1">567 KB · May 15, 2026</p>
+              <div class="absolute top-2 right-2 hidden group-hover:flex items-center gap-1">
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400" title="Download">⬇️</button>
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400" title="Share">🔗</button>
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400 hover:text-red-500" title="Delete">🗑</button>
+              </div>
+            </div>
+            <!-- File: ZIP -->
+            <div class="group relative bg-white rounded-xl border border-gray-200 p-4 hover:border-blue-300 hover:shadow-sm cursor-pointer transition-all">
+              <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center text-2xl mb-3">🗜</div>
+              <p class="text-sm font-medium text-gray-900 truncate">Source Code.zip</p>
+              <p class="text-xs text-gray-400 mt-1">12.4 MB · May 14, 2026</p>
+              <div class="absolute top-2 right-2 hidden group-hover:flex items-center gap-1">
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400" title="Download">⬇️</button>
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400" title="Share">🔗</button>
+                <button class="p-1 rounded hover:bg-gray-100 text-gray-400 hover:text-red-500" title="Delete">🗑</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="border-t border-gray-200 pt-4">
+          <p class="text-sm text-gray-500">12 items · 69.4 MB total</p>
+        </div>
+      </div><!-- end main area -->
+    </div><!-- end 3-col -->
+  </div><!-- end main content -->
+</div><!-- end outer flex -->
+
+<script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    sidebar.classList.toggle('-translate-x-full');
+    overlay.classList.toggle('hidden');
+  }
+</script>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Common Components -->
+<script src="common-loader.js"></script>
+<script src="common-sidebar.js"></script>
+<script src="common-header.js"></script>
+<script src="app-shell.js"></script>
+
+</body>
+</html>
