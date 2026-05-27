@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#465fff" />
-  <meta name="description" content="Avatar sizes, groups, and online/offline indicators using the bundled profile image." />
-  <title>Avatars - mtverse</title>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Avatars — mtverse</title>
   <style>
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-    .animate-slideDown { animation: slideDown 0.2s ease-out; }
+    .no-scrollbar::-webkit-scrollbar{display:none}.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+    @keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+    @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+    .animate-spin{animation:spin 1s linear infinite}
+    .animate-pulse{animation:pulse 2s ease-in-out infinite}
+    .shimmer-bar{background:linear-gradient(90deg,#e5e7eb 25%,#d1d5db 50%,#e5e7eb 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
+    .avatar-hover-overlay{opacity:0;transition:opacity .2s}
+    .avatar-upload-wrap:hover .avatar-hover-overlay{opacity:1}
+    .avatar-upload-wrap{position:relative;display:inline-block;cursor:pointer}
+    .tooltip{position:relative}
+    .tooltip:hover .tooltip-text{display:block}
+    .tooltip-text{display:none;position:absolute;bottom:120%;left:50%;transform:translateX(-50%);white-space:nowrap;background:#1f2937;color:#fff;font-size:11px;padding:3px 8px;border-radius:6px;z-index:10}
+    .tooltip-text::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:4px solid transparent;border-top-color:#1f2937}
+    .dark .shimmer-bar{background:linear-gradient(90deg,#374151 25%,#4b5563 50%,#374151 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
   </style>
   <link rel="stylesheet" href="tailwind-production.css">
   <link rel="stylesheet" href="pro-styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100">
 <div id="sidebar-overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
@@ -26,68 +32,657 @@
     <div id="header-container"></div>
     <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 md:px-6 2xl:px-10 py-6" tabindex="-1">
       <div class="mx-auto w-full max-w-screen-2xl">
-        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <div class="mb-2 flex items-center gap-2 text-sm text-gray-500">
-              <span>mtverse</span><span>/</span><span>ui-elements</span><span>/</span>
-              <span class="font-medium text-gray-800 dark:text-white/90">Avatars</span>
+
+        <!-- PAGE HEADER -->
+        <div class="mb-8">
+          <nav class="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 mb-4">
+            <a href="#" class="hover:text-gray-700 dark:hover:text-gray-200">mtverse</a>
+            <span>/</span>
+            <a href="#" class="hover:text-gray-700 dark:hover:text-gray-200">UI Elements</a>
+            <span>/</span>
+            <span class="text-gray-900 dark:text-white font-medium">Avatars</span>
+          </nav>
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Avatars &amp; Profile Images</h1>
+          <p class="text-gray-500 dark:text-gray-400 text-base mb-6">50+ avatar variants — sizes, shapes, initials, groups, status indicators, upload states, and fallback patterns</p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4 text-center">
+              <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">56</div>
+              <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">Variants</div>
             </div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white/90">Avatars</h1>
-            <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Avatar sizes, groups, and online/offline indicators using the bundled profile image.</p>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <button type="button" class="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:bg-white/[0.03] dark:text-gray-300">Preview</button>
-            <button type="button" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">Use Component</button>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Components</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">24</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">States</p><p class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">96</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <p class="text-sm text-gray-500">Responsive</p><p class="mt-2 text-3xl font-bold text-green-600">Ready</p>
+            <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4 text-center">
+              <div class="text-2xl font-bold text-purple-600 dark:text-purple-400">10</div>
+              <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">Patterns</div>
+            </div>
+            <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4 text-center">
+              <div class="text-2xl font-bold text-green-600 dark:text-green-400">✓</div>
+              <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">Accessible</div>
+            </div>
+            <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4 text-center">
+              <div class="text-2xl font-bold text-amber-600 dark:text-amber-400">✓</div>
+              <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">Responsive</div>
+            </div>
           </div>
         </div>
-        <div class="mt-5 grid grid-cols-1 gap-5 xl:grid-cols-2">
 
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Default avatar</h2>
-            <div class="mt-5"><div class="flex flex-wrap items-end justify-center gap-5"><img src="assets/avatars/admin-profile-man.png" alt="Musharof avatar" class="rounded-full bg-gray-100" style="width:28px;height:28px"><img src="assets/avatars/admin-profile-man.png" alt="Musharof avatar" class="rounded-full bg-gray-100" style="width:36px;height:36px"><img src="assets/avatars/admin-profile-man.png" alt="Musharof avatar" class="rounded-full bg-gray-100" style="width:44px;height:44px"><img src="assets/avatars/admin-profile-man.png" alt="Musharof avatar" class="rounded-full bg-gray-100" style="width:56px;height:56px"><img src="assets/avatars/admin-profile-man.png" alt="Musharof avatar" class="rounded-full bg-gray-100" style="width:68px;height:68px"><img src="assets/avatars/admin-profile-man.png" alt="Musharof avatar" class="rounded-full bg-gray-100" style="width:82px;height:82px"></div></div>
-          </section>
 
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03]">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Avatar with online indicator</h2>
-            <div class="mt-5"><div class="flex flex-wrap items-end justify-center gap-5"><span class="app-avatar" style="width:28px;height:28px"><img src="assets/avatars/admin-profile-man.png" alt="Musharof avatar"><span class="app-online-dot"></span></span><span class="app-avatar" style="width:36px;height:36px"><img src="assets/avatars/admin-profile-man.png" alt="Musharof avatar"><span class="app-online-dot"></span></span><span class="app-avatar" style="width:44px;height:44px"><img src="assets/avatars/admin-profile-man.png" alt="Musharof avatar"><span class="app-online-dot"></span></span><span class="app-avatar" style="width:56px;height:56px"><img src="assets/avatars/admin-profile-man.png" alt="Musharof avatar"><span class="app-online-dot"></span></span><span class="app-avatar" style="width:68px;height:68px"><img src="assets/avatars/admin-profile-man.png" alt="Musharof avatar"><span class="app-online-dot"></span></span><span class="app-avatar" style="width:82px;height:82px"><img src="assets/avatars/admin-profile-man.png" alt="Musharof avatar"><span class="app-online-dot"></span></span></div></div>
-          </section>
-
-          <section class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] xl:col-span-2">
-            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <!-- SECTION 1: SIZE VARIANTS -->
+        <section id="sizes" class="mb-8">
+          <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6">
+            <div class="flex items-center justify-between mb-6">
               <div>
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-white/90">Avatars production states</h2>
-                <p class="mt-1 text-sm text-gray-500">Real dashboard states with actions, accessibility, responsive layout, and clean spacing.</p>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Size Variants</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">xs through 2xl — all initials-based, no external image dependencies</p>
               </div>
-              <div class="inline-flex rounded-xl bg-gray-100 p-1 dark:bg-white/[0.04]">
-                <button class="rounded-lg bg-white px-4 py-2 text-sm font-bold text-blue-600 shadow-sm dark:bg-gray-900">Preview</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">Code</button>
-                <button class="rounded-lg px-4 py-2 text-sm font-bold text-gray-500">States</button>
+              <button onclick="openSourceDrawer('sizes','Size Variants')" class="text-xs font-medium text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 rounded-lg px-3 py-1.5 hover:bg-blue-50 dark:hover:bg-blue-900/30">View Source</button>
+            </div>
+            <div class="flex flex-wrap items-end gap-6">
+              <!-- xs -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0" role="img" aria-label="Avatar AK">
+                  <span class="text-white font-bold" style="font-size:8px">AK</span>
+                </div>
+                <span class="text-xs text-gray-500">xs</span>
+              </div>
+              <!-- sm -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center flex-shrink-0" role="img" aria-label="Avatar BJ">
+                  <span class="text-white font-bold text-xs">BJ</span>
+                </div>
+                <span class="text-xs text-gray-500">sm</span>
+              </div>
+              <!-- md -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center flex-shrink-0" role="img" aria-label="Avatar CL">
+                  <span class="text-white font-bold text-sm">CL</span>
+                </div>
+                <span class="text-xs text-gray-500">md</span>
+              </div>
+              <!-- lg -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="w-12 h-12 rounded-full bg-amber-500 flex items-center justify-center flex-shrink-0" role="img" aria-label="Avatar DM">
+                  <span class="text-white font-bold text-base">DM</span>
+                </div>
+                <span class="text-xs text-gray-500">lg</span>
+              </div>
+              <!-- xl -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="w-16 h-16 rounded-full bg-red-500 flex items-center justify-center flex-shrink-0" role="img" aria-label="Avatar EM">
+                  <span class="text-white font-bold text-lg">EM</span>
+                </div>
+                <span class="text-xs text-gray-500">xl</span>
+              </div>
+              <!-- 2xl -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="w-20 h-20 rounded-full bg-indigo-600 flex items-center justify-center flex-shrink-0" role="img" aria-label="Avatar FN">
+                  <span class="text-white font-bold text-xl">FN</span>
+                </div>
+                <span class="text-xs text-gray-500">2xl</span>
               </div>
             </div>
-            <div class="mt-5 grid gap-4 md:grid-cols-3">
-              <div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Default</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Hover / active</p><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div><div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><div class="mb-4 flex items-center justify-between"><p class="font-bold">Loading / empty</p><span class="h-2.5 w-2.5 rounded-full bg-yellow-400"></span></div><div class="space-y-2"><div class="h-3 rounded bg-gray-100 dark:bg-white/[0.06]"></div><div class="h-3 w-3/4 rounded bg-gray-100 dark:bg-white/[0.06]"></div><button type="button" class="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white">Action</button></div></div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: SHAPE VARIANTS -->
+        <section id="shapes" class="mb-8">
+          <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Shape Variants</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Circle, rounded square, square, squircle, and ring bordered</p>
+              </div>
+              <button onclick="openSourceDrawer('shapes','Shape Variants')" class="text-xs font-medium text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 rounded-lg px-3 py-1.5 hover:bg-blue-50 dark:hover:bg-blue-900/30">View Source</button>
             </div>
-          </section>
-        </div>
-      </div>
+            <div class="flex flex-wrap items-center gap-8">
+              <!-- Circle -->
+              <div class="flex flex-col items-center gap-3">
+                <div class="w-14 h-14 rounded-full bg-blue-600 flex items-center justify-center" role="img" aria-label="Circle avatar">
+                  <span class="text-white font-bold text-lg">GR</span>
+                </div>
+                <span class="text-xs text-gray-500">Circle</span>
+              </div>
+              <!-- Rounded square -->
+              <div class="flex flex-col items-center gap-3">
+                <div class="w-14 h-14 rounded-xl bg-purple-600 flex items-center justify-center" role="img" aria-label="Rounded square avatar">
+                  <span class="text-white font-bold text-lg">HS</span>
+                </div>
+                <span class="text-xs text-gray-500">Rounded</span>
+              </div>
+              <!-- Square -->
+              <div class="flex flex-col items-center gap-3">
+                <div class="w-14 h-14 rounded-none bg-green-600 flex items-center justify-center" role="img" aria-label="Square avatar">
+                  <span class="text-white font-bold text-lg">IT</span>
+                </div>
+                <span class="text-xs text-gray-500">Square</span>
+              </div>
+              <!-- Squircle -->
+              <div class="flex flex-col items-center gap-3">
+                <div class="w-14 h-14 rounded-2xl bg-amber-500 flex items-center justify-center" role="img" aria-label="Squircle avatar">
+                  <span class="text-white font-bold text-lg">JK</span>
+                </div>
+                <span class="text-xs text-gray-500">Squircle</span>
+              </div>
+              <!-- With ring -->
+              <div class="flex flex-col items-center gap-3">
+                <div class="w-14 h-14 rounded-full bg-sky-500 flex items-center justify-center ring-4 ring-sky-200 dark:ring-sky-800" role="img" aria-label="Avatar with ring">
+                  <span class="text-white font-bold text-lg">KL</span>
+                </div>
+                <span class="text-xs text-gray-500">Ring (blue)</span>
+              </div>
+              <!-- Green ring -->
+              <div class="flex flex-col items-center gap-3">
+                <div class="w-14 h-14 rounded-full bg-rose-500 flex items-center justify-center ring-4 ring-rose-200 dark:ring-rose-800" role="img" aria-label="Avatar with rose ring">
+                  <span class="text-white font-bold text-lg">LM</span>
+                </div>
+                <span class="text-xs text-gray-500">Ring (rose)</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: INITIALS AVATARS -->
+        <section id="initials" class="mb-8">
+          <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Initials Avatars</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">12 colorful initials avatars — pure CSS, no images required</p>
+              </div>
+              <button onclick="openSourceDrawer('initials','Initials Avatars')" class="text-xs font-medium text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 rounded-lg px-3 py-1.5 hover:bg-blue-50 dark:hover:bg-blue-900/30">View Source</button>
+            </div>
+            <div class="flex flex-wrap gap-4">
+              <div class="flex flex-col items-center gap-1.5"><div class="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center"><span class="text-white font-bold text-sm">AK</span></div><span class="text-xs text-gray-500">AK</span></div>
+              <div class="flex flex-col items-center gap-1.5"><div class="w-12 h-12 rounded-full bg-purple-600 flex items-center justify-center"><span class="text-white font-bold text-sm">BJ</span></div><span class="text-xs text-gray-500">BJ</span></div>
+              <div class="flex flex-col items-center gap-1.5"><div class="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center"><span class="text-white font-bold text-sm">CL</span></div><span class="text-xs text-gray-500">CL</span></div>
+              <div class="flex flex-col items-center gap-1.5"><div class="w-12 h-12 rounded-full bg-amber-500 flex items-center justify-center"><span class="text-white font-bold text-sm">DM</span></div><span class="text-xs text-gray-500">DM</span></div>
+              <div class="flex flex-col items-center gap-1.5"><div class="w-12 h-12 rounded-full bg-red-500 flex items-center justify-center"><span class="text-white font-bold text-sm">EM</span></div><span class="text-xs text-gray-500">EM</span></div>
+              <div class="flex flex-col items-center gap-1.5"><div class="w-12 h-12 rounded-full bg-teal-600 flex items-center justify-center"><span class="text-white font-bold text-sm">FN</span></div><span class="text-xs text-gray-500">FN</span></div>
+              <div class="flex flex-col items-center gap-1.5"><div class="w-12 h-12 rounded-full bg-indigo-600 flex items-center justify-center"><span class="text-white font-bold text-sm">GR</span></div><span class="text-xs text-gray-500">GR</span></div>
+              <div class="flex flex-col items-center gap-1.5"><div class="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center"><span class="text-white font-bold text-sm">HS</span></div><span class="text-xs text-gray-500">HS</span></div>
+              <div class="flex flex-col items-center gap-1.5"><div class="w-12 h-12 rounded-full bg-pink-500 flex items-center justify-center"><span class="text-white font-bold text-sm">IT</span></div><span class="text-xs text-gray-500">IT</span></div>
+              <div class="flex flex-col items-center gap-1.5"><div class="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center"><span class="text-white font-bold text-sm">JK</span></div><span class="text-xs text-gray-500">JK</span></div>
+              <div class="flex flex-col items-center gap-1.5"><div class="w-12 h-12 rounded-full bg-sky-500 flex items-center justify-center"><span class="text-white font-bold text-sm">KL</span></div><span class="text-xs text-gray-500">KL</span></div>
+              <div class="flex flex-col items-center gap-1.5"><div class="w-12 h-12 rounded-full bg-rose-600 flex items-center justify-center"><span class="text-white font-bold text-sm">LM</span></div><span class="text-xs text-gray-500">LM</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 4: STATUS INDICATORS -->
+        <section id="status" class="mb-8">
+          <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Status Indicators</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Online, offline, away, busy, and in-meeting status dots</p>
+              </div>
+              <button onclick="openSourceDrawer('status','Status Indicators')" class="text-xs font-medium text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 rounded-lg px-3 py-1.5 hover:bg-blue-50 dark:hover:bg-blue-900/30">View Source</button>
+            </div>
+            <div class="flex flex-wrap gap-8">
+              <!-- Online -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="relative inline-block">
+                  <div class="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center"><span class="text-white font-bold text-sm">AK</span></div>
+                  <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-white dark:border-gray-800 rounded-full"></span>
+                </div>
+                <span class="text-xs text-gray-500">Online</span>
+              </div>
+              <!-- Offline -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="relative inline-block">
+                  <div class="w-12 h-12 rounded-full bg-purple-600 flex items-center justify-center"><span class="text-white font-bold text-sm">BJ</span></div>
+                  <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-gray-400 border-2 border-white dark:border-gray-800 rounded-full"></span>
+                </div>
+                <span class="text-xs text-gray-500">Offline</span>
+              </div>
+              <!-- Away -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="relative inline-block">
+                  <div class="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center"><span class="text-white font-bold text-sm">CL</span></div>
+                  <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-amber-400 border-2 border-white dark:border-gray-800 rounded-full"></span>
+                </div>
+                <span class="text-xs text-gray-500">Away</span>
+              </div>
+              <!-- Busy / DND -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="relative inline-block">
+                  <div class="w-12 h-12 rounded-full bg-amber-500 flex items-center justify-center"><span class="text-white font-bold text-sm">DM</span></div>
+                  <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-red-500 border-2 border-white dark:border-gray-800 rounded-full"></span>
+                </div>
+                <span class="text-xs text-gray-500">Busy / DND</span>
+              </div>
+              <!-- In meeting -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="relative inline-block">
+                  <div class="w-12 h-12 rounded-full bg-red-500 flex items-center justify-center"><span class="text-white font-bold text-sm">EM</span></div>
+                  <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-blue-500 border-2 border-white dark:border-gray-800 rounded-full flex items-center justify-center">
+                    <svg class="w-2 h-2 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/></svg>
+                  </span>
+                </div>
+                <span class="text-xs text-gray-500">In Meeting</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- SECTION 5: AVATAR GROUPS / STACKS -->
+        <section id="groups" class="mb-8">
+          <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Avatar Groups &amp; Stacks</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Overlapping facepiles, rows, overflow badges, and tooltips</p>
+              </div>
+              <button onclick="openSourceDrawer('groups','Avatar Groups / Stacks')" class="text-xs font-medium text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 rounded-lg px-3 py-1.5 hover:bg-blue-50 dark:hover:bg-blue-900/30">View Source</button>
+            </div>
+            <div class="space-y-8">
+              <!-- Tightly overlapping with +N -->
+              <div>
+                <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">Overlapping stack with overflow badge</p>
+                <div class="flex items-center -space-x-2">
+                  <div class="tooltip w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center ring-2 ring-white dark:ring-gray-800 z-10"><span class="text-white font-bold text-sm">AK</span><span class="tooltip-text">Alice Kim</span></div>
+                  <div class="tooltip w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center ring-2 ring-white dark:ring-gray-800 z-10"><span class="text-white font-bold text-sm">BJ</span><span class="tooltip-text">Bob Jones</span></div>
+                  <div class="tooltip w-10 h-10 rounded-full bg-green-600 flex items-center justify-center ring-2 ring-white dark:ring-gray-800 z-10"><span class="text-white font-bold text-sm">CL</span><span class="tooltip-text">Carol Lee</span></div>
+                  <div class="tooltip w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center ring-2 ring-white dark:ring-gray-800 z-10"><span class="text-white font-bold text-sm">DM</span><span class="tooltip-text">Dan Miller</span></div>
+                  <div class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center ring-2 ring-white dark:ring-gray-800 z-10">
+                    <span class="text-gray-700 dark:text-gray-300 font-bold text-xs">+8</span>
+                  </div>
+                </div>
+                <p class="text-xs text-gray-500 mt-2">-space-x-2 overlap, +8 more</p>
+              </div>
+              <!-- Loose overlap -space-x-3 -->
+              <div>
+                <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">Tighter overlap (-space-x-3)</p>
+                <div class="flex items-center -space-x-3">
+                  <div class="w-12 h-12 rounded-full bg-red-500 flex items-center justify-center ring-2 ring-white dark:ring-gray-800"><span class="text-white font-bold text-sm">EM</span></div>
+                  <div class="w-12 h-12 rounded-full bg-teal-600 flex items-center justify-center ring-2 ring-white dark:ring-gray-800"><span class="text-white font-bold text-sm">FN</span></div>
+                  <div class="w-12 h-12 rounded-full bg-indigo-600 flex items-center justify-center ring-2 ring-white dark:ring-gray-800"><span class="text-white font-bold text-sm">GR</span></div>
+                  <div class="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center ring-2 ring-white dark:ring-gray-800"><span class="text-white font-bold text-sm">HS</span></div>
+                </div>
+              </div>
+              <!-- Non-overlapping row -->
+              <div>
+                <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">Non-overlapping row with "and 12 more"</p>
+                <div class="flex items-center gap-2">
+                  <div class="w-10 h-10 rounded-full bg-pink-500 flex items-center justify-center"><span class="text-white font-bold text-sm">IT</span></div>
+                  <div class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center"><span class="text-white font-bold text-sm">JK</span></div>
+                  <div class="w-10 h-10 rounded-full bg-sky-500 flex items-center justify-center"><span class="text-white font-bold text-sm">KL</span></div>
+                  <div class="w-10 h-10 rounded-full bg-rose-600 flex items-center justify-center"><span class="text-white font-bold text-sm">LM</span></div>
+                  <span class="text-sm text-gray-500 dark:text-gray-400 ml-1">and <strong class="text-gray-800 dark:text-gray-200">12 more</strong></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 6: WITH BADGE/LABEL -->
+        <section id="with-badge" class="mb-8">
+          <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">With Badge &amp; Label</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Name, role, notification count, Pro crown, and verified badges</p>
+              </div>
+              <button onclick="openSourceDrawer('with-badge','With Badge / Label')" class="text-xs font-medium text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 rounded-lg px-3 py-1.5 hover:bg-blue-50 dark:hover:bg-blue-900/30">View Source</button>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <!-- Avatar + name + role -->
+              <div class="flex items-center gap-3 p-4 border border-gray-200 dark:border-gray-700 rounded-xl">
+                <div class="w-11 h-11 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0"><span class="text-white font-bold text-sm">AK</span></div>
+                <div><p class="text-sm font-semibold text-gray-900 dark:text-white">Alice Kim</p><p class="text-xs text-gray-500">Product Designer</p></div>
+              </div>
+              <!-- Avatar + name + status badge -->
+              <div class="flex items-center gap-3 p-4 border border-gray-200 dark:border-gray-700 rounded-xl">
+                <div class="w-11 h-11 rounded-full bg-purple-600 flex items-center justify-center flex-shrink-0"><span class="text-white font-bold text-sm">BJ</span></div>
+                <div>
+                  <div class="flex items-center gap-2"><p class="text-sm font-semibold text-gray-900 dark:text-white">Bob Jones</p><span class="text-xs bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 font-medium px-1.5 py-0.5 rounded-full">Online</span></div>
+                  <p class="text-xs text-gray-500">Engineering Lead</p>
+                </div>
+              </div>
+              <!-- Notification count badge -->
+              <div class="flex items-center gap-3 p-4 border border-gray-200 dark:border-gray-700 rounded-xl">
+                <div class="relative flex-shrink-0">
+                  <div class="w-11 h-11 rounded-full bg-green-600 flex items-center justify-center"><span class="text-white font-bold text-sm">CL</span></div>
+                  <span class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">3</span>
+                </div>
+                <div><p class="text-sm font-semibold text-gray-900 dark:text-white">Carol Lee</p><p class="text-xs text-gray-500">3 new messages</p></div>
+              </div>
+              <!-- Pro crown badge -->
+              <div class="flex items-center gap-3 p-4 border border-gray-200 dark:border-gray-700 rounded-xl">
+                <div class="relative flex-shrink-0">
+                  <div class="w-11 h-11 rounded-full bg-amber-500 flex items-center justify-center"><span class="text-white font-bold text-sm">DM</span></div>
+                  <span class="absolute -top-2 -right-1 text-amber-400" title="Pro member">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                  </span>
+                </div>
+                <div><p class="text-sm font-semibold text-gray-900 dark:text-white">Dan Miller</p><p class="text-xs text-amber-600 font-medium">Pro Member</p></div>
+              </div>
+              <!-- Verified checkmark -->
+              <div class="flex items-center gap-3 p-4 border border-gray-200 dark:border-gray-700 rounded-xl">
+                <div class="relative flex-shrink-0">
+                  <div class="w-11 h-11 rounded-full bg-red-500 flex items-center justify-center"><span class="text-white font-bold text-sm">EM</span></div>
+                  <span class="absolute bottom-0 right-0 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center ring-2 ring-white dark:ring-gray-800">
+                    <svg class="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                  </span>
+                </div>
+                <div><p class="text-sm font-semibold text-gray-900 dark:text-white">Emma Moore</p><p class="text-xs text-blue-600 font-medium">✓ Verified</p></div>
+              </div>
+              <!-- Large horizontal -->
+              <div class="flex items-center gap-4 p-4 border border-gray-200 dark:border-gray-700 rounded-xl">
+                <div class="w-14 h-14 rounded-full bg-teal-600 flex items-center justify-center flex-shrink-0"><span class="text-white font-bold text-lg">FN</span></div>
+                <div>
+                  <p class="text-base font-bold text-gray-900 dark:text-white">Finn Nash</p>
+                  <p class="text-xs text-gray-500">@finn.nash · CTO</p>
+                  <div class="flex gap-1.5 mt-1">
+                    <span class="text-xs bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 px-1.5 py-0.5 rounded-full">Engineering</span>
+                    <span class="text-xs bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 px-1.5 py-0.5 rounded-full">Leadership</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- SECTION 7: FALLBACK STATES -->
+        <section id="fallback" class="mb-8">
+          <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Fallback States</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Missing image, unknown user, deleted, bot, and system avatars</p>
+              </div>
+              <button onclick="openSourceDrawer('fallback','Fallback States')" class="text-xs font-medium text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 rounded-lg px-3 py-1.5 hover:bg-blue-50 dark:hover:bg-blue-900/30">View Source</button>
+            </div>
+            <div class="flex flex-wrap gap-8">
+              <!-- Initials fallback -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center" title="Image failed — showing initials">
+                  <span class="text-gray-700 dark:text-gray-300 font-bold text-sm">AK</span>
+                </div>
+                <span class="text-xs text-gray-500 text-center">Initials fallback</span>
+              </div>
+              <!-- Generic silhouette -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center" title="Unknown user">
+                  <svg class="w-7 h-7 text-gray-400 dark:text-gray-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+                </div>
+                <span class="text-xs text-gray-500 text-center">Unknown user</span>
+              </div>
+              <!-- Deleted user -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center opacity-40 relative" title="Deleted user">
+                  <svg class="w-7 h-7 text-gray-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="w-full h-0.5 bg-gray-500 rotate-45"></div>
+                  </div>
+                </div>
+                <span class="text-xs text-gray-500 text-center">Deleted user</span>
+              </div>
+              <!-- Bot / AI avatar -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="w-12 h-12 rounded-full bg-purple-600 flex items-center justify-center" title="AI Assistant">
+                  <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L9.09 8.26 2 9.27l5 4.87-1.18 6.88L12 17.77l6.18 3.25L17 14.14l5-4.87-7.09-1.01L12 2z"/></svg>
+                </div>
+                <span class="text-xs text-gray-500 text-center">Bot / AI</span>
+              </div>
+              <!-- System / App avatar -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="w-12 h-12 rounded-xl bg-blue-700 flex items-center justify-center" title="System">
+                  <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                </div>
+                <span class="text-xs text-gray-500 text-center">System</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 8: UPLOAD / EDIT STATES -->
+        <section id="upload" class="mb-8">
+          <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Upload &amp; Edit States</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Hover overlay, uploading spinner, success, and remove button</p>
+              </div>
+              <button onclick="openSourceDrawer('upload-avatar','Upload / Edit States')" class="text-xs font-medium text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 rounded-lg px-3 py-1.5 hover:bg-blue-50 dark:hover:bg-blue-900/30">View Source</button>
+            </div>
+            <div class="flex flex-wrap gap-10">
+              <!-- Hover overlay (camera) -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="avatar-upload-wrap w-16 h-16" title="Click to change photo">
+                  <div class="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center overflow-hidden">
+                    <span class="text-white font-bold text-xl">AK</span>
+                  </div>
+                  <div class="avatar-hover-overlay absolute inset-0 rounded-full bg-black/50 flex items-center justify-center">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                  </div>
+                </div>
+                <span class="text-xs text-gray-500">Hover to edit</span>
+              </div>
+              <!-- Uploading state -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="relative w-16 h-16">
+                  <div class="w-16 h-16 rounded-full bg-purple-600 flex items-center justify-center opacity-50"><span class="text-white font-bold text-xl">BJ</span></div>
+                  <div class="absolute inset-0 rounded-full flex items-center justify-center">
+                    <svg class="animate-spin w-8 h-8 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+                  </div>
+                </div>
+                <span class="text-xs text-gray-500">Uploading...</span>
+              </div>
+              <!-- Success state -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="relative w-16 h-16">
+                  <div class="w-16 h-16 rounded-full bg-green-600 flex items-center justify-center"><span class="text-white font-bold text-xl">CL</span></div>
+                  <div class="absolute bottom-0 right-0 w-5 h-5 bg-green-400 rounded-full flex items-center justify-center ring-2 ring-white dark:ring-gray-800">
+                    <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                  </div>
+                </div>
+                <span class="text-xs text-gray-500">Uploaded ✓</span>
+              </div>
+              <!-- Remove button -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="relative w-16 h-16">
+                  <div class="w-16 h-16 rounded-full bg-amber-500 flex items-center justify-center"><span class="text-white font-bold text-xl">DM</span></div>
+                  <button class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center ring-2 ring-white dark:ring-gray-800 hover:bg-red-600" aria-label="Remove photo">
+                    <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                  </button>
+                </div>
+                <span class="text-xs text-gray-500">Remove (×)</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 9: CONTEXT APPEARANCES -->
+        <section id="context" class="mb-8">
+          <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Context Appearances</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Comment, table row, nav, card footer, and chat bubble</p>
+              </div>
+              <button onclick="openSourceDrawer('context','Context Appearances')" class="text-xs font-medium text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 rounded-lg px-3 py-1.5 hover:bg-blue-50 dark:hover:bg-blue-900/30">View Source</button>
+            </div>
+            <div class="space-y-5">
+              <!-- Comment -->
+              <div class="flex gap-3 p-4 border border-gray-200 dark:border-gray-700 rounded-xl">
+                <div class="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0"><span class="text-white font-bold text-xs">AK</span></div>
+                <div>
+                  <div class="flex items-baseline gap-2 mb-1"><span class="text-sm font-semibold text-gray-900 dark:text-white">Alice Kim</span><span class="text-xs text-gray-400">2 hours ago</span></div>
+                  <p class="text-sm text-gray-700 dark:text-gray-300">Looks good to me! I think we should ship this by end of week.</p>
+                </div>
+              </div>
+              <!-- Table row -->
+              <div class="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
+                <table class="w-full text-sm">
+                  <thead class="bg-gray-50 dark:bg-gray-700/50">
+                    <tr><th class="text-left px-4 py-2.5 text-xs font-medium text-gray-500 dark:text-gray-400">User</th><th class="text-left px-4 py-2.5 text-xs font-medium text-gray-500 dark:text-gray-400">Role</th><th class="text-left px-4 py-2.5 text-xs font-medium text-gray-500 dark:text-gray-400">Status</th></tr>
+                  </thead>
+                  <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+                    <tr><td class="px-4 py-3"><div class="flex items-center gap-2.5"><div class="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center"><span class="text-white font-bold text-xs">BJ</span></div><span class="font-medium text-gray-900 dark:text-white">Bob Jones</span></div></td><td class="px-4 py-3 text-gray-500">Admin</td><td class="px-4 py-3"><span class="text-xs bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 px-2 py-0.5 rounded-full font-medium">Active</span></td></tr>
+                    <tr><td class="px-4 py-3"><div class="flex items-center gap-2.5"><div class="w-8 h-8 rounded-full bg-green-600 flex items-center justify-center"><span class="text-white font-bold text-xs">CL</span></div><span class="font-medium text-gray-900 dark:text-white">Carol Lee</span></div></td><td class="px-4 py-3 text-gray-500">Member</td><td class="px-4 py-3"><span class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-2 py-0.5 rounded-full font-medium">Offline</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- Card footer + chat bubble -->
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div class="p-4 border border-gray-200 dark:border-gray-700 rounded-xl">
+                  <div class="shimmer-bar h-12 w-full rounded-lg animate-pulse mb-3"></div>
+                  <div class="shimmer-bar h-3 w-3/4 rounded animate-pulse mb-4"></div>
+                  <div class="flex items-center gap-2 pt-3 border-t border-gray-100 dark:border-gray-700">
+                    <div class="w-6 h-6 rounded-full bg-amber-500 flex items-center justify-center"><span class="text-white font-bold" style="font-size:8px">DM</span></div>
+                    <span class="text-xs text-gray-500">Created by <strong class="text-gray-700 dark:text-gray-300">Dan Miller</strong></span>
+                  </div>
+                </div>
+                <!-- Chat bubble -->
+                <div class="p-4 border border-gray-200 dark:border-gray-700 rounded-xl space-y-3">
+                  <div class="flex gap-2 items-end">
+                    <div class="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center flex-shrink-0"><span class="text-white font-bold text-xs">EM</span></div>
+                    <div class="bg-gray-100 dark:bg-gray-700 rounded-2xl rounded-bl-sm px-3 py-2 max-w-xs"><p class="text-sm text-gray-800 dark:text-gray-200">Hey, can you review my PR?</p></div>
+                  </div>
+                  <div class="flex gap-2 items-end justify-end">
+                    <div class="bg-blue-600 rounded-2xl rounded-br-sm px-3 py-2 max-w-xs"><p class="text-sm text-white">Sure! I'll take a look now.</p></div>
+                    <div class="w-8 h-8 rounded-full bg-teal-600 flex items-center justify-center flex-shrink-0"><span class="text-white font-bold text-xs">FN</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- SECTION 10: AVATAR PLACEHOLDER PATTERNS -->
+        <section id="placeholders" class="mb-8">
+          <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Avatar Placeholder Patterns</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Generic silhouette, abstract patterns, monogram, org logo, and empty state</p>
+              </div>
+              <button onclick="openSourceDrawer('placeholders','Avatar Placeholder Patterns')" class="text-xs font-medium text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 rounded-lg px-3 py-1.5 hover:bg-blue-50 dark:hover:bg-blue-900/30">View Source</button>
+            </div>
+            <div class="flex flex-wrap gap-8">
+              <!-- Generic silhouette -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="w-16 h-16 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                  <svg class="w-10 h-10 text-gray-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+                </div>
+                <span class="text-xs text-gray-500">Silhouette</span>
+              </div>
+              <!-- Abstract CSS pattern — checkerboard style -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="w-16 h-16 rounded-full overflow-hidden" style="background-color:#3b82f6;background-image:repeating-linear-gradient(45deg,#1d4ed8 0,#1d4ed8 25%,transparent 0,transparent 50%,#1d4ed8 0,#1d4ed8 75%,transparent 0,transparent);background-size:8px 8px" role="img" aria-label="Abstract pattern avatar"></div>
+                <span class="text-xs text-gray-500">Abstract pattern</span>
+              </div>
+              <!-- Monogram on two-tone solid -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="w-16 h-16 rounded-full overflow-hidden flex" role="img" aria-label="Monogram avatar HS">
+                  <div class="w-1/2 h-full bg-indigo-600"></div>
+                  <div class="w-1/2 h-full bg-indigo-400"></div>
+                </div>
+                <div class="relative -mt-12 w-16 flex items-center justify-center h-16">
+                  <span class="text-white font-bold text-xl z-10 relative">HS</span>
+                </div>
+                <span class="text-xs text-gray-500 -mt-2">Two-tone monogram</span>
+              </div>
+              <!-- Company / org logo style -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="w-16 h-16 rounded-xl bg-gray-900 dark:bg-gray-100 flex items-center justify-center" role="img" aria-label="Organization avatar">
+                  <span class="text-white dark:text-gray-900 font-extrabold text-2xl tracking-tighter">M</span>
+                </div>
+                <span class="text-xs text-gray-500">Org logo</span>
+              </div>
+              <!-- Empty state — dashed circle with + -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="w-16 h-16 rounded-full border-2 border-dashed border-gray-300 dark:border-gray-600 flex items-center justify-center hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-colors cursor-pointer" role="button" aria-label="Add avatar">
+                  <svg class="w-7 h-7 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                </div>
+                <span class="text-xs text-gray-500">Empty state (+)</span>
+              </div>
+              <!-- Striped abstract -->
+              <div class="flex flex-col items-center gap-2">
+                <div class="w-16 h-16 rounded-full overflow-hidden" style="background:repeating-linear-gradient(135deg,#a855f7,#a855f7 4px,#7c3aed 4px,#7c3aed 8px)" role="img" aria-label="Striped pattern avatar"></div>
+                <span class="text-xs text-gray-500">Striped pattern</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div><!-- /max-w -->
     </main>
   </div>
 </div>
-<script src="common-loader.js"></script>
+
+<!-- SOURCE DRAWER -->
+<div id="source-drawer" class="fixed inset-x-0 bottom-0 z-50 hidden">
+  <div class="fixed inset-0 bg-black/30" onclick="closeSourceDrawer()"></div>
+  <div class="relative bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 rounded-t-2xl shadow-2xl max-h-[65vh] flex flex-col mx-auto" style="max-width:720px;border-left:1px solid #e5e7eb;border-right:1px solid #e5e7eb;">
+    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-gray-800 flex-shrink-0">
+      <span id="drawer-title" class="text-sm font-semibold text-gray-900 dark:text-white">Source Code</span>
+      <div class="flex gap-2">
+        <button onclick="copyDrawerCode()" class="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700">Copy</button>
+        <button onclick="closeSourceDrawer()" class="rounded-lg border border-gray-200 dark:border-gray-700 p-1.5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+    </div>
+    <div class="overflow-auto flex-1 p-5"><pre id="drawer-code" class="text-xs leading-relaxed text-gray-800 dark:text-gray-200 whitespace-pre-wrap font-mono"></pre></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-2 pointer-events-none"></div>
+
 <script src="common-sidebar.js"></script>
 <script src="common-header.js"></script>
 <script src="app-shell.js"></script>
+<script>
+const SOURCE_SNIPPETS = {
+  'sizes': `<!-- Avatar Size Variants (xs → 2xl) -->\n<!-- xs: w-6 h-6 -->\n<div class="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center">\n  <span class="text-white font-bold" style="font-size:8px">AK</span>\n</div>\n<!-- sm: w-8 h-8 -->\n<div class="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center">\n  <span class="text-white font-bold text-xs">BJ</span>\n</div>\n<!-- md: w-10 h-10 -->\n<div class="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center">\n  <span class="text-white font-bold text-sm">CL</span>\n</div>\n<!-- lg: w-12 h-12 -->\n<div class="w-12 h-12 rounded-full bg-amber-500 flex items-center justify-center">\n  <span class="text-white font-bold text-base">DM</span>\n</div>\n<!-- xl: w-16 h-16 -->\n<div class="w-16 h-16 rounded-full bg-red-500 flex items-center justify-center">\n  <span class="text-white font-bold text-lg">EM</span>\n</div>\n<!-- 2xl: w-20 h-20 -->\n<div class="w-20 h-20 rounded-full bg-indigo-600 flex items-center justify-center">\n  <span class="text-white font-bold text-xl">FN</span>\n</div>`,
+
+  'shapes': `<!-- Shape Variants -->\n<!-- Circle -->\n<div class="w-14 h-14 rounded-full bg-blue-600 flex items-center justify-center">\n  <span class="text-white font-bold text-lg">GR</span>\n</div>\n<!-- Rounded square -->\n<div class="w-14 h-14 rounded-xl bg-purple-600 flex items-center justify-center">\n  <span class="text-white font-bold text-lg">HS</span>\n</div>\n<!-- Square -->\n<div class="w-14 h-14 rounded-none bg-green-600 flex items-center justify-center">\n  <span class="text-white font-bold text-lg">IT</span>\n</div>\n<!-- Squircle -->\n<div class="w-14 h-14 rounded-2xl bg-amber-500 flex items-center justify-center">\n  <span class="text-white font-bold text-lg">JK</span>\n</div>\n<!-- With ring border -->\n<div class="w-14 h-14 rounded-full bg-sky-500 flex items-center justify-center ring-4 ring-sky-200">\n  <span class="text-white font-bold text-lg">KL</span>\n</div>`,
+
+  'initials': `<!-- Initials avatar — pick color based on name hash -->\n<div class="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center">\n  <span class="text-white font-bold text-sm">AK</span>\n</div>\n<!-- Color palette examples: -->\n<!-- bg-blue-600, bg-purple-600, bg-green-600, bg-amber-500 -->\n<!-- bg-red-500, bg-teal-600, bg-indigo-600, bg-orange-500 -->\n<!-- bg-pink-500, bg-gray-700, bg-sky-500, bg-rose-600 -->`,
+
+  'status': `<!-- Avatar with status dot -->\n<div class="relative inline-block">\n  <div class="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center">\n    <span class="text-white font-bold text-sm">AK</span>\n  </div>\n  <!-- Online: bg-green-500 | Offline: bg-gray-400 | Away: bg-amber-400 | Busy: bg-red-500 -->\n  <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-white rounded-full"></span>\n</div>`,
+
+  'groups': `<!-- Avatar group with overlap + overflow badge -->\n<div class="flex items-center -space-x-2">\n  <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center ring-2 ring-white">\n    <span class="text-white font-bold text-sm">AK</span>\n  </div>\n  <div class="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center ring-2 ring-white">\n    <span class="text-white font-bold text-sm">BJ</span>\n  </div>\n  <div class="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center ring-2 ring-white">\n    <span class="text-white font-bold text-sm">CL</span>\n  </div>\n  <!-- Overflow badge -->\n  <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center ring-2 ring-white">\n    <span class="text-gray-700 font-bold text-xs">+8</span>\n  </div>\n</div>`,
+
+  'with-badge': `<!-- Avatar + name + role -->\n<div class="flex items-center gap-3">\n  <div class="w-11 h-11 rounded-full bg-blue-600 flex items-center justify-center">\n    <span class="text-white font-bold text-sm">AK</span>\n  </div>\n  <div>\n    <p class="text-sm font-semibold">Alice Kim</p>\n    <p class="text-xs text-gray-500">Product Designer</p>\n  </div>\n</div>\n\n<!-- Notification count badge -->\n<div class="relative">\n  <div class="w-11 h-11 rounded-full bg-green-600 flex items-center justify-center">\n    <span class="text-white font-bold text-sm">CL</span>\n  </div>\n  <span class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">3</span>\n</div>`,
+
+  'fallback': `<!-- Fallback: initials on image error -->\n<div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">\n  <span class="text-gray-700 font-bold text-sm">AK</span>\n</div>\n\n<!-- Generic silhouette SVG -->\n<div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">\n  <svg class="w-7 h-7 text-gray-400" fill="currentColor" viewBox="0 0 24 24">\n    <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>\n  </svg>\n</div>\n\n<!-- Bot/AI avatar -->\n<div class="w-12 h-12 rounded-full bg-purple-600 flex items-center justify-center">\n  <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">\n    <path d="M12 2L9.09 8.26 2 9.27l5 4.87-1.18 6.88L12 17.77l6.18 3.25L17 14.14l5-4.87-7.09-1.01L12 2z"/>\n  </svg>\n</div>`,
+
+  'upload-avatar': `<!-- Avatar with hover camera overlay -->\n<style>\n  .av-wrap{position:relative;display:inline-block;cursor:pointer}\n  .av-overlay{opacity:0;transition:opacity .2s;position:absolute;inset:0;border-radius:9999px;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center}\n  .av-wrap:hover .av-overlay{opacity:1}\n</style>\n<div class="av-wrap w-16 h-16">\n  <div class="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center">\n    <span class="text-white font-bold text-xl">AK</span>\n  </div>\n  <div class="av-overlay">\n    <!-- camera icon -->\n  </div>\n</div>\n\n<!-- Uploading spinner overlay -->\n<div class="relative w-16 h-16">\n  <div class="w-16 h-16 rounded-full bg-purple-600 opacity-50 flex items-center justify-center">\n    <span class="text-white font-bold text-xl">BJ</span>\n  </div>\n  <div class="absolute inset-0 rounded-full flex items-center justify-center">\n    <svg class="animate-spin w-8 h-8 text-white" fill="none" viewBox="0 0 24 24">\n      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>\n      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>\n    </svg>\n  </div>\n</div>`,
+
+  'context': `<!-- In a comment -->\n<div class="flex gap-3">\n  <div class="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0">\n    <span class="text-white font-bold text-xs">AK</span>\n  </div>\n  <div>\n    <div class="flex items-baseline gap-2 mb-1">\n      <span class="text-sm font-semibold">Alice Kim</span>\n      <span class="text-xs text-gray-400">2h ago</span>\n    </div>\n    <p class="text-sm text-gray-700">Looks good to me!</p>\n  </div>\n</div>\n\n<!-- In a chat bubble -->\n<div class="flex gap-2 items-end">\n  <div class="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center">\n    <span class="text-white font-bold text-xs">EM</span>\n  </div>\n  <div class="bg-gray-100 rounded-2xl rounded-bl-sm px-3 py-2">\n    <p class="text-sm">Hey, can you review my PR?</p>\n  </div>\n</div>`,
+
+  'placeholders': `<!-- Generic silhouette -->\n<div class="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">\n  <svg class="w-10 h-10 text-gray-400" fill="currentColor" viewBox="0 0 24 24">\n    <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>\n  </svg>\n</div>\n\n<!-- Abstract CSS pattern -->\n<div class="w-16 h-16 rounded-full overflow-hidden" style="background-color:#3b82f6;background-image:repeating-linear-gradient(45deg,#1d4ed8 0,#1d4ed8 25%,transparent 0,transparent 50%,#1d4ed8 0,#1d4ed8 75%,transparent 0,transparent);background-size:8px 8px"></div>\n\n<!-- Empty state with + icon -->\n<div class="w-16 h-16 rounded-full border-2 border-dashed border-gray-300 flex items-center justify-center hover:border-blue-400 cursor-pointer">\n  <svg class="w-7 h-7 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">\n    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>\n  </svg>\n</div>`,
+};
+
+function openSourceDrawer(id, title) {
+  document.getElementById('drawer-title').textContent = title + ' — Source';
+  document.getElementById('drawer-code').textContent = SOURCE_SNIPPETS[id] || '// No source available';
+  document.getElementById('source-drawer').classList.remove('hidden');
+  document.getElementById('source-drawer').dataset.currentId = id;
+  document.body.style.overflow = 'hidden';
+}
+function closeSourceDrawer() {
+  document.getElementById('source-drawer').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+function copyDrawerCode() {
+  navigator.clipboard.writeText(SOURCE_SNIPPETS[document.getElementById('source-drawer').dataset.currentId] || '')
+    .then(() => showToast('Copied to clipboard!'));
+}
+function showToast(msg) {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = 'pointer-events-auto flex items-center gap-2 rounded-xl border border-green-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 shadow-lg dark:border-green-800 dark:bg-gray-900 dark:text-white';
+  t.style.animation = 'toastIn .2s ease';
+  t.innerHTML = '<span class="h-2 w-2 rounded-full bg-green-500 flex-shrink-0"></span>' + msg;
+  c.appendChild(t);
+  setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateX(12px)'; t.style.transition = 'all .2s'; setTimeout(() => t.remove(), 200); }, 2500);
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSourceDrawer(); });
+</script>
 </body>
 </html>
